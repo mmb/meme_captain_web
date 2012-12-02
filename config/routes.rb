@@ -1,7 +1,7 @@
 MemeCaptainWeb::Application.routes.draw do
   get "user/new"
 
-  get "user/create"
+  post 'user/create'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

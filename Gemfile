@@ -37,8 +37,11 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # To use debugger
 # gem 'debugger'
 
+gem 'dynamic_form'
+
 group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'
   gem 'shoulda'
+  gem 'webrat'
 end
