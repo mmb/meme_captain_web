@@ -38,6 +38,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # gem 'debugger'
 
 group :test, :development do
+  gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'
   gem 'shoulda'
 end

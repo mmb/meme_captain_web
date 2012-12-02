@@ -8,6 +8,8 @@ describe User do
   it 'should validate that the email address is valid' do
   end
 
+  it { should validate_confirmation_of :password }
+
   it { should validate_presence_of :password_digest }
   it { should_not allow_mass_assignment_of :password_digest }
 
