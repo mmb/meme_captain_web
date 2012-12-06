@@ -53,7 +53,6 @@ describe SessionController do
       end
 
       it 'informs the user of login failure with flash' do
-        p flash
         flash[:error].should == 'Login failed.'
       end
 
