@@ -1,4 +1,8 @@
 MemeCaptainWeb::Application.routes.draw do
+  get "session/create"
+
+  get "session/destroy"
+
   get "user/new"
 
   post 'user/create'
