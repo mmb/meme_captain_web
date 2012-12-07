@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MemeCaptainWeb</title>
+  <title>Meme Captain meme generator</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <div class="container">
+    <img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcwAAAAyAgMAAACsWgPIAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wBHwQoJY1iyrwAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAAWJLR0QB/wIt3gAAAHpJREFUWIXt1zESgCAMRNE03s9mG+9ns6e0EaKCqDOWf4sUJOHREvqciOn7Us0cEZiYmJhnc7HtVbJtS5LsVRo09DScZzmSG5iYmJit2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xMTMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC" alt="Meme Captain" width="460" height="50" />
+
+    <p>
+      <% if current_user %>
+      <%= link_to "Logout #{current_user.email}", session_destroy_path %>
+      <% else %>
+      <%= link_to "Login", session_new_path %>
+      |
+      <%= link_to "Register", user_new_path %>
+      <% end %>
+    </p>
+
+    <% if flash[:error] -%>
+    <div class="alert alert-error">
+      <%=h flash[:error] %>
+    </div>
+    <% end -%>
+
+    <% if flash[:notice] -%>
+    <div class="alert alert-info">
+      <%=h flash[:notice] %>
+    </div>
+    <% end -%>
+
+    <%= yield %>
+
+  </div>
+
+<%= javascript_include_tag "application" %>
 
 </body>
 </html>

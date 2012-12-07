@@ -1,1 +1,12 @@
-<h1>Login</h1>
+<%= form_tag 'create' do %>
+<fieldset>
+  <legend>Login</legend>
+  <%= label_tag :email, 'Email' %>
+  <%= text_field_tag :email %>
+
+  <%= label :password, 'Password' %>
+  <%= password_field_tag :password %>
+
+  <%= submit_tag 'Login' %>
+</fieldset>
+<% end %>
