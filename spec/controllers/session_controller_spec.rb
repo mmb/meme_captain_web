@@ -34,7 +34,7 @@ describe SessionController do
       it 'informs the user of login success with flash' do
         post :create, :email => user.email, :password => user.password
 
-        flash[:notice].should == 'Signed in.'
+        flash[:notice].should == 'Logged in.'
       end
     end
 
@@ -54,6 +54,50 @@ describe SessionController do
 
       it 'informs the user of login failure with flash' do
         flash[:error].should == 'Login failed.'
+      end
+
+    end
+
+  end
+
+  describe "GET 'destroy'" do
+
+    context 'when the user is logged in ' do
+
+      before do
+        post :create, :email => user.email, :password => user.password
+      end
+
+      before(:each) do
+        get :destroy
+      end
+
+      it 'clears the session' do
+        session[:user_id].should be_nil
+      end
+
+      it 'redirects to the root url' do
+        response.should redirect_to root_url
+      end
+
+      it 'informs the user of login failure with flash' do
+        flash[:notice].should == 'Logged out.'
+      end
+
+    end
+
+    context 'when the user is logged out' do
+
+      before(:each) do
+        get :destroy
+      end
+
+      it 'clears the session' do
+        session[:user_id].should be_nil
+      end
+
+      it 'redirects to the root url' do
+        response.should redirect_to root_url
       end
 
     end

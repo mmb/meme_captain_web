@@ -4,7 +4,7 @@ class SessionController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to root_url, :notice => 'Signed in.'
+      redirect_to root_url, :notice => 'Logged in.'
     else
       flash[:error] = 'Login failed.'
       render :new
@@ -12,7 +12,13 @@ class SessionController < ApplicationController
   end
 
   def destroy
-    session.delete :user_id
+    if session[:user_id]
+      session.delete :user_id
+
+      redirect_to root_url, :notice => 'Logged out.'
+    else
+      redirect_to root_url
+    end
   end
 
 end
