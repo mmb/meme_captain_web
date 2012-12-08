@@ -28,6 +28,7 @@ describe UserController do
     end
 
     context 'with invalid attributes' do
+
       it 'does not save the new contact in the database' do
         expect {
           post :create, user: FactoryGirl.attributes_for(:invalid_user)
