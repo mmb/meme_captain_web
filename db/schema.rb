@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206052011) do
+ActiveRecord::Schema.define(:version => 20121208070934) do
 
   create_table "gend_images", :force => true do |t|
     t.string   "id_hash"
@@ -30,6 +30,31 @@ ActiveRecord::Schema.define(:version => 20121206052011) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "src_images", :force => true do |t|
+    t.string   "id_hash"
+    t.string   "url"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "size"
+    t.string   "format"
+    t.binary   "image"
+    t.integer  "src_thumb_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "src_thumbs", :force => true do |t|
+    t.integer  "src_image_id"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "size"
+    t.binary   "image"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "format"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"
