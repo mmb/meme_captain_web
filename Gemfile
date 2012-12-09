@@ -39,6 +39,8 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'dynamic_form'
 
+gem 'rmagick'
+
 group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'
