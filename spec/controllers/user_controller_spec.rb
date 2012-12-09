@@ -13,7 +13,7 @@ describe UserController do
 
     context 'with valid attributes' do
 
-      it 'saves the new contact to the database' do
+      it 'saves the new user to the database' do
         expect {
           post :create, user: FactoryGirl.attributes_for(:user)
         }.to change{User.count}.by(1)
@@ -29,7 +29,7 @@ describe UserController do
 
     context 'with invalid attributes' do
 
-      it 'does not save the new contact in the database' do
+      it 'does not save the new user in the database' do
         expect {
           post :create, user: FactoryGirl.attributes_for(:invalid_user)
         }.to_not change{User.count}
