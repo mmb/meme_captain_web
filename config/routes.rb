@@ -1,4 +1,12 @@
 MemeCaptainWeb::Application.routes.draw do
+  get "src_image/new"
+
+  get "src_image/index"
+
+  post "src_image/create"
+
+  get "src_image/show"
+
   get "home/index"
 
   get "session/new"

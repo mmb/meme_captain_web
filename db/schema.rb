@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121208070934) do
+ActiveRecord::Schema.define(:version => 20121209081928) do
 
   create_table "gend_images", :force => true do |t|
     t.string   "id_hash"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20121208070934) do
     t.integer  "width"
     t.integer  "height"
     t.integer  "size"
-    t.string   "format"
+    t.string   "content_type"
     t.binary   "image"
     t.integer  "src_thumb_id"
     t.integer  "user_id"

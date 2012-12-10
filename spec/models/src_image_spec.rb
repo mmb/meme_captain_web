@@ -8,8 +8,8 @@ describe SrcImage do
     Base64.decode64('iVBORw0KGgoAAAANSUhEUgAAAcwAAAAyAgMAAACsWgPIAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wBHwQoJY1iyrwAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAAWJLR0QB/wIt3gAAAHpJREFUWIXt1zESgCAMRNE03s9mG+9ns6e0EaKCqDOWf4sUJOHREvqciOn7Us0cEZiYmJhnc7HtVbJtS5LsVRo09DScZzmSG5iYmJit2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xMTMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC')
   }
 
-  it { should validate_presence_of :format }
-  it { should_not allow_mass_assignment_of :format }
+  it { should validate_presence_of :content_type }
+  it { should_not allow_mass_assignment_of :content_type }
 
   it { should validate_presence_of :height }
   it { should_not allow_mass_assignment_of :height }
@@ -46,10 +46,19 @@ describe SrcImage do
       src_image
     }
 
-    its(:format) { should == 'PNG' }
+    its(:content_type) { should == 'image/png' }
     its(:height) { should == 50 }
     its(:width) { should == 460 }
     its(:size) { should == 279 }
+  end
+
+  describe '#format_to_content_type' do
+
+    it 'converts jpeg'
+    it 'converts png'
+    it 'converts gif'
+    it 'returns nil for unknown formats'
+
   end
 
 end
