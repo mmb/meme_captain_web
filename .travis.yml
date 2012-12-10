@@ -3,4 +3,5 @@ rvm:
   - "1.9.2"
   - "1.9.3"
 before_script:
+  - sudo apt-get install -qq imagemagick libmagickwand-dev
   - bundle exec rake db:migrate
