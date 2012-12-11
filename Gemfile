@@ -39,7 +39,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'dynamic_form'
 
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 
 group :test, :development do
   gem 'factory_girl_rails'
