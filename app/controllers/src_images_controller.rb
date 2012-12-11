@@ -1,14 +1,16 @@
-class SrcImageController < ApplicationController
+class SrcImagesController < ApplicationController
 
   def new
     @src_image = SrcImage.new
   end
 
   def index
+    @src_images = current_user.src_images
   end
 
   def create
     @src_image = SrcImage.new(params[:src_image])
+    @src_image.user = current_user
 
     if params[:src_image][:image]
       @src_image.image = params[:src_image][:image].read

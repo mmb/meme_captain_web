@@ -14,6 +14,6 @@ describe User do
   it { should_not allow_mass_assignment_of :password_digest }
 
   it { pending; should have_many :gend_image }
-  it { should have_many :src_image }
+  it { should have_many :src_images }
 
 end

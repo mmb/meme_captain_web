@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SrcImageController do
+describe SrcImagesController do
 
   describe "GET 'new'" do
     it "returns http success" do
@@ -11,6 +11,8 @@ describe SrcImageController do
 
   describe "GET 'index'" do
     it "returns http success" do
+      controller.stub_chain(:current_user, :src_images) { [] }
+
       get 'index'
       response.should be_success
     end

@@ -6,5 +6,5 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  has_many :src_image
+  has_many :src_images
 end
