@@ -7,11 +7,9 @@ MemeCaptainWeb::Application.routes.draw do
 
   get "session/destroy"
 
-  get "user/new"
-
-  post 'user/create'
-
   resources :src_images
+
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

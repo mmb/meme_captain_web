@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "user/new.html.erb" do
+describe "users/new.html.erb" do
 
   subject {
     assign(:user, [ stub_model(User) ])
