@@ -22,19 +22,19 @@ describe SessionController do
       it 'creates a session' do
         post :create, :email => user.email, :password => user.password
 
-        session[:user_id].should == user.id
+        expect(session[:user_id]).to eq(user.id)
       end
 
       it 'redirects to the root url' do
         post :create, :email => user.email, :password => user.password
 
-        response.should redirect_to root_url
+        expect(response).to redirect_to root_url
       end
 
       it 'informs the user of login success with flash' do
         post :create, :email => user.email, :password => user.password
 
-        flash[:notice].should == 'Logged in.'
+        expect(flash[:notice]).to eq('Logged in.')
       end
     end
 
@@ -45,15 +45,15 @@ describe SessionController do
       end
 
       it 'does not create a session' do
-        session[:user_id].should be_nil
+        expect(session[:user_id]).to be_nil
       end
 
       it 'renders the new template' do
-        response.should render_template('new')
+        expect(response).to render_template('new')
       end
 
       it 'informs the user of login failure with flash' do
-        flash[:error].should == 'Login failed.'
+        expect(flash[:error]).to eq('Login failed.')
       end
 
     end
@@ -73,15 +73,15 @@ describe SessionController do
       end
 
       it 'clears the session' do
-        session[:user_id].should be_nil
+        expect(session[:user_id]).to be_nil
       end
 
       it 'redirects to the root url' do
-        response.should redirect_to root_url
+        expect(response).to redirect_to root_url
       end
 
       it 'informs the user of login failure with flash' do
-        flash[:notice].should == 'Logged out.'
+        expect(flash[:notice]).to eq('Logged out.')
       end
 
     end
@@ -93,11 +93,11 @@ describe SessionController do
       end
 
       it 'clears the session' do
-        session[:user_id].should be_nil
+        expect(session[:user_id]).to be_nil
       end
 
       it 'redirects to the root url' do
-        response.should redirect_to root_url
+        expect(response).to redirect_to root_url
       end
 
     end

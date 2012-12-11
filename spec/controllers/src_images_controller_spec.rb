@@ -5,7 +5,7 @@ describe SrcImagesController do
   describe "GET 'new'" do
     it "returns http success" do
       get 'new'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -14,7 +14,7 @@ describe SrcImagesController do
       controller.stub_chain(:current_user, :src_images) { [] }
 
       get 'index'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -33,14 +33,14 @@ describe SrcImagesController do
         post :create, src_image: {
           :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
 
-        response.should redirect_to :action => :index
+        expect(response).to redirect_to :action => :index
       end
 
       it 'informs the user of success with flash' do
         post :create, src_image: {
           :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
 
-        flash[:notice].should == 'Source image created.'
+        expect(flash[:notice]).to eq('Source image created.')
       end
 
     end
@@ -56,7 +56,7 @@ describe SrcImagesController do
       it 're-renders the new template' do
         post :create, src_image: { :image => nil }
 
-        response.should render_template('new')
+        expect(response).to render_template('new')
       end
 
     end
@@ -76,7 +76,7 @@ describe SrcImagesController do
 
         get 'show', :id => 1
 
-        response.should be_success
+        expect(response).to be_success
       end
 
       it 'has the right content type' do
@@ -85,7 +85,7 @@ describe SrcImagesController do
 
         get 'show', :id => 1
 
-        response.content_type.should == 'content type'
+        expect(response.content_type).to eq('content type')
       end
 
       it 'has the right content' do
@@ -94,7 +94,7 @@ describe SrcImagesController do
 
         get 'show', :id => 1
 
-        response.body.should == 'image'
+        expect(response.body).to eq('image')
       end
 
     end

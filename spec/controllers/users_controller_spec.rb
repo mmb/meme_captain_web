@@ -5,7 +5,7 @@ describe UsersController do
   describe "GET 'new'" do
     it "returns http success" do
       get 'new'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -22,7 +22,7 @@ describe UsersController do
       it 'redirects to the home page' do
         post :create, user: FactoryGirl.attributes_for(:user)
 
-        response.should redirect_to root_url
+        expect(response).to redirect_to root_url
       end
 
     end
@@ -38,7 +38,7 @@ describe UsersController do
       it 're-renders the new template' do
         post :create, user: FactoryGirl.attributes_for(:invalid_user)
 
-        response.should render_template('new')
+        expect(response).to render_template('new')
       end
 
     end

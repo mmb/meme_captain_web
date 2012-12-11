@@ -35,7 +35,7 @@ describe SrcImage do
   it 'should generate a unique id hash' do
     SrcImage.any_instance.stub(:gen_id_hash).and_return 'some_id_hash'
     src_image = SrcImage.create(:image => test_image)
-    src_image.id_hash.should == 'some_id_hash'
+    expect(src_image.id_hash).to eq('some_id_hash')
   end
 
   context 'setting fields derived from the image' do
