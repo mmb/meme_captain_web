@@ -52,13 +52,4 @@ describe SrcImage do
     its(:size) { should == 279 }
   end
 
-  describe '#format_to_content_type' do
-
-    it 'converts jpeg'
-    it 'converts png'
-    it 'converts gif'
-    it 'returns nil for unknown formats'
-
-  end
-
 end

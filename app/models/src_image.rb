@@ -26,19 +26,11 @@ class SrcImage < ActiveRecord::Base
     id_hash
   end
 
-  def format_to_content_type(format)
-    {
-      'PNG' => 'image/png',
-      'GIF' => 'image/gif',
-      'JPEG' => 'image/jpeg',
-    }.fetch(format)
-  end
-
   def set_derived_image_fields
     if image
       img = Magick::Image.from_blob(image)[0]
 
-      self.content_type = format_to_content_type(img.format)
+      self.content_type = img.content_type
       self.height = img.rows
       self.size = image.size
       self.width = img.columns
