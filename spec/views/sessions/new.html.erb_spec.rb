@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "session/new.html.erb" do
+describe "sessions/new.html.erb" do
 
   subject { render }
 

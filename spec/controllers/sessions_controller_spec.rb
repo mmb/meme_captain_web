@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionController do
+describe SessionsController do
 
   let(:mock_user) { mock_model(User) }
   let(:user) { User.create!(FactoryGirl.attributes_for(:user)) }
@@ -60,7 +60,7 @@ describe SessionController do
 
   end
 
-  describe "GET 'destroy'" do
+  describe "DELETE 'destroy'" do
 
     context 'when the user is logged in ' do
 
@@ -69,7 +69,7 @@ describe SessionController do
       end
 
       before(:each) do
-        get :destroy
+        delete :destroy
       end
 
       it 'clears the session' do
@@ -89,7 +89,7 @@ describe SessionController do
     context 'when the user is logged out' do
 
       before(:each) do
-        get :destroy
+        delete :destroy
       end
 
       it 'clears the session' do

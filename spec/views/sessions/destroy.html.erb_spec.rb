@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe "session/destroy.html.erb" do
+describe "sessions/destroy.html.erb" do
   pending "add some examples to (or delete) #{__FILE__}"
 end

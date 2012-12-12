@@ -1,11 +1,7 @@
 MemeCaptainWeb::Application.routes.draw do
   get "home/index"
 
-  get "session/new"
-
-  post "session/create"
-
-  get "session/destroy"
+  resource :session
 
   resources :src_images
 
