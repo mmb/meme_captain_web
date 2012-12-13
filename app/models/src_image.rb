@@ -45,7 +45,9 @@ class SrcImage < ActiveRecord::Base
 
   def create_thumbnail
     thumb_image = Magick::Image.from_blob(image)[0]
-    thumb_image.resize_to_fit!(MemeCaptainWeb::Config::ThumbMaxSide)
+    thumb_image.resize_to_fill!(
+      MemeCaptainWeb::Config::ThumbSide,
+      MemeCaptainWeb::Config::ThumbSide)
 
     self.src_thumb = SrcThumb.new(:image => thumb_image.to_blob)
   end
