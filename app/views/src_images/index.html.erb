@@ -1,3 +1,3 @@
 <% @src_images.each do |si| %>
-<p><%= link_to si.id, url_for(si) %></p>
+<%=link_to image_tag(url_for(si.src_thumb)), si %>
 <% end %>

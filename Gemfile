@@ -41,6 +41,9 @@ gem 'dynamic_form'
 
 gem 'rmagick', :require => 'RMagick'
 
+gem 'delayed_job_active_record'
+gem 'daemons'
+
 group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'

@@ -5,6 +5,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :src_images
 
+  resources :src_thumbs
+
   resources :users
 
   # The priority is based upon order of creation:

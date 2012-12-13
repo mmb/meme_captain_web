@@ -12,6 +12,8 @@ class SrcImage < ActiveRecord::Base
 
   before_validation :set_derived_image_fields
 
+  after_commit :create_thumbnail_job
+
   protected
 
   def set_id_hash
@@ -35,6 +37,17 @@ class SrcImage < ActiveRecord::Base
       self.size = image.size
       self.width = img.columns
     end
+  end
+
+  def create_thumbnail_job
+    self.delay.create_thumbnail  unless src_thumb
+  end
+
+  def create_thumbnail
+    thumb_image = Magick::Image.from_blob(image)[0]
+    thumb_image.resize_to_fit!(MemeCaptainWeb::Config::ThumbMaxSide)
+
+    self.src_thumb = SrcThumb.new(:image => thumb_image.to_blob)
   end
 
 end
