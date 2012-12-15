@@ -25,6 +25,12 @@ describe UsersController do
         expect(response).to redirect_to root_url
       end
 
+      it 'logs the user in' do
+        post :create, user: FactoryGirl.attributes_for(:user)
+
+        expect(session[:user_id]).to eq(User.last.id)
+      end
+
     end
 
     context 'with invalid attributes' do
