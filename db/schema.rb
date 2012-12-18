@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213070351) do
+ActiveRecord::Schema.define(:version => 20121218025528) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(:version => 20121213070351) do
   create_table "gend_images", :force => true do |t|
     t.string   "id_hash"
     t.integer  "src_image_id"
-    t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

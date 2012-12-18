@@ -9,6 +9,7 @@ class SrcImage < ActiveRecord::Base
 
   belongs_to :user
   has_one :src_thumb
+  has_many :gend_images
 
   before_validation :set_derived_image_fields
 

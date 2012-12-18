@@ -1,7 +1,7 @@
 class GendImage < ActiveRecord::Base
-  attr_accessible :id_hash, :src_image, :user
+  attr_accessible :id_hash, :src_image
 
   validates_presence_of :id_hash
 
-  belongs_to :user
+  belongs_to :src_image
 end

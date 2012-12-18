@@ -31,6 +31,7 @@ describe SrcImage do
 
   it { should belong_to :user }
   it { should have_one :src_thumb }
+  it { should have_many :gend_images }
 
   it 'should generate a unique id hash' do
     SrcImage.any_instance.stub(:gen_id_hash).and_return 'some_id_hash'
@@ -51,5 +52,7 @@ describe SrcImage do
     its(:width) { should == 460 }
     its(:size) { should == 279 }
   end
+
+  it 'should not delete child gend_images when deleted'
 
 end
