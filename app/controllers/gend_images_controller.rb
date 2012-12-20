@@ -14,7 +14,8 @@ class GendImagesController < ApplicationController
     # TODO check if current user has access to the source image
 
     @gend_image.image = MemeCaptain.meme_top_bottom(
-      @gend_image.src_image.image, params[:text1], params[:text2]).to_blob
+      @gend_image.src_image.image, params[:text1], params[:text2],
+      :font => MemeCaptainWeb::Config::Font).to_blob
 
     if @gend_image.save
       redirect_to({ :action => :index }, { :notice => 'Image created.' })
