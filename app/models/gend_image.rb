@@ -1,7 +1,10 @@
 class GendImage < ActiveRecord::Base
-  attr_accessible :id_hash, :src_image
+  include HasImageConcern
+  include IdHashConcern
 
-  validates_presence_of :id_hash
+  attr_accessible :image, :src_image_id
+
+  validates :content_type, :height, :image, :size, :width, presence: true
 
   belongs_to :src_image
 end

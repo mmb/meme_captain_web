@@ -1,6 +1,8 @@
 MemeCaptainWeb::Application.routes.draw do
   get "home/index"
 
+  resources :gend_images
+
   resource :session
 
   resources :src_images

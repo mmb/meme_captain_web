@@ -1,0 +1,2 @@
+module GendImagesHelper
+end

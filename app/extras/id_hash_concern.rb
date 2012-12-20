@@ -4,6 +4,7 @@ module IdHashConcern
 
   included do
     before_create :set_id_hash
+    validates :id_hash, uniqueness: true
   end
 
   def set_id_hash

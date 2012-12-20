@@ -44,6 +44,8 @@ gem 'rmagick', :require => 'RMagick'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
+gem 'meme_captain'
+
 group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'

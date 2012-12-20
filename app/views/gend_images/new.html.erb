@@ -1,0 +1,14 @@
+<h1>New Meme</h1>
+
+<%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
+  <%= f.label :src_image_id %>
+  <%= f.text_field :src_image_id %>
+
+  <%= label_tag :text1, 'Text 1' %>
+  <%= text_field_tag :text1 %>
+
+  <%= label_tag :text2, 'Text 2' %>
+  <%= text_field_tag :text2 %>
+
+  <%= f.submit 'Create' %>
+<% end %>
