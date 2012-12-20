@@ -2,6 +2,7 @@ class GendImagesController < ApplicationController
 
   def new
     @gend_image = GendImage.new
+    @gend_image.src_image_id = params[:src_image_id]
   end
 
   def index
@@ -18,7 +19,7 @@ class GendImagesController < ApplicationController
       :font => MemeCaptainWeb::Config::Font).to_blob
 
     if @gend_image.save
-      redirect_to({ :action => :index }, { :notice => 'Image created.' })
+      redirect_to :action => :show, :id => @gend_image.id
     else
       render :new
     end
