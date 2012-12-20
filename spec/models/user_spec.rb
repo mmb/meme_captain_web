@@ -13,7 +13,7 @@ describe User do
   it { should validate_presence_of :password_digest }
   it { should_not allow_mass_assignment_of :password_digest }
 
-  it { pending; should have_many :gend_image }
+  it { should have_many(:gend_images).through(:src_images) }
   it { should have_many :src_images }
 
 end
