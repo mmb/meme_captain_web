@@ -9,6 +9,15 @@ describe GendImagesController do
     end
   end
 
+  describe "GET 'index'" do
+    it "returns http success" do
+      controller.stub_chain(:current_user, :gend_images) { [] }
+
+      get 'index'
+      expect(response).to be_success
+    end
+  end
+
   it 'should have more specs'
 
 end

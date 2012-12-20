@@ -4,6 +4,10 @@ class GendImagesController < ApplicationController
     @gend_image = GendImage.new
   end
 
+  def index
+    @gend_images = current_user.gend_images
+  end
+
   def create
     @gend_image = GendImage.new(params[:gend_image])
 
