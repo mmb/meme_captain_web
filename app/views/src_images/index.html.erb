@@ -1,3 +1,6 @@
 <% @src_images.each do |si| %>
-<%=link_to image_tag(url_for(si.src_thumb)), si %>
+<%= link_to image_tag(url_for(si.src_thumb)),
+  :controller => :src_images,
+  :action => :show,
+  :id => si.id_hash %>
 <% end %>

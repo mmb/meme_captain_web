@@ -71,28 +71,28 @@ describe SrcImagesController do
         mock_model(SrcImage)
       }
 
-      it 'shows the source image' do
-        SrcImage.should_receive(:find).and_return(src_image)
+      before :each do
+        SrcImage.should_receive(:find_by_id_hash!).and_return(src_image)
+      end
 
-        get 'show', :id => 1
+      it 'shows the source image' do
+        get 'show', :id => 'abc'
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
         src_image.should_receive(:content_type).and_return('content type')
-        SrcImage.should_receive(:find).and_return(src_image)
 
-        get 'show', :id => 1
+        get 'show', :id => 'abc'
 
         expect(response.content_type).to eq('content type')
       end
 
       it 'has the right content' do
         src_image.should_receive(:image).and_return('image')
-        SrcImage.should_receive(:find).and_return(src_image)
 
-        get 'show', :id => 1
+        get 'show', :id => 'abc'
 
         expect(response.body).to eq('image')
       end
@@ -103,7 +103,7 @@ describe SrcImagesController do
 
       it 'raises record not found' do
         expect {
-          get 'show', :id => 1
+          get 'show', :id => 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 

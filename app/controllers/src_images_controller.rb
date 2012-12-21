@@ -25,7 +25,7 @@ class SrcImagesController < ApplicationController
   end
 
   def show
-    src_image = SrcImage.find(params[:id])
+    src_image = SrcImage.find_by_id_hash!(params[:id])
 
     render :text => src_image.image, :content_type => src_image.content_type
   end
