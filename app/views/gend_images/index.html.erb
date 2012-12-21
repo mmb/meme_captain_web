@@ -1,3 +1,6 @@
 <% @gend_images.each do |gi| %>
-<%=link_to gi.id, gi %>
+<%= link_to gi.id_hash,
+  :controller => :gend_images,
+  :action => :show,
+  :id => gi.id_hash %>
 <% end %>
