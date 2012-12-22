@@ -41,10 +41,10 @@ describe SrcImage do
       src_image
     }
 
-    its(:content_type) { should == 'image/png' }
-    its(:height) { should == 50 }
-    its(:width) { should == 460 }
-    its(:size) { should == 279 }
+    its(:content_type) { should == 'image/jpeg' }
+    its(:height) { should == 399 }
+    its(:width) { should == 399 }
+    its(:size) { should == 9141 }
   end
 
   it 'should not delete child gend_images when deleted'
