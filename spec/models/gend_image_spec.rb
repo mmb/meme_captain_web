@@ -42,4 +42,7 @@ describe GendImage do
     its(:size) { should == 279 }
   end
 
+  it 'generates a thumbnail'
+  # figure out how to use run a delayed job in spec
+
 end

@@ -55,4 +55,7 @@ describe SrcImage do
 
   it 'should not delete child gend_images when deleted'
 
+  it 'generates a thumbnail'
+  # figure out how to use run a delayed job in spec
+
 end
