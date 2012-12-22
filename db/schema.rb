@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220065946) do
+ActiveRecord::Schema.define(:version => 20121222222948) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -40,6 +40,19 @@ ActiveRecord::Schema.define(:version => 20121220065946) do
     t.integer  "size"
     t.integer  "width"
   end
+
+  create_table "gend_thumbs", :force => true do |t|
+    t.string   "content_type"
+    t.integer  "gend_image_id"
+    t.integer  "height"
+    t.binary   "image"
+    t.integer  "size"
+    t.integer  "width"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "gend_thumbs", ["gend_image_id"], :name => "index_gend_thumbs_on_gend_image_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

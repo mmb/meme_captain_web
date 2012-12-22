@@ -7,4 +7,5 @@ class GendImage < ActiveRecord::Base
   validates :content_type, :height, :image, :size, :width, presence: true
 
   belongs_to :src_image
+  has_one :gend_thumb
 end

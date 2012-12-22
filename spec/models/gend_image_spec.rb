@@ -18,6 +18,8 @@ describe GendImage do
 
   it { should belong_to :src_image }
 
+  it { should have_one :gend_thumb }
+
   it { pending; should have_many :caption_text }
 
   it 'should generate a unique id hash' do
