@@ -4,7 +4,7 @@
 
 <%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
   <%= f.label :src_image_id %>
-  <%= f.text_field :src_image_id %>
+  <%= f.text_field :src_image_id, :value => @gend_image.src_image.id_hash %>
 
   <%= label_tag :text1, 'Text 1' %>
   <%= text_field_tag :text1 %>

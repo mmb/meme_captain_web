@@ -2,7 +2,7 @@ class GendImagesController < ApplicationController
 
   def new
     @gend_image = GendImage.new
-    @gend_image.src_image_id = params[:src_image_id]
+    @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
   end
 
   def index

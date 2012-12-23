@@ -2,9 +2,15 @@ require 'spec_helper'
 
 describe GendImagesController do
 
+  let(:src_image) {
+    mock_model(SrcImage, FactoryGirl.attributes_for(:src_image))
+  }
+
   describe "GET 'new'" do
     it "returns http success" do
-      get 'new'
+      SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
+        src_image)
+      get 'new', :src => 'abc'
       expect(response).to be_success
     end
   end
@@ -29,10 +35,6 @@ describe GendImagesController do
   end
 
   describe "POST 'create'" do
-
-    let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
-
-    let(:src_image) { mock_model(SrcImage, :image => image) }
 
     context 'with valid attributes' do
 
