@@ -19,7 +19,7 @@ class GendImage < ActiveRecord::Base
 
   def create_thumbnail
     thumb_image = Magick::Image.from_blob(image)[0]
-    thumb_image.resize_to_fill!(
+    thumb_image.resize_to_fit!(
       MemeCaptainWeb::Config::ThumbSide,
       MemeCaptainWeb::Config::ThumbSide)
 
