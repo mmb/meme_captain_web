@@ -6,7 +6,9 @@ class GendImagesController < ApplicationController
   end
 
   def index
-    @gend_images = current_user.gend_images
+    # Sort in database?
+    @gend_images = current_user.gend_images.sort {
+      |a,b| b.updated_at <=> a.updated_at }
   end
 
   def create
