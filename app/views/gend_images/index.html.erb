@@ -1,6 +1,1 @@
-<% @gend_images.each do |gi| %>
-<%= link_to image_tag(url_for(gi.gend_thumb)),
-  :controller => :gend_images,
-  :action => :show,
-  :id => gi.id_hash %>
-<% end %>
+<%= render @gend_images %>
