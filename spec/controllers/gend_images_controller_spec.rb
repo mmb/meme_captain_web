@@ -9,7 +9,7 @@ describe GendImagesController do
   describe "GET 'new'" do
     it "returns http success" do
       SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
-        src_image)
+          src_image)
       get 'new', :src => 'abc'
       expect(response).to be_success
     end
@@ -40,27 +40,25 @@ describe GendImagesController do
 
       before :each do
         SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
-          src_image)
+            src_image)
       end
 
       it 'saves the new generated image to the database' do
         expect {
           post :create,
-            gend_image: { :src_image_id => 'abc' },
-            :text1 => 'hello',
-            :text2 => 'world'
-        }.to change{GendImage.count}.by(1)
+               gend_image: {:src_image_id => 'abc'},
+               :text1 => 'hello',
+               :text2 => 'world'
+        }.to change { GendImage.count }.by(1)
       end
 
-      it 'redirects to show the new image' do
-        post :create, gend_image: {
-          :src_image_id => 'abc',
-          :text1 => 'hello',
-          :text2 => 'world'
-        }
+      it 'redirects to the index' do
+        post :create,
+             gend_image: {:src_image_id => 'abc'},
+             :text1 => 'hello',
+             :text2 => 'world'
 
-        expect(response).to redirect_to :action => :show,
-          :id => assigns(:gend_image).id_hash
+        expect(response).to redirect_to :action => :index
       end
 
     end
@@ -69,7 +67,7 @@ describe GendImagesController do
 
       it 'raises record not found' do
         expect {
-          post :create, gend_image: { :src_image_id => 'abc' }
+          post :create, gend_image: {:src_image_id => 'abc'}
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 

@@ -1,6 +1,7 @@
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
+  include HasPostProcessConcern
 
   attr_accessible :image, :url
 
@@ -10,21 +11,24 @@ class SrcImage < ActiveRecord::Base
   has_one :src_thumb
   has_many :gend_images
 
-  after_commit :create_thumbnail_job
-
   protected
 
-  def create_thumbnail_job
-    self.delay.create_thumbnail  unless src_thumb
-  end
+  def post_process
+    img = magick_image
 
-  def create_thumbnail
-    thumb_image = Magick::Image.from_blob(image)[0]
-    thumb_image.resize_to_fill!(
-      MemeCaptainWeb::Config::ThumbSide,
-      MemeCaptainWeb::Config::ThumbSide)
+    # Resize large images.
+    if width > MemeCaptainWeb::Config::SourceImageSide or
+        height > MemeCaptainWeb::Config::SourceImageSide
+      img.resize_to_fit!(MemeCaptainWeb::Config::SourceImageSide)
+      self.image = img.to_blob
+    end
 
-    self.src_thumb = SrcThumb.new(:image => thumb_image.to_blob)
+    # Generate thumbnail.
+    img.resize_to_fill!(
+        MemeCaptainWeb::Config::ThumbSide,
+        MemeCaptainWeb::Config::ThumbSide)
+
+    self.src_thumb = SrcThumb.new(:image => img.to_blob)
   end
 
 end

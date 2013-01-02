@@ -5,7 +5,6 @@ describe GendImage do
   it { should_not allow_mass_assignment_of :id_hash }
   it { should validate_uniqueness_of :id_hash }
 
-  it { should validate_presence_of :image }
   it { should allow_mass_assignment_of :image }
 
   it { should allow_mass_assignment_of :src_image_id }
@@ -14,7 +13,7 @@ describe GendImage do
 
   it { should have_one :gend_thumb }
 
-  it { pending; should have_many :caption_text }
+  it { should have_many :captions }
 
   it 'should generate a unique id hash' do
     GendImage.any_instance.stub(:gen_id_hash).and_return 'some_id_hash'

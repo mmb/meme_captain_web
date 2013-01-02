@@ -3,6 +3,8 @@
 <%= image_tag(url_for(@gend_image.src_image.src_thumb)) %>
 
 <%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
+  <%= f.error_messages %>
+
   <%= f.label :src_image_id %>
   <%= f.text_field :src_image_id, :value => @gend_image.src_image.id_hash %>
 

@@ -1,23 +1,22 @@
 class GendImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
+  include HasPostProcessConcern
 
   attr_accessible :image, :src_image_id
 
-  validates :content_type, :height, :image, :size, :width, presence: true
-
   belongs_to :src_image
   has_one :gend_thumb
-
-  after_commit :create_thumbnail_job
+  has_many :captions
 
   protected
 
-  def create_thumbnail_job
-    self.delay.create_thumbnail unless gend_thumb
-  end
+  def post_process
+    self.image = MemeCaptain.meme_top_bottom(
+        src_image.image,
+        captions[0].text, captions[1].text,
+        :font => captions[0].font).to_blob
 
-  def create_thumbnail
     thumb_image = magick_image
     thumb_image.resize_to_fit!(
         MemeCaptainWeb::Config::ThumbSide,

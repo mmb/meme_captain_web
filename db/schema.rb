@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222222948) do
+ActiveRecord::Schema.define(:version => 20130102044216) do
+
+  create_table "captions", :force => true do |t|
+    t.string   "text"
+    t.string   "font"
+    t.float    "top_left_x_pct"
+    t.float    "top_left_y_pct"
+    t.float    "width_pct"
+    t.float    "height_pct"
+    t.integer  "gend_image_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "captions", ["gend_image_id"], :name => "index_captions_on_gend_image_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -32,13 +46,14 @@ ActiveRecord::Schema.define(:version => 20121222222948) do
   create_table "gend_images", :force => true do |t|
     t.string   "id_hash"
     t.integer  "src_image_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "content_type"
     t.binary   "image"
     t.integer  "height"
     t.integer  "size"
     t.integer  "width"
+    t.boolean  "work_in_progress", :default => true
   end
 
   create_table "gend_thumbs", :force => true do |t|
@@ -73,8 +88,9 @@ ActiveRecord::Schema.define(:version => 20121222222948) do
     t.string   "content_type"
     t.binary   "image"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "work_in_progress", :default => true
   end
 
   create_table "src_thumbs", :force => true do |t|

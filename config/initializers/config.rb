@@ -8,6 +8,9 @@ module MemeCaptainWeb
     # Font to use for memes.
     Font = 'Impact-Regular'
 
+    # Maximum size of any side for source images.
+    SourceImageSide = 800
+
   end
 
 end

@@ -8,7 +8,7 @@ class GendImagesController < ApplicationController
   def index
     # Sort in database?
     @gend_images = current_user.gend_images.sort {
-      |a,b| b.updated_at <=> a.updated_at }
+        |a, b| b.updated_at <=> a.updated_at }
   end
 
   def create
@@ -17,12 +17,11 @@ class GendImagesController < ApplicationController
     @gend_image = GendImage.new
     @gend_image.src_image = src_image
 
-    @gend_image.image = MemeCaptain.meme_top_bottom(src_image.image,
-      params[:text1], params[:text2],
-      :font => MemeCaptainWeb::Config::Font).to_blob
+    @gend_image.captions << Caption.new(:text => params[:text1], :font => MemeCaptainWeb::Config::Font)
+    @gend_image.captions << Caption.new(:text => params[:text2], :font => MemeCaptainWeb::Config::Font)
 
     if @gend_image.save
-      redirect_to :action => :show, :id => @gend_image.id_hash
+      redirect_to :action => :index
     else
       render :new
     end
