@@ -14,14 +14,14 @@ class GendImage < ActiveRecord::Base
   protected
 
   def create_thumbnail_job
-    self.delay.create_thumbnail  unless gend_thumb
+    self.delay.create_thumbnail unless gend_thumb
   end
 
   def create_thumbnail
-    thumb_image = Magick::Image.from_blob(image)[0]
+    thumb_image = magick_image
     thumb_image.resize_to_fit!(
-      MemeCaptainWeb::Config::ThumbSide,
-      MemeCaptainWeb::Config::ThumbSide)
+        MemeCaptainWeb::Config::ThumbSide,
+        MemeCaptainWeb::Config::ThumbSide)
 
     self.gend_thumb = GendThumb.new(:image => thumb_image.to_blob)
   end

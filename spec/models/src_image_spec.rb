@@ -52,4 +52,15 @@ describe SrcImage do
   it 'generates a thumbnail'
   # figure out how to use run a delayed job in spec
 
+  context 'generating a Magick::Image from its data' do
+
+    subject {
+      SrcImage.new(FactoryGirl.attributes_for(:src_image))
+    }
+
+    its(:'magick_image.columns') { should == 399 }
+    its(:'magick_image.rows') { should == 399 }
+
+  end
+
 end
