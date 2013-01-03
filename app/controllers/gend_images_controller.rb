@@ -3,6 +3,7 @@ class GendImagesController < ApplicationController
   def new
     @gend_image = GendImage.new
     @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
+    2.times { @gend_image.captions.build }
   end
 
   def index
@@ -14,11 +15,8 @@ class GendImagesController < ApplicationController
   def create
     src_image = SrcImage.find_by_id_hash!(params[:gend_image][:src_image_id])
 
-    @gend_image = GendImage.new
+    @gend_image = GendImage.new(params[:gend_image])
     @gend_image.src_image = src_image
-
-    @gend_image.captions << Caption.new(:text => params[:text1], :font => MemeCaptainWeb::Config::Font)
-    @gend_image.captions << Caption.new(:text => params[:text2], :font => MemeCaptainWeb::Config::Font)
 
     if @gend_image.save
       redirect_to :action => :index

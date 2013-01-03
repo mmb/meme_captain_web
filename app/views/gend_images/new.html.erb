@@ -2,17 +2,18 @@
 
 <%= image_tag(url_for(@gend_image.src_image.src_thumb)) %>
 
-<%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
-  <%= f.error_messages %>
+<%= form_for @gend_image, :url => {:action => 'create'} do |f| %>
+    <%= f.error_messages %>
 
-  <%= f.label :src_image_id %>
-  <%= f.text_field :src_image_id, :value => @gend_image.src_image.id_hash %>
+    <%= f.label :src_image_id %>
+    <%= f.text_field :src_image_id, :value => @gend_image.src_image.id_hash %>
 
-  <%= label_tag :text1, 'Text 1' %>
-  <%= text_field_tag :text1 %>
+    <%= f.fields_for :captions do |cf| %>
+        <%= cf.label :text %>
+        <%= cf.text_field :text %>
 
-  <%= label_tag :text2, 'Text 2' %>
-  <%= text_field_tag :text2 %>
+        <%= cf.hidden_field :font, value: "Impact-Regular" %>
+    <% end %>
 
-  <%= f.submit 'Create' %>
+    <%= f.submit 'Create' %>
 <% end %>
