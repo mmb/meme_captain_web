@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102044216) do
+ActiveRecord::Schema.define(:version => 20130105065853) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -92,6 +92,22 @@ ActiveRecord::Schema.define(:version => 20130102044216) do
     t.datetime "updated_at",                         :null => false
     t.boolean  "work_in_progress", :default => true
   end
+
+  create_table "src_images_src_sets", :id => false, :force => true do |t|
+    t.integer "src_image_id"
+    t.integer "src_set_id"
+  end
+
+  add_index "src_images_src_sets", ["src_image_id", "src_set_id"], :name => "index_src_images_src_sets_on_src_image_id_and_src_set_id", :unique => true
+
+  create_table "src_sets", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "src_sets", ["user_id"], :name => "index_src_sets_on_user_id"
 
   create_table "src_thumbs", :force => true do |t|
     t.integer  "src_image_id"

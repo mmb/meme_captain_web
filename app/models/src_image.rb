@@ -10,6 +10,7 @@ class SrcImage < ActiveRecord::Base
   belongs_to :user
   has_one :src_thumb
   has_many :gend_images
+  has_and_belongs_to_many :src_sets
 
   protected
 

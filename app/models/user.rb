@@ -7,5 +7,6 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :src_images
+  has_many :src_sets
   has_many :gend_images, :through => :src_images
 end

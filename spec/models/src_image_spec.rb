@@ -26,6 +26,7 @@ describe SrcImage do
   it { should belong_to :user }
   it { should have_one :src_thumb }
   it { should have_many :gend_images }
+  it { should have_and_belong_to_many :src_sets }
 
   it 'should generate a unique id hash' do
     SrcImage.any_instance.stub(:gen_id_hash).and_return 'some_id_hash'

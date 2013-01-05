@@ -15,5 +15,6 @@ describe User do
 
   it { should have_many(:gend_images).through(:src_images) }
   it { should have_many :src_images }
+  it { should have_many :src_sets }
 
 end
