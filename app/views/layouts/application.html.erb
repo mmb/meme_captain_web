@@ -2,39 +2,44 @@
 <html>
 <head>
   <title>Meme Captain meme generator</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-  <div class="container">
-    <img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcwAAAAyAgMAAACsWgPIAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wBHwQoJY1iyrwAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAAWJLR0QB/wIt3gAAAHpJREFUWIXt1zESgCAMRNE03s9mG+9ns6e0EaKCqDOWf4sUJOHREvqciOn7Us0cEZiYmJhnc7HtVbJtS5LsVRo09DScZzmSG5iYmJit2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xMTMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC" alt="Meme Captain" width="460" height="50" />
+<div class="container">
 
-    <p>
-      <% if current_user %>
-      <%= link_to "Logout #{current_user.email}", session_path, :method => :delete %>
-      <% else %>
-      <%= link_to "Login", new_session_path %>
-      |
-      <%= link_to "Register", new_user_path %>
-      <% end %>
-    </p>
+  <div class="page-header">
+    <img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcwAAAAyAgMAAACsWgPIAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wBHwQoJY1iyrwAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAAWJLR0QB/wIt3gAAAHpJREFUWIXt1zESgCAMRNE03s9mG+9ns6e0EaKCqDOWf4sUJOHREvqciOn7Us0cEZiYmJhnc7HtVbJtS5LsVRo09DScZzmSG5iYmJit2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xMTMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC" alt="Meme Captain" width="460" height="50"/>
 
-    <% if flash[:error] -%>
-    <div class="alert alert-error">
-      <%=h flash[:error] %>
+    <div class="pull-right">
+      <p>
+        <% if current_user %>
+            <%= link_to "Logout #{current_user.email}", session_path, :method => :delete %>
+        <% else %>
+            <%= link_to "Login", new_session_path %>
+            |
+            <%= link_to "Register", new_user_path %>
+        <% end %>
+      </p>
     </div>
-    <% end -%>
-
-    <% if flash[:notice] -%>
-    <div class="alert alert-info">
-      <%=h flash[:notice] %>
-    </div>
-    <% end -%>
-
-    <%= yield %>
-
   </div>
+
+  <% if flash[:error] -%>
+      <div class="alert alert-error">
+        <%= h flash[:error] %>
+      </div>
+  <% end -%>
+
+  <% if flash[:notice] -%>
+      <div class="alert alert-info">
+        <%= h flash[:notice] %>
+      </div>
+  <% end -%>
+
+  <%= yield %>
+
+</div>
 
 <%= javascript_include_tag "application" %>
 
