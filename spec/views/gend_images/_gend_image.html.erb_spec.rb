@@ -19,15 +19,15 @@ describe 'gend_images/_gend_image.html' do
       expect(rendered).to match(gend_thumb.id.to_s)
     end
 
-  end
+    context 'the image has not been processed yet' do
 
-  context 'the image has not been processed yet' do
+      let(:gend_image) { mock_model(GendImage, :work_in_progress => true) }
 
-    let(:gend_image) { mock_model(GendImage, :work_in_progress => true) }
+      it 'shows as under construction' do
+        subject
+        expect(rendered).to match('Under Construction')
+      end
 
-    it 'shows as under construction' do
-      subject
-      expect(rendered).to match('Under Construction')
     end
 
   end
