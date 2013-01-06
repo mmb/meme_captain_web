@@ -53,4 +53,5 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.0'
   gem 'shoulda'
   gem 'webrat'
+  gem 'jasmine'
 end
