@@ -25,9 +25,9 @@ describe 'gend_images/_gend_image.html' do
 
     let(:gend_image) { mock_model(GendImage, :work_in_progress => true) }
 
-    it 'shows the under construction image' do
+    it 'shows as under construction' do
       subject
-      expect(rendered).to match('under_construction')
+      expect(rendered).to match('Under Construction')
     end
 
   end

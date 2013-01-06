@@ -1,3 +1,21 @@
-<%= render @src_images %>
+<ul class="thumbnails">
+  <% @src_images.each do |si| %>
+      <li>
+        <div class="thumbnail">
+          <%= render :partial => si %>
+        </div>
+      </li>
+  <% end %>
+</ul>
 
-<%= render @gend_images %>
+<ul class="thumbnails">
+  <% @gend_images.each do |gi| %>
+      <li>
+        <div class="thumbnail">
+          <%= render :partial => gi %>
+        </div>
+      </li>
+  <% end %>
+</ul>
+
+

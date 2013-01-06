@@ -1,7 +1,7 @@
 <% if gend_image.work_in_progress %>
-    <%= image_tag 'under_construction.png' %>
+    <%= render :partial => 'application/under_construction' %>
 <% else %>
-    <%= link_to thumbnail(gend_image.gend_thumb),
+    <%= link_to image_tag(url_for(gend_image.gend_thumb)),
                 :controller => :gend_images,
                 :action => :show,
                 :id => gend_image.id_hash %>

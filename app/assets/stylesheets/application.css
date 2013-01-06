@@ -11,7 +11,3 @@
  *= require_self
  *= require_tree .
  */
-
-.thumb {
-    margin: 3px 5px 3px 5px;
-}
