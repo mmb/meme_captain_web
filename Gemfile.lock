@@ -195,6 +195,7 @@ DEPENDENCIES
   meme_captain
   rails (= 3.2.9)
   rmagick
+  rmagick4j
   rspec-rails (~> 2.0)
   sass-rails (~> 3.2.3)
   shoulda
