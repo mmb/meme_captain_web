@@ -1,16 +1,18 @@
 <h1>Sign Up</h1>
 
-<%= form_for @user, :url => { :action => 'create' } do |f| %>
-  <%= f.error_messages %>
+<%= form_for @user, :url => {:action => 'create'} do |f| %>
+    <%= f.error_messages %>
 
-  <%= f.label :email %>
-  <%= f.text_field :email %>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
 
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
 
-  <%= f.submit 'Sign Up' %>
+    <p>
+      <%= f.submit 'Sign Up', :class => 'btn' %>
+    </p>
 <% end %>

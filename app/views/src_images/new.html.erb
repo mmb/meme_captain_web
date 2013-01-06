@@ -1,7 +1,9 @@
 <h1>New Source Image</h1>
 
-<%= form_for @src_image, :url => { :action => 'create' } do |f| %>
-  <%= f.file_field :image %>
+<%= form_for @src_image, :url => {:action => 'create'} do |f| %>
+    <%= f.file_field :image %>
 
-  <%= f.submit 'Create' %>
+    <p>
+      <%= f.submit 'Create', :class => 'btn' %>
+    </p>
 <% end %>
