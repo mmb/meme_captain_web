@@ -19,12 +19,11 @@ class GendImage < ActiveRecord::Base
         captions[0].text, captions[1] ? captions[1].text : nil,
         :font => captions[0].font).to_blob
 
-    thumb_image = magick_image
-    thumb_image.resize_to_fit!(
-        MemeCaptainWeb::Config::ThumbSide,
-        MemeCaptainWeb::Config::ThumbSide)
+    thumb_img = magick_image_list
 
-    self.gend_thumb = GendThumb.new(:image => thumb_image.to_blob)
+    thumb_img.resize_to_fit_anim!(MemeCaptainWeb::Config::ThumbSide)
+
+    self.gend_thumb = GendThumb.new(:image => thumb_img.to_blob)
   end
 
 end

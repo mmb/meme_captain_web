@@ -9,7 +9,7 @@ module HasImageConcern
 
   def set_derived_image_fields
     if image
-      img = magick_image
+      img = magick_image_list
 
       self.content_type = img.content_type
       self.height = img.rows
@@ -18,8 +18,8 @@ module HasImageConcern
     end
   end
 
-  def magick_image
-    Magick::Image.from_blob(image)[0]
+  def magick_image_list
+    Magick::ImageList.new.from_blob(image)
   end
 
 end

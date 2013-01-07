@@ -15,21 +15,22 @@ class SrcImage < ActiveRecord::Base
   protected
 
   def post_process
-    img = magick_image
+    img = magick_image_list
 
-    # Resize large images.
     if width > MemeCaptainWeb::Config::SourceImageSide or
         height > MemeCaptainWeb::Config::SourceImageSide
-      img.resize_to_fit!(MemeCaptainWeb::Config::SourceImageSide)
-      self.image = img.to_blob
+      img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
     end
 
-    # Generate thumbnail.
-    img.resize_to_fill!(
-        MemeCaptainWeb::Config::ThumbSide,
-        MemeCaptainWeb::Config::ThumbSide)
+    thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::ThumbSide)
 
-    self.src_thumb = SrcThumb.new(:image => img.to_blob)
+    watermark_img = Magick::ImageList.new(Rails.root + 'app/assets/images/watermark.png')
+    img.extend MemeCaptain::ImageList::Watermark
+    img.watermark_mc watermark_img
+
+    self.image = img.to_blob
+
+    self.src_thumb = SrcThumb.new(:image => thumb_img.to_blob)
   end
 
 end

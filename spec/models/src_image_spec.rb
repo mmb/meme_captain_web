@@ -59,8 +59,8 @@ describe SrcImage do
       SrcImage.new(FactoryGirl.attributes_for(:src_image))
     }
 
-    its(:'magick_image.columns') { should == 399 }
-    its(:'magick_image.rows') { should == 399 }
+    its(:'magick_image_list.columns') { should == 399 }
+    its(:'magick_image_list.rows') { should == 399 }
 
   end
 
