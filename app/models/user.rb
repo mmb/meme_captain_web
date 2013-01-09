@@ -9,4 +9,9 @@ class User < ActiveRecord::Base
   has_many :src_images
   has_many :src_sets
   has_many :gend_images, :through => :src_images
+
+  def owns?(o)
+    o.user == self
+  end
+
 end
