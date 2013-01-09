@@ -25,20 +25,20 @@ describe SrcImagesController do
       it 'saves the new source image to the database' do
         expect {
           post :create, src_image: {
-            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
-        }.to change{SrcImage.count}.by(1)
+              :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
+        }.to change { SrcImage.count }.by(1)
       end
 
       it 'redirects to the index page' do
         post :create, src_image: {
-          :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
 
         expect(response).to redirect_to :action => :index
       end
 
       it 'informs the user of success with flash' do
         post :create, src_image: {
-          :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
 
         expect(flash[:notice]).to eq('Source image created.')
       end
@@ -49,12 +49,12 @@ describe SrcImagesController do
 
       it 'does not save the new source image in the database' do
         expect {
-          post :create, src_image: { :image => nil }
-        }.to_not change{SrcImage.count}
+          post :create, src_image: {:image => nil}
+        }.to_not change { SrcImage.count }
       end
 
       it 're-renders the new template' do
-        post :create, src_image: { :image => nil }
+        post :create, src_image: {:image => nil}
 
         expect(response).to render_template('new')
       end
@@ -104,6 +104,43 @@ describe SrcImagesController do
       it 'raises record not found' do
         expect {
           get 'show', :id => 'abc'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+  end
+
+  describe "DELETE 'destroy'" do
+
+    context 'when the id is found' do
+
+      subject {
+        post :create, src_image: {
+            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
+        delete :destroy, :id => assigns(:src_image).id_hash
+      }
+
+      it 'marks the record as deleted in the database' do
+        subject
+
+        expect {
+          SrcImage.find_by_id_hash!(assigns(:src_image).id_hash).is_deleted?
+        }.to be_true
+      end
+
+      it 'redirects to the index page' do
+        subject
+        expect(response).to redirect_to :action => :index
+      end
+
+    end
+
+    context 'when the id is not found' do
+
+      it 'raises record not found' do
+        expect {
+          delete :destroy, :id => 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 

@@ -7,7 +7,7 @@ class SrcImagesController < ApplicationController
   def index
     # Sort in database?
     @src_images = current_user.src_images.sort {
-      |a,b| b.updated_at <=> a.updated_at }
+        |a, b| b.updated_at <=> a.updated_at }
   end
 
   def create
@@ -19,8 +19,8 @@ class SrcImagesController < ApplicationController
     end
 
     if @src_image.save
-      redirect_to({ :action => :index }, {
-        :notice => 'Source image created.' })
+      redirect_to({:action => :index}, {
+          :notice => 'Source image created.'})
     else
       render :new
     end
@@ -30,6 +30,14 @@ class SrcImagesController < ApplicationController
     src_image = SrcImage.find_by_id_hash!(params[:id])
 
     render :text => src_image.image, :content_type => src_image.content_type
+  end
+
+  def destroy
+    src_image = SrcImage.find_by_id_hash!(params[:id])
+    src_image.is_deleted = true
+    src_image.save!
+
+    redirect_to :action => :index
   end
 
 end

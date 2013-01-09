@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105065853) do
+ActiveRecord::Schema.define(:version => 20130109080014) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -88,9 +88,10 @@ ActiveRecord::Schema.define(:version => 20130105065853) do
     t.string   "content_type"
     t.binary   "image"
     t.integer  "user_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.boolean  "work_in_progress", :default => true
+    t.boolean  "is_deleted",       :default => false
   end
 
   create_table "src_images_src_sets", :id => false, :force => true do |t|
