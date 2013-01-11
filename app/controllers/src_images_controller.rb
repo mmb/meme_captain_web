@@ -5,9 +5,7 @@ class SrcImagesController < ApplicationController
   end
 
   def index
-    # Sort in database?
-    @src_images = current_user.src_images.sort {
-        |a, b| b.updated_at <=> a.updated_at }
+    @src_images = SrcImage.owned_by(current_user).most_recent(8)
   end
 
   def create

@@ -11,11 +11,27 @@ describe SrcImagesController do
 
   describe "GET 'index'" do
     it "returns http success" do
-      controller.stub_chain(:current_user, :src_images) { [] }
+      controller.stub(:current_user => stub_model(User, :src_images => []))
 
       get 'index'
       expect(response).to be_success
     end
+
+    it 'shows the images sorted by reverse updated time' do
+      user = User.create(FactoryGirl.attributes_for(:user))
+      3.times { user.src_images.build(FactoryGirl.attributes_for(:src_image)).save! }
+
+      controller.stub(:current_user => user)
+
+      get :index
+
+      src_images = assigns(:src_images)
+
+      expect(
+          src_images[0].updated_at >= src_images[1].updated_at &&
+              src_images[1].updated_at >= src_images[2].updated_at).to be_true
+    end
+
   end
 
   describe "POST 'create'" do
