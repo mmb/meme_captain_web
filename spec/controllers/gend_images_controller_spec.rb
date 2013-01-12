@@ -18,7 +18,7 @@ describe GendImagesController do
   describe "GET 'index'" do
 
     before :each do
-      controller.stub_chain(:current_user, :gend_images) { [] }
+      controller.stub(:current_user => stub_model(User, :gend_images => []))
     end
 
     subject { get 'index' }
@@ -32,6 +32,22 @@ describe GendImagesController do
       subject
       expect(response).to be_success
     end
+  end
+
+  it 'shows the images sorted by reverse updated time' do
+    user = FactoryGirl.create(:user)
+    src_image = FactoryGirl.create(:src_image, :user => user)
+    3.times { FactoryGirl.create(:gend_image, :src_image => src_image) }
+
+    controller.stub(:current_user => user)
+
+    get :index
+
+    gend_images = assigns(:gend_images)
+
+    expect(
+        gend_images[0].updated_at >= gend_images[1].updated_at &&
+            gend_images[1].updated_at >= gend_images[2].updated_at).to be_true
   end
 
   describe "POST 'create'" do
