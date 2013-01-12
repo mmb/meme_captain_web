@@ -18,8 +18,8 @@ describe SrcImagesController do
     end
 
     it 'shows the images sorted by reverse updated time' do
-      user = User.create(FactoryGirl.attributes_for(:user))
-      3.times { user.src_images.build(FactoryGirl.attributes_for(:src_image)).save! }
+      user = FactoryGirl.create(:user)
+      3.times { FactoryGirl.create(:src_image, :user => user) }
 
       controller.stub(:current_user => user)
 
