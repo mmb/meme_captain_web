@@ -7,6 +7,7 @@ describe GendImagesController do
   }
 
   describe "GET 'new'" do
+
     it "returns http success" do
       SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
           src_image)
@@ -17,37 +18,44 @@ describe GendImagesController do
 
   describe "GET 'index'" do
 
-    before :each do
-      controller.stub(:current_user => stub_model(User, :gend_images => []))
+    let(:user) { FactoryGirl.create(:user) }
+    let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
+
+    before(:each) do
+      controller.stub(:current_user => user)
     end
 
-    subject { get 'index' }
-
-    it 'assigns the images' do
-      subject
-      expect(assigns(:gend_images)).to eq []
-    end
+    subject {
+      get :index
+    }
 
     it "returns http success" do
       subject
+
       expect(response).to be_success
     end
-  end
 
-  it 'shows the images sorted by reverse updated time' do
-    user = FactoryGirl.create(:user)
-    src_image = FactoryGirl.create(:src_image, :user => user)
-    3.times { FactoryGirl.create(:gend_image, :src_image => src_image) }
+    it 'shows the images sorted by reverse updated time' do
+      3.times { FactoryGirl.create(:gend_image, :src_image => src_image) }
 
-    controller.stub(:current_user => user)
+      subject
 
-    get :index
+      gend_images = assigns(:gend_images)
 
-    gend_images = assigns(:gend_images)
+      expect(
+          gend_images[0].updated_at >= gend_images[1].updated_at &&
+              gend_images[1].updated_at >= gend_images[2].updated_at).to be_true
+    end
 
-    expect(
-        gend_images[0].updated_at >= gend_images[1].updated_at &&
-            gend_images[1].updated_at >= gend_images[2].updated_at).to be_true
+    it 'does not show deleted images' do
+      FactoryGirl.create(:gend_image, :src_image => src_image)
+      FactoryGirl.create(:gend_image, :src_image => src_image, :is_deleted => true)
+
+      subject
+
+      expect(assigns(:gend_images).size).to eq 1
+    end
+
   end
 
   describe "POST 'create'" do

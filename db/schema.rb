@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109080014) do
+ActiveRecord::Schema.define(:version => 20130113054632) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -46,14 +46,15 @@ ActiveRecord::Schema.define(:version => 20130109080014) do
   create_table "gend_images", :force => true do |t|
     t.string   "id_hash"
     t.integer  "src_image_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "content_type"
     t.binary   "image"
     t.integer  "height"
     t.integer  "size"
     t.integer  "width"
     t.boolean  "work_in_progress", :default => true
+    t.boolean  "is_deleted",       :default => false
   end
 
   create_table "gend_thumbs", :force => true do |t|
