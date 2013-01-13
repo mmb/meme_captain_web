@@ -10,26 +10,42 @@ describe SrcImagesController do
   end
 
   describe "GET 'index'" do
-    it "returns http success" do
-      controller.stub(:current_user => stub_model(User, :src_images => []))
 
-      get 'index'
+    let(:user) { FactoryGirl.create(:user) }
+
+    before(:each) do
+      controller.stub(:current_user => user)
+    end
+
+    subject {
+      get :index
+    }
+
+    it "returns http success" do
+      subject
+
       expect(response).to be_success
     end
 
     it 'shows the images sorted by reverse updated time' do
-      user = FactoryGirl.create(:user)
       3.times { FactoryGirl.create(:src_image, :user => user) }
 
-      controller.stub(:current_user => user)
-
-      get :index
+      subject
 
       src_images = assigns(:src_images)
 
       expect(
           src_images[0].updated_at >= src_images[1].updated_at &&
               src_images[1].updated_at >= src_images[2].updated_at).to be_true
+    end
+
+    it 'does not show deleted images' do
+      FactoryGirl.create(:src_image, :user => user)
+      FactoryGirl.create(:src_image, :user => user, :is_deleted => true)
+
+      subject
+
+      expect(assigns(:src_images).size).to eq 1
     end
 
   end
