@@ -29,4 +29,18 @@ class GendImagesController < ApplicationController
     render :text => gend_image.image, :content_type => gend_image.content_type
   end
 
+  def destroy
+    gend_image = GendImage.find_by_id_hash!(params[:id])
+
+    if gend_image.user == current_user
+      gend_image.is_deleted = true
+      gend_image.save!
+
+      redirect_to :action => :index
+    else
+      render :status => :forbidden, :text => 'Forbidden'
+    end
+
+  end
+
 end

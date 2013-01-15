@@ -31,4 +31,6 @@ class GendImage < ActiveRecord::Base
   scope :owned_by, lambda { |user| joins(:src_image).where(:src_images => {:user_id => user.id}) }
 
   scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
+
+  delegate :user, :to => :src_image
 end

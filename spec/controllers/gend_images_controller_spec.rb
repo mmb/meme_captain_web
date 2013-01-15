@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe GendImagesController do
 
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
+
   let(:src_image) {
     mock_model(SrcImage, FactoryGirl.attributes_for(:src_image))
   }
@@ -18,7 +21,6 @@ describe GendImagesController do
 
   describe "GET 'index'" do
 
-    let(:user) { FactoryGirl.create(:user) }
     let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
 
     before(:each) do
@@ -139,6 +141,62 @@ describe GendImagesController do
         expect {
           get 'show', :id => 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+  end
+
+  describe "DELETE 'destroy'" do
+
+    let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
+    let(:src_image2) { FactoryGirl.create(:src_image, :user => user2) }
+
+    before(:each) do
+      controller.stub(:current_user => user)
+    end
+
+    context 'when the id is found' do
+
+      let(:gend_image) { FactoryGirl.create(:gend_image, :src_image => src_image) }
+
+      subject {
+        delete :destroy, :id => gend_image.id_hash
+      }
+
+      it 'marks the record as deleted in the database' do
+        subject
+
+        expect {
+          GendImage.find_by_id_hash!(gend_image.id_hash).is_deleted?
+        }.to be_true
+      end
+
+      it 'redirects to the index page' do
+        subject
+        expect(response).to redirect_to :action => :index
+      end
+
+    end
+
+    context 'when the id is not found' do
+
+      it 'raises record not found' do
+        expect {
+          delete :destroy, :id => 'abc'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the image is owned by another user' do
+
+      it "doesn't allow it to be deleted" do
+        gend_image = FactoryGirl.create(:gend_image, :src_image => src_image2)
+
+        delete :destroy, :id => gend_image.id_hash
+
+        expect(response).to be_forbidden
       end
 
     end
