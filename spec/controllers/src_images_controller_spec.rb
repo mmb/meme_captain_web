@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe SrcImagesController do
 
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
+
   describe "GET 'new'" do
     it "returns http success" do
       get 'new'
@@ -10,8 +13,6 @@ describe SrcImagesController do
   end
 
   describe "GET 'index'" do
-
-    let(:user) { FactoryGirl.create(:user) }
 
     before(:each) do
       controller.stub(:current_user => user)
@@ -145,6 +146,10 @@ describe SrcImagesController do
 
   describe "DELETE 'destroy'" do
 
+    before(:each) do
+      controller.stub(:current_user => user)
+    end
+
     context 'when the id is found' do
 
       subject {
@@ -174,6 +179,18 @@ describe SrcImagesController do
         expect {
           delete :destroy, :id => 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the image is owned by another user' do
+
+      it "doesn't allow it to be deleted" do
+        src_image = FactoryGirl.create(:src_image, :user => user2)
+
+        delete :destroy, :id => src_image.id_hash
+
+        expect(response).to be_forbidden
       end
 
     end

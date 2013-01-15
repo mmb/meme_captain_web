@@ -32,10 +32,16 @@ class SrcImagesController < ApplicationController
 
   def destroy
     src_image = SrcImage.find_by_id_hash!(params[:id])
-    src_image.is_deleted = true
-    src_image.save!
 
-    redirect_to :action => :index
+    if src_image.user == current_user
+      src_image.is_deleted = true
+      src_image.save!
+
+      redirect_to :action => :index
+    else
+      render :status => :forbidden, :text => 'Forbidden'
+    end
+
   end
 
 end
