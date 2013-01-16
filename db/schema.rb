@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113054632) do
+ActiveRecord::Schema.define(:version => 20130116055326) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20130113054632) do
     t.boolean  "is_deleted",       :default => false
   end
 
+  add_index "gend_images", ["is_deleted"], :name => "index_gend_images_on_is_deleted"
+
   create_table "gend_thumbs", :force => true do |t|
     t.string   "content_type"
     t.integer  "gend_image_id"
@@ -94,6 +96,8 @@ ActiveRecord::Schema.define(:version => 20130113054632) do
     t.boolean  "work_in_progress", :default => true
     t.boolean  "is_deleted",       :default => false
   end
+
+  add_index "src_images", ["is_deleted"], :name => "index_src_images_on_is_deleted"
 
   create_table "src_images_src_sets", :id => false, :force => true do |t|
     t.integer "src_image_id"
