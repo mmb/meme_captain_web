@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :src_set do
-    name "MyString"
+    sequence(:name) { |n| "set#{n}" }
     user nil
   end
 end
