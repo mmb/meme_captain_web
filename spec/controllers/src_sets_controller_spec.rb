@@ -89,4 +89,50 @@ describe SrcSetsController do
 
   end
 
+  describe "PUT 'update'" do
+
+    let(:src_image) { FactoryGirl.create(:src_image) }
+    let(:src_image2) { FactoryGirl.create(:src_image) }
+    let(:src_set) { FactoryGirl.create(:src_set) }
+
+    context 'adding source images' do
+
+      subject { put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id] }
+
+      it 'adds source images to the set' do
+        expect {
+          subject
+          src_set.reload
+        }.to change { src_set.src_images.size }.by(2)
+      end
+
+    end
+
+    context 'deleting source images' do
+
+      subject { put :update, :id => src_set.id, :delete_src_images => [src_image.id, src_image2.id] }
+
+      it 'deletes source images from the set' do
+        put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id]
+
+        expect {
+          subject
+          src_set.reload
+        }.to change { src_set.src_images.size }.by(-2)
+      end
+
+    end
+
+    context 'changing the name' do
+
+      subject {
+        put :update, :id => src_set.id, :src_set => {:name => 'newname'}
+        src_set.reload
+      }
+
+      its(:name) { should == 'newname' }
+
+    end
+  end
+
 end
