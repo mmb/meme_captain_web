@@ -3,6 +3,7 @@ require 'spec_helper'
 describe SrcSetsController do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:user2) { FactoryGirl.create(:user) }
 
   before(:each) do
     controller.stub(:current_user => user)
@@ -93,7 +94,7 @@ describe SrcSetsController do
 
     let(:src_image) { FactoryGirl.create(:src_image) }
     let(:src_image2) { FactoryGirl.create(:src_image) }
-    let(:src_set) { FactoryGirl.create(:src_set) }
+    let(:src_set) { FactoryGirl.create(:src_set, :user => user) }
 
     context 'adding source images' do
 
@@ -123,7 +124,7 @@ describe SrcSetsController do
 
     end
 
-    context 'changing the name' do
+    context ' changing the name ' do
 
       subject {
         put :update, :id => src_set.id, :src_set => {:name => 'newname'}
@@ -133,6 +134,19 @@ describe SrcSetsController do
       its(:name) { should == 'newname' }
 
     end
+
+    context 'when the source set is owned by another user' do
+
+      it "doesn't allow it to be updated" do
+        src_set = FactoryGirl.create(:src_set, :user => user2)
+
+        put :update, :id => src_set.id, :src_set => {:name => 'newname'}
+
+        expect(response).to be_forbidden
+      end
+
+    end
+
   end
 
 end

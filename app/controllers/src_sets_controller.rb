@@ -24,16 +24,19 @@ class SrcSetsController < ApplicationController
   def update
     @src_set = SrcSet.find(params[:id])
 
-    @src_set.src_images << SrcImage.find(params[:add_src_images]) if params[:add_src_images]
+    if @src_set.user == current_user
+      @src_set.src_images << SrcImage.find(params[:add_src_images]) if params[:add_src_images]
 
-    @src_set.src_images.delete(SrcImage.find(params[:delete_src_images])) if params[:delete_src_images]
+      @src_set.src_images.delete(SrcImage.find(params[:delete_src_images])) if params[:delete_src_images]
 
-    if @src_set.update_attributes(params[:src_set])
-      redirect_to @src_set
+      if @src_set.update_attributes(params[:src_set])
+        redirect_to @src_set
+      else
+        render :edit
+      end
     else
-      render :edit
+      render :status => :forbidden, :text => 'Forbidden'
     end
-
   end
 
 end
