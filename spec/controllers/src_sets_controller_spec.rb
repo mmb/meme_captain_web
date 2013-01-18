@@ -124,7 +124,7 @@ describe SrcSetsController do
 
     end
 
-    context ' changing the name ' do
+    context 'changing the name' do
 
       subject {
         put :update, :id => src_set.id, :src_set => {:name => 'newname'}
