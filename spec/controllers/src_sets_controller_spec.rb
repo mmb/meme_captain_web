@@ -98,28 +98,38 @@ describe SrcSetsController do
 
     context 'adding source images' do
 
-      subject { put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id] }
+      subject {
+        put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id]
+        src_set.reload
+      }
 
       it 'adds source images to the set' do
-        expect {
-          subject
-          src_set.reload
-        }.to change { src_set.src_images.size }.by(2)
+        expect { subject }.to change { src_set.src_images.size }.by(2)
+      end
+
+      it "changes the set's updated time" do
+        expect { subject }.to change { src_set.updated_at }
       end
 
     end
 
     context 'deleting source images' do
 
-      subject { put :update, :id => src_set.id, :delete_src_images => [src_image.id, src_image2.id] }
+      subject {
+        put :update, :id => src_set.id, :delete_src_images => [src_image.id, src_image2.id]
+        src_set.reload
+      }
+
+      before(:each) do
+        put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id]
+      end
 
       it 'deletes source images from the set' do
-        put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id]
+        expect { subject }.to change { src_set.src_images.size }.by(-2)
+      end
 
-        expect {
-          subject
-          src_set.reload
-        }.to change { src_set.src_images.size }.by(-2)
+      it "changes the set's updated time" do
+        expect { subject }.to change { src_set.updated_at }
       end
 
     end

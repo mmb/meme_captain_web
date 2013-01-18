@@ -29,6 +29,8 @@ class SrcSetsController < ApplicationController
 
       @src_set.src_images.delete(SrcImage.find(params[:delete_src_images])) if params[:delete_src_images]
 
+      @src_set.touch if params[:add_src_images] || params[:delete_src_images]
+
       if @src_set.update_attributes(params[:src_set])
         redirect_to @src_set
       else
