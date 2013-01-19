@@ -17,6 +17,9 @@ class SrcImage < ActiveRecord::Base
   def post_process
     img = magick_image_list
 
+    img.auto_orient!
+    img.strip!
+
     if width > MemeCaptainWeb::Config::SourceImageSide or
         height > MemeCaptainWeb::Config::SourceImageSide
       img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
