@@ -4,3 +4,4 @@ rvm:
   - "1.9.3"
 before_script:
   - bundle exec rake db:migrate
+script: rake spec && rake jasmine:headless
