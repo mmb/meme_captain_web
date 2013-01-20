@@ -2,6 +2,9 @@ language: ruby
 rvm:
   - "1.9.2"
   - "1.9.3"
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 before_script:
   - bundle exec rake db:migrate
 script: rake spec && rake jasmine:headless
