@@ -1,0 +1,29 @@
+<div class="thumb-index well">
+
+  <p>
+    <%= link_to 'New', {:controller => :src_images, :action => :new}, :class => 'btn btn-success' %>
+
+    <%= link_to '#', :class => 'btn disabled disable-none-selected enable-some-selected' do %>
+        Add <span class="selected-count">0</span> to Set
+    <% end %>
+
+    <%= link_to '#', :class => 'btn disabled disable-none-selected enable-some-selected' do %>
+        Delete <span class="selected-count">0</span>
+    <% end %>
+
+    <%= link_to 'Select All', '#', :class => 'btn select-all' %>
+
+    <%= link_to 'Select None', '#', :class => 'btn select-none disabled disable-none-selected enable-some-selected' %>
+  </p>
+
+  <ul class="thumbnails">
+    <% @src_images.each do |si| %>
+        <li>
+          <div class="thumbnail">
+            <%= render :partial => si %>
+          </div>
+        </li>
+    <% end %>
+  </ul>
+
+</div>

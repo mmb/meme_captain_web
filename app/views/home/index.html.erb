@@ -1,16 +1,4 @@
-<p>
-  <%= link_to 'new source image', :controller => :src_images, :action => :new %>
-</p>
-
-<ul class="thumbnails">
-  <% @src_images.each do |si| %>
-      <li>
-        <div class="thumbnail">
-          <%= render :partial => si %>
-        </div>
-      </li>
-  <% end %>
-</ul>
+<%= render :partial => 'src_images/src_images' %>
 
 <ul class="thumbnails">
   <% @gend_images.each do |gi| %>
