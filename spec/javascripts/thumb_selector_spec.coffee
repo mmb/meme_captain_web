@@ -3,7 +3,7 @@ describe 'thumb_selector', ->
     loadFixtures 'thumb_selector.html'
     window.thumb_selector_init()
 
-  describe 'inidividual selection', ->
+  describe 'individual selection', ->
     it 'gives its parents the selected class when checked', ->
       $('#check1').prop('checked', true).trigger('change')
 
@@ -36,6 +36,13 @@ describe 'thumb_selector', ->
     expect($('#check2')).not.toBeChecked()
     expect($('#check3')).not.toBeChecked()
 
-  xit 'disables disable-none-selected when none are selected'
+  it 'disables disable-none-selected when none are selected', ->
+    $('#div1').click()
+    $('.select-none').click()
 
-  xit 'enables enable-some-selected when some are selected'
+    expect($('.disable-none-selected')).toHaveClass('disabled')
+
+  it 'enables enable-some-selected when some are selected', ->
+    $('#div1').click()
+    expect($('.enable-some-selected')).not.toHaveClass('disabled')
+
