@@ -1,20 +1,34 @@
 <div class="thumb-index well">
 
-  <p>
-    <%= link_to 'New', {:controller => :src_images, :action => :new}, :class => 'btn btn-success' %>
+  <div class="btn-toolbar">
 
-    <%= link_to '#', :class => 'btn disabled disable-none-selected enable-some-selected' do %>
-        Add <span class="selected-count badge badge-info">0</span> to Set
-    <% end %>
+    <div class="btn-group">
+      <%= link_to 'New', {:controller => :src_images, :action => :new}, :class => 'btn btn-success' %>
+    </div>
 
-    <%= link_to '#', :class => 'btn disabled disable-none-selected enable-some-selected' do %>
+    <div class="btn-group">
+
+      <div class="input-prepend">
+        <button class="btn add-to-set disabled disable-none-selected enable-some-selected">
+          Add <span class="selected-count badge badge-info">0</span> to Set
+        </button>
+        <input id="add-to-set-name" type="text"/>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn select-all">Select All</button>
+      <button class="btn select-none disabled disable-none-selected enable-some-selected">Select None</button>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn disabled disable-none-selected enable-some-selected">
         Delete <span class="selected-count badge badge-info">0</span>
-    <% end %>
+      </button>
+    </div>
 
-    <%= link_to 'Select All', '#', :class => 'btn select-all' %>
-
-    <%= link_to 'Select None', '#', :class => 'btn select-none disabled disable-none-selected enable-some-selected' %>
-  </p>
+  </div>
 
   <ul class="thumbnails">
     <% @src_images.each do |si| %>

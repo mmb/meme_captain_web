@@ -99,7 +99,7 @@ describe SrcSetsController do
     context 'adding source images' do
 
       subject {
-        put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id]
+        put :update, :id => src_set.name, :add_src_images => [src_image.id_hash, src_image2.id_hash]
         src_set.reload
       }
 
@@ -116,12 +116,12 @@ describe SrcSetsController do
     context 'deleting source images' do
 
       subject {
-        put :update, :id => src_set.id, :delete_src_images => [src_image.id, src_image2.id]
+        put :update, :id => src_set.name, :delete_src_images => [src_image.id_hash, src_image2.id_hash]
         src_set.reload
       }
 
       before(:each) do
-        put :update, :id => src_set.id, :add_src_images => [src_image.id, src_image2.id]
+        put :update, :id => src_set.name, :add_src_images => [src_image.id_hash, src_image2.id_hash]
       end
 
       it 'deletes source images from the set' do
@@ -137,7 +137,7 @@ describe SrcSetsController do
     context 'changing the name' do
 
       subject {
-        put :update, :id => src_set.id, :src_set => {:name => 'newname'}
+        put :update, :id => src_set.name, :src_set => {:name => 'newname'}
         src_set.reload
       }
 
@@ -150,7 +150,7 @@ describe SrcSetsController do
       it "doesn't allow it to be updated" do
         src_set = FactoryGirl.create(:src_set, :user => user2)
 
-        put :update, :id => src_set.id, :src_set => {:name => 'newname'}
+        put :update, :id => src_set.name, :src_set => {:name => 'newname'}
 
         expect(response).to be_forbidden
       end

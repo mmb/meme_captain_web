@@ -14,6 +14,18 @@ select_none = (event) ->
 selected_count = (parent) ->
   parent.find('input:checkbox.selector:checked').length
 
+add_to_set = (event) ->
+  target = $(event.target)
+  thumb_index = get_thumb_index(target)
+  ids = thumb_index.find('input:checkbox.selector:checked').map(-> this.getAttribute('data-id')).get()
+  set_name = $('#add-to-set-name').val()
+  $.ajax '/src_sets/' + set_name,
+    type: 'put',
+    data:
+      add_src_images: ids
+    success: ->
+      console.log('success')
+
 window.thumb_selector_init = ->
   $('input:checkbox.selector').change (event) ->
     target = $(event.target)
@@ -37,6 +49,8 @@ window.thumb_selector_init = ->
   $('.select-all').click select_all
 
   $('.select-none').click select_none
+
+  $('.add-to-set').click add_to_set
 
 $(document).ready ->
   thumb_selector_init()

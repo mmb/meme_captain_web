@@ -22,14 +22,11 @@ class SrcSetsController < ApplicationController
   end
 
   def update
-    @src_set = SrcSet.find(params[:id])
+    @src_set = SrcSet.find_by_name(params[:id])
 
     if @src_set.user == current_user
-      @src_set.src_images << SrcImage.find(params[:add_src_images]) if params[:add_src_images]
-
-      @src_set.src_images.delete(SrcImage.find(params[:delete_src_images])) if params[:delete_src_images]
-
-      @src_set.touch if params[:add_src_images] || params[:delete_src_images]
+      @src_set.add_src_images(params[:add_src_images]) if params[:add_src_images]
+      @src_set.delete_src_images(params[:delete_src_images]) if params[:delete_src_images]
 
       if @src_set.update_attributes(params[:src_set])
         redirect_to @src_set
