@@ -46,3 +46,19 @@ describe 'thumb_selector', ->
     $('#div1').click()
     expect($('.enable-some-selected')).not.toHaveClass('disabled')
 
+  describe 'adding to source image set', ->
+    it 'makes the AJAX call to add selected images to the set', ->
+      $('#div1').click()
+      $('#div3').click()
+
+      spyOn($, 'ajax')
+
+      $('.add-to-set').click()
+
+      expect($.ajax).toHaveBeenCalledWith(
+        '/src_sets/set1',
+        type: 'put',
+        data:
+          add_src_images: ['1', '3'],
+        success: jasmine.any(Function))
+
