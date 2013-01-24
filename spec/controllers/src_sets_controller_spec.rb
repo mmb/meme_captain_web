@@ -159,4 +159,44 @@ describe SrcSetsController do
 
   end
 
+  describe "GET 'show'" do
+
+    context 'when the name is found' do
+
+      let(:src_set) { FactoryGirl.create(:src_set) }
+
+      subject { get :show, :id => src_set.name }
+
+      it 'assigns the source set' do
+        subject
+
+        expect(assigns(:src_set)).to eq src_set
+      end
+
+      it 'assigns the source images' do
+        subject
+
+        expect(assigns(:src_images)).to eq src_set.src_images
+      end
+
+      it 'returns success' do
+        subject
+
+        expect(response).to be_success
+      end
+
+    end
+
+    context 'when the name is not found' do
+
+      it 'raises record not found' do
+        expect {
+          get 'show', :id => 'abc'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+  end
+
 end

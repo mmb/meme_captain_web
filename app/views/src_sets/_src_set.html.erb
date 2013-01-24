@@ -1,0 +1,8 @@
+<%= link_to image_tag(url_for(src_set.thumbnail),
+                      :size => "#{src_set.thumb_width}x#{src_set.thumb_height}"),
+            :controller => :src_sets,
+            :action => :show,
+            :id => src_set.name %>
+<p>
+  <%= src_set.name %>
+</p>

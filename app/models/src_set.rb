@@ -25,6 +25,21 @@ class SrcSet < ActiveRecord::Base
     end
   end
 
+  def thumbnail
+    recent = src_images.active.most_recent
+    recent.first.src_thumb unless recent.empty?
+  end
+
+  def thumb_width
+    thumb = thumbnail
+    thumb.width if thumb
+  end
+
+  def thumb_height
+    thumb = thumbnail
+    thumb.height if thumb
+  end
+
   scope :active, where(:is_deleted => false)
 
   scope :owned_by, lambda { |user| where(:user_id => user.id) }

@@ -7,4 +7,21 @@ describe SrcSet do
 
   it { should belong_to :user }
   it { should have_and_belong_to_many :src_images }
+
+  context "determining the set's thumbnail" do
+
+    it 'uses the most recent image as the thumbnail for the set'
+
+    context 'when the set is empty' do
+
+      subject { FactoryGirl.create(:src_set) }
+
+      its(:thumbnail) { should be_nil }
+      its(:thumb_width) { should be_nil }
+      its(:thumb_height) { should be_nil }
+
+    end
+
+  end
+
 end

@@ -1,0 +1,13 @@
+<div class="thumb-index well">
+
+  <ul class="thumbnails">
+    <% @src_sets.each do |ss| %>
+        <li>
+          <div class="thumbnail">
+            <%= render :partial => ss %>
+          </div>
+        </li>
+    <% end %>
+  </ul>
+
+</div>

@@ -38,4 +38,9 @@ class SrcSetsController < ApplicationController
     end
   end
 
+  def show
+    @src_set = SrcSet.find_by_name!(params[:id])
+    @src_images = @src_set.src_images
+  end
+
 end
