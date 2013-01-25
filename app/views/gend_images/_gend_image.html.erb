@@ -1,9 +1,12 @@
 <% if gend_image.work_in_progress %>
     <%= render :partial => 'application/under_construction' %>
 <% else %>
-    <%= link_to image_tag(url_for(gend_image.gend_thumb)),
+    <%= link_to image_tag(url_for(gend_image.gend_thumb),
+                          :size => "#{gend_image.gend_thumb.width}x#{gend_image.gend_thumb.height}"),
                 :controller => :gend_images,
                 :action => :show,
                 :id => gend_image.id_hash %>
-    <p><input type="checkbox" class="selector"/></p>
+    <p>
+      <input type="checkbox" class="selector" data-id="<%= gend_image.id_hash %>"/>
+    </p>
 <% end %>
