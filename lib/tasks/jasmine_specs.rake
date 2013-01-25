@@ -1,0 +1,1 @@
+task :spec => :'jasmine:headless'
