@@ -27,6 +27,12 @@ describe 'src_images/_src_image.html' do
       subject
       expect(rendered).to match('height="78"')
     end
+
+    it 'has the id hash as data' do
+      subject
+      expect(rendered).to match("data-id=\"#{src_image.id_hash}\"")
+    end
+
   end
 
   context 'the image has not been processed yet' do
