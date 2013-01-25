@@ -1,9 +1,3 @@
-<ul class="thumbnails">
-  <% @src_images.each do |si| %>
-      <li>
-        <div class="thumbnail">
-          <%= render :partial => si %>
-        </div>
-      </li>
-  <% end %>
-</ul>
+<% if @src_images %>
+    <%= render :partial => 'src_images/src_images' %>
+<% end %>

@@ -1,9 +1,3 @@
-<ul class="thumbnails">
-  <% @gend_images.each do |gi| %>
-      <li>
-        <div class="thumbnail">
-          <%= render :partial => gi %>
-        </div>
-      </li>
-  <% end %>
-</ul>
+<% if @gend_images %>
+    <%= render :partial => 'gend_images/gend_images' %>
+<% end %>

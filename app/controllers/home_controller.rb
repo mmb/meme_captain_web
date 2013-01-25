@@ -1,15 +1,11 @@
 class HomeController < ApplicationController
 
   def index
-    if current_user
-      @src_images = current_user.src_images.sort {
-          |a, b| b.updated_at <=> a.updated_at }
+    @src_sets = SrcSet.active.most_recent(8)
 
-      @gend_images = current_user.gend_images.sort {
-          |a, b| b.updated_at <=> a.updated_at }
-    else
-      @src_images = []
-      @gend_images = []
+    if current_user
+      @src_images = SrcImage.owned_by(current_user).active.most_recent(8)
+      @gend_images = GendImage.owned_by(current_user).active.most_recent(8)
     end
 
   end

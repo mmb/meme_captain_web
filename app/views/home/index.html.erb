@@ -2,16 +2,12 @@
   <%= link_to 'Source Sets', :src_sets %>
 </p>
 
-<%= render :partial => 'src_images/src_images' %>
+<%= render :partial => 'src_sets/src_sets' %>
 
-<ul class="thumbnails">
-  <% @gend_images.each do |gi| %>
-      <li>
-        <div class="thumbnail">
-          <%= render :partial => gi %>
-        </div>
-      </li>
-  <% end %>
-</ul>
+<% if @src_images %>
+    <%= render :partial => 'src_images/src_images' %>
+<% end %>
 
-
+<% if @gend_images %>
+    <%= render :partial => 'gend_images/gend_images' %>
+<% end %>
