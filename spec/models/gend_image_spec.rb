@@ -11,14 +11,17 @@ describe GendImage do
 
   it { should belong_to :src_image }
 
+  it { should belong_to :user }
+
   it { should have_one :gend_thumb }
 
   it { should have_many :captions }
 
+  it { should validate_presence_of :user }
+
   it 'should generate a unique id hash' do
-    GendImage.any_instance.stub(:gen_id_hash).and_return 'some_id_hash'
-    gend_image = GendImage.create(FactoryGirl.attributes_for(:gend_image))
-    expect(gend_image.id_hash).to eq('some_id_hash')
+    gend_image = FactoryGirl.create(:gend_image)
+    expect(gend_image.id_hash).to_not be_nil
   end
 
   context 'setting fields derived from the image' do

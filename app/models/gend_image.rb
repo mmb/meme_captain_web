@@ -8,6 +8,9 @@ class GendImage < ActiveRecord::Base
   belongs_to :src_image
   has_one :gend_thumb
   has_many :captions
+  belongs_to :user
+
+  validates :user, presence: true
 
   accepts_nested_attributes_for :captions, reject_if: proc { |attrs| attrs['text'].blank? }
 
@@ -28,9 +31,7 @@ class GendImage < ActiveRecord::Base
 
   scope :active, where(:is_deleted => false)
 
-  scope :owned_by, lambda { |user| joins(:src_image).where(:src_images => {:user_id => user.id}) }
+  scope :owned_by, lambda { |user| where(:user_id => user.id) }
 
   scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
-
-  delegate :user, :to => :src_image
 end

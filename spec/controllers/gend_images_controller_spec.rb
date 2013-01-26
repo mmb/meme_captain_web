@@ -4,10 +4,15 @@ describe GendImagesController do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
+  let(:src_image2) { FactoryGirl.create(:src_image, :user => user2) }
 
   let(:src_image) {
     mock_model(SrcImage, FactoryGirl.attributes_for(:src_image))
   }
+
+  before(:each) do
+    controller.stub(:current_user => user)
+  end
 
   describe "GET 'new'" do
 
@@ -23,10 +28,6 @@ describe GendImagesController do
 
     let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
 
-    before(:each) do
-      controller.stub(:current_user => user)
-    end
-
     subject {
       get :index
     }
@@ -38,7 +39,7 @@ describe GendImagesController do
     end
 
     it 'shows the images sorted by reverse updated time' do
-      3.times { FactoryGirl.create(:gend_image, :src_image => src_image) }
+      3.times { FactoryGirl.create(:gend_image, :user => user) }
 
       subject
 
@@ -50,8 +51,8 @@ describe GendImagesController do
     end
 
     it 'does not show deleted images' do
-      FactoryGirl.create(:gend_image, :src_image => src_image)
-      FactoryGirl.create(:gend_image, :src_image => src_image, :is_deleted => true)
+      FactoryGirl.create(:gend_image, :user => user)
+      FactoryGirl.create(:gend_image, :user => user, :is_deleted => true)
 
       subject
 
@@ -95,6 +96,17 @@ describe GendImagesController do
         expect {
           post :create, gend_image: {:src_image_id => 'abc'}
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the source image is owned by another user' do
+
+      specify 'the gend image is owned by the current user' do
+        gend_image = FactoryGirl.create(:gend_image, :src_image => src_image2)
+
+        post :create, gend_image: {:src_image_id => src_image2.id_hash}
+        expect(GendImage.last.user).to eq user
       end
 
     end
@@ -149,16 +161,9 @@ describe GendImagesController do
 
   describe "DELETE 'destroy'" do
 
-    let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
-    let(:src_image2) { FactoryGirl.create(:src_image, :user => user2) }
-
-    before(:each) do
-      controller.stub(:current_user => user)
-    end
-
     context 'when the id is found' do
 
-      let(:gend_image) { FactoryGirl.create(:gend_image, :src_image => src_image) }
+      let(:gend_image) { FactoryGirl.create(:gend_image, :user => user) }
 
       subject {
         delete :destroy, :id => gend_image.id_hash
@@ -192,7 +197,7 @@ describe GendImagesController do
     context 'when the image is owned by another user' do
 
       it "doesn't allow it to be deleted" do
-        gend_image = FactoryGirl.create(:gend_image, :src_image => src_image2)
+        gend_image = FactoryGirl.create(:gend_image, :user => user2)
 
         delete :destroy, :id => gend_image.id_hash
 

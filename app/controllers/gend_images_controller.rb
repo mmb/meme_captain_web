@@ -15,6 +15,7 @@ class GendImagesController < ApplicationController
 
     @gend_image = GendImage.new(params[:gend_image])
     @gend_image.src_image = src_image
+    @gend_image.user = current_user
 
     if @gend_image.save
       redirect_to :action => :index
