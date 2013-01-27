@@ -38,7 +38,13 @@ describe 'src_sets/_src_set.html' do
   end
 
   context 'when the set is empty' do
-    it 'shows a default thumbnail'
+    let(:src_set) { mock_model(SrcSet, :name => 'set1', :thumbnail => nil) }
+
+    it 'shows the empty set' do
+      subject
+      expect(rendered).to match /class="empty-set"/
+    end
+
   end
 
   context 'when the set contains only under construction images' do

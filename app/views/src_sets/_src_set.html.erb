@@ -1,9 +1,12 @@
-<%= link_to image_tag(url_for(src_set.thumbnail),
-                      :size => "#{src_set.thumb_width}x#{src_set.thumb_height}"),
-            :controller => :src_sets,
-            :action => :show,
-            :id => src_set.name %>
+<%= link_to :controller => :src_sets, :action => :show, :id => src_set.name do %>
+
+    <% if src_set.thumbnail %>
+        <%= image_tag(url_for(src_set.thumbnail), :size => "#{src_set.thumb_width}x#{src_set.thumb_height}") %>
+    <% else %>
+        <div class="empty-set">&#x2205;</div>
+    <% end %>
+<% end %>
+
 <p class="src-set-name">
   <%= src_set.name %>
 </p>
-
