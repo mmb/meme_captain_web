@@ -1,3 +1,8 @@
 <h1><%= @src_set.name %></h1>
 
+<% if @src_set.user == current_user %>
+    <%= button_to 'Delete Set', {:action => :destroy, :id => @src_set.name},
+                  :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-danger' %>
+<% end %>
+
 <%= render :partial => 'src_images/src_images' %>
