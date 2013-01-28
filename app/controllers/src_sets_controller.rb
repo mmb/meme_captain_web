@@ -36,7 +36,7 @@ class SrcSetsController < ApplicationController
         if @src_set.update_attributes(params[:src_set])
           format.html {
             redirect_to({:action => :show, :id => @src_set.name}, :notice => 'The set was successfully updated.') }
-          format.json { head :no_content }
+          format.json { render :json => {} }
         else
           format.html { render :edit }
           format.json { render :json => @src_set.errors, :status => :unprocessable_entity }
