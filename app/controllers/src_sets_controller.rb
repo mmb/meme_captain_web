@@ -22,16 +22,25 @@ class SrcSetsController < ApplicationController
   end
 
   def update
-    @src_set = SrcSet.find_by_name(params[:id])
+    unless current_user
+      render :status => :forbidden, :text => 'Forbidden' and return
+    end
+
+    @src_set = SrcSet.where(:name => params[:id]).first_or_create { |ss| ss.user = current_user }
 
     if @src_set.user == current_user
       @src_set.add_src_images(params[:add_src_images]) if params[:add_src_images]
       @src_set.delete_src_images(params[:delete_src_images]) if params[:delete_src_images]
 
-      if @src_set.update_attributes(params[:src_set])
-        redirect_to @src_set
-      else
-        render :edit
+      respond_to do |format|
+        if @src_set.update_attributes(params[:src_set])
+          format.html {
+            redirect_to({:action => :show, :id => @src_set.name}, :notice => 'The set was successfully updated.') }
+          format.json { head :no_content }
+        else
+          format.html { render :edit }
+          format.json { render :json => @src_set.errors, :status => :unprocessable_entity }
+        end
       end
     else
       render :status => :forbidden, :text => 'Forbidden'

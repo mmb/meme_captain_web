@@ -111,6 +111,16 @@ describe SrcSetsController do
         expect { subject }.to change { src_set.updated_at }
       end
 
+      it 'redirects to the source set' do
+        subject
+        expect(response).to redirect_to :action => :show
+      end
+
+      it 'informs the user of success with a notice' do
+        subject
+        expect(flash[:notice]).to eq 'The set was successfully updated.'
+      end
+
     end
 
     context 'deleting source images' do
@@ -132,6 +142,16 @@ describe SrcSetsController do
         expect { subject }.to change { src_set.updated_at }
       end
 
+      it 'redirects to the source set' do
+        subject
+        expect(response).to redirect_to :action => :show
+      end
+
+      it 'informs the user of success with a notice' do
+        subject
+        expect(flash[:notice]).to eq 'The set was successfully updated.'
+      end
+
     end
 
     context 'changing the name' do
@@ -143,6 +163,16 @@ describe SrcSetsController do
 
       its(:name) { should == 'newname' }
 
+      it 'redirects to the source set' do
+        subject
+        expect(response).to redirect_to :action => :show, :id => 'newname'
+      end
+
+      it 'informs the user of success with a notice' do
+        subject
+        expect(flash[:notice]).to eq 'The set was successfully updated.'
+      end
+
     end
 
     context 'when the source set is owned by another user' do
@@ -153,6 +183,16 @@ describe SrcSetsController do
         put :update, :id => src_set.name, :src_set => {:name => 'newname'}
 
         expect(response).to be_forbidden
+      end
+
+    end
+
+    context "when the set doesn't exist" do
+
+      it 'creates the set' do
+        expect {
+          put :update, :id => 'a new set', :add_src_images => [src_image.id_hash]
+        }.to change { SrcSet.count }.by(1)
       end
 
     end

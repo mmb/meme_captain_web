@@ -14,17 +14,35 @@ select_none = (event) ->
 selected_count = (parent) ->
   parent.find('input:checkbox.selector:checked').length
 
+close_button = ->
+  $('<button />').addClass('close').attr('data-dismiss', 'alert').append('&times;')
+
+add_alert = (container, message) ->
+  container.prepend($('<div />').addClass('alert alert-error').append(
+    close_button).append(message))
+
 add_to_set = (event) ->
-  target = $(event.target)
-  thumb_index = get_thumb_index(target)
-  ids = thumb_index.find('input:checkbox.selector:checked').map(-> this.getAttribute('data-id')).get()
   set_name = $('#add-to-set-name').val()
-  $.ajax '/src_sets/' + set_name,
-    type: 'put',
-    data:
-      add_src_images: ids
-    success: ->
-      console.log('success')
+
+  unless set_name is ''
+    target = $(event.target)
+    thumb_index = get_thumb_index(target)
+    ids = thumb_index.find('input:checkbox.selector:checked').map(-> this.getAttribute('data-id')).get()
+
+    $.ajax "/src_sets/#{set_name}",
+      type: 'put'
+      contentType: 'application/json'
+      dataType: 'json'
+      data: JSON.stringify(add_src_images: ids)
+      success: ->
+        $(window).attr('location', "/src_sets/#{set_name}")
+      error: (xhr, text_status)->
+        if xhr.status == 403
+          message = "You do not own the set #{set_name}"
+        else
+          message = text_status
+
+        add_alert(thumb_index, message)
 
 window.thumb_selector_init = ->
   $('input:checkbox.selector').change (event) ->

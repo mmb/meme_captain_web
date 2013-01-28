@@ -46,19 +46,41 @@ describe 'thumb_selector', ->
     $('#div1').click()
     expect($('.enable-some-selected')).not.toHaveClass('disabled')
 
-  describe 'adding to source image set', ->
-    it 'makes the AJAX call to add selected images to the set', ->
-      $('#div1').click()
-      $('#div3').click()
+  describe 'adding to a source image set', ->
+    describe 'when successful', ->
+      it 'redirects to the set', ->
+        $('#div1').click()
+        $('#div3').click()
 
-      spyOn($, 'ajax')
+        spyOn $, 'attr'
 
-      $('.add-to-set').click()
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
 
-      expect($.ajax).toHaveBeenCalledWith(
-        '/src_sets/set1',
-        type: 'put',
-        data:
-          add_src_images: ['1', '3'],
-        success: jasmine.any(Function))
+        $('.add-to-set').click()
 
+        expect($.attr).toHaveBeenCalledWith(jasmine.any(Object), 'location', '/src_sets/set1')
+
+    describe 'when the response is forbidden', ->
+      it 'shows the user an error message', ->
+        $('#div1').click()
+        $('#div3').click()
+
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.error({status: 403}, '')
+
+        $('.add-to-set').click()
+
+        expect($('.alert')).toHaveText(/You do not own the set set1/)
+
+    describe 'when the response is another error', ->
+      it 'shows the user an error message', ->
+        $('#div1').click()
+        $('#div3').click()
+
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.error({status: 500}, 'some error')
+
+        $('.add-to-set').click()
+
+        expect($('.alert')).toHaveText(/some error/)
