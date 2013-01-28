@@ -52,4 +52,11 @@ class SrcSetsController < ApplicationController
     @src_images = @src_set.src_images
   end
 
+  def destroy
+    @src_set = SrcSet.find_by_name_and_user_id!(params[:id], current_user.try(:id))
+
+    @src_set.update_attribute(:is_deleted, true)
+    redirect_to :action => :index
+  end
+
 end

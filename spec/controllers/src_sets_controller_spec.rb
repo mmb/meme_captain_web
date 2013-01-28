@@ -239,4 +239,55 @@ describe SrcSetsController do
 
   end
 
+  describe "DELETE 'destroy'" do
+
+    let(:src_set) { FactoryGirl.create(:src_set, :user => user) }
+    subject { delete :destroy, :id => src_set.name }
+
+    context 'when the name is found' do
+
+      it 'marks the record as deleted in the database' do
+        subject
+        expect { SrcSet.find(src_set).is_deleted? }.to be_true
+      end
+
+      it 'redirects to the index page' do
+        subject
+        expect(response).to redirect_to :action => :index
+      end
+
+    end
+
+    context 'when the name is not found' do
+
+      it 'raises record not found' do
+        expect {
+          delete :destroy, :id => 'abc'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the image is owned by another user' do
+
+      let(:src_set) { FactoryGirl.create(:src_set, :user => user2) }
+
+      it 'returns not found' do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the user is not logged in' do
+
+      it 'returns not found' do
+        controller.stub(:current_user => nil)
+
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+  end
+
 end
