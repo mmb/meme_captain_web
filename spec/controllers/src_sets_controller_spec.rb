@@ -201,11 +201,11 @@ describe SrcSetsController do
 
   describe "GET 'show'" do
 
+    subject { get :show, :id => src_set.name }
+
     context 'when the name is found' do
 
       let(:src_set) { FactoryGirl.create(:src_set) }
-
-      subject { get :show, :id => src_set.name }
 
       it 'assigns the source set' do
         subject
@@ -233,6 +233,16 @@ describe SrcSetsController do
         expect {
           get 'show', :id => 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the set is deleted' do
+
+      let(:src_set) { FactoryGirl.create(:src_set, :is_deleted => true) }
+
+      it 'returns not found' do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -283,6 +293,16 @@ describe SrcSetsController do
       it 'returns not found' do
         controller.stub(:current_user => nil)
 
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+    end
+
+    context 'when the set is deleted' do
+
+      let(:src_set) { FactoryGirl.create(:src_set, :user => user, :is_deleted => true) }
+
+      it 'returns not found' do
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
