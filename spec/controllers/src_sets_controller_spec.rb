@@ -222,7 +222,7 @@ describe SrcSetsController do
       it 'assigns the source images' do
         subject
 
-        expect(assigns(:src_images)).to eq src_set.src_images
+        expect(assigns(:src_images)).to eq []
       end
 
       it 'returns success' do
