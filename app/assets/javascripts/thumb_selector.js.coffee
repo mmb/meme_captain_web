@@ -70,5 +70,8 @@ window.thumb_selector_init = ->
 
   $('.add-to-set').click add_to_set
 
+  $('#add-to-set-name').keypress (event) ->
+    add_to_set(event) if event.keyCode == 13
+
 $(document).ready ->
   thumb_selector_init()
