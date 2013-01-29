@@ -197,6 +197,12 @@ describe SrcSetsController do
 
     end
 
+    context 'when the set is deleted' do
+
+      it 'returns not found'
+
+    end
+
   end
 
   describe "GET 'show'" do
