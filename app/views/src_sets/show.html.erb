@@ -1,5 +1,7 @@
 <h1><%= @src_set.name %>
-  <small>by <%= @src_set.user.email %></small>
+  <% if @src_set.by %>
+      <small>by <%= @src_set.by %></small>
+  <% end %>
 </h1>
 
 <% if @src_set.user == current_user %>
