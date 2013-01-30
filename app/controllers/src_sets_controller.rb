@@ -18,7 +18,7 @@ class SrcSetsController < ApplicationController
   end
 
   def index
-    @src_sets = SrcSet.owned_by(current_user).active.most_recent(8)
+    @src_sets = SrcSet.owned_by(current_user).active.most_recent.page(params[:page])
   end
 
   def update
@@ -49,7 +49,7 @@ class SrcSetsController < ApplicationController
 
   def show
     @src_set = SrcSet.find_by_name_and_is_deleted!(params[:id], false)
-    @src_images = @src_set.src_images.active.most_recent(nil)
+    @src_images = @src_set.src_images.active.most_recent.page(params[:page])
   end
 
   def destroy

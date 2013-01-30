@@ -48,6 +48,8 @@ gem 'daemons'
 
 gem 'meme_captain'
 
+gem 'kaminari'
+
 group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'

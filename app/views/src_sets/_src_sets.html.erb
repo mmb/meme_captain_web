@@ -10,6 +10,10 @@
     <% end %>
   </ul>
 
-  <%= link_to 'More sets', :src_sets %>
+  <% if current_page? root_url %>
+      <%= link_to 'More sets', :src_sets %>
+  <% else %>
+      <%= paginate @src_sets %>
+  <% end %>
 
 </div>

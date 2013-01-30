@@ -5,7 +5,7 @@ class SrcImagesController < ApplicationController
   end
 
   def index
-    @src_images = SrcImage.owned_by(current_user).active.most_recent(8)
+    @src_images = SrcImage.owned_by(current_user).active.most_recent.page(params[:page])
   end
 
   def create

@@ -40,6 +40,10 @@
     <% end %>
   </ul>
 
-  <%= link_to 'More images', :src_images %>
+  <% if current_page? root_url %>
+      <%= link_to 'More images', :src_images %>
+  <% else %>
+      <%= paginate @src_images %>
+  <% end %>
 
 </div>
