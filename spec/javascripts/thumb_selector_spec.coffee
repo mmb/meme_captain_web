@@ -84,3 +84,33 @@ describe 'thumb_selector', ->
         $('.add-to-set').click()
 
         expect($('.alert')).toHaveText(/some error/)
+
+  describe 'deleting a generated image', ->
+    describe 'when deletion is successful', ->
+      it 'removes the images from the DOM', ->
+        $('#div1').click()
+        $('#div3').click()
+
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
+
+        $('.delete-gend').click()
+
+        expect($('#div1').length).toBe(0)
+        expect($('#div2').length).toBe(1)
+        expect($('#div1').length).toBe(0)
+
+    describe 'when the response is an error', ->
+      beforeEach ->
+        $('#div1').click()
+
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.error({status: 500}, '')
+
+        $('.delete-gend').click()
+
+      it 'shows the user an error message', ->
+        expect($('.alert')).toHaveText(/Error deleting 1/)
+
+      it 'does not delete the image', ->
+        expect($('#div1').length).toBe(1)

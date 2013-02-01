@@ -179,7 +179,7 @@ describe GendImagesController do
 
       it 'redirects to the index page' do
         subject
-        expect(response).to redirect_to :action => :index
+        expect(response).to be_success
       end
 
     end
