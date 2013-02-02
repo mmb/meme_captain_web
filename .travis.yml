@@ -18,8 +18,9 @@ env:
 after_success:
   - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo sh
   - git remote add heroku git@heroku.com:${HEROKU_APP}.git
-  - ssh-keygen -f $HOME/.ssh/id_rsa -P ''
+  - KEY_PATH=$HOME/.ssh/id_rsa
+  - ssh-keygen -f $KEY_PATH -P ''
+  - KEY=`cut -d ' ' -f 3  $KEY_PATH.pub`
   - heroku keys:add
-  - LAST_KEY=`heroku keys | tail -2 | cut -f 3 -d ' '`
   - git push heroku master
-  - heroku keys:remove $LAST_KEY
+  - heroku keys:remove $KEY
