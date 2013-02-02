@@ -12,7 +12,7 @@ class SrcImagesController < ApplicationController
     @src_image = SrcImage.new(params[:src_image])
     @src_image.user = current_user
 
-    if params[:src_image][:image]
+    if params.try(:[], :src_image).try(:[], :image)
       @src_image.image = params[:src_image][:image].read
     end
 
