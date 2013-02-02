@@ -22,5 +22,7 @@ after_success:
   - ssh-keygen -f $KEY_PATH -P ''
   - KEY=`cut -d ' ' -f 3  $KEY_PATH.pub`
   - heroku keys:add
+  - echo 'Host heroku.com' >> ~/.ssh/config
+  - echo '  StrictHostKeyChecking no' >> ~/.ssh/config
   - git push heroku master
   - heroku keys:remove $KEY
