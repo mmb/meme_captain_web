@@ -9,7 +9,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :src_images
 
-  resources :src_sets
+  resources :src_sets, :except => :new
 
   resources :src_thumbs
 

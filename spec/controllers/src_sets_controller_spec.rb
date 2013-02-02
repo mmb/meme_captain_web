@@ -13,9 +13,8 @@ describe SrcSetsController do
 
     subject { get 'new' }
 
-    it "returns http success" do
-      subject
-      expect(response).to be_success
+    it 'does not match a route' do
+      expect { subject }.to raise_error ActionController::RoutingError
     end
   end
 
