@@ -54,6 +54,7 @@ group :test, :development do
   gem 'webrat'
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
+  gem 'travis_heroku'
 end
 
 group :production do
