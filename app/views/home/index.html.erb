@@ -1,4 +1,6 @@
-<%= render :partial => 'src_sets/src_sets' %>
+<% unless @src_sets.empty? %>
+    <%= render :partial => 'src_sets/src_sets' %>
+<% end %>
 
 <% if @src_images %>
     <%= render :partial => 'src_images/src_images' %>
