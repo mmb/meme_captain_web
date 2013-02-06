@@ -47,11 +47,12 @@ describe 'thumb_selector', ->
     expect($('.enable-some-selected')).not.toHaveClass('disabled')
 
   describe 'adding to a source image set', ->
+    beforeEach ->
+      $('#div1').click()
+      $('#div3').click()
+
     describe 'when successful', ->
       it 'redirects to the set', ->
-        $('#div1').click()
-        $('#div3').click()
-
         spyOn $, 'attr'
 
         spyOn($, 'ajax').andCallFake (url, params) ->
@@ -63,9 +64,6 @@ describe 'thumb_selector', ->
 
     describe 'when the response is forbidden', ->
       it 'shows the user an error message', ->
-        $('#div1').click()
-        $('#div3').click()
-
         spyOn($, 'ajax').andCallFake (url, params) ->
           params.error({status: 403}, '')
 
@@ -75,9 +73,6 @@ describe 'thumb_selector', ->
 
     describe 'when the response is another error', ->
       it 'shows the user an error message', ->
-        $('#div1').click()
-        $('#div3').click()
-
         spyOn($, 'ajax').andCallFake (url, params) ->
           params.error({status: 500}, 'some error')
 
