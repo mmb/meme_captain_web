@@ -85,6 +85,39 @@ describe 'thumb_selector', ->
 
         expect($('.alert')).toHaveText(/some error/)
 
+  describe 'removing source images from a set', ->
+    beforeEach ->
+      $('#div1').click()
+      $('#div3').click()
+
+    describe 'when successful', ->
+      it 'removes the images from the DOM', ->
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
+
+        $('.remove-from-set').click()
+
+        expect($('#div1').length).toBe(0)
+        expect($('#div3').length).toBe(0)
+
+    describe 'when the response is forbidden', ->
+      it 'shows the user an error message', ->
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.error({status: 403}, '')
+
+        $('.remove-from-set').click()
+
+        expect($('.alert')).toHaveText(/You do not own this set/)
+
+    describe 'when the response is another error', ->
+      it 'shows the user an error message', ->
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.error({status: 500}, 'some error')
+
+        $('.remove-from-set').click()
+
+        expect($('.alert')).toHaveText(/some error/)
+
   describe 'deleting a generated image', ->
     describe 'when deletion is successful', ->
       it 'removes the images from the DOM', ->

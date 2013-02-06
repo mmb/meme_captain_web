@@ -44,6 +44,27 @@ add_to_set = (event) ->
 
         add_alert thumb_index, message
 
+remove_from_set = (event) ->
+  target = $(event.target)
+  thumb_index = get_thumb_index(target)
+  checked = thumb_index.find('input:checkbox.selector:checked')
+  ids = checked.map(-> this.getAttribute('data-id')).get()
+
+  $.ajax '',
+    type: 'put'
+    contentType: 'application/json'
+    dataType: 'json'
+    data: JSON.stringify(delete_src_images: ids)
+    success: ->
+      checked.prop('checked', false).trigger('change').parents('.thumbnail').remove()
+    error: (xhr, text_status)->
+      if xhr.status == 403
+        message = 'You do not own this set'
+      else
+        message = text_status
+
+      add_alert thumb_index, message
+
 delete_gend = (event)->
   target = $(event.target)
   thumb_index = get_thumb_index(target)
@@ -83,6 +104,8 @@ window.thumb_selector_init = ->
   $('.select-none').click select_none
 
   $('.add-to-set').click add_to_set
+
+  $('.remove-from-set').click remove_from_set
 
   $('#add-to-set-name').keypress (event) ->
     add_to_set(event) if event.keyCode == 13
