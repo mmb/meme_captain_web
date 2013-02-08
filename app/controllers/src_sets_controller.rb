@@ -26,7 +26,7 @@ class SrcSetsController < ApplicationController
       render :status => :forbidden, :text => 'Forbidden' and return
     end
 
-    @src_set = SrcSet.where(:name => params[:id]).first_or_create { |ss| ss.user = current_user }
+    @src_set = SrcSet.where(:name => params[:id], :is_deleted => false).first_or_create { |ss| ss.user = current_user }
 
     if @src_set.user == current_user
       @src_set.add_src_images(params[:add_src_images]) if params[:add_src_images]

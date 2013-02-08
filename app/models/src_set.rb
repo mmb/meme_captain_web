@@ -2,10 +2,18 @@ class SrcSet < ActiveRecord::Base
   attr_accessible :name
 
   validates :name, presence: true
-  validates :name, uniqueness: true
+  validate :name, :one_active_name
 
   has_and_belongs_to_many :src_images
   belongs_to :user
+
+  def one_active_name
+    if new_record? && SrcSet.active.exists?(:name => name) or
+        !is_deleted && SrcSet.count(
+            :conditions => ['name = ? AND id != ? AND is_deleted = ?', name, id, false]) > 0
+      errors.add :name, 'has already been taken'
+    end
+  end
 
   def add_src_images(add_id_hashes)
     to_add = SrcImage.find_all_by_id_hash(add_id_hashes) - self.src_images
