@@ -11,7 +11,17 @@ describe SrcSet do
 
   context "determining the set's thumbnail" do
 
-    it 'uses the most recent image as the thumbnail for the set'
+    it 'uses the most recent image as the thumbnail for the set' do
+      si1 = FactoryGirl.create(:src_image, :src_thumb => FactoryGirl.create(:src_thumb))
+      si2 = FactoryGirl.create(:src_image, :src_thumb => FactoryGirl.create(:src_thumb))
+      si3 = FactoryGirl.create(:src_image, :src_thumb => FactoryGirl.create(:src_thumb))
+
+      set1.src_images << si1
+      set1.src_images << si2
+      set1.src_images << si3
+
+      expect(set1.thumbnail).to eq si3.src_thumb
+    end
 
     context 'when the set is empty' do
 
