@@ -7,7 +7,7 @@ class GendImage < ActiveRecord::Base
 
   belongs_to :src_image
   has_one :gend_thumb
-  has_many :captions
+  has_many :captions, :order => :id
   belongs_to :user
 
   validates :user, presence: true
