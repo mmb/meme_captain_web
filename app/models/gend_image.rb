@@ -20,7 +20,7 @@ class GendImage < ActiveRecord::Base
     self.image = MemeCaptain.meme_top_bottom(
         src_image.image,
         captions[0].text, captions[1] ? captions[1].text : nil,
-        :font => captions[0].font).to_blob
+        :font => "#{Rails.root}/fonts/#{captions[0].font}").to_blob
 
     thumb_img = magick_image_list
 
