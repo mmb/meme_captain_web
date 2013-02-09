@@ -19,4 +19,4 @@ after_success:
   - travis-heroku
   - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
   - heroku run rake db:migrate
-  - heroku config:add DELAY_JOBS=false
+  - heroku config:add DELAY_JOBS=false ALPHA_LAST_UPDATE=`date` ALPHA_SHA=`git rev-parse --verify HEAD`

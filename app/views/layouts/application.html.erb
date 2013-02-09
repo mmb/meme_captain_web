@@ -25,6 +25,17 @@
     </div>
   </div>
 
+  <% if ENV['ALPHA_LAST_UPDATE'] %>
+      <div class="alert">
+        <p>
+          This is a pre-release testing build of this site. It is continuously updated and images may not be preserved.
+          Please send feedback to <%= mail_to 'matthewm@boedicker.org' %>.
+        </p>
+
+        <p>Last updated: <%= ENV['ALPHA_LAST_UPDATE'] %>, commit <%= ENV['ALPHA_SHA'] %></p>
+      </div>
+  <% end %>
+
   <% if flash[:error] -%>
       <div class="alert alert-error">
         <%= h flash[:error] %>
