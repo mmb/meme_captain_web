@@ -17,3 +17,6 @@ env:
   - HEROKU_APP=mcalpha
 after_success:
   - travis-heroku
+  - heroku config:add DELAY_JOBS=false
+  - heroku run rake db:migrate
+  - heroku restart
