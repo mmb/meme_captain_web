@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
     o.user == self
   end
 
+  def self.auth_case_insens(email, password)
+    for_auth(email).find { |u| u.authenticate(password) }
+  end
+
+  scope :for_auth, lambda { |email| where('LOWER(email) = ?', email.downcase) }
+
 end

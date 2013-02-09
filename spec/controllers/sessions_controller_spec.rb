@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe SessionsController do
 
-  let(:mock_user) { mock_model(User) }
   let(:user) { FactoryGirl.create(:user) }
 
   describe "POST 'create'" do
@@ -10,16 +9,6 @@ describe SessionsController do
     subject { post :create, :email => user.email, :password => user.password }
 
     context 'when login succeeds' do
-
-      it 'authenticates the user' do
-        User.should_receive(:find_by_email).with(user.email).
-            and_return(mock_user)
-
-        mock_user.should_receive(:authenticate).with(user.password).
-            and_return(true)
-
-        subject
-      end
 
       it 'creates a session' do
         subject
@@ -57,6 +46,16 @@ describe SessionsController do
       it 'informs the user of login failure with flash' do
         subject
         expect(flash[:error]).to eq('Login failed.')
+      end
+
+    end
+
+    context 'when the email case does not match' do
+
+      it 'allows the user to login' do
+        post :create, :email => user.email.upcase, :password => user.password
+
+        expect(session[:user_id]).to eq(user.id)
       end
 
     end

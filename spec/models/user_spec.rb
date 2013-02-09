@@ -34,4 +34,78 @@ describe User do
 
   end
 
+  describe '.auth_case_insens' do
+    let(:user_password) { 'some password' }
+    let(:try_email) { 'does not exist' }
+    let(:try_password) { 'try' }
+
+    subject { User.auth_case_insens(try_email, try_password) }
+
+    context 'when no emails are found' do
+      it { should be_nil }
+    end
+
+    context 'when one email is found' do
+
+      before(:each) do
+        @user = FactoryGirl.create(
+            :user,
+            password: user_password,
+            password_confirmation: user_password)
+      end
+
+      let(:try_email) { @user.email }
+
+      context 'when the password matches' do
+        let(:try_password) { user_password }
+        it { should eq @user }
+      end
+
+      context 'when the password does not match' do
+        it { should be_nil }
+      end
+    end
+
+    context 'when multiple emails are found' do
+
+      let(:try_email) { @user.email }
+      let(:user2_password) { 'some other password' }
+
+      before(:each) do
+        @user = FactoryGirl.create(:user, password: user_password, password_confirmation: user_password)
+        @user2 = FactoryGirl.create(
+            :user,
+            email: @user.email.upcase,
+            password: user2_password,
+            password_confirmation: user2_password)
+      end
+
+      context 'when no passwords match' do
+        it { should be_nil }
+      end
+
+      context 'when the first password matches' do
+        let(:try_password) { user_password }
+        it { should eq @user }
+      end
+
+      context 'when the last password matches' do
+        let(:try_password) { user2_password }
+        it { should eq @user2 }
+      end
+
+    end
+
+  end
+
+  describe '.for_auth' do
+
+    it 'ignores case when finding emails' do
+      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user, :email => user.email.upcase)
+      expect(User.for_auth(user.email).count).to eq 2
+    end
+
+  end
+
 end
