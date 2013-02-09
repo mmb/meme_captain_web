@@ -17,6 +17,7 @@ env:
   - HEROKU_APP=mcalpha
 after_success:
   - travis-heroku
+  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
   - heroku config:add DELAY_JOBS=false
   - heroku run rake db:migrate
   - heroku restart
