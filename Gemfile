@@ -46,6 +46,7 @@ gem 'daemons'
 gem 'meme_captain'
 
 gem 'kaminari'
+gem 'thin'
 
 group :test, :development do
   gem 'factory_girl_rails'
