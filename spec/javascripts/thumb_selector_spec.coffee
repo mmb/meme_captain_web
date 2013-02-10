@@ -142,3 +142,16 @@ describe 'thumb_selector', ->
 
       it 'does not delete the image', ->
         expect($('#div1').length).toBe(1)
+
+    describe 'enable based on selection', ->
+      it 'disable-none-selected should be disabled initially', ->
+        expect($('.disable-none-selected').prop('disabled')).toBe(true)
+
+      it 'disable-none-selected should be disabled when none are selected', ->
+        $('#div1').click()
+        $('#div1').click()
+        expect($('.disable-none-selected').prop('disabled')).toBe(true)
+
+      it 'enable-some-selected should be enabled when some are selected', ->
+        $('#div1').click()
+        expect($('.enable-some-selected').prop('disabled')).toBe(false)

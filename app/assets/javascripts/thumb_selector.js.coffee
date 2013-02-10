@@ -79,21 +79,26 @@ delete_gend = (event)->
       error: (xhr, text_status)->
         add_alert thumb_index, "Error deleting #{id}"
 
+update_selected = (container) ->
+  selected_ct = selected_count container
+
+  if selected_ct > 0
+    container.find('.enable-some-selected').prop('disabled', false).removeClass('disabled')
+  else
+    container.find('.disable-none-selected').prop('disabled', true).addClass('disabled')
+
+  container.find('.selected-count').text selected_ct
+
 window.thumb_selector_init = ->
   $('input:checkbox.selector').change (event) ->
     target = $(event.target)
     div = target.parents 'div.thumbnail'
     div.toggleClass 'selected', target.is(':checked')
 
-    thumb_index = get_thumb_index(target)
-    selected_ct = selected_count thumb_index
+    update_selected get_thumb_index(target)
 
-    if selected_ct > 0
-      thumb_index.find('.enable-some-selected').removeClass('disabled')
-    else
-      thumb_index.find('.disable-none-selected').addClass('disabled')
-
-    thumb_index.find('.selected-count').text selected_ct
+  $('.thumb-index').each (_, e) ->
+    update_selected $(e)
 
   $('div.thumbnail').click (event) ->
     checkbox = $(event.target).find('input:checkbox.selector').first()
