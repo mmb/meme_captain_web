@@ -32,8 +32,8 @@
           Please send feedback to <%= mail_to 'matthewm@boedicker.org' %>.
         </p>
 
-        <p>Last updated: <%= ENV['ALPHA_LAST_UPDATE'] %>, commit
-          <a href="https://github.com/mmb/meme_captain_web/tree/<%= ENV['ALPHA_SHA'] %>"><%= ENV['ALPHA_SHA'] %></a>
+        <p>Last updated: <%= ENV['DEPLOYED_TIME'] %>, commit
+          <a href="https://github.com/mmb/meme_captain_web/tree/<%= ENV['DEPLOYED_SHA'] %>"><%= ENV['DEPLOYED_SHA'] %></a>
         </p>
       </div>
   <% end %>
