@@ -177,7 +177,7 @@ describe GendImagesController do
         }.to be_true
       end
 
-      it 'redirects to the index page' do
+      it 'returns success' do
         subject
         expect(response).to be_success
       end
