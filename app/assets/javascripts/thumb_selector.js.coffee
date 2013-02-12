@@ -65,19 +65,25 @@ remove_from_set = (event) ->
 
       add_alert thumb_index, message
 
-delete_gend = (event)->
-  target = $(event.target)
-  thumb_index = get_thumb_index(target)
-  delete_thumbs = thumb_index.find('input:checkbox.selector:checked')
+delete_thumb = (url) ->
+  (event) ->
+    target = $(event.target)
+    thumb_index = get_thumb_index(target)
+    delete_thumbs = thumb_index.find('input:checkbox.selector:checked')
 
-  delete_thumbs.each (_, e) ->
-    id = e.getAttribute('data-id')
-    $.ajax "/gend_images/#{id}",
-      type: 'delete'
-      success: =>
-        $(e).prop('checked', false).trigger('change').parents('.thumbnail').remove()
-      error: (xhr, text_status)->
-        add_alert thumb_index, "Error deleting #{id}"
+    if confirm "Delete #{delete_thumbs.length} images?"
+      delete_thumbs.each (_, e) ->
+        id = e.getAttribute('data-id')
+        $.ajax "#{url}#{id}",
+          type: 'delete'
+          success: =>
+            $(e).prop('checked', false).trigger('change').parents('.thumbnail').remove()
+          error: (xhr, text_status)->
+            add_alert thumb_index, "Error deleting #{id}"
+
+delete_gend = delete_thumb '/gend_images/'
+
+delete_src = delete_thumb '/src_images/'
 
 update_selected = (container) ->
   selected_ct = selected_count container
@@ -114,6 +120,8 @@ window.thumb_selector_init = ->
 
   $('#add-to-set-name').keypress (event) ->
     add_to_set(event) if event.keyCode == 13
+
+  $('.delete-src').click delete_src
 
   $('.delete-gend').click delete_gend
 

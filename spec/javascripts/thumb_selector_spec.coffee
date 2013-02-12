@@ -113,7 +113,7 @@ describe 'thumb_selector', ->
 
         expect($('.alert')).toHaveText(/some error/)
 
-  describe 'deleting a generated image', ->
+  describe 'deleting a source image', ->
     describe 'when deletion is successful', ->
       it 'removes the images from the DOM', ->
         $('#div1').click()
@@ -121,6 +121,48 @@ describe 'thumb_selector', ->
 
         spyOn($, 'ajax').andCallFake (url, params) ->
           params.success()
+        spyOn(window, 'confirm').andReturn(true)
+
+        $('.delete-src').click()
+
+        expect($('#div1').length).toBe(0)
+        expect($('#div2').length).toBe(1)
+        expect($('#div1').length).toBe(0)
+
+    describe 'when the response is an error', ->
+      beforeEach ->
+        $('#div1').click()
+
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.error({status: 500}, '')
+        spyOn(window, 'confirm').andReturn(true)
+
+        $('.delete-src').click()
+
+      it 'shows the user an error message', ->
+        expect($('.alert')).toHaveText(/Error deleting 1/)
+
+      it 'does not delete the image', ->
+        expect($('#div1').length).toBe(1)
+
+    describe 'when the request is not confirmed', ->
+
+      it "doesn't delete the image", ->
+        $('#div1').click()
+        spyOn(window, 'confirm').andReturn(false)
+        $('.delete-src').click()
+        expect($('#div1').length).toBe(1)
+
+  describe 'deleting a generated image', ->
+
+    describe 'when deletion is successful', ->
+      it 'removes the images from the DOM', ->
+        $('#div1').click()
+        $('#div3').click()
+
+        spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
+        spyOn(window, 'confirm').andReturn(true)
 
         $('.delete-gend').click()
 
@@ -134,6 +176,7 @@ describe 'thumb_selector', ->
 
         spyOn($, 'ajax').andCallFake (url, params) ->
           params.error({status: 500}, '')
+        spyOn(window, 'confirm').andReturn(true)
 
         $('.delete-gend').click()
 
@@ -143,15 +186,23 @@ describe 'thumb_selector', ->
       it 'does not delete the image', ->
         expect($('#div1').length).toBe(1)
 
-    describe 'enable based on selection', ->
-      it 'disable-none-selected should be disabled initially', ->
-        expect($('.disable-none-selected').prop('disabled')).toBe(true)
+    describe 'when the request is not confirmed', ->
 
-      it 'disable-none-selected should be disabled when none are selected', ->
+      it "doesn't delete the image", ->
         $('#div1').click()
-        $('#div1').click()
-        expect($('.disable-none-selected').prop('disabled')).toBe(true)
+        spyOn(window, 'confirm').andReturn(false)
+        $('.delete-gend').click()
+        expect($('#div1').length).toBe(1)
 
-      it 'enable-some-selected should be enabled when some are selected', ->
-        $('#div1').click()
-        expect($('.enable-some-selected').prop('disabled')).toBe(false)
+  describe 'enable based on selection', ->
+    it 'disable-none-selected should be disabled initially', ->
+      expect($('.disable-none-selected').prop('disabled')).toBe(true)
+
+    it 'disable-none-selected should be disabled when none are selected', ->
+      $('#div1').click()
+      $('#div1').click()
+      expect($('.disable-none-selected').prop('disabled')).toBe(true)
+
+    it 'enable-some-selected should be enabled when some are selected', ->
+      $('#div1').click()
+      expect($('.enable-some-selected').prop('disabled')).toBe(false)

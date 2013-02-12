@@ -166,9 +166,9 @@ describe SrcImagesController do
         }.to be_true
       end
 
-      it 'redirects to the index page' do
+      it 'returns success' do
         subject
-        expect(response).to redirect_to :action => :index
+        expect(response).to be_success
       end
 
     end

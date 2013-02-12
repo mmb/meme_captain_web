@@ -37,9 +37,9 @@ class SrcImagesController < ApplicationController
       src_image.is_deleted = true
       src_image.save!
 
-      redirect_to :action => :index
+      head :no_content
     else
-      render :status => :forbidden, :text => 'Forbidden'
+      head :forbidden
     end
 
   end
