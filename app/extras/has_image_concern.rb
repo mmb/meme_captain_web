@@ -5,6 +5,8 @@ module HasImageConcern
 
   included do
     before_validation :set_derived_image_fields
+
+    scope :without_image, :select => column_names - ['image']
   end
 
   def set_derived_image_fields

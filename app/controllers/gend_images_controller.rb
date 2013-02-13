@@ -7,7 +7,7 @@ class GendImagesController < ApplicationController
   end
 
   def index
-    @gend_images = GendImage.owned_by(current_user).active.most_recent.page(params[:page])
+    @gend_images = GendImage.without_image.owned_by(current_user).active.most_recent.page(params[:page])
   end
 
   def create
