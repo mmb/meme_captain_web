@@ -7,6 +7,8 @@ class GendImagesController < ApplicationController
   end
 
   def index
+    return if not_logged_in 'Please login to view generated images.'
+
     @gend_images = GendImage.without_image.includes(:gend_thumb).owned_by(current_user).active.most_recent.page(params[:page])
   end
 

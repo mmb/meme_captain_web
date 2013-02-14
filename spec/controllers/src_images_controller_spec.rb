@@ -49,6 +49,27 @@ describe SrcImagesController do
       expect(assigns(:src_images).size).to eq 1
     end
 
+    context 'when the user is not logged in' do
+
+      let(:user) { nil }
+
+      it 'redirects to login form' do
+        subject
+        expect(response).to redirect_to new_session_path
+      end
+
+      it 'set the return to url in the session' do
+        subject
+        expect(session[:return_to]).to include src_images_path
+      end
+
+      it 'informs the user to login' do
+        subject
+        expect(flash[:notice]).to eq 'Please login to view source images.'
+      end
+
+    end
+
   end
 
   describe "POST 'create'" do

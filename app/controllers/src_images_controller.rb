@@ -5,6 +5,8 @@ class SrcImagesController < ApplicationController
   end
 
   def index
+    return if not_logged_in 'Please login to view source images.'
+
     @src_images = SrcImage.without_image.includes(:src_thumb).owned_by(current_user).active.most_recent.page(params[:page])
   end
 
