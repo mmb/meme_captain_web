@@ -1,3 +1,5 @@
+require 'net/http'
+
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
@@ -5,16 +7,30 @@ class SrcImage < ActiveRecord::Base
 
   attr_accessible :image, :url
 
-  validates :content_type, :height, :image, :size, :width, presence: true
-
   belongs_to :user
   has_one :src_thumb
   has_many :gend_images
   has_and_belongs_to_many :src_sets
 
+  validate :image_if_not_url
+
+  def image_if_not_url
+    if url.blank? && image.blank?
+      errors.add :image, 'is required if url is not set.'
+    end
+  end
+
   protected
 
+  def load_from_url
+    uri = URI(url)
+    self.image = Net::HTTP.get(uri)
+    set_derived_image_fields
+  end
+
   def post_process
+    load_from_url if url
+
     img = magick_image_list
 
     img.auto_orient!

@@ -18,11 +18,17 @@ class SrcImagesController < ApplicationController
       @src_image.image = params[:src_image][:image].read
     end
 
-    if @src_image.save
-      redirect_to({:action => :index}, {
-          :notice => 'Source image created.'})
-    else
-      render :new
+    respond_to do |format|
+      if @src_image.save
+        format.html {
+          redirect_to({:action => :index}, {
+              :notice => 'Source image created.'})
+        }
+        format.json { render :json => {} }
+      else
+        format.html { render :new }
+        format.json { render :json => @src_image.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

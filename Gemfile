@@ -58,6 +58,10 @@ group :test, :development do
   gem 'travis_heroku'
 end
 
+group :test do
+  gem 'webmock'
+end
+
 group :production do
   gem 'pg'
 end

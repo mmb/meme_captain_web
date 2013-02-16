@@ -9,6 +9,6 @@ describe "src_images/new.html.erb" do
 
     render
 
-    expect(rendered).to contain 'errors'
+    expect(rendered).to contain 'error'
   end
 end
