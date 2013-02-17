@@ -5,7 +5,61 @@ describe 'src_images', ->
 
   describe 'creating source images with urls', ->
     describe 'when successful', ->
-      xit 'adds source images'
+      it 'makes the AJAX requests to add the source images', ->
+        $('#load-urls').val "http://url1.com/ http://url2.com/\n\nhttp://url3.com/"
+
+        ajax_spy = spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
+
+        $('#load-urls-button').click()
+
+        expect(ajax_spy).toHaveBeenCalledWith '/src_images/',
+                                              type: 'post',
+                                              contentType: 'application/json',
+                                              dataType: 'json',
+                                              data: '{"url":"http://url1.com/"}',
+                                              success: jasmine.any(Function),
+                                              error: jasmine.any(Function)
+
+        expect(ajax_spy).toHaveBeenCalledWith '/src_images/',
+                                              type: 'post',
+                                              contentType: 'application/json',
+                                              dataType: 'json',
+                                              data: '{"url":"http://url2.com/"}',
+                                              success: jasmine.any(Function),
+                                              error: jasmine.any(Function)
+
+        expect(ajax_spy).toHaveBeenCalledWith '/src_images/',
+                                              type: 'post',
+                                              contentType: 'application/json',
+                                              dataType: 'json',
+                                              data: '{"url":"http://url3.com/"}',
+                                              success: jasmine.any(Function),
+                                              error: jasmine.any(Function)
+
+      it 'displays a message to the user', ->
+        $('#load-urls').val 'http://url1.com/'
+
+        ajax_spy = spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
+
+        $('#load-urls-button').click()
+
+        expect($('#load-urls-message').text()).toMatch /Loaded 1 source image URLs\./
+
+      it 'clears the text area', ->
+        $('#load-urls').val 'http://url1.com/'
+
+        ajax_spy = spyOn($, 'ajax').andCallFake (url, params) ->
+          params.success()
+
+        $('#load-urls-button').click()
+
+        expect($('#load-urls').val()).toEqual ''
+
+      xit 'redirects to the source image index'
 
     describe 'when there is an error', ->
-      xit 'displays an error message'
+      xit 'displays an error message to the user'
+      xit 'does not makes the AJAX requests to add the source images'
+      xit 'clears the text area'

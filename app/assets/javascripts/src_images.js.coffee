@@ -8,14 +8,16 @@ create_with_url = (url) ->
          dataType: 'json'
          data: JSON.stringify(url: url)
          success: ->
-           console.log "ok #{url}"
          error: (xhr, text_status) ->
-           console.log "#{text_status} #{url}"
+           add_alert $('#load-urls-message'), "Error adding #{url}"
 
 window.load_urls_init = ->
   $('#load-urls-button').click ->
-    for url in split_urls($('#load-urls').val())
-      create_with_url url
+    urls = split_urls($('#load-urls').val())
+    $.when((create_with_url url for url in urls)...).then ->
+      add_alert $('#load-urls-message'), "Loaded #{urls.length} source image URLs.", 'alert-info'
+
+      $('#load-urls').val ''
 
 $(document).ready ->
   load_urls_init()

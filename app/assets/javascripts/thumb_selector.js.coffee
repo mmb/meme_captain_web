@@ -14,13 +14,6 @@ select_none = (event) ->
 selected_count = (parent) ->
   parent.find('input:checkbox.selector:checked').length
 
-close_button = ->
-  $('<button />').addClass('close').attr('data-dismiss', 'alert').append('&times;')
-
-add_alert = (container, message) ->
-  container.prepend($('<div />').addClass('alert alert-error').append(
-    close_button).append(message))
-
 add_to_set = (event) ->
   set_name = $('#add-to-set-name').val()
 
