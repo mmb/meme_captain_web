@@ -7,23 +7,27 @@
 </head>
 <body>
 
-<div class="container">
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <%= link_to image_tag('logo.png'), root_url %>
 
-  <div class="page-header">
-    <%= link_to image_tag('logo.png'), root_url %>
-
-    <div class="pull-right">
-      <p>
-        <% if current_user %>
-            <%= link_to "Logout #{current_user.email}", session_path, :method => :delete %>
-        <% else %>
-            <%= link_to "Login", new_session_path %>
-            |
-            <%= link_to "Register", new_user_path %>
-        <% end %>
-      </p>
+      <div class="pull-right">
+        <p>
+          <% if current_user %>
+              <%= link_to "Logout #{current_user.email}", session_path, :method => :delete %>
+          <% else %>
+              <%= link_to "Login", new_session_path %>
+              |
+              <%= link_to "Register", new_user_path %>
+          <% end %>
+        </p>
+      </div>
     </div>
   </div>
+</div>
+
+<div class="container-fluid">
 
   <% if ENV['DEPLOYED_TIME'] %>
       <div class="alert">
