@@ -96,7 +96,7 @@ describe SrcSetsController do
         expect(response).to redirect_to new_session_path
       end
 
-      it 'set the return to url in the session' do
+      it 'sets the return to url in the session' do
         subject
         expect(session[:return_to]).to include src_sets_path
       end
