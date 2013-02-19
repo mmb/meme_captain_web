@@ -1,6 +1,8 @@
 class GendImagesController < ApplicationController
 
   def new
+    return if not_logged_in 'Please login to create images.'
+
     @gend_image = GendImage.new
     @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
     2.times { @gend_image.captions.build }

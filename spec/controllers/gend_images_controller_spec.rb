@@ -16,12 +16,37 @@ describe GendImagesController do
 
   describe "GET 'new'" do
 
+    let(:src_id) { 'abc' }
+    subject { get :new, :src => src_id }
+
     it "returns http success" do
       SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
           src_image)
-      get 'new', :src => 'abc'
+      subject
       expect(response).to be_success
     end
+
+    context 'when the user is not logged in' do
+
+      let(:user) { nil }
+
+      it 'redirects to the login form' do
+        subject
+        expect(response).to redirect_to new_session_path
+      end
+
+      it 'sets the return to url in the session' do
+        subject
+        expect(session[:return_to]).to include new_gend_image_path
+      end
+
+      it 'informs the user to login' do
+        subject
+        expect(flash[:notice]).to eq 'Please login to create images.'
+      end
+
+    end
+
   end
 
   describe "GET 'index'" do
