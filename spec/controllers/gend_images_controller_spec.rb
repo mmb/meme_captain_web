@@ -161,6 +161,9 @@ describe GendImagesController do
 
   describe "GET 'show'" do
 
+    let(:id) { 'abc' }
+    subject { get :show, :id => id }
+
     context 'when the id is found' do
 
       let(:gend_image) { mock_model(GendImage) }
@@ -170,7 +173,7 @@ describe GendImagesController do
       end
 
       it 'shows the source image' do
-        get 'show', :id => 'abc'
+        subject
 
         expect(response).to be_success
       end
@@ -178,17 +181,17 @@ describe GendImagesController do
       it 'has the right content type' do
         gend_image.should_receive(:content_type).and_return('content type')
 
-        get 'show', :id => 'abc'
+        subject
 
-        expect(response.content_type).to eq('content type')
+        expect(response.content_type).to eq 'content type'
       end
 
       it 'has the right content' do
         gend_image.should_receive(:image).and_return('image')
 
-        get 'show', :id => 'abc'
+        subject
 
-        expect(response.body).to eq('image')
+        expect(response.body).to eq 'image'
       end
 
     end
@@ -197,7 +200,7 @@ describe GendImagesController do
 
       it 'raises record not found' do
         expect {
-          get 'show', :id => 'abc'
+          subject
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
