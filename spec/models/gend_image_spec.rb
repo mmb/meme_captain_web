@@ -17,7 +17,7 @@ describe GendImage do
 
   it { should have_many :captions }
 
-  it { should validate_presence_of :user }
+  it { should_not validate_presence_of :user }
 
   it 'should generate a unique id hash' do
     gend_image = FactoryGirl.create(:gend_image)

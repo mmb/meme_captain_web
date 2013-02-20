@@ -1,19 +1,21 @@
 <div class="thumb-index well">
 
-  <div class="btn-toolbar">
+  <% if current_user %>
+      <div class="btn-toolbar">
 
-    <div class="btn-group">
-      <button class="btn select-all">Select All</button>
-      <button class="btn select-none disabled disable-none-selected enable-some-selected">Select None</button>
-    </div>
+        <div class="btn-group">
+          <button class="btn select-all">Select All</button>
+          <button class="btn select-none disabled disable-none-selected enable-some-selected">Select None</button>
+        </div>
 
-    <div class="btn-group">
-      <button class="btn btn-danger delete-gend disabled disable-none-selected enable-some-selected">
-        Delete <span class="selected-count badge badge-inverse">0</span>
-      </button>
-    </div>
+        <div class="btn-group">
+          <button class="btn btn-danger delete-gend disabled disable-none-selected enable-some-selected">
+            Delete <span class="selected-count badge badge-inverse">0</span>
+          </button>
+        </div>
 
-  </div>
+      </div>
+  <% end %>
 
   <ul class="thumbnails">
     <% @gend_images.each do |gi| %>

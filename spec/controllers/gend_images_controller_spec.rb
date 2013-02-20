@@ -30,19 +30,11 @@ describe GendImagesController do
 
       let(:user) { nil }
 
-      it 'redirects to the login form' do
+      it 'returns http success' do
+        SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
+            src_image)
         subject
-        expect(response).to redirect_to new_session_path
-      end
-
-      it 'sets the return to url in the session' do
-        subject
-        expect(session[:return_to]).to include new_gend_image_path
-      end
-
-      it 'informs the user to login' do
-        subject
-        expect(flash[:notice]).to eq 'Please login to create images.'
+        expect(response).to be_success
       end
 
     end
@@ -88,21 +80,13 @@ describe GendImagesController do
 
       let(:user) { nil }
 
-      it 'redirects to login form' do
-        subject
-        expect(response).to redirect_to new_session_path
-      end
+      it 'shows anonymous images that have no user' do
+        3.times { FactoryGirl.create(:gend_image, :user => user) }
 
-      it 'set the return to url in the session' do
         subject
-        expect(session[:return_to]).to include gend_images_path
-      end
 
-      it 'informs the user to login' do
-        subject
-        expect(flash[:notice]).to eq 'Please login to view generated images.'
+        expect(assigns(:gend_images).size).to eq 3
       end
-
     end
 
   end
@@ -210,13 +194,12 @@ describe GendImagesController do
 
   describe "DELETE 'destroy'" do
 
+    let(:gend_image) { FactoryGirl.create(:gend_image, :user => user) }
+    let(:id) { gend_image.id_hash }
+
+    subject { delete :destroy, :id => id }
+
     context 'when the id is found' do
-
-      let(:gend_image) { FactoryGirl.create(:gend_image, :user => user) }
-
-      subject {
-        delete :destroy, :id => gend_image.id_hash
-      }
 
       it 'marks the record as deleted in the database' do
         subject
@@ -235,20 +218,31 @@ describe GendImagesController do
 
     context 'when the id is not found' do
 
+      let(:id) { 'abc' }
       it 'raises record not found' do
         expect {
-          delete :destroy, :id => 'abc'
+          subject
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
 
     context 'when the image is owned by another user' do
+      let(:gend_image) { FactoryGirl.create(:gend_image, :user => user2) }
 
       it "doesn't allow it to be deleted" do
-        gend_image = FactoryGirl.create(:gend_image, :user => user2)
+        subject
 
-        delete :destroy, :id => gend_image.id_hash
+        expect(response).to be_forbidden
+      end
+
+    end
+
+    context 'when the image is not owned by any user' do
+      let(:user) { nil }
+
+      it 'cannot be deleted' do
+        subject
 
         expect(response).to be_forbidden
       end

@@ -1,16 +1,12 @@
 class GendImagesController < ApplicationController
 
   def new
-    return if not_logged_in 'Please login to create images.'
-
     @gend_image = GendImage.new
     @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
     2.times { @gend_image.captions.build }
   end
 
   def index
-    return if not_logged_in 'Please login to view generated images.'
-
     @gend_images = GendImage.without_image.includes(:gend_thumb).owned_by(current_user).active.most_recent.page(params[:page])
   end
 
@@ -37,7 +33,7 @@ class GendImagesController < ApplicationController
   def destroy
     gend_image = GendImage.find_by_id_hash!(params[:id])
 
-    if gend_image.user == current_user
+    if gend_image.user && gend_image.user == current_user
       gend_image.is_deleted = true
       gend_image.save!
 
