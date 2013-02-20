@@ -1,8 +1,4 @@
-<h1><%= @src_set.name %>
-  <% if @src_set.by %>
-      <small>by <%= @src_set.by %></small>
-  <% end %>
-</h1>
+<h1><%= @src_set.name %></h1>
 
 <% if @src_set.user == current_user %>
     <%= button_to 'Delete Set', {:action => :destroy, :id => @src_set.name},

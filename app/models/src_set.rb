@@ -48,10 +48,6 @@ class SrcSet < ActiveRecord::Base
     thumb.height if thumb
   end
 
-  def by
-    try(:user).try(:email)
-  end
-
   scope :active, where(:is_deleted => false)
 
   scope :owned_by, lambda { |user| where(:user_id => user.id) }
