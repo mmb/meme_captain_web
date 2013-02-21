@@ -51,6 +51,13 @@ describe 'src_images/_src_images.html' do
         expect(rendered).to_not contain /Remove 0 from Set/
       end
 
+      it "doesn't show the toolbar" do
+        assign :src_images, src_images
+        assign :src_set, src_set
+        subject
+
+        expect(rendered).to_not have_selector '.btn-toolbar'
+      end
     end
 
   end
