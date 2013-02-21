@@ -6,9 +6,26 @@ describe SrcImagesController do
   let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
 
   describe "GET 'new'" do
-    it "returns http success" do
-      get 'new'
-      expect(response).to be_success
+
+    before(:each) do
+      controller.stub :current_user => user
+    end
+
+    subject { get :new }
+
+    context 'when the user is logged in' do
+      it "returns http success" do
+        subject
+        expect(response).to be_success
+      end
+    end
+
+    context 'when the user it not logged in' do
+      let(:user) { nil }
+      it 'redirects to the login form' do
+        subject
+        expect(response).to redirect_to new_session_path
+      end
     end
   end
 
