@@ -91,19 +91,16 @@ describe SrcSetsController do
 
       let(:user) { nil }
 
-      it 'redirects to login form' do
-        subject
-        expect(response).to redirect_to new_session_path
-      end
+      it "shows all source sets sorted by reverse updated time" do
+        3.times { FactoryGirl.create(:src_set, :user => user) }
 
-      it 'sets the return to url in the session' do
         subject
-        expect(session[:return_to]).to include src_sets_path
-      end
 
-      it 'informs the user to login' do
-        subject
-        expect(flash[:notice]).to eq 'Please login to view source sets.'
+        src_sets = assigns(:src_sets)
+
+        expect(
+            src_sets[0].updated_at >= src_sets[1].updated_at &&
+                src_sets[1].updated_at >= src_sets[2].updated_at).to be_true
       end
 
     end

@@ -18,9 +18,11 @@ class SrcSetsController < ApplicationController
   end
 
   def index
-    return if not_logged_in 'Please login to view source sets.'
-
-    @src_sets = SrcSet.owned_by(current_user).active.most_recent.page(params[:page])
+    if current_user
+      @src_sets = SrcSet.owned_by(current_user).active.most_recent.page(params[:page])
+    else
+      @src_sets = SrcSet.active.most_recent.page(params[:page])
+    end
   end
 
   def update
