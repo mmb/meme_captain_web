@@ -53,7 +53,7 @@ class SrcSetsController < ApplicationController
 
   def show
     @src_set = SrcSet.find_by_name_and_is_deleted!(params[:id], false)
-    @src_images = @src_set.src_images.active.most_recent.page(params[:page])
+    @src_images = @src_set.src_images.without_image.active.most_recent.page(params[:page])
   end
 
   def destroy
