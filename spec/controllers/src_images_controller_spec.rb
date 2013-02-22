@@ -5,11 +5,11 @@ describe SrcImagesController do
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
 
-  describe "GET 'new'" do
+  before(:each) do
+    controller.stub :current_user => user
+  end
 
-    before(:each) do
-      controller.stub :current_user => user
-    end
+  describe "GET 'new'" do
 
     subject { get :new }
 
@@ -30,10 +30,6 @@ describe SrcImagesController do
   end
 
   describe "GET 'index'" do
-
-    before(:each) do
-      controller.stub(:current_user => user)
-    end
 
     subject {
       get :index
@@ -75,7 +71,7 @@ describe SrcImagesController do
         expect(response).to redirect_to new_session_path
       end
 
-      it 'set the return to url in the session' do
+      it 'sets the return to url in the session' do
         subject
         expect(session[:return_to]).to include src_images_path
       end
@@ -91,25 +87,24 @@ describe SrcImagesController do
 
   describe "POST 'create'" do
 
+    let(:image) { fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+
+    subject { post :create, src_image: {:image => image} }
+
     context 'with valid attributes' do
 
       it 'saves the new source image to the database' do
-        expect {
-          post :create, src_image: {
-              :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
-        }.to change { SrcImage.count }.by(1)
+        expect { subject }.to change { SrcImage.count }.by(1)
       end
 
       it 'redirects to the index page' do
-        post :create, src_image: {
-            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
+        subject
 
         expect(response).to redirect_to :action => :index
       end
 
       it 'informs the user of success with flash' do
-        post :create, src_image: {
-            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
+        subject
 
         expect(flash[:notice]).to eq('Source image created.')
       end
@@ -118,18 +113,29 @@ describe SrcImagesController do
 
     context 'with invalid attributes' do
 
+      let(:image) { nil }
+
       it 'does not save the new source image in the database' do
-        expect {
-          post :create, src_image: {:image => nil}
-        }.to_not change { SrcImage.count }
+        expect { subject }.to_not change { SrcImage.count }
       end
 
       it 're-renders the new template' do
-        post :create, src_image: {:image => nil}
+        subject
 
         expect(response).to render_template('new')
       end
 
+    end
+
+    context 'when the user it not logged in' do
+
+      let(:user) { nil }
+
+      it 'redirects to the login form' do
+        subject
+
+        expect(response).to redirect_to new_session_path
+      end
     end
 
   end
@@ -183,10 +189,6 @@ describe SrcImagesController do
   end
 
   describe "DELETE 'destroy'" do
-
-    before(:each) do
-      controller.stub(:current_user => user)
-    end
 
     context 'when the id is found' do
 

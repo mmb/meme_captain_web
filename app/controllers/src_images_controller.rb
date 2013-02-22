@@ -13,6 +13,8 @@ class SrcImagesController < ApplicationController
   end
 
   def create
+    return if not_logged_in 'Please login to create source images.'
+
     @src_image = SrcImage.new(params[:src_image])
     @src_image.user = current_user
 
