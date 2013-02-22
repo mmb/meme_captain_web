@@ -48,6 +48,7 @@ gem 'daemons'
 gem 'meme_captain'
 
 gem 'kaminari'
+gem 'kaminari-bootstrap'
 gem 'thin'
 
 group :test, :development do
