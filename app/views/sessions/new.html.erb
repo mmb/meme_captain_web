@@ -3,7 +3,7 @@
 <%= form_tag session_path do %>
     <fieldset>
       <%= label_tag :email, 'Email' %>
-      <%= text_field_tag :email %>
+      <%= text_field_tag :email, '', :autofocus => true %>
 
       <%= label :password, 'Password' %>
       <%= password_field_tag :password %>

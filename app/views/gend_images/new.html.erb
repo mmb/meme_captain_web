@@ -8,9 +8,11 @@
     <%= f.label :src_image_id %>
     <%= f.text_field :src_image_id, :value => @gend_image.src_image.id_hash %>
 
+    <% focused = false %>
+
     <%= f.fields_for :captions do |cf| %>
         <%= cf.label :text %>
-        <%= cf.text_field :text %>
+        <%= cf.text_field :text, :autofocus => focused ? false : (focused = true) %>
 
         <%= cf.hidden_field :font, value: 'Coda-Heavy.ttf' %>
     <% end %>
