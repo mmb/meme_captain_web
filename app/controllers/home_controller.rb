@@ -7,6 +7,7 @@ class HomeController < ApplicationController
       @gend_images = GendImage.without_image.includes(:gend_thumb).owned_by(current_user).active.most_recent(6)
     else
       @src_sets = SrcSet.active.most_recent(16)
+      @gend_images = GendImage.without_image.includes(:gend_thumb).owned_by(current_user).active.most_recent(16)
     end
 
   end
