@@ -1,3 +1,8 @@
+<p>
+  <%= link_to "Login", new_session_path %>
+  to upload your own source images and create source sets.
+</p>
+
 <% unless @src_sets.empty? %>
     <%= render :partial => 'src_sets/src_sets' %>
 <% end %>

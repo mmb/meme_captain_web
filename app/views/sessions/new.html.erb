@@ -1,5 +1,9 @@
 <h1>Login</h1>
 
+<p>
+  <%= link_to "Register", new_user_path %> if you don't have an account.
+</p>
+
 <%= form_tag session_path do %>
     <fieldset>
       <%= label_tag :email, 'Email' %>
