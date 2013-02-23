@@ -32,13 +32,11 @@
 <div class="container-fluid">
 
   <% if ENV['DEPLOYED_TIME'] %>
-      <div class="alert">
+      <div class="alert alert-error">
         <p>
-          This is a pre-release testing build of this site. It is continuously updated and images may not be preserved.
-          Please send feedback to <%= mail_to 'matthewm@boedicker.org' %>.
-        </p>
-
-        <p>Last updated: <%= ENV['DEPLOYED_TIME'] %>, commit
+          This is a a test build and images may not be preserved. Send feedback
+          to <%= mail_to 'matthewm@boedicker.org' %>. Last
+          updated: <%= ENV['DEPLOYED_TIME'] %>, commit
           <a href="https://github.com/mmb/meme_captain_web/tree/<%= ENV['DEPLOYED_SHA'] %>"><%= ENV['DEPLOYED_SHA'] %></a>
         </p>
       </div>
