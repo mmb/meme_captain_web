@@ -13,6 +13,7 @@ MemeCaptainWeb::Application.configure do
   if heroku
     config.serve_static_assets = true
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
+    config.static_cache_control = "public, max-age=31536000"
   else
     config.serve_static_assets = false
   end
@@ -70,4 +71,14 @@ MemeCaptainWeb::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  if ENV['MEMCACHE_SERVERS']
+    config.cache_store = :dalli_store
+
+    config.action_dispatch.rack_cache = {
+        :metastore => Dalli::Client.new,
+        :entitystore => 'file:tmp/cache/rack/body',
+        :allow_reload => false
+    }
+  end
 end
