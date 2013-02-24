@@ -27,7 +27,11 @@ class GendImagesController < ApplicationController
   def show
     gend_image = GendImage.find_by_id_hash!(params[:id])
 
-    render :text => gend_image.image, :content_type => gend_image.content_type
+    expires_in 1.hour, :public => true
+
+    if stale?(gend_image)
+      render :text => gend_image.image, :content_type => gend_image.content_type
+    end
   end
 
   def destroy

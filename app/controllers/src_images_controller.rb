@@ -39,7 +39,11 @@ class SrcImagesController < ApplicationController
   def show
     src_image = SrcImage.find_by_id_hash!(params[:id])
 
-    render :text => src_image.image, :content_type => src_image.content_type
+    expires_in 1.hour, :public => true
+
+    if stale?(src_image)
+      render :text => src_image.image, :content_type => src_image.content_type
+    end
   end
 
   def destroy
