@@ -29,6 +29,8 @@ class GendImagesController < ApplicationController
 
     expires_in 1.hour, :public => true
 
+    headers['Meme-Text'] = gend_image.captions.map { |c| Rack::Utils.escape(c.text) }.join('&')
+
     if stale?(gend_image)
       render :text => gend_image.image, :content_type => gend_image.content_type
     end

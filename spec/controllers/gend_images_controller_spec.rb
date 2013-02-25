@@ -146,11 +146,14 @@ describe GendImagesController do
   describe "GET 'show'" do
 
     let(:id) { 'abc' }
+    let(:caption1) { mock_model(Caption, :text => '1&2') }
+    let(:caption2) { mock_model(Caption, :text => "3\n4") }
+
     subject { get :show, :id => id }
 
     context 'when the id is found' do
 
-      let(:gend_image) { mock_model(GendImage) }
+      let(:gend_image) { mock_model(GendImage, :captions => [caption1, caption2]) }
 
       before :each do
         GendImage.should_receive(:find_by_id_hash!).and_return(gend_image)
@@ -176,6 +179,28 @@ describe GendImagesController do
         subject
 
         expect(response.body).to eq 'image'
+      end
+
+      context 'returning the meme text in the headers' do
+
+        context 'when there is more than one caption' do
+          it 'returns the correct header' do
+            subject
+
+            expect(response.headers['Meme-Text']).to eq '1%262&3%0A4'
+          end
+        end
+
+        context 'when there is one caption' do
+          let(:gend_image) { mock_model(GendImage, :captions => [caption1]) }
+
+          it 'returns the correct header' do
+            subject
+
+            expect(response.headers['Meme-Text']).to eq '1%262'
+          end
+        end
+
       end
 
     end
