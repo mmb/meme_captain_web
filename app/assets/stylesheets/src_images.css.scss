@@ -1,9 +1,9 @@
-// Place all the styles related to the SrcImages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$orange: #ffb700;
+$lightgrey: #f5f5f5;
+$darkgrey: #e3e3e3;
 
-.selected {
-  background-color: #ffb700;
+.thumb-index .selected {
+  background-color: $orange;
 }
 
 .input-prepend {
@@ -22,4 +22,13 @@
 
 #load-urls {
   width: 32em;
+}
+
+.thumb-index {
+  background-color: darken($lightgrey, 4%);
+  border: 1px solid darken($darkgrey, 4%);
+}
+
+.thumbnail {
+  background-color: $lightgrey;
 }
