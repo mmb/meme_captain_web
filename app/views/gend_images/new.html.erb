@@ -5,8 +5,10 @@
 <%= form_for @gend_image, :url => {:action => 'create'} do |f| %>
     <%= f.error_messages %>
 
-    <%= f.label :src_image_id %>
-    <%= f.text_field :src_image_id, :value => @gend_image.src_image.id_hash %>
+    <%= f.hidden_field :src_image_id, :value => @gend_image.src_image.id_hash %>
+    <p>
+      Source image: <%= @gend_image.src_image.id_hash %>
+    </p>
 
     <% focused = false %>
 
