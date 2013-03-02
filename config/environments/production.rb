@@ -1,3 +1,5 @@
+require 'rack/cache'
+
 MemeCaptainWeb::Application.configure do
   heroku = !ENV['HEROKU'].blank?
   # Settings specified here will take precedence over those in config/application.rb
