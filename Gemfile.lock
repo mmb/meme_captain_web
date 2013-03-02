@@ -240,6 +240,7 @@ DEPENDENCIES
   less-rails
   meme_captain
   pg
+  rack-rewrite
   rails (= 3.2.9)
   rmagick
   rmagick4j

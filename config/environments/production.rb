@@ -6,10 +6,13 @@ MemeCaptainWeb::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
-  # Disable Rails's static asset server (Apache or nginx will already do this)
+  config.middleware.insert_before(ActionDispatch::Static, Rack::Rewrite) do
+    r301 %r{/((?:g|i)\?.+)}, 'http://v1.memecaptain.com/$1'
+  end
+
   if heroku
     config.serve_static_assets = true
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater

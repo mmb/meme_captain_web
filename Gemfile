@@ -68,4 +68,5 @@ end
 group :production do
   gem 'dalli'
   gem 'pg'
+  gem 'rack-rewrite'
 end
