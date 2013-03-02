@@ -1,4 +1,10 @@
 <% unless current_user %>
+    <div class="alert">Meme Captain is new. The previous version is still available
+      at <%= link_to 'http://v1.memecaptain.com/', 'http://v1.memecaptain.com/' %>. Send
+      feedback
+      to <%= mail_to 'matthewm@boedicker.org' %>.
+    </div>
+
     <p>
       <%= link_to "Login", new_session_path %> to upload source images and create source sets.
     </p>
