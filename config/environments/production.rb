@@ -9,7 +9,7 @@ MemeCaptainWeb::Application.configure do
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
-  config.middleware.insert_before(ActionDispatch::Static, Rack::Rewrite) do
+  config.middleware.insert_before(Rack::Cache, Rack::Rewrite) do
     r301 %r{/([a-f0-9]+\.(?:gif|jpg|png))$}, 'http://v1.memecaptain.com/$1'
     r301 %r{/((?:g|i)\?.+)}, 'http://v1.memecaptain.com/$1'
   end
