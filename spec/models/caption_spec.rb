@@ -22,4 +22,22 @@ describe Caption do
 
   it { should belong_to :gend_image }
 
+  context 'converting to a MemeCaptain::TextPos' do
+
+    let(:caption) { FactoryGirl.create(:caption) }
+
+    subject { caption.text_pos }
+
+    its(:text) { should == caption.text }
+    its(:x) { should == caption.top_left_x_pct }
+    its(:y) { should == caption.top_left_y_pct }
+    its(:width) { should == caption.width_pct }
+    its(:height) { should == caption.height_pct }
+
+    it 'has the correct font' do
+      expect(subject.draw_options[:font]).to include caption.font
+    end
+
+  end
+
 end

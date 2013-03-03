@@ -15,10 +15,7 @@ class GendImage < ActiveRecord::Base
   protected
 
   def post_process
-    self.image = MemeCaptain.meme_top_bottom(
-        src_image.image,
-        captions[0].text, captions[1] ? captions[1].text : nil,
-        :font => "#{Rails.root}/fonts/#{captions[0].font}").to_blob
+    self.image = MemeCaptain.meme(src_image.image, captions.map(&:text_pos)).to_blob
 
     thumb_img = magick_image_list
 

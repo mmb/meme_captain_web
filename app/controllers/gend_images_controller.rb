@@ -3,6 +3,17 @@ class GendImagesController < ApplicationController
   def new
     @gend_image = GendImage.new
     @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
+
+    @caption_defaults = [
+        {
+            :autofocus => true,
+            :top_left_y_pct => 0,
+        },
+        {
+            :top_left_y_pct => 0.75,
+        },
+    ]
+
     2.times { @gend_image.captions.build }
   end
 
