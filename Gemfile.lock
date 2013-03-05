@@ -207,7 +207,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.2.5)
+    twitter-bootstrap-rails (2.2.4)
       actionpack (>= 3.1)
       execjs
       railties (>= 3.1)
@@ -253,7 +253,7 @@ DEPENDENCIES
   therubyracer
   thin
   travis_heroku
-  twitter-bootstrap-rails
+  twitter-bootstrap-rails (= 2.2.4)
   uglifier (>= 1.0.3)
   webmock
   webrat
