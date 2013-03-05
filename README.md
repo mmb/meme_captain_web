@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/mmb/meme_captain_web.png)](https://travis-ci.org/mmb/meme_captain_web)
 
-Work-in-progress rewrite of memecaptain.com in rails.
-
-Test build at [http://mcalpha.herokuapp.com/](http://mcalpha.herokuapp.com/)
+Rails app deployed at [http://memecaptain.com/](http://memecaptain.com/)
 
 &copy; 2013 Matthew M. Boedicker
 
