@@ -50,6 +50,7 @@ gem 'meme_captain'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 gem 'thin'
+gem 'fabric-rails'
 
 group :test, :development do
   gem 'factory_girl_rails'

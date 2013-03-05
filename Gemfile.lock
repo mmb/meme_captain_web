@@ -61,6 +61,7 @@ GEM
     excon (0.16.10)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fabric-rails (1.0.12.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -232,6 +233,7 @@ DEPENDENCIES
   dalli
   delayed_job_active_record
   dynamic_form
+  fabric-rails
   factory_girl_rails
   jasmine-headless-webkit
   jquery-rails
