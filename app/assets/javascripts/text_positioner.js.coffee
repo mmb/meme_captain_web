@@ -78,7 +78,7 @@ class TextPositioner
     $("#gend_image_captions_attributes_#{target.name()}_width_pct").val(target.width_pct())
     $("#gend_image_captions_attributes_#{target.name()}_height_pct").val(target.height_pct())
 
-class Target
+class @Target
 
   constructor: (o) ->
     @target = o.target
