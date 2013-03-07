@@ -26,6 +26,15 @@ class TextPositioner
       lockRotation: true
       hasRotatingPoint: false
 
+    rect.setGradientFill
+      x1: '0%'
+      y1: '0%'
+      x2: '100%'
+      y2: '100%'
+      colorStops:
+        0: 'black'
+        1: 'white'
+
     @fabric_canvas.add rect
 
   set_img_attrs: ->
