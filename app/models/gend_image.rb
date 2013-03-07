@@ -29,4 +29,6 @@ class GendImage < ActiveRecord::Base
   scope :owned_by, lambda { |user| where(:user_id => user.try(:id)) }
 
   scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
+
+  scope :finished, where(:work_in_progress => false)
 end
