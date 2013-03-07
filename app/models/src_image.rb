@@ -22,14 +22,52 @@ class SrcImage < ActiveRecord::Base
 
   protected
 
-  def load_from_url
-    uri = URI(url)
-    self.image = Net::HTTP.get(uri)
-    set_derived_image_fields
+  def self.load_from_url(the_url)
+    case the_url
+      when %r{\|}
+        load_multi_vert the_url
+      when %r{\[\]}
+        load_multi_horiz the_url
+      else
+        Net::HTTP.get(URI(the_url))
+    end
+  end
+
+  def self.load_multi_vert(the_url)
+    images = the_url.split('|').map { |u| Magick::ImageList.new.from_blob(load_from_url(u)).first }
+
+    min_width = images.map(&:columns).min
+
+    images.select { |i| i.columns > min_width }.each do |i|
+      i.resize_to_fit! min_width
+    end
+
+    img_list = Magick::ImageList.new
+    img_list.push(*images)
+
+    img_list.append(true).to_blob
+  end
+
+  def self.load_multi_horiz(the_url)
+    images = the_url.split('[]').map { |u| Magick::ImageList.new.from_blob(load_from_url(u)).first }
+
+    min_height = images.map(&:rows).min
+
+    images.select { |i| i.rows > min_height }.each do |i|
+      i.resize_to_fit! nil, min_height
+    end
+
+    img_list = Magick::ImageList.new
+    img_list.push(*images)
+
+    img_list.append(false).to_blob
   end
 
   def post_process
-    load_from_url if url
+    if url
+      self.image = self.class.load_from_url(url)
+      set_derived_image_fields
+    end
 
     img = magick_image_list
 
