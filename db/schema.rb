@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126072700) do
+ActiveRecord::Schema.define(:version => 20130308084654) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(:version => 20130126072700) do
 
   create_table "src_images", :force => true do |t|
     t.string   "id_hash"
-    t.string   "url"
+    t.text     "url"
     t.integer  "width"
     t.integer  "height"
     t.integer  "size"
