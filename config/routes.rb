@@ -3,6 +3,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :gend_images
 
+  resources :gend_image_pages, :only => :show
+
   resources :gend_thumbs
 
   resource :session

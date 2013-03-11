@@ -1,0 +1,29 @@
+<% if @gend_image.work_in_progress? %>
+    <p>
+      This image is still being processed. Wait a few seconds or reload the page.
+    </p>
+<% else %>
+    <p>
+      <%= link_to image_tag(@gend_image_url), @gend_image_url %>
+    </p>
+
+    <div class="btn-group">
+      <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", :class => 'btn') do %>
+          <i class="icon-arrow-up"></i> Reddit
+      <% end %>
+
+      <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", :class => 'btn') do %>
+          <i class="icon-picture"></i> Imgur
+      <% end %>
+
+      <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", :class => 'btn') do %>
+          <i class="icon-twitter"></i> Tweet
+      <% end %>
+
+      <%= link_to 'New', {
+              :controller => :gend_images,
+              :action => :new,
+              :src => @src_image.id_hash,
+      }, :class => 'btn' %>
+    </div>
+<% end %>

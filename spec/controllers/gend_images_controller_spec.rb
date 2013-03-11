@@ -115,7 +115,8 @@ describe GendImagesController do
              :text1 => 'hello',
              :text2 => 'world'
 
-        expect(response).to redirect_to :action => :index
+        expect(response).to redirect_to :controller => :gend_image_pages, :action => :show,
+                                        :id => assigns(:gend_image).id_hash
       end
 
     end

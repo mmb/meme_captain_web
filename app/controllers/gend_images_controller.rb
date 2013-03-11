@@ -29,7 +29,7 @@ class GendImagesController < ApplicationController
     @gend_image.user = current_user
 
     if @gend_image.save
-      redirect_to :action => :index
+      redirect_to :controller => :gend_image_pages, :action => :show, :id => @gend_image.id_hash
     else
       render :new
     end

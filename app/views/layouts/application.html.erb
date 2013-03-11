@@ -5,6 +5,9 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag %>
+  <% if @refresh_in %>
+      <meta http-equiv="refresh" content="<%= @refresh_in %>"/>
+  <% end %>
 </head>
 <body>
 
