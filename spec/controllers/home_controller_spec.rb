@@ -34,6 +34,16 @@ describe HomeController do
 
     end
 
+    it "shows src sets sorted by reverse quality and reverse updated time" do
+      set1 = FactoryGirl.create(:src_set, :user => user, :quality => 1)
+      set2 = FactoryGirl.create(:src_set, :user => user)
+      set3 = FactoryGirl.create(:src_set, :user => user)
+
+      subject
+
+      expect(assigns(:src_sets)).to eq [set1, set3, set2]
+    end
+
   end
 
 end

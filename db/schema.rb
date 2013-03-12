@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308084654) do
+ActiveRecord::Schema.define(:version => 20130312050331) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -114,9 +114,11 @@ ActiveRecord::Schema.define(:version => 20130308084654) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
+    t.integer  "quality",    :default => 0,     :null => false
   end
 
   add_index "src_sets", ["is_deleted"], :name => "index_src_sets_on_is_deleted"
+  add_index "src_sets", ["quality"], :name => "index_src_sets_on_quality"
   add_index "src_sets", ["user_id"], :name => "index_src_sets_on_user_id"
 
   create_table "src_thumbs", :force => true do |t|
