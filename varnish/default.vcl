@@ -1,5 +1,6 @@
 sub vcl_recv {
-    if (req.url ~ "^/(gend|src)_thumbs/[0-9]+$") {
+    if (req.request == "GET" &&
+        req.url ~ "^/((gend|src)_thumbs/\d+|(gend|src)_images/[\w-]{6,})$") {
         unset req.http.Cookie;
     }
 }
