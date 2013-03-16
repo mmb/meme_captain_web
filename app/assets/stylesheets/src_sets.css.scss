@@ -2,11 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$src-set-base: #f5f5f5;
+
 .src-set-name {
   text-align: center;
   width: 128px;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.src-set-name-small {
+  background-color: $src-set-base;
+}
+
+.src-set-name-medium {
+  background-color: darken($src-set-base, 10%);
+}
+
+.src-set-name-large {
+  background-color: darken($src-set-base, 20%);
 }
 
 .empty-set {

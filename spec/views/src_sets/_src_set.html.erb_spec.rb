@@ -15,7 +15,8 @@ describe 'src_sets/_src_set.html' do
 
   let(:src_set) {
     mock_model(SrcSet, :name => 'set1', :src_images => [src_image],
-               :thumbnail => src_thumb, :thumb_width => src_thumb.width, :thumb_height => src_thumb.height)
+               :thumbnail => src_thumb, :thumb_width => src_thumb.width, :thumb_height => src_thumb.height,
+               :size_desc => :small)
   }
 
   context 'when the set contains a completed source image' do
@@ -38,7 +39,7 @@ describe 'src_sets/_src_set.html' do
   end
 
   context 'when the set is empty' do
-    let(:src_set) { mock_model(SrcSet, :name => 'set1', :thumbnail => nil, :src_images => []) }
+    let(:src_set) { mock_model(SrcSet, :name => 'set1', :thumbnail => nil, :src_images => [], :size_desc => :small) }
 
     it 'shows the empty set' do
       subject
