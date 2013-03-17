@@ -20,6 +20,10 @@
           <i class="icon-twitter"></i> Tweet
       <% end %>
 
+      <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", :class => 'btn') do %>
+          <i class="icon-pinterest"></i> Pinterest
+      <% end %>
+
       <%= link_to 'New', {
               :controller => :gend_images,
               :action => :new,
