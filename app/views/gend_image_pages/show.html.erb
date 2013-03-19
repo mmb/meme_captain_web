@@ -24,6 +24,14 @@
           <i class="icon-pinterest"></i> Pinterest
       <% end %>
 
+      <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", :class => 'btn') do %>
+          <i class="icon-facebook"></i> Facebook
+      <% end %>
+
+      <%= link_to("http://plus.google.com/share?url=#{u(@gend_image_url)}", :class => 'btn') do %>
+          <i class="icon-google-plus"></i> Google+
+      <% end %>
+
       <%= link_to 'New', {
               :controller => :gend_images,
               :action => :new,
