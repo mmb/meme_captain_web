@@ -54,6 +54,9 @@ gem 'fabric-rails'
 
 group :test, :development do
   gem 'factory_girl_rails'
+  # Should not be needed. Workaround described in:
+  #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
+  gem 'rspec'
   gem 'rspec-rails', '~> 2.0'
   gem 'shoulda'
   gem 'webrat'
