@@ -51,6 +51,7 @@ gem 'kaminari'
 gem 'kaminari-bootstrap'
 gem 'thin'
 gem 'fabric-rails'
+gem 'browser'
 
 group :test, :development do
   gem 'factory_girl_rails'

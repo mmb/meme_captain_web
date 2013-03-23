@@ -33,6 +33,7 @@ GEM
     bcrypt-ruby (3.0.1)
     bourne (1.4.0)
       mocha (~> 0.13.2)
+    browser (0.1.6)
     bson (1.8.3)
     bson_ext (1.8.3)
       bson (~> 1.8.3)
@@ -233,6 +234,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
+  browser
   coffee-rails (~> 3.2.1)
   daemons
   dalli

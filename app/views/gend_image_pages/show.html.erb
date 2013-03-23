@@ -32,6 +32,12 @@
           <i class="icon-google-plus"></i> Google+
       <% end %>
 
+      <% if browser.android? %>
+          <%= link_to("sms:?body=#{u(@gend_image_url)}", :class => 'btn') do %>
+              <i class="icon-mobile-phone"></i> SMS
+          <% end %>
+      <% end %>
+
       <%= link_to 'New', {
               :controller => :gend_images,
               :action => :new,
