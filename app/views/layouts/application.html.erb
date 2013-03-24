@@ -58,6 +58,14 @@
 
   <%= yield %>
 
+  <div class="footer">
+    <p>
+      <%= link_to 'Meme Captain version 1', 'http://v1.memecaptain.com/' %>
+      |
+      Feedback: <%= mail_to 'matthewm@boedicker.org' %>
+    </p>
+  </div>
+
 </div>
 
 <%= javascript_include_tag "application" %>
