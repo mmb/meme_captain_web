@@ -64,4 +64,6 @@ class SrcSet < ActiveRecord::Base
   scope :owned_by, lambda { |user| where(:user_id => user.id) }
 
   scope :most_recent, lambda { |limit=1| order(:quality, :updated_at).reverse_order.limit(limit) }
+
+  scope :front_page, where('quality >= 50')
 end
