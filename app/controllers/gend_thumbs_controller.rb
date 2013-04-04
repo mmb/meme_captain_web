@@ -1,7 +1,7 @@
 class GendThumbsController < ApplicationController
 
   def show
-    gend_thumb = GendThumb.find(params[:id])
+    gend_thumb = GendThumb.find(params[:id], :select => :image)
 
     expires_in 1.hour, :public => true
 
