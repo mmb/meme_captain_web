@@ -7,6 +7,10 @@
       <%= link_to image_tag(@gend_image_url), @gend_image_url %>
     </p>
 
+    <p>
+      <%= link_to @gend_image_url, @gend_image_url %>
+    </p>
+
     <div class="btn-group">
       <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", :class => 'btn') do %>
           <i class="icon-arrow-up"></i> Reddit
