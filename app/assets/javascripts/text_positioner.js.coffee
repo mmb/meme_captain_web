@@ -47,7 +47,7 @@ class TextPositioner
 
   create_fabric_canvas: ->
     canvas = new fabric.Canvas @canvas_id,
-                               'backgroundImage': @img_url
+      'backgroundImage': @img_url
     canvas.setWidth @img_width
     canvas.setHeight @img_height
 
@@ -169,13 +169,15 @@ $(document).ready ->
     tp.bind_div element
 
     tp.add_rect '0',
-                $('#gend_image_captions_attributes_0_top_left_x_pct'),
-                $('#gend_image_captions_attributes_0_top_left_y_pct'),
-                $('#gend_image_captions_attributes_0_width_pct'),
-                $('#gend_image_captions_attributes_0_height_pct')
+      $('#gend_image_captions_attributes_0_top_left_x_pct'),
+      $('#gend_image_captions_attributes_0_top_left_y_pct'),
+      $('#gend_image_captions_attributes_0_width_pct'),
+      $('#gend_image_captions_attributes_0_height_pct')
 
     tp.add_rect '1',
-                $('#gend_image_captions_attributes_1_top_left_x_pct'),
-                $('#gend_image_captions_attributes_1_top_left_y_pct'),
-                $('#gend_image_captions_attributes_1_width_pct'),
-                $('#gend_image_captions_attributes_1_height_pct')
+      $('#gend_image_captions_attributes_1_top_left_x_pct'),
+      $('#gend_image_captions_attributes_1_top_left_y_pct'),
+      $('#gend_image_captions_attributes_1_width_pct'),
+      $('#gend_image_captions_attributes_1_height_pct')
+
+    $(element).data 'tp', tp
