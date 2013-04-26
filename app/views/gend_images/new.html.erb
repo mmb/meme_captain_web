@@ -16,7 +16,7 @@
 
     <% @gend_image.captions.each.with_index do |caption, index| %>
         <%= f.fields_for :captions, caption do |cf| %>
-            <%= cf.label "Caption #{index + 1}" %>
+            <%= cf.label :text, "Caption #{index + 1}" %>
             <%= cf.text_field :text, :autofocus => @caption_defaults[index][:autofocus] %>
 
             <%= cf.hidden_field :font, value: 'Coda-Heavy.ttf' %>
