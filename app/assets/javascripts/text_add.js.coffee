@@ -19,7 +19,7 @@ window.add_text_positioner = (index) ->
 
     index = count_caption_fields(form)
 
-    target.before "<label for=\"gend_image_captions_attributes_#{index}_text\">Text</label>"
+    target.before "<label for=\"gend_image_captions_attributes_#{index}_text\">Caption #{index + 1}</label>"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_text\" name=\"gend_image[captions_attributes][#{index}][text]\" size=\"30\" type=\"text\" />"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_font\" name=\"gend_image[captions_attributes][#{index}][font]\" type=\"hidden\" value=\"Coda-Heavy.ttf\" />"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_top_left_x_pct\" name=\"gend_image[captions_attributes][#{index}][top_left_x_pct]\" type=\"hidden\" value=\"0.05\" />"

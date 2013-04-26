@@ -10,7 +10,7 @@ describe 'text_add', ->
 
     describe 'when the form has inputs', ->
       it 'adds a new label', ->
-        expect($('#new_gend_image')).toContainHtml '<label for="gend_image_captions_attributes_2_text">Text<\/label>'
+        expect($('#new_gend_image')).toContainHtml '<label for="gend_image_captions_attributes_2_text">Caption 3<\/label>'
 
       it 'adds a new text input', ->
         expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_text" name="gend_image[captions_attributes][2][text]" size="30" type="text" />'
@@ -35,7 +35,7 @@ describe 'text_add', ->
 
     describe 'when the form has no inputs', ->
       it 'adds a new label', ->
-        expect($('#empty')).toContainHtml '<label for="gend_image_captions_attributes_0_text">Text<\/label>'
+        expect($('#empty')).toContainHtml '<label for="gend_image_captions_attributes_0_text">Caption 1<\/label>'
 
       it 'adds a new text input', ->
         expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" size="30" type="text" />'
