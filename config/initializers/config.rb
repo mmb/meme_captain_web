@@ -8,6 +8,7 @@ module MemeCaptainWeb
     # Maximum size of any side for source images.
     SourceImageSide = 800
 
+    SetFrontPageMinQuality = (ENV['SET_FRONT_PAGE_MIN_QUALITY'] || 0).to_i
   end
 
 end

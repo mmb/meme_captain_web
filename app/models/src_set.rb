@@ -65,5 +65,5 @@ class SrcSet < ActiveRecord::Base
 
   scope :most_recent, lambda { |limit=1| order(:quality, :updated_at).reverse_order.limit(limit) }
 
-  scope :front_page, where('quality >= 50')
+  scope :front_page, where('quality >= ?', MemeCaptainWeb::Config::SetFrontPageMinQuality)
 end
