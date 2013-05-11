@@ -40,4 +40,27 @@ describe Caption do
 
   end
 
+  describe '#default_values' do
+    subject { FactoryGirl.create(:caption, :font => font) }
+
+    context 'when the font is nil' do
+      let(:font) { nil }
+
+      its(:font) { should eq MemeCaptainWeb::Config::DefaultFont }
+    end
+
+    context 'when the font is empty' do
+      let(:font) { '' }
+
+      its(:font) { should eq MemeCaptainWeb::Config::DefaultFont }
+    end
+
+    context 'when the font is set' do
+      let(:font) { 'some_font.ttf' }
+
+      its(:font) { should eq font }
+    end
+
+  end
+
 end

@@ -21,7 +21,7 @@ window.add_text_positioner = (index) ->
 
     target.before "<label for=\"gend_image_captions_attributes_#{index}_text\">Caption #{index + 1}</label>"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_text\" name=\"gend_image[captions_attributes][#{index}][text]\" size=\"30\" type=\"text\" />"
-    target.before "<input id=\"gend_image_captions_attributes_#{index}_font\" name=\"gend_image[captions_attributes][#{index}][font]\" type=\"hidden\" value=\"Coda-Heavy.ttf\" />"
+    target.before "<input id=\"gend_image_captions_attributes_#{index}_font\" name=\"gend_image[captions_attributes][#{index}][font]\" type=\"hidden\" value=\"\" />"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_top_left_x_pct\" name=\"gend_image[captions_attributes][#{index}][top_left_x_pct]\" type=\"hidden\" value=\"0.05\" />"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_top_left_y_pct\" name=\"gend_image[captions_attributes][#{index}][top_left_y_pct]\" type=\"hidden\" value =\"0.375\" />"
     target.before "<input id=\"gend_image_captions_attributes_#{index}_width_pct\" name=\"gend_image[captions_attributes][#{index}][width_pct]\" type=\"hidden\" value=\"0.9\" />"

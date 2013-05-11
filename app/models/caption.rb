@@ -5,6 +5,14 @@ class Caption < ActiveRecord::Base
 
   validates :text, presence: true
 
+  before_save :default_values
+
+  def default_values
+    if font.blank?
+      self.font = MemeCaptainWeb::Config::DefaultFont
+    end
+  end
+
   def font_path
     "#{Rails.root}/fonts/#{font}"
   end

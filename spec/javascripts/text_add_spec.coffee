@@ -16,7 +16,7 @@ describe 'text_add', ->
         expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_text" name="gend_image[captions_attributes][2][text]" size="30" type="text" />'
 
       it 'adds a new font input', ->
-        expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_font" name="gend_image[captions_attributes][2][font]" type="hidden" value="Coda-Heavy.ttf" />'
+        expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_font" name="gend_image[captions_attributes][2][font]" type="hidden" value="" />'
 
       it 'adds a new top left x percentage', ->
         expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_top_left_x_pct" name="gend_image[captions_attributes][2][top_left_x_pct]" type="hidden" value="0.05" />'
@@ -41,7 +41,7 @@ describe 'text_add', ->
         expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" size="30" type="text" />'
 
       it 'adds a new font input', ->
-        expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_font" name="gend_image[captions_attributes][0][font]" type="hidden" value="Coda-Heavy.ttf" />'
+        expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_font" name="gend_image[captions_attributes][0][font]" type="hidden" value="" />'
 
       it 'adds a new top left x percentage', ->
         expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_top_left_x_pct" name="gend_image[captions_attributes][0][top_left_x_pct]" type="hidden" value="0.05" />'

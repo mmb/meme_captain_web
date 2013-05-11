@@ -11,6 +11,8 @@ module MemeCaptainWeb
     # Minimum source set quality to be shown on the front page.
     SetFrontPageMinQuality = (ENV['MC_SET_FRONT_PAGE_MIN_QUALITY'] || 0).to_i
 
+    # Default font to use for memes.
+    DefaultFont = ENV['MC_DEFAULT_FONT'].blank? ? 'Coda-Heavy.ttf' : ENV['MC_DEFAULT_FONT']
   end
 
 end
