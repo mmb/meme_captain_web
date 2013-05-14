@@ -53,23 +53,4 @@ describe SrcSet do
 
   end
 
-  describe '#size_desc' do
-
-    it "knows what's small" do
-      set1.stub_chain(:src_images, :count) { 5 }
-      expect(set1.size_desc).to eq :small
-    end
-
-    it "knows what's medium" do
-      set1.stub_chain(:src_images, :count) { 11 }
-      expect(set1.size_desc).to eq :medium
-    end
-
-    it "knows what's small" do
-      set1.stub_chain(:src_images, :count) { 51 }
-      expect(set1.size_desc).to eq :large
-    end
-
-  end
-
 end

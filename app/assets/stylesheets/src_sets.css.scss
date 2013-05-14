@@ -11,18 +11,6 @@ $src-set-base: #f5f5f5;
   overflow: hidden;
 }
 
-.src-set-name-small {
-  background-color: $src-set-base;
-}
-
-.src-set-name-medium {
-  background-color: darken($src-set-base, 10%);
-}
-
-.src-set-name-large {
-  background-color: darken($src-set-base, 20%);
-}
-
 .empty-set {
   width: 128px;
   height: 128px;

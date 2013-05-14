@@ -48,17 +48,6 @@ class SrcSet < ActiveRecord::Base
     thumb.height if thumb
   end
 
-  def size_desc
-    case src_images.count
-      when 0..10 then
-        :small
-      when 11..50 then
-        :medium
-      else
-        :large
-    end
-  end
-
   scope :active, where(:is_deleted => false)
 
   scope :owned_by, lambda { |user| where(:user_id => user.id) }
