@@ -80,12 +80,21 @@ describe GendImagesController do
 
       let(:user) { nil }
 
-      it 'shows anonymous images that have no user' do
-        3.times { FactoryGirl.create(:gend_image, :user => user) }
+      it 'shows public images' do
+        3.times { FactoryGirl.create(:gend_image, :user => user, :private => false) }
 
         subject
 
         expect(assigns(:gend_images).size).to eq 3
+      end
+
+      it 'does not show private images' do
+        FactoryGirl.create(:gend_image, :user => user, :private => false)
+        2.times { FactoryGirl.create(:gend_image, :user => user, :private => true) }
+
+        subject
+
+        expect(assigns(:gend_images).size).to eq 1
       end
     end
 

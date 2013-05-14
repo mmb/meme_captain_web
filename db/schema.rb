@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312050331) do
+ActiveRecord::Schema.define(:version => 20130511083437) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -56,9 +56,11 @@ ActiveRecord::Schema.define(:version => 20130312050331) do
     t.boolean  "work_in_progress", :default => true
     t.boolean  "is_deleted",       :default => false
     t.integer  "user_id"
+    t.boolean  "private",          :default => false
   end
 
   add_index "gend_images", ["is_deleted"], :name => "index_gend_images_on_is_deleted"
+  add_index "gend_images", ["private"], :name => "index_gend_images_on_private"
   add_index "gend_images", ["user_id"], :name => "index_gend_images_on_user_id"
 
   create_table "gend_thumbs", :force => true do |t|

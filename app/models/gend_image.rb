@@ -3,7 +3,7 @@ class GendImage < ActiveRecord::Base
   include IdHashConcern
   include HasPostProcessConcern
 
-  attr_accessible :image, :src_image_id, :captions_attributes
+  attr_accessible :image, :src_image_id, :captions_attributes, :private
 
   belongs_to :src_image
   has_one :gend_thumb
@@ -31,4 +31,6 @@ class GendImage < ActiveRecord::Base
   scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
 
   scope :finished, where(:work_in_progress => false)
+
+  scope :public, where(:private => false)
 end

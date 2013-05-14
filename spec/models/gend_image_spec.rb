@@ -9,6 +9,10 @@ describe GendImage do
 
   it { should allow_mass_assignment_of :src_image_id }
 
+  it { should allow_mass_assignment_of :captions_attributes }
+
+  it { should allow_mass_assignment_of :private }
+
   it { should belong_to :src_image }
 
   it { should belong_to :user }

@@ -29,6 +29,11 @@
 
     <%= button_tag 'Add another caption', :class => "btn text-add", :type => :button %>
 
+    <%= f.label :private do %>
+        Private?
+        <%= f.check_box :private %>
+    <% end %>
+
     <p>
       <%= f.submit 'Create', :class => 'btn btn-primary' %>
     </p>

@@ -32,6 +32,23 @@ describe HomeController do
 
       end
 
+      it 'shows public images' do
+        3.times { FactoryGirl.create(:gend_image, :user => user, :work_in_progress => false, :private => false) }
+
+        subject
+
+        expect(assigns(:gend_images).size).to eq 3
+      end
+
+      it 'does not show private images' do
+        FactoryGirl.create(:gend_image, :user => user, :work_in_progress => false, :private => false)
+        2.times { FactoryGirl.create(:gend_image, :user => user, :work_in_progress => false, :private => true) }
+
+        subject
+
+        expect(assigns(:gend_images).size).to eq 1
+      end
+
     end
 
     it "shows src sets sorted by reverse quality and reverse updated time" do
