@@ -18,11 +18,7 @@ class SrcSetsController < ApplicationController
   end
 
   def index
-    if current_user
-      @src_sets = SrcSet.owned_by(current_user).active.most_recent.page(params[:page])
-    else
-      @src_sets = SrcSet.active.most_recent.page(params[:page])
-    end
+    @src_sets = SrcSet.active.most_recent.page(params[:page])
   end
 
   def update

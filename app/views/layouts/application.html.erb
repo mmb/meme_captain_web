@@ -18,6 +18,8 @@
       <div class="pull-right">
         <p>
           <% if current_user %>
+              <%= link_to 'My images', controller: :my, action: :show %>
+              |
               <%= link_to "Logout #{current_user.email}", session_path, :method => :delete %>
           <% else %>
               <%= link_to "Login", new_session_path %>

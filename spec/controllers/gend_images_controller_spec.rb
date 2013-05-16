@@ -76,26 +76,21 @@ describe GendImagesController do
       expect(assigns(:gend_images).size).to eq 1
     end
 
-    context 'when the user is not logged in' do
+    it 'shows public images' do
+      3.times { FactoryGirl.create(:gend_image, :user => user, :private => false) }
 
-      let(:user) { nil }
+      subject
 
-      it 'shows public images' do
-        3.times { FactoryGirl.create(:gend_image, :user => user, :private => false) }
+      expect(assigns(:gend_images).size).to eq 3
+    end
 
-        subject
+    it 'does not show private images' do
+      FactoryGirl.create(:gend_image, :user => user, :private => false)
+      2.times { FactoryGirl.create(:gend_image, :user => user, :private => true) }
 
-        expect(assigns(:gend_images).size).to eq 3
-      end
+      subject
 
-      it 'does not show private images' do
-        FactoryGirl.create(:gend_image, :user => user, :private => false)
-        2.times { FactoryGirl.create(:gend_image, :user => user, :private => true) }
-
-        subject
-
-        expect(assigns(:gend_images).size).to eq 1
-      end
+      expect(assigns(:gend_images).size).to eq 1
     end
 
   end

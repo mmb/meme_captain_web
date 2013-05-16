@@ -65,7 +65,7 @@ describe SrcSetsController do
       expect(response).to be_success
     end
 
-    it "shows the user's src sets sorted by reverse updated time" do
+    it 'shows all source sets sorted by reverse updated time' do
       3.times { FactoryGirl.create(:src_set, :user => user) }
 
       subject

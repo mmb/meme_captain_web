@@ -18,11 +18,7 @@ class GendImagesController < ApplicationController
   end
 
   def index
-    if current_user
-      @gend_images = GendImage.without_image.includes(:gend_thumb).owned_by(current_user).active.most_recent(params[:page])
-    else
-      @gend_images = GendImage.without_image.includes(:gend_thumb).public.active.most_recent.page(params[:page])
-    end
+    @gend_images = GendImage.without_image.includes(:gend_thumb).public.active.most_recent.page(params[:page])
   end
 
   def create
