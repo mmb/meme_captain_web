@@ -31,7 +31,7 @@ describe GendImage do
   context 'setting fields derived from the image' do
 
     subject {
-      gend_image = GendThumb.new(FactoryGirl.attributes_for(:gend_image))
+      gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image))
       gend_image.valid?
       gend_image
     }
@@ -44,5 +44,43 @@ describe GendImage do
 
   it 'generates a thumbnail'
   # figure out how to use run a delayed job in spec
+
+  describe '#ext' do
+
+    let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
+
+    subject {
+      gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image, image: image))
+      gend_image.valid?
+      gend_image
+    }
+
+    context 'jpg' do
+      its(:format) { should == :jpg }
+    end
+
+    context 'gif' do
+      let(:image) { File.read(Rails.root + 'spec/fixtures/files/omgcat.gif') }
+
+      its(:format) { should == :gif }
+    end
+
+    context 'png' do
+      let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.png') }
+
+      its(:format) { should == :png }
+    end
+
+    context 'other' do
+
+      it 'returns nil for extension' do
+        subject
+        subject.stub(content_type: 'foo/bar')
+        expect(subject.format).to be_nil
+      end
+
+    end
+
+  end
 
 end
