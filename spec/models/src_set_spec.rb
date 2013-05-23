@@ -12,9 +12,9 @@ describe SrcSet do
   context "determining the set's thumbnail" do
 
     it 'uses the most recent image as the thumbnail for the set' do
-      si1 = FactoryGirl.create(:src_image, :src_thumb => FactoryGirl.create(:src_thumb))
-      si2 = FactoryGirl.create(:src_image, :src_thumb => FactoryGirl.create(:src_thumb))
-      si3 = FactoryGirl.create(:src_image, :src_thumb => FactoryGirl.create(:src_thumb))
+      si1 = FactoryGirl.create(:src_image, src_thumb: FactoryGirl.create(:src_thumb), updated_at: 1.second.from_now)
+      si2 = FactoryGirl.create(:src_image, src_thumb: FactoryGirl.create(:src_thumb), updated_at: 2.seconds.from_now)
+      si3 = FactoryGirl.create(:src_image, src_thumb: FactoryGirl.create(:src_thumb), updated_at: 3.seconds.from_now)
 
       set1.src_images << si1
       set1.src_images << si2
