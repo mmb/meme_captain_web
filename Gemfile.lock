@@ -68,6 +68,7 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    gravatar-ultimate (1.0.3)
     heroku-api (0.3.8)
       excon (~> 0.16.10)
     hike (1.2.1)
@@ -242,6 +243,7 @@ DEPENDENCIES
   dynamic_form
   fabric-rails
   factory_girl_rails
+  gravatar-ultimate
   jasmine-headless-webkit
   jquery-rails
   kaminari

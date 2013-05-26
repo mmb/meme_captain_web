@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
     for_auth(email).find { |u| u.authenticate(password) }
   end
 
+  def avatar
+    Gravatar.new email
+  end
+
   scope :for_auth, lambda { |email| where('LOWER(email) = ?', email.downcase) }
 
 end

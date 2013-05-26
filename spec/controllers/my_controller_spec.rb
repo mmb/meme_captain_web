@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+require 'digest/md5'
+
 describe MyController do
 
   let(:user) { FactoryGirl.create(:user) }
@@ -40,6 +42,17 @@ describe MyController do
 
         subject
         expect(assigns(:gend_images)).to eq [gi2, gi1]
+      end
+
+      it "sets the user's name" do
+        subject
+        expect(assigns(:name)).to eq user.email
+      end
+
+      it "sets the user's avatar url" do
+        subject
+
+        expect(assigns(:avatar_url)).to eq "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}"
       end
 
     end

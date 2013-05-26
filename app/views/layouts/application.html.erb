@@ -18,7 +18,8 @@
       <div class="pull-right">
         <p>
           <% if current_user %>
-              <%= link_to 'My images', controller: :my, action: :show %>
+              <%= link_to image_tag(current_user.avatar.image_url(size: 50)), my_url %>
+              <%= link_to 'My images', my_url %>
               |
               <%= link_to "Logout #{current_user.email}", session_path, :method => :delete %>
           <% else %>
