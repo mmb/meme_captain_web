@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130511083437) do
+ActiveRecord::Schema.define(:version => 20130526045843) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -46,17 +46,17 @@ ActiveRecord::Schema.define(:version => 20130511083437) do
   create_table "gend_images", :force => true do |t|
     t.string   "id_hash"
     t.integer  "src_image_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
     t.string   "content_type"
-    t.binary   "image"
+    t.binary   "image",            :limit => 16777216
     t.integer  "height"
     t.integer  "size"
     t.integer  "width"
-    t.boolean  "work_in_progress", :default => true
-    t.boolean  "is_deleted",       :default => false
+    t.boolean  "work_in_progress",                     :default => true
+    t.boolean  "is_deleted",                           :default => false
     t.integer  "user_id"
-    t.boolean  "private",          :default => false
+    t.boolean  "private",                              :default => false
   end
 
   add_index "gend_images", ["is_deleted"], :name => "index_gend_images_on_is_deleted"
@@ -67,11 +67,11 @@ ActiveRecord::Schema.define(:version => 20130511083437) do
     t.string   "content_type"
     t.integer  "gend_image_id"
     t.integer  "height"
-    t.binary   "image"
+    t.binary   "image",         :limit => 16777216
     t.integer  "size"
     t.integer  "width"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "gend_thumbs", ["gend_image_id"], :name => "index_gend_thumbs_on_gend_image_id"
@@ -93,12 +93,12 @@ ActiveRecord::Schema.define(:version => 20130511083437) do
     t.integer  "height"
     t.integer  "size"
     t.string   "content_type"
-    t.binary   "image"
+    t.binary   "image",            :limit => 16777216
     t.integer  "user_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
-    t.boolean  "work_in_progress", :default => true
-    t.boolean  "is_deleted",       :default => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.boolean  "work_in_progress",                     :default => true
+    t.boolean  "is_deleted",                           :default => false
   end
 
   add_index "src_images", ["is_deleted"], :name => "index_src_images_on_is_deleted"
@@ -128,9 +128,9 @@ ActiveRecord::Schema.define(:version => 20130511083437) do
     t.integer  "width"
     t.integer  "height"
     t.integer  "size"
-    t.binary   "image"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.binary   "image",        :limit => 16777216
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "content_type"
   end
 
