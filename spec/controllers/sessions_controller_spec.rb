@@ -16,10 +16,10 @@ describe SessionsController do
         expect(session[:user_id]).to eq(user.id)
       end
 
-      it 'redirects to the root url' do
+      it 'redirects to the my url' do
         subject
 
-        expect(response).to redirect_to root_url
+        expect(response).to redirect_to my_url
       end
 
       it 'informs the user of login success with flash' do

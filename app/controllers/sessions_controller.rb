@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
     if user
       session[:user_id] = user.id
-      redirect_to(session[:return_to] || root_url, :notice => 'Logged in.')
+      redirect_to(session[:return_to] || my_url, :notice => 'Logged in.')
     else
       flash[:error] = 'Login failed.'
       render :new
