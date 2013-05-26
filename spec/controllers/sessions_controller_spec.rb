@@ -27,6 +27,25 @@ describe SessionsController do
 
         expect(flash[:notice]).to eq('Logged in.')
       end
+
+      context 'when the session has a return to url' do
+        let(:return_to) { 'foo' }
+
+        before(:each) do
+          session[:return_to] = return_to
+        end
+
+        it 'redirects to the return to url' do
+          subject
+          expect(response).to redirect_to return_to
+        end
+
+        it 'removes the return to url from the session' do
+          subject
+          expect(session[:return_to]).to be_nil
+        end
+      end
+
     end
 
     context 'when login fails' do
