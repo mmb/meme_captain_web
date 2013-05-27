@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130526045843) do
+ActiveRecord::Schema.define(:version => 20130527013239) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20130526045843) do
     t.boolean  "private",                              :default => false
   end
 
+  add_index "gend_images", ["id_hash"], :name => "index_gend_images_on_id_hash", :unique => true
   add_index "gend_images", ["is_deleted"], :name => "index_gend_images_on_is_deleted"
   add_index "gend_images", ["private"], :name => "index_gend_images_on_private"
   add_index "gend_images", ["user_id"], :name => "index_gend_images_on_user_id"
@@ -101,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20130526045843) do
     t.boolean  "is_deleted",                           :default => false
   end
 
+  add_index "src_images", ["id_hash"], :name => "index_src_images_on_id_hash", :unique => true
   add_index "src_images", ["is_deleted"], :name => "index_src_images_on_is_deleted"
 
   create_table "src_images_src_sets", :id => false, :force => true do |t|
