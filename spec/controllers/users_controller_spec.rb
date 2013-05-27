@@ -19,10 +19,10 @@ describe UsersController do
         }.to change{User.count}.by(1)
       end
 
-      it 'redirects to the home page' do
+      it 'redirects to the my page' do
         post :create, user: FactoryGirl.attributes_for(:user)
 
-        expect(response).to redirect_to root_url
+        expect(response).to redirect_to my_url
       end
 
       it 'logs the user in' do
