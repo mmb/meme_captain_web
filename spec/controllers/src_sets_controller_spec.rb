@@ -87,6 +87,19 @@ describe SrcSetsController do
       expect(assigns(:src_sets).size).to eq 1
     end
 
+    xit 'does not show empty source sets' do
+      src_image = FactoryGirl.create(:src_image)
+
+      set1 = FactoryGirl.create(:src_set, user: user)
+      set2 = FactoryGirl.create(:src_set, user: user)
+
+      put :update, id: set1.name, add_src_images: [src_image.id_hash]
+
+      subject
+
+      expect(assigns(:src_sets).size).to eq 1
+    end
+
     context 'when the user is not logged in' do
 
       let(:user) { nil }
