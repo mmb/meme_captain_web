@@ -52,15 +52,23 @@ describe HomeController do
     end
 
     it "shows src sets sorted by reverse quality and reverse updated time" do
-      set1 = FactoryGirl.create(:src_set, user: user, quality: 1, updated_at: 1.second.from_now)
-      set2 = FactoryGirl.create(:src_set, user: user, updated_at: 2.seconds.from_now)
-      set3 = FactoryGirl.create(:src_set, user: user, updated_at: 3.seconds.from_now)
+      set1 = FactoryGirl.create(:src_set_with_src_image, user: user, quality: 1, updated_at: 1.second.from_now)
+      set2 = FactoryGirl.create(:src_set_with_src_image, user: user, updated_at: 2.seconds.from_now)
+      set3 = FactoryGirl.create(:src_set_with_src_image, user: user, updated_at: 3.seconds.from_now)
 
       subject
 
       expect(assigns(:src_sets)).to eq [set1, set3, set2]
     end
 
+    it 'does not show empty src sets' do
+      set1 = FactoryGirl.create(:src_set_with_src_image)
+      FactoryGirl.create(:src_set)
+
+      subject
+
+      expect(assigns(:src_sets)).to eq [set1]
+    end
   end
 
 end

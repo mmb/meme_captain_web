@@ -18,7 +18,7 @@ class SrcSetsController < ApplicationController
   end
 
   def index
-    @src_sets = SrcSet.active.most_recent.page(params[:page])
+    @src_sets = SrcSet.active.not_empty.most_recent.page(params[:page])
   end
 
   def update

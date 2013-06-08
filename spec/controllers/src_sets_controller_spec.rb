@@ -66,7 +66,7 @@ describe SrcSetsController do
     end
 
     it 'shows all source sets sorted by reverse updated time' do
-      3.times { FactoryGirl.create(:src_set, :user => user) }
+      3.times { FactoryGirl.create(:src_set_with_src_image, user: user) }
 
       subject
 
@@ -78,26 +78,21 @@ describe SrcSetsController do
     end
 
     it 'does not show deleted src sets' do
-      FactoryGirl.create(:src_set, :user => user)
-
-      FactoryGirl.create(:src_set, :user => user, :is_deleted => true)
+      set1 = FactoryGirl.create(:src_set_with_src_image, user: user)
+      FactoryGirl.create(:src_set_with_src_image, user: user, is_deleted: true)
 
       subject
 
-      expect(assigns(:src_sets).size).to eq 1
+      expect(assigns(:src_sets)).to eq [set1]
     end
 
-    xit 'does not show empty source sets' do
-      src_image = FactoryGirl.create(:src_image)
-
-      set1 = FactoryGirl.create(:src_set, user: user)
-      set2 = FactoryGirl.create(:src_set, user: user)
-
-      put :update, id: set1.name, add_src_images: [src_image.id_hash]
+    it 'does not show empty source sets' do
+      set1 = FactoryGirl.create(:src_set_with_src_image, user: user)
+      FactoryGirl.create(:src_set, user: user)
 
       subject
 
-      expect(assigns(:src_sets).size).to eq 1
+      expect(assigns(:src_sets)).to eq [set1]
     end
 
     context 'when the user is not logged in' do
@@ -105,7 +100,7 @@ describe SrcSetsController do
       let(:user) { nil }
 
       it "shows all source sets sorted by reverse updated time" do
-        3.times { FactoryGirl.create(:src_set, :user => user) }
+        3.times { FactoryGirl.create(:src_set_with_src_image, user: user) }
 
         subject
 
