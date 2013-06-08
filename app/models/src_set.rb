@@ -56,5 +56,5 @@ class SrcSet < ActiveRecord::Base
 
   scope :front_page, where('quality >= ?', MemeCaptainWeb::Config::SetFrontPageMinQuality)
 
-  scope :not_empty, joins(:src_images).group(:'src_sets.id')
+  scope :not_empty, joins(:src_images).where('src_images.is_deleted' => false).group(:'src_sets.id')
 end
