@@ -1,15 +1,22 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the GendImagesHelper. For example:
-#
-# describe GendImagesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe GendImagesHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe '#gend_image_url_for' do
+
+    let(:host) { 'cdn.com' }
+    let(:gend_image) { FactoryGirl.create(:gend_image) }
+
+    it 'generates the gend image url' do
+      expect(helper.gend_image_url_for(gend_image)).to eq "http://#{controller.request.host}/gend_images/#{gend_image.id_hash}.#{gend_image.format}"
+    end
+
+    it 'uses the gend image host from the config if set' do
+      stub_const 'MemeCaptainWeb::Config::GendImageHost', host
+
+      expect(helper.gend_image_url_for(gend_image)).to eq "http://#{host}/gend_images/#{gend_image.id_hash}.#{gend_image.format}"
+    end
+
+  end
+
 end

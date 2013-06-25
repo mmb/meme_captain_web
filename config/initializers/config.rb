@@ -13,6 +13,8 @@ module MemeCaptainWeb
 
     # Default font to use for memes.
     DefaultFont = ENV['MC_DEFAULT_FONT'].blank? ? 'Coda-Heavy.ttf' : ENV['MC_DEFAULT_FONT']
+
+    GendImageHost = ENV['GEND_IMAGE_HOST'].blank? ? nil : ENV['GEND_IMAGE_HOST']
   end
 
 end
