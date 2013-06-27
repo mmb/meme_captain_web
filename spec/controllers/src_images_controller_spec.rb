@@ -101,7 +101,7 @@ describe SrcImagesController do
       it 'redirects to the index page' do
         subject
 
-        expect(response).to redirect_to :action => :index
+        expect(response).to redirect_to controller: :my, action: :show
       end
 
       it 'informs the user of success with flash' do

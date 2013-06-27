@@ -23,7 +23,7 @@ class SrcImagesController < ApplicationController
     respond_to do |format|
       if @src_image.save
         format.html {
-          redirect_to({:action => :index}, {
+          redirect_to({ controller: :my, action: :show }, {
               :notice => 'Source image created.'})
         }
         format.json { render :json => {} }
