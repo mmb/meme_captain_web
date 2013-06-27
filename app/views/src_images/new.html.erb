@@ -5,6 +5,11 @@
 
     <%= f.file_field :image %>
 
+    <%= f.label :private do %>
+        Private?
+        <%= f.check_box :private %>
+    <% end %>
+
     <p>
       <%= f.submit 'Create', :class => 'btn' %>
     </p>

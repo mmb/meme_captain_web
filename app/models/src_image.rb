@@ -5,7 +5,7 @@ class SrcImage < ActiveRecord::Base
   include IdHashConcern
   include HasPostProcessConcern
 
-  attr_accessible :image, :url
+  attr_accessible :image, :url, :private
 
   belongs_to :user
   has_one :src_thumb
@@ -95,4 +95,8 @@ class SrcImage < ActiveRecord::Base
   scope :owned_by, lambda { |user| where(:user_id => user.id) }
 
   scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
+
+  scope :public, where(private: false)
+
+  scope :name_matches, ->(query) { where('name LIKE ?', "%#{query}%") if query }
 end

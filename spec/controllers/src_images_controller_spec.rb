@@ -62,23 +62,24 @@ describe SrcImagesController do
       expect(assigns(:src_images).size).to eq 1
     end
 
-    context 'when the user is not logged in' do
+    it 'shows public images' do
+      FactoryGirl.create(:src_image, private: true)
+      3.times { FactoryGirl.create(:src_image) }
 
-      let(:user) { nil }
+      subject
 
-      it 'redirects to login form' do
-        subject
-        expect(response).to redirect_to new_session_path
-      end
+      expect(assigns(:src_images).size).to eq 3
+    end
 
-      it 'sets the return to url in the session' do
-        subject
-        expect(session[:return_to]).to include src_images_path
-      end
+    context 'searching' do
 
-      it 'informs the user to login' do
-        subject
-        expect(flash[:notice]).to eq 'Please login to view source images.'
+      it 'filters the result by the query string' do
+        si1 = FactoryGirl.create(:src_image, user: user, name: 'abc')
+        si2 = FactoryGirl.create(:src_image, user: user, name: 'def')
+        si3 = FactoryGirl.create(:src_image, user: user, name: 'ghi')
+
+        get :index, q: 'e'
+        expect(assigns(:src_images)).to eq [si2]
       end
 
     end

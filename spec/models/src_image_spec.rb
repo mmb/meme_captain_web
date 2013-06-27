@@ -14,6 +14,10 @@ describe SrcImage do
   it { should_not validate_presence_of :image }
   it { should allow_mass_assignment_of :image }
 
+  it { should_not validate_presence_of :name }
+
+  it { should allow_mass_assignment_of :private }
+
   it { should_not validate_presence_of :size }
   it { should_not allow_mass_assignment_of :size }
 

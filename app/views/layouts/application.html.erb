@@ -28,6 +28,10 @@
         </p>
       </div>
 
+      <%= form_tag({ controller: :src_images, action: :index }, method: 'get', class: 'navbar-search pull-right') do %>
+          <%= text_field_tag :q, nil, class: 'input-medium search-query', placeholder: 'Search' %>
+      <% end %>
+
       <%= link_to image_tag('logo.png'), root_url %>
 
     </div>
