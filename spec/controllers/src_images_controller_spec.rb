@@ -82,6 +82,13 @@ describe SrcImagesController do
         expect(assigns(:src_images)).to eq [si2]
       end
 
+      it 'is case insensitive' do
+        si = FactoryGirl.create(:src_image, user: user, name: 'a')
+
+        get :index, q: 'A'
+        expect(assigns(:src_images)).to eq [si]
+      end
+
     end
 
   end

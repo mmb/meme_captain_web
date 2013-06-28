@@ -98,5 +98,5 @@ class SrcImage < ActiveRecord::Base
 
   scope :public, where(private: false)
 
-  scope :name_matches, ->(query) { where('name LIKE ?', "%#{query}%") if query }
+  scope :name_matches, ->(query) { where('name LIKE ?', "%#{query.downcase}%") if query }
 end
