@@ -42,6 +42,7 @@ class GendImagesController < ApplicationController
 
     headers['Meme-Text'] = gend_image.captions.map { |c| Rack::Utils.escape(c.text) }.join('&')
     headers['Meme-Name'] = gend_image.src_image.name
+    headers['Meme-Source-Image'] = url_for(controller: :src_images, action: :show, id: gend_image.src_image.id_hash)
 
     if stale?(gend_image)
       render :text => gend_image.image, :content_type => gend_image.content_type

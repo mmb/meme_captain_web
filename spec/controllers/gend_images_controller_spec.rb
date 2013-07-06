@@ -160,7 +160,8 @@ describe GendImagesController do
 
       let(:captions) { [caption1, caption2] }
       let(:name) { 'name' }
-      let(:src_image) { mock_model(SrcImage, name: name) }
+      let(:src_id_hash) { 'test_hash' }
+      let(:src_image) { mock_model(SrcImage, id_hash: src_id_hash, name: name) }
       let(:gend_image) { mock_model(GendImage, captions: captions, src_image: src_image) }
 
       before :each do
@@ -227,6 +228,12 @@ describe GendImagesController do
             expect(response.headers['Meme-Name']).to be_nil
           end
         end
+      end
+
+      it 'returns the meme src image url in the headers' do
+        subject
+
+        expect(response.headers['Meme-Source-Image']).to eq "http://#{request.host}/src_images/#{src_id_hash}"
       end
 
     end
