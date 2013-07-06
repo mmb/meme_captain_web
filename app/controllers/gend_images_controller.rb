@@ -41,7 +41,7 @@ class GendImagesController < ApplicationController
     expires_in 1.hour, :public => true
 
     headers['Meme-Text'] = gend_image.captions.map { |c| Rack::Utils.escape(c.text) }.join('&')
-    headers['Meme-Name'] = gend_image.src_image.name
+    headers['Meme-Name'] = Rack::Utils.escape(gend_image.src_image.name) if gend_image.src_image.name
     headers['Meme-Source-Image'] = url_for(controller: :src_images, action: :show, id: gend_image.src_image.id_hash)
 
     if stale?(gend_image)

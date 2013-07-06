@@ -228,6 +228,16 @@ describe GendImagesController do
             expect(response.headers['Meme-Name']).to be_nil
           end
         end
+
+        context 'when the name has special characters' do
+          let(:name) { "a\r\nb" }
+
+          it 'url encodes special characters' do
+            subject
+
+            expect(response.headers['Meme-Name']).to eq 'a%0D%0Ab'
+          end
+        end
       end
 
       it 'returns the meme src image url in the headers' do
