@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627044401) do
+ActiveRecord::Schema.define(:version => 20130715032514) do
 
   create_table "captions", :force => true do |t|
     t.string   "text"
@@ -94,16 +94,18 @@ ActiveRecord::Schema.define(:version => 20130627044401) do
     t.integer  "height"
     t.integer  "size"
     t.string   "content_type"
-    t.binary   "image",            :limit => 16777216
+    t.binary   "image",             :limit => 16777216
     t.integer  "user_id"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
-    t.boolean  "work_in_progress",                     :default => true
-    t.boolean  "is_deleted",                           :default => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+    t.boolean  "work_in_progress",                      :default => true
+    t.boolean  "is_deleted",                            :default => false
     t.text     "name"
-    t.boolean  "private",                              :default => false
+    t.boolean  "private",                               :default => false
+    t.integer  "gend_images_count",                     :default => 0,     :null => false
   end
 
+  add_index "src_images", ["gend_images_count"], :name => "index_src_images_on_gend_images_count"
   add_index "src_images", ["id_hash"], :name => "index_src_images_on_id_hash", :unique => true
   add_index "src_images", ["is_deleted"], :name => "index_src_images_on_is_deleted"
   add_index "src_images", ["name"], :name => "index_src_images_on_name"

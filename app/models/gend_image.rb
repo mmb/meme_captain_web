@@ -5,7 +5,7 @@ class GendImage < ActiveRecord::Base
 
   attr_accessible :image, :src_image_id, :captions_attributes, :private
 
-  belongs_to :src_image
+  belongs_to :src_image, counter_cache: true
   has_one :gend_thumb
   has_many :captions, :order => :id
   belongs_to :user
