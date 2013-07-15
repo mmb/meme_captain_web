@@ -69,6 +69,35 @@ describe HomeController do
 
       expect(assigns(:src_sets)).to eq [set1]
     end
+
+    it 'does not show private source images' do
+      si1 = FactoryGirl.create(:src_image, private: true)
+      si2 = FactoryGirl.create(:src_image)
+
+      subject
+
+      expect(assigns(:src_images)).to eq [si2]
+    end
+
+    it 'does not show deleted source images' do
+      si1 = FactoryGirl.create(:src_image, is_deleted: true)
+      si2 = FactoryGirl.create(:src_image)
+
+      subject
+
+      expect(assigns(:src_images)).to eq [si2]
+    end
+
+    it 'shows source images sorted by reverse gend_images_count' do
+      si1 = FactoryGirl.create(:src_image, gend_images_count: 10)
+      si2 = FactoryGirl.create(:src_image, gend_images_count: 30)
+      si3 = FactoryGirl.create(:src_image, gend_images_count: 20)
+
+      subject
+
+      expect(assigns(:src_images)).to eq [si2, si3, si1]
+    end
+
   end
 
 end

@@ -244,10 +244,30 @@ describe SrcSetsController do
         expect(assigns(:src_set)).to eq src_set
       end
 
-      it 'assigns the source images' do
+      it 'sorts the source images by reverse gend images count' do
+        si1 = FactoryGirl.create(:src_image, gend_images_count: 30)
+        si2 = FactoryGirl.create(:src_image, gend_images_count: 10)
+        si3 = FactoryGirl.create(:src_image, gend_images_count: 20)
+
+        src_set.src_images << si1
+        src_set.src_images << si2
+        src_set.src_images << si3
+
         subject
 
-        expect(assigns(:src_images)).to eq []
+        expect(assigns(:src_images)).to eq [si1, si3, si2]
+      end
+
+      it 'does not show deleted source images' do
+        si1 = FactoryGirl.create(:src_image, is_deleted: true)
+        si2 = FactoryGirl.create(:src_image)
+
+        src_set.src_images << si1
+        src_set.src_images << si2
+
+        subject
+
+        expect(assigns(:src_images)).to eq [si2]
       end
 
       it 'returns success' do

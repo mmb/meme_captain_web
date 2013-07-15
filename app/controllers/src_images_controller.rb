@@ -7,7 +7,7 @@ class SrcImagesController < ApplicationController
   end
 
   def index
-    @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(params[:q]).public.active.most_recent.page(params[:page])
+    @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(params[:q]).public.active.most_used.page(params[:page])
   end
 
   def create

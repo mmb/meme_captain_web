@@ -41,16 +41,14 @@ describe SrcImagesController do
       expect(response).to be_success
     end
 
-    it 'shows the images sorted by reverse updated time' do
-      3.times { FactoryGirl.create(:src_image, :user => user) }
+    it 'shows the images sorted by reverse gend image count' do
+      si1 = FactoryGirl.create(:src_image, user: user, gend_images_count: 20)
+      si2 = FactoryGirl.create(:src_image, user: user, gend_images_count: 10)
+      si3 = FactoryGirl.create(:src_image, user: user, gend_images_count: 30)
 
       subject
 
-      src_images = assigns(:src_images)
-
-      expect(
-          src_images[0].updated_at >= src_images[1].updated_at &&
-              src_images[1].updated_at >= src_images[2].updated_at).to be_true
+      expect(assigns(:src_images)).to eq [si3, si1, si2]
     end
 
     it 'does not show deleted images' do

@@ -99,4 +99,6 @@ class SrcImage < ActiveRecord::Base
   scope :public, where(private: false)
 
   scope :name_matches, ->(query) { where('name LIKE ?', "%#{query.downcase}%") if query }
+
+  scope :most_used, lambda { |limit=1| order(:gend_images_count).reverse_order.limit(limit) }
 end
