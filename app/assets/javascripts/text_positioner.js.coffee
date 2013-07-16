@@ -26,14 +26,21 @@ class TextPositioner
       lockRotation: true
       hasRotatingPoint: false
 
-    rect.setGradientFill
-      x1: '0%'
-      y1: '0%'
-      x2: '100%'
-      y2: '100%'
+    rect.setGradient 'fill',
+      type: 'linear',
+      x1: -rect.getWidth() / 2,
+      y1: -rect.getHeight() / 2,
+      x2: rect.getWidth() / 2,
+      y2: rect.getHeight() / 2,
       colorStops:
         0: 'black'
         1: 'white'
+
+    rect.setShadow
+      color: 'rgba(0,0,0,0.3)'
+      blur: 10
+      offsetX: 10
+      offsetY: 10
 
     @fabric_canvas.add rect
 
