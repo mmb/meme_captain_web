@@ -34,7 +34,7 @@ class SrcSet < ActiveRecord::Base
   end
 
   def thumbnail
-    recent = src_images.without_image.active.most_recent
+    recent = src_images.without_image.active.most_used
     recent.first.src_thumb unless recent.empty?
   end
 
