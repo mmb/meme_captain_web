@@ -10,6 +10,8 @@
                   :id => gend_image.id_hash %>
     </div>
 <% end %>
-<p>
-  <input type="checkbox" class="selector" data-id="<%= gend_image.id_hash %>"/>
-</p>
+<% if @show_toolbar %>
+    <p>
+      <input type="checkbox" class="selector" data-id="<%= gend_image.id_hash %>"/>
+    </p>
+<% end %>
