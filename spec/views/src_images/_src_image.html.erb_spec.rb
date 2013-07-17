@@ -1,17 +1,22 @@
 require 'spec_helper'
 
 describe 'src_images/_src_image.html' do
+  let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
+  let(:src_image) { mock_model(SrcImage,
+                               work_in_progress: false,
+                               src_thumb: src_thumb) }
+  let(:user) { user = FactoryGirl.create(:user) }
+
+  before do
+    view.stub(current_user: user)
+  end
 
   subject {
-    render :partial => 'src_images/src_image',
-           :locals => {:src_image => src_image}
+    render partial: 'src_images/src_image',
+           locals: { src_image: src_image }
   }
 
   context 'the image has been processed' do
-    let(:src_thumb) { mock_model(SrcThumb, :width => 19, :height => 78) }
-    let(:src_image) { mock_model(SrcImage,
-                                 :work_in_progress => false,
-                                 :src_thumb => src_thumb) }
 
     it 'shows the thumbnail' do
       subject
@@ -37,11 +42,31 @@ describe 'src_images/_src_image.html' do
 
   context 'the image has not been processed yet' do
 
-    let(:src_image) { mock_model(SrcImage, :work_in_progress => true) }
+    let(:src_image) { mock_model(SrcImage, work_in_progress: true) }
 
     it 'shows as under construction' do
       subject
       expect(rendered).to match('Under Construction')
+    end
+
+  end
+
+  context 'when the user is logged in' do
+    it 'shows the checkbox' do
+      subject
+
+      expect(rendered).to have_selector '.selector'
+    end
+
+  end
+
+  context 'when the user is not logged in' do
+    let(:user) { nil }
+
+    it 'hides the checkbox' do
+      subject
+
+      expect(rendered).to_not have_selector '.selector'
     end
 
   end
