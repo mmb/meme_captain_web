@@ -19,6 +19,7 @@ class GendImagesController < ApplicationController
 
   def index
     @gend_images = GendImage.without_image.includes(:gend_thumb).public.active.most_recent.page(params[:page])
+    @show_toolbar = false
   end
 
   def create

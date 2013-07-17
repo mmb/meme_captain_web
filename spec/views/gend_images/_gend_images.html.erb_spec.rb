@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe 'gend_images/_gend_images.html' do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:gend_images) { Kaminari.paginate_array([]).page(1) }
+  subject { render :partial => 'gend_images/gend_images' }
 
-  subject {
-    render :partial => 'gend_images/gend_images',
-           :locals => {:current_user => user}
-  }
+  before do
+    assign :gend_images, Kaminari.paginate_array([]).page(1)
+    assign :show_toolbar, show_toolbar
+  end
 
-  context 'when the user is logged in' do
+  context 'when toolbar is enabled' do
+    let(:show_toolbar) { true }
 
     it 'shows the toolbar' do
-      assign :gend_images, gend_images
       subject
 
       expect(rendered).to have_selector '.btn-toolbar'
@@ -21,12 +20,10 @@ describe 'gend_images/_gend_images.html' do
 
   end
 
-  context 'when the user is not logged in' do
-
-    let(:user) { nil }
+  context 'when the toolbar is disabled' do
+    let(:show_toolbar) { false }
 
     it 'does not show the toolbar' do
-      assign :gend_images, gend_images
       subject
 
       expect(rendered).to_not have_selector '.btn-toolbar'
