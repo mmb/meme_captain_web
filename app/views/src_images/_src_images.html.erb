@@ -31,11 +31,13 @@
             </div>
         <% end %>
 
-        <div class="btn-group">
-          <button class="btn btn-danger delete-src disabled disable-none-selected enable-some-selected">
-            Delete <span class="selected-count badge badge-inverse">0</span>
-          </button>
-        </div>
+        <% if current_page? my_url %>
+            <div class="btn-group">
+              <button class="btn btn-danger delete-src disabled disable-none-selected enable-some-selected">
+                Delete <span class="selected-count badge badge-inverse">0</span>
+              </button>
+            </div>
+        <% end %>
 
       </div>
   <% end %>
