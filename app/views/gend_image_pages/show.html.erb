@@ -4,7 +4,7 @@
     </p>
 <% else %>
     <p>
-      <%= link_to image_tag(@gend_image_url), @gend_image_url %>
+      <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}"), @gend_image_url %>
     </p>
 
     <p>

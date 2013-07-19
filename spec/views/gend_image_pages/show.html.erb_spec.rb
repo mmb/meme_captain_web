@@ -32,4 +32,8 @@ describe "gend_image_pages/show.html.erb" do
     end
   end
 
+  it { should have_selector 'img[width="399"]' }
+
+  it { should have_selector 'img[height="399"]' }
+
 end
