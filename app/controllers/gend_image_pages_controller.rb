@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class GendImagePagesController < ApplicationController
   include GendImagesHelper
 
@@ -6,7 +8,8 @@ class GendImagePagesController < ApplicationController
     @src_image = SrcImage.without_image.find(@gend_image.src_image_id)
     @gend_image_url = gend_image_url_for(@gend_image)
 
-    if @gend_image.work_in_progress? && (Time.now() - @gend_image.created_at < 10)
+    if @gend_image.work_in_progress? &&
+        (Time.now - @gend_image.created_at < 10)
       @refresh_in = 2
     end
   end

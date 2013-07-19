@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class SrcImagesController < ApplicationController
 
   def new
@@ -7,7 +9,8 @@ class SrcImagesController < ApplicationController
   end
 
   def index
-    @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(params[:q]).public.active.most_used.page(params[:page])
+    @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(
+        params[:q]).public.active.most_used.page(params[:page])
   end
 
   def create
@@ -22,14 +25,16 @@ class SrcImagesController < ApplicationController
 
     respond_to do |format|
       if @src_image.save
-        format.html {
+        format.html do
           redirect_to({ controller: :my, action: :show }, {
-              :notice => 'Source image created.'})
-        }
-        format.json { render :json => {} }
+              notice: 'Source image created.' })
+        end
+        format.json { render json: {} }
       else
         format.html { render :new }
-        format.json { render :json => @src_image.errors, :status => :unprocessable_entity }
+        format.json do
+          render json: @src_image.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -37,10 +42,10 @@ class SrcImagesController < ApplicationController
   def show
     src_image = SrcImage.find_by_id_hash!(params[:id])
 
-    expires_in 1.hour, :public => true
+    expires_in 1.hour, public: true
 
     if stale?(src_image)
-      render :text => src_image.image, :content_type => src_image.content_type
+      render text: src_image.image, content_type: src_image.content_type
     end
   end
 

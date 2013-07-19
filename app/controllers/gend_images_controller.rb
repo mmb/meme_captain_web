@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class GendImagesController < ApplicationController
 
   def new
@@ -6,11 +8,11 @@ class GendImagesController < ApplicationController
 
     @caption_defaults = [
         {
-            :autofocus => true,
-            :top_left_y_pct => 0,
+            autofocus: true,
+            top_left_y_pct: 0,
         },
         {
-            :top_left_y_pct => 0.75,
+            top_left_y_pct: 0.75,
         },
     ]
 
@@ -18,7 +20,8 @@ class GendImagesController < ApplicationController
   end
 
   def index
-    @gend_images = GendImage.without_image.includes(:gend_thumb).public.active.most_recent.page(params[:page])
+    @gend_images = GendImage.without_image.includes(
+        :gend_thumb).public.active.most_recent.page(params[:page])
     @show_toolbar = false
   end
 
@@ -30,7 +33,8 @@ class GendImagesController < ApplicationController
     @gend_image.user = current_user
 
     if @gend_image.save
-      redirect_to :controller => :gend_image_pages, :action => :show, :id => @gend_image.id_hash
+      redirect_to controller: :gend_image_pages, action: :show,
+                  id: @gend_image.id_hash
     else
       render :new
     end
@@ -39,14 +43,19 @@ class GendImagesController < ApplicationController
   def show
     gend_image = GendImage.find_by_id_hash!(params[:id])
 
-    expires_in 1.hour, :public => true
+    expires_in 1.hour, public: true
 
-    headers['Meme-Text'] = gend_image.captions.map { |c| Rack::Utils.escape(c.text) }.join('&')
-    headers['Meme-Name'] = Rack::Utils.escape(gend_image.src_image.name) if gend_image.src_image.name
-    headers['Meme-Source-Image'] = url_for(controller: :src_images, action: :show, id: gend_image.src_image.id_hash)
+    headers['Meme-Text'] = gend_image.captions.map do |c|
+      Rack::Utils.escape(c.text)
+    end.join('&')
+    headers['Meme-Name'] = Rack::Utils.escape(
+        gend_image.src_image.name) if gend_image.src_image.name
+    headers['Meme-Source-Image'] = url_for(
+        controller: :src_images, action: :show,
+        id: gend_image.src_image.id_hash)
 
     if stale?(gend_image)
-      render :text => gend_image.image, :content_type => gend_image.content_type
+      render text: gend_image.image, content_type: gend_image.content_type
     end
   end
 

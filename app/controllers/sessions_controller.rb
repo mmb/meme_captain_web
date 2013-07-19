@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class SessionsController < ApplicationController
 
   def create
@@ -13,7 +15,7 @@ class SessionsController < ApplicationController
         return_to = nil
       end
 
-      redirect_to(return_to || my_url, :notice => 'Logged in.')
+      redirect_to(return_to || my_url, notice: 'Logged in.')
     else
       flash[:error] = 'Login failed.'
       render :new
@@ -24,7 +26,7 @@ class SessionsController < ApplicationController
     if session[:user_id]
       session.delete :user_id
 
-      redirect_to root_url, :notice => 'Logged out.'
+      redirect_to root_url, notice: 'Logged out.'
     else
       redirect_to root_url
     end
