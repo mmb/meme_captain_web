@@ -12,50 +12,47 @@
 
       <div class="span6">
 
-        <div class="btn-group">
-          <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn') do %>
-              <i class="icon-arrow-up"></i> Reddit
-          <% end %>
-
-          <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", class: 'btn') do %>
-              <i class="icon-picture"></i> Imgur
-          <% end %>
-
-          <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn') do %>
-              <i class="icon-twitter"></i> Tweet
-          <% end %>
-
-          <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn') do %>
-              <i class="icon-pinterest"></i> Pinterest
-          <% end %>
-
-          <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn') do %>
-              <i class="icon-facebook"></i> Facebook
-          <% end %>
-
-          <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn') do %>
-              <i class="icon-google-plus"></i> Google+
-          <% end %>
-
-          <% if browser.android? %>
-              <%= link_to("sms:?body=#{u(@gend_image_url)}", class: 'btn') do %>
-                  <i class="icon-mobile-phone"></i> SMS
-              <% end %>
-          <% end %>
-
-          <%= link_to 'New', {
-                  controller: :gend_images,
-                  action: :new,
-                  src: @src_image.id_hash,
-          }, class: 'btn' %>
-
-        </div>
-
         <% @gend_image.captions.each do |c| %>
             <h1><%= c.text %></h1>
         <% end %>
 
-        <p>
+        <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn') do %>
+            <i class="icon-arrow-up"></i> Reddit
+        <% end %>
+
+        <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", class: 'btn') do %>
+            <i class="icon-picture"></i> Imgur
+        <% end %>
+
+        <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn') do %>
+            <i class="icon-twitter"></i> Tweet
+        <% end %>
+
+        <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn') do %>
+            <i class="icon-pinterest"></i> Pinterest
+        <% end %>
+
+        <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn') do %>
+            <i class="icon-facebook"></i> Facebook
+        <% end %>
+
+        <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn') do %>
+            <i class="icon-google-plus"></i> Google+
+        <% end %>
+
+        <% if browser.android? %>
+            <%= link_to("sms:?body=#{u(@gend_image_url)}", class: 'btn') do %>
+                <i class="icon-mobile-phone"></i> SMS
+            <% end %>
+        <% end %>
+
+        <%= link_to 'New', {
+                controller: :gend_images,
+                action: :new,
+                src: @src_image.id_hash,
+        }, class: 'btn' %>
+
+        <p class="meme-meta">
           <%= link_to @gend_image_url, @gend_image_url %>
         </p>
 
