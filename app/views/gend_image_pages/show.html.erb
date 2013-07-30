@@ -3,51 +3,70 @@
       This image is still being processed. Wait a few seconds or reload the page.
     </p>
 <% else %>
-    <p>
-      <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}"), @gend_image_url %>
-    </p>
+    <div class="row-fluid">
+      <div class="span6">
+        <p>
+          <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}"), @gend_image_url %>
+        </p>
+      </div>
 
-    <p>
-      <%= link_to @gend_image_url, @gend_image_url %>
-    </p>
+      <div class="span6">
 
-    <div class="btn-group">
-      <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", :class => 'btn') do %>
-          <i class="icon-arrow-up"></i> Reddit
-      <% end %>
-
-      <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", :class => 'btn') do %>
-          <i class="icon-picture"></i> Imgur
-      <% end %>
-
-      <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", :class => 'btn') do %>
-          <i class="icon-twitter"></i> Tweet
-      <% end %>
-
-      <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", :class => 'btn') do %>
-          <i class="icon-pinterest"></i> Pinterest
-      <% end %>
-
-      <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", :class => 'btn') do %>
-          <i class="icon-facebook"></i> Facebook
-      <% end %>
-
-      <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", :class => 'btn') do %>
-          <i class="icon-google-plus"></i> Google+
-      <% end %>
-
-      <% if browser.android? %>
-          <%= link_to("sms:?body=#{u(@gend_image_url)}", :class => 'btn') do %>
-              <i class="icon-mobile-phone"></i> SMS
+        <div class="btn-group">
+          <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn') do %>
+              <i class="icon-arrow-up"></i> Reddit
           <% end %>
-      <% end %>
 
-      <%= link_to 'New', {
-              :controller => :gend_images,
-              :action => :new,
-              :src => @src_image.id_hash,
-      }, :class => 'btn' %>
+          <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", class: 'btn') do %>
+              <i class="icon-picture"></i> Imgur
+          <% end %>
+
+          <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn') do %>
+              <i class="icon-twitter"></i> Tweet
+          <% end %>
+
+          <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn') do %>
+              <i class="icon-pinterest"></i> Pinterest
+          <% end %>
+
+          <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn') do %>
+              <i class="icon-facebook"></i> Facebook
+          <% end %>
+
+          <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn') do %>
+              <i class="icon-google-plus"></i> Google+
+          <% end %>
+
+          <% if browser.android? %>
+              <%= link_to("sms:?body=#{u(@gend_image_url)}", class: 'btn') do %>
+                  <i class="icon-mobile-phone"></i> SMS
+              <% end %>
+          <% end %>
+
+          <%= link_to 'New', {
+                  controller: :gend_images,
+                  action: :new,
+                  src: @src_image.id_hash,
+          }, class: 'btn' %>
+
+        </div>
+
+        <% @gend_image.captions.each do |c| %>
+            <h1><%= c.text %></h1>
+        <% end %>
+
+        <p>
+          <%= link_to @gend_image_url, @gend_image_url %>
+        </p>
+
+        <p>Size: <%= @gend_image.width %>x<%= @gend_image.height %></p>
+
+        <p>Created: <%= @gend_image.created_at %></p>
+
+        <p>
+          <%= image_tag("https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=#{u(@gend_image_url)}") %>
+        </p>
+
+      </div>
     </div>
-
-    <p class="meme-meta">Image created <%= @gend_image.created_at %></p>
 <% end %>
