@@ -2,16 +2,20 @@ require 'spec_helper'
 
 describe "users/new.html.erb" do
 
-  subject {
-    assign(:user, [ stub_model(User) ])
+  before(:each) do
+    assign(:user, [stub_model(User)])
+  end
 
-    render
-  }
+  it 'has an email field' do
+    expect(render).to have_selector('input', id: 'user_email')
+  end
 
-  it { should have_selector('input', :id => 'user_email') }
+  it 'has a password field' do
+    expect(render).to have_selector('input', id: 'user_password')
+  end
 
-  it { should have_selector('input', :id => 'user_password') }
-
-  it { should have_selector('input', :id => 'user_password_confirmation') }
+  it 'has a password confirmation field' do
+    expect(render).to have_selector('input', id: 'user_password_confirmation')
+  end
 
 end
