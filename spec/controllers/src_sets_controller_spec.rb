@@ -6,7 +6,7 @@ describe SrcSetsController do
   let(:user2) { FactoryGirl.create(:user) }
 
   before(:each) do
-    controller.stub(:current_user => user)
+    session[:user_id] = user.try(:id)
   end
 
   describe "GET 'new'" do

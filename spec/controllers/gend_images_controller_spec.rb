@@ -11,7 +11,7 @@ describe GendImagesController do
   }
 
   before(:each) do
-    controller.stub(:current_user => user)
+    session[:user_id] = user.try(:id)
   end
 
   describe "GET 'new'" do

@@ -74,8 +74,7 @@ describe GendImage do
     context 'other' do
 
       it 'returns nil for extension' do
-        subject
-        subject.stub(content_type: 'foo/bar')
+        subject.content_type = 'foo/bar'
         expect(subject.format).to be_nil
       end
 
