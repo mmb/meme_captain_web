@@ -22,7 +22,7 @@ describe SrcSetsController do
 
     context 'with valid attributes' do
 
-      subject { post :create, :src_set => {:name => 'test'} }
+      subject { post :create, src_set: { name: 'test' } }
 
       it 'saves the new src set to the database' do
         expect { subject }.to change { SrcSet.count }.by(1)
@@ -31,7 +31,7 @@ describe SrcSetsController do
       it 'redirects to the index' do
         subject
 
-        expect(response).to redirect_to :action => :index
+        expect(response).to redirect_to action: :index
       end
 
       it 'informs the user of success with flash' do
@@ -44,7 +44,7 @@ describe SrcSetsController do
 
     context 'with invalid attributes' do
 
-      subject { post :create, :src_set => {} }
+      subject { post :create, src_set: {} }
 
       it 'renders the form again' do
         subject
@@ -119,12 +119,12 @@ describe SrcSetsController do
 
     let(:src_image) { FactoryGirl.create(:src_image) }
     let(:src_image2) { FactoryGirl.create(:src_image) }
-    let(:src_set) { FactoryGirl.create(:src_set, :user => user) }
+    let(:src_set) { FactoryGirl.create(:src_set, user: user) }
 
     context 'adding source images' do
 
       subject {
-        put :update, :id => src_set.name, :add_src_images => [src_image.id_hash, src_image2.id_hash]
+        put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
         src_set.reload
       }
 
@@ -138,7 +138,7 @@ describe SrcSetsController do
 
       it 'redirects to the source set' do
         subject
-        expect(response).to redirect_to :action => :show
+        expect(response).to redirect_to action: :show
       end
 
       it 'informs the user of success with a notice' do
@@ -151,12 +151,12 @@ describe SrcSetsController do
     context 'deleting source images' do
 
       subject {
-        put :update, :id => src_set.name, :delete_src_images => [src_image.id_hash, src_image2.id_hash]
+        put :update, id: src_set.name, delete_src_images: [src_image.id_hash, src_image2.id_hash]
         src_set.reload
       }
 
       before(:each) do
-        put :update, :id => src_set.name, :add_src_images => [src_image.id_hash, src_image2.id_hash]
+        put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
       end
 
       it 'deletes source images from the set' do
@@ -169,7 +169,7 @@ describe SrcSetsController do
 
       it 'redirects to the source set' do
         subject
-        expect(response).to redirect_to :action => :show
+        expect(response).to redirect_to action: :show
       end
 
       it 'informs the user of success with a notice' do
@@ -182,7 +182,7 @@ describe SrcSetsController do
     context 'changing the name' do
 
       subject {
-        put :update, :id => src_set.name, :src_set => {:name => 'newname'}
+        put :update, id: src_set.name, src_set: { name: 'newname' }
         src_set.reload
       }
 
@@ -190,7 +190,7 @@ describe SrcSetsController do
 
       it 'redirects to the source set' do
         subject
-        expect(response).to redirect_to :action => :show, :id => 'newname'
+        expect(response).to redirect_to action: :show, id: 'newname'
       end
 
       it 'informs the user of success with a notice' do
@@ -203,9 +203,9 @@ describe SrcSetsController do
     context 'when the source set is owned by another user' do
 
       it "doesn't allow it to be updated" do
-        src_set = FactoryGirl.create(:src_set, :user => user2)
+        src_set = FactoryGirl.create(:src_set, user: user2)
 
-        put :update, :id => src_set.name, :src_set => {:name => 'newname'}
+        put :update, id: src_set.name, src_set: { name: 'newname' }
 
         expect(response).to be_forbidden
       end
@@ -216,7 +216,7 @@ describe SrcSetsController do
 
       it 'creates the set' do
         expect {
-          put :update, :id => 'a new set', :add_src_images => [src_image.id_hash]
+          put :update, id: 'a new set', add_src_images: [src_image.id_hash]
         }.to change { SrcSet.count }.by(1)
       end
 
@@ -232,7 +232,7 @@ describe SrcSetsController do
 
   describe "GET 'show'" do
 
-    subject { get :show, :id => src_set.name }
+    subject { get :show, id: src_set.name }
 
     context 'when the name is found' do
 
@@ -282,7 +282,7 @@ describe SrcSetsController do
 
       it 'raises record not found' do
         expect {
-          get 'show', :id => 'abc'
+          get 'show', id: 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -290,7 +290,7 @@ describe SrcSetsController do
 
     context 'when the set is deleted' do
 
-      let(:src_set) { FactoryGirl.create(:src_set, :is_deleted => true) }
+      let(:src_set) { FactoryGirl.create(:src_set, is_deleted: true) }
 
       it 'returns not found' do
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
@@ -302,8 +302,8 @@ describe SrcSetsController do
 
   describe "DELETE 'destroy'" do
 
-    let(:src_set) { FactoryGirl.create(:src_set, :user => user) }
-    subject { delete :destroy, :id => src_set.name }
+    let(:src_set) { FactoryGirl.create(:src_set, user: user) }
+    subject { delete :destroy, id: src_set.name }
 
     context 'when the name is found' do
 
@@ -314,7 +314,7 @@ describe SrcSetsController do
 
       it 'redirects to the index page' do
         subject
-        expect(response).to redirect_to :action => :index
+        expect(response).to redirect_to action: :index
       end
 
     end
@@ -323,7 +323,7 @@ describe SrcSetsController do
 
       it 'raises record not found' do
         expect {
-          delete :destroy, :id => 'abc'
+          delete :destroy, id: 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -331,7 +331,7 @@ describe SrcSetsController do
 
     context 'when the image is owned by another user' do
 
-      let(:src_set) { FactoryGirl.create(:src_set, :user => user2) }
+      let(:src_set) { FactoryGirl.create(:src_set, user: user2) }
 
       it 'returns not found' do
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
@@ -342,7 +342,7 @@ describe SrcSetsController do
     context 'when the user is not logged in' do
 
       it 'returns not found' do
-        controller.stub(:current_user => nil)
+        controller.stub(current_user: nil)
 
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -351,7 +351,7 @@ describe SrcSetsController do
 
     context 'when the set is deleted' do
 
-      let(:src_set) { FactoryGirl.create(:src_set, :user => user, :is_deleted => true) }
+      let(:src_set) { FactoryGirl.create(:src_set, user: user, is_deleted: true) }
 
       it 'returns not found' do
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
