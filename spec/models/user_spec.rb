@@ -39,10 +39,10 @@ describe User do
     let(:try_email) { 'does not exist' }
     let(:try_password) { 'try' }
 
-    subject { User.auth_case_insens(try_email, try_password) }
-
     context 'when no emails are found' do
-      it { should be_nil }
+      it 'returns nil' do
+        expect(User.auth_case_insens(try_email, try_password)).to be_nil
+      end
     end
 
     context 'when one email is found' do
@@ -58,11 +58,15 @@ describe User do
 
       context 'when the password matches' do
         let(:try_password) { user_password }
-        it { should eq @user }
+        it 'finds the user' do
+          expect(User.auth_case_insens(try_email, try_password)).to eq @user
+        end
       end
 
       context 'when the password does not match' do
-        it { should be_nil }
+        it 'returns nil' do
+          expect(User.auth_case_insens(try_email, try_password)).to be_nil
+        end
       end
     end
 
@@ -81,17 +85,24 @@ describe User do
       end
 
       context 'when no passwords match' do
-        it { should be_nil }
+        it 'returns nil' do
+          expect(User.auth_case_insens(try_email, try_password)).to be_nil
+        end
       end
 
       context 'when the first password matches' do
         let(:try_password) { user_password }
-        it { should eq @user }
+        it 'find the first user' do
+          expect(User.auth_case_insens(try_email, try_password)).to eq @user
+        end
       end
 
       context 'when the last password matches' do
         let(:try_password) { user2_password }
-        it { should eq @user2 }
+        it 'find the second user' do
+          expect(User.auth_case_insens(try_email, try_password)).to eq @user2
+        end
+
       end
 
     end
