@@ -21,7 +21,7 @@ describe User do
     let(:user) { stub_model(User) }
 
     it 'should know what it owns' do
-      src_image = stub_model(SrcImage, :user => user)
+      src_image = stub_model(SrcImage, user: user)
 
       expect(user.owns?(src_image)).to eq true
     end
@@ -102,7 +102,7 @@ describe User do
 
     it 'ignores case when finding emails' do
       user = FactoryGirl.create(:user)
-      FactoryGirl.create(:user, :email => user.email.upcase)
+      FactoryGirl.create(:user, email: user.email.upcase)
       expect(User.for_auth(user.email).count).to eq 2
     end
 
