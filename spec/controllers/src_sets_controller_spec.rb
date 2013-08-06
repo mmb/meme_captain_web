@@ -11,10 +11,8 @@ describe SrcSetsController do
 
   describe "GET 'new'" do
 
-    subject { get 'new' }
-
     it 'does not match a route' do
-      expect { subject }.to raise_error ActionController::RoutingError
+      expect { get :new }.to raise_error ActionController::RoutingError
     end
   end
 
@@ -22,20 +20,18 @@ describe SrcSetsController do
 
     context 'with valid attributes' do
 
-      subject { post :create, src_set: { name: 'test' } }
-
       it 'saves the new src set to the database' do
-        expect { subject }.to change { SrcSet.count }.by(1)
+        expect { post :create, src_set: { name: 'test' } }.to change { SrcSet.count }.by(1)
       end
 
       it 'redirects to the index' do
-        subject
+        post :create, src_set: { name: 'test' }
 
         expect(response).to redirect_to action: :index
       end
 
       it 'informs the user of success with flash' do
-        subject
+        post :create, src_set: { name: 'test' }
 
         expect(flash[:notice]).to eq('Source set created.')
       end
@@ -44,10 +40,8 @@ describe SrcSetsController do
 
     context 'with invalid attributes' do
 
-      subject { post :create, src_set: {} }
-
       it 'renders the form again' do
-        subject
+        post :create, src_set: {}
         expect(response).to render_template(:new)
       end
 
@@ -57,18 +51,15 @@ describe SrcSetsController do
 
   describe "GET 'index'" do
 
-    subject { get :index }
-
     it "returns http success" do
-      subject
-
+      get :index
       expect(response).to be_success
     end
 
     it 'shows all source sets sorted by reverse updated time' do
       3.times { FactoryGirl.create(:src_set_with_src_image, user: user) }
 
-      subject
+      get :index
 
       src_sets = assigns(:src_sets)
 
@@ -81,7 +72,7 @@ describe SrcSetsController do
       set1 = FactoryGirl.create(:src_set_with_src_image, user: user)
       FactoryGirl.create(:src_set_with_src_image, user: user, is_deleted: true)
 
-      subject
+      get :index
 
       expect(assigns(:src_sets)).to eq [set1]
     end
@@ -90,7 +81,7 @@ describe SrcSetsController do
       set1 = FactoryGirl.create(:src_set_with_src_image, user: user)
       FactoryGirl.create(:src_set, user: user)
 
-      subject
+      get :index
 
       expect(assigns(:src_sets)).to eq [set1]
     end
@@ -102,7 +93,7 @@ describe SrcSetsController do
       it "shows all source sets sorted by reverse updated time" do
         3.times { FactoryGirl.create(:src_set_with_src_image, user: user) }
 
-        subject
+        get :index
 
         src_sets = assigns(:src_sets)
 
@@ -123,26 +114,31 @@ describe SrcSetsController do
 
     context 'adding source images' do
 
-      subject {
-        put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
-        src_set.reload
-      }
-
       it 'adds source images to the set' do
-        expect { subject }.to change { src_set.src_images.size }.by(2)
+        expect {
+          put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
+          src_set.reload
+        }.to change { src_set.src_images.size }.by(2)
       end
 
       it "changes the set's updated time" do
-        expect { subject }.to change { src_set.updated_at }
+        expect {
+          put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
+          src_set.reload
+        }.to change { src_set.updated_at }
       end
 
       it 'redirects to the source set' do
-        subject
+        put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
+        src_set.reload
+
         expect(response).to redirect_to action: :show
       end
 
       it 'informs the user of success with a notice' do
-        subject
+        put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
+        src_set.reload
+
         expect(flash[:notice]).to eq 'The set was successfully updated.'
       end
 
@@ -150,30 +146,35 @@ describe SrcSetsController do
 
     context 'deleting source images' do
 
-      subject {
-        put :update, id: src_set.name, delete_src_images: [src_image.id_hash, src_image2.id_hash]
-        src_set.reload
-      }
-
       before(:each) do
         put :update, id: src_set.name, add_src_images: [src_image.id_hash, src_image2.id_hash]
       end
 
       it 'deletes source images from the set' do
-        expect { subject }.to change { src_set.src_images.size }.by(-2)
+        expect {
+          put :update, id: src_set.name, delete_src_images: [src_image.id_hash, src_image2.id_hash]
+          src_set.reload
+        }.to change { src_set.src_images.size }.by(-2)
       end
 
       it "changes the set's updated time" do
-        expect { subject }.to change { src_set.updated_at }
+        expect {
+          put :update, id: src_set.name, delete_src_images: [src_image.id_hash, src_image2.id_hash]
+          src_set.reload
+        }.to change { src_set.updated_at }
       end
 
       it 'redirects to the source set' do
-        subject
+        put :update, id: src_set.name, delete_src_images: [src_image.id_hash, src_image2.id_hash]
+        src_set.reload
+
         expect(response).to redirect_to action: :show
       end
 
       it 'informs the user of success with a notice' do
-        subject
+        put :update, id: src_set.name, delete_src_images: [src_image.id_hash, src_image2.id_hash]
+        src_set.reload
+
         expect(flash[:notice]).to eq 'The set was successfully updated.'
       end
 
@@ -181,20 +182,24 @@ describe SrcSetsController do
 
     context 'changing the name' do
 
-      subject {
+      it 'has the new name' do
         put :update, id: src_set.name, src_set: { name: 'newname' }
         src_set.reload
-      }
 
-      its(:name) { should == 'newname' }
+        expect(src_set.name).to eq 'newname'
+      end
 
       it 'redirects to the source set' do
-        subject
+        put :update, id: src_set.name, src_set: { name: 'newname' }
+        src_set.reload
+
         expect(response).to redirect_to action: :show, id: 'newname'
       end
 
       it 'informs the user of success with a notice' do
-        subject
+        put :update, id: src_set.name, src_set: { name: 'newname' }
+        src_set.reload
+
         expect(flash[:notice]).to eq 'The set was successfully updated.'
       end
 
@@ -232,14 +237,12 @@ describe SrcSetsController do
 
   describe "GET 'show'" do
 
-    subject { get :show, id: src_set.name }
-
     context 'when the name is found' do
 
       let(:src_set) { FactoryGirl.create(:src_set) }
 
       it 'assigns the source set' do
-        subject
+        get :show, id: src_set.name
 
         expect(assigns(:src_set)).to eq src_set
       end
@@ -253,7 +256,7 @@ describe SrcSetsController do
         src_set.src_images << si2
         src_set.src_images << si3
 
-        subject
+        get :show, id: src_set.name
 
         expect(assigns(:src_images)).to eq [si1, si3, si2]
       end
@@ -265,13 +268,13 @@ describe SrcSetsController do
         src_set.src_images << si1
         src_set.src_images << si2
 
-        subject
+        get :show, id: src_set.name
 
         expect(assigns(:src_images)).to eq [si2]
       end
 
       it 'returns success' do
-        subject
+        get :show, id: src_set.name
 
         expect(response).to be_success
       end
@@ -293,7 +296,7 @@ describe SrcSetsController do
       let(:src_set) { FactoryGirl.create(:src_set, is_deleted: true) }
 
       it 'returns not found' do
-        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { get :show, id: src_set.name }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -303,17 +306,16 @@ describe SrcSetsController do
   describe "DELETE 'destroy'" do
 
     let(:src_set) { FactoryGirl.create(:src_set, user: user) }
-    subject { delete :destroy, id: src_set.name }
 
     context 'when the name is found' do
 
       it 'marks the record as deleted in the database' do
-        subject
+        delete :destroy, id: src_set.name
         expect { SrcSet.find(src_set).is_deleted? }.to be_true
       end
 
       it 'redirects to the index page' do
-        subject
+        delete :destroy, id: src_set.name
         expect(response).to redirect_to action: :index
       end
 
@@ -334,7 +336,7 @@ describe SrcSetsController do
       let(:src_set) { FactoryGirl.create(:src_set, user: user2) }
 
       it 'returns not found' do
-        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { delete :destroy, id: src_set.name }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -342,9 +344,9 @@ describe SrcSetsController do
     context 'when the user is not logged in' do
 
       it 'returns not found' do
-        controller.stub(current_user: nil)
+        session[:user_id] = nil
 
-        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { delete :destroy, id: src_set.name }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -354,7 +356,7 @@ describe SrcSetsController do
       let(:src_set) { FactoryGirl.create(:src_set, user: user, is_deleted: true) }
 
       it 'returns not found' do
-        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { delete :destroy, id: src_set.name }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
