@@ -6,24 +6,22 @@ describe SessionsController do
 
   describe "POST 'create'" do
 
-    subject { post :create, email: user.email, password: user.password }
-
     context 'when login succeeds' do
 
       it 'creates a session' do
-        subject
+        post :create, email: user.email, password: user.password
 
         expect(session[:user_id]).to eq(user.id)
       end
 
       it 'redirects to the my url' do
-        subject
+        post :create, email: user.email, password: user.password
 
         expect(response).to redirect_to my_url
       end
 
       it 'informs the user of login success with flash' do
-        subject
+        post :create, email: user.email, password: user.password
 
         expect(flash[:notice]).to eq('Logged in.')
       end
@@ -36,12 +34,12 @@ describe SessionsController do
         end
 
         it 'redirects to the return to url' do
-          subject
+          post :create, email: user.email, password: user.password
           expect(response).to redirect_to return_to
         end
 
         it 'removes the return to url from the session' do
-          subject
+          post :create, email: user.email, password: user.password
           expect(session[:return_to]).to be_nil
         end
       end
@@ -50,20 +48,18 @@ describe SessionsController do
 
     context 'when login fails' do
 
-      subject { post :create, email: user.email, password: 'wrongpass' }
-
       it 'does not create a session' do
-        subject
+        post :create, email: user.email, password: 'wrongpass'
         expect(session[:user_id]).to be_nil
       end
 
       it 'renders the new template' do
-        subject
+        post :create, email: user.email, password: 'wrongpass'
         expect(response).to render_template('new')
       end
 
       it 'informs the user of login failure with flash' do
-        subject
+        post :create, email: user.email, password: 'wrongpass'
         expect(flash[:error]).to eq('Login failed.')
       end
 
@@ -83,8 +79,6 @@ describe SessionsController do
 
   describe "DELETE 'destroy'" do
 
-    subject { delete :destroy }
-
     context 'when the user is logged in ' do
 
       before do
@@ -92,17 +86,17 @@ describe SessionsController do
       end
 
       it 'clears the session' do
-        subject
+        delete :destroy
         expect(session[:user_id]).to be_nil
       end
 
       it 'redirects to the root url' do
-        subject
+        delete :destroy
         expect(response).to redirect_to root_url
       end
 
       it 'informs the user of login failure with flash' do
-        subject
+        delete :destroy
         expect(flash[:notice]).to eq('Logged out.')
       end
 
@@ -111,12 +105,12 @@ describe SessionsController do
     context 'when the user is logged out' do
 
       it 'clears the session' do
-        subject
+        delete :destroy
         expect(session[:user_id]).to be_nil
       end
 
       it 'redirects to the root url' do
-        subject
+        delete :destroy
         expect(response).to redirect_to root_url
       end
 
