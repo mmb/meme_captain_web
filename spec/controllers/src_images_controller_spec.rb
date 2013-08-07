@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SrcImagesController do
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
+  let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
 
   before(:each) do
     session[:user_id] = user.try(:id)
@@ -52,8 +52,8 @@ describe SrcImagesController do
     end
 
     it 'does not show deleted images' do
-      FactoryGirl.create(:src_image, :user => user)
-      FactoryGirl.create(:src_image, :user => user, :is_deleted => true)
+      FactoryGirl.create(:src_image, user: user)
+      FactoryGirl.create(:src_image, user: user, is_deleted: true)
 
       subject
 
@@ -95,7 +95,7 @@ describe SrcImagesController do
 
     let(:image) { fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
 
-    subject { post :create, src_image: {:image => image} }
+    subject { post :create, src_image: { image: image } }
 
     context 'with valid attributes' do
 
@@ -159,7 +159,7 @@ describe SrcImagesController do
       end
 
       it 'shows the source image' do
-        get 'show', :id => 'abc'
+        get 'show', id: 'abc'
 
         expect(response).to be_success
       end
@@ -167,7 +167,7 @@ describe SrcImagesController do
       it 'has the right content type' do
         src_image.should_receive(:content_type).and_return('content type')
 
-        get 'show', :id => 'abc'
+        get 'show', id: 'abc'
 
         expect(response.content_type).to eq('content type')
       end
@@ -175,7 +175,7 @@ describe SrcImagesController do
       it 'has the right content' do
         src_image.should_receive(:image).and_return('image')
 
-        get 'show', :id => 'abc'
+        get 'show', id: 'abc'
 
         expect(response.body).to eq('image')
       end
@@ -186,7 +186,7 @@ describe SrcImagesController do
 
       it 'raises record not found' do
         expect {
-          get 'show', :id => 'abc'
+          get 'show', id: 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -200,8 +200,8 @@ describe SrcImagesController do
 
       subject {
         post :create, src_image: {
-            :image => fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')}
-        delete :destroy, :id => assigns(:src_image).id_hash
+            image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+        delete :destroy, id: assigns(:src_image).id_hash
       }
 
       it 'marks the record as deleted in the database' do
@@ -223,7 +223,7 @@ describe SrcImagesController do
 
       it 'raises record not found' do
         expect {
-          delete :destroy, :id => 'abc'
+          delete :destroy, id: 'abc'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -232,9 +232,9 @@ describe SrcImagesController do
     context 'when the image is owned by another user' do
 
       it "doesn't allow it to be deleted" do
-        src_image = FactoryGirl.create(:src_image, :user => user2)
+        src_image = FactoryGirl.create(:src_image, user: user2)
 
-        delete :destroy, :id => src_image.id_hash
+        delete :destroy, id: src_image.id_hash
 
         expect(response).to be_forbidden
       end
