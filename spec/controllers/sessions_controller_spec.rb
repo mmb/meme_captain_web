@@ -6,7 +6,7 @@ describe SessionsController do
 
   describe "POST 'create'" do
 
-    subject { post :create, :email => user.email, :password => user.password }
+    subject { post :create, email: user.email, password: user.password }
 
     context 'when login succeeds' do
 
@@ -50,7 +50,7 @@ describe SessionsController do
 
     context 'when login fails' do
 
-      subject { post :create, :email => user.email, :password => 'wrongpass' }
+      subject { post :create, email: user.email, password: 'wrongpass' }
 
       it 'does not create a session' do
         subject
@@ -72,7 +72,7 @@ describe SessionsController do
     context 'when the email case does not match' do
 
       it 'allows the user to login' do
-        post :create, :email => user.email.upcase, :password => user.password
+        post :create, email: user.email.upcase, password: user.password
 
         expect(session[:user_id]).to eq(user.id)
       end
@@ -88,7 +88,7 @@ describe SessionsController do
     context 'when the user is logged in ' do
 
       before do
-        post :create, :email => user.email, :password => user.password
+        post :create, email: user.email, password: user.password
       end
 
       it 'clears the session' do
