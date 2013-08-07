@@ -5,9 +5,9 @@ describe GendImagePagesController do
   describe 'show' do
 
     let(:src_image) { FactoryGirl.create(:src_image) }
-    let(:gend_image) { FactoryGirl.create(:gend_image, :src_image => src_image) }
+    let(:gend_image) { FactoryGirl.create(:gend_image, src_image: src_image) }
 
-    subject { get :show, :id => gend_image.id_hash }
+    subject { get :show, id: gend_image.id_hash }
 
     it 'sets the gend image' do
       subject
