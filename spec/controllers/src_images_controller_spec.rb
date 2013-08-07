@@ -11,11 +11,9 @@ describe SrcImagesController do
 
   describe "GET 'new'" do
 
-    subject { get :new }
-
     context 'when the user is logged in' do
       it "returns http success" do
-        subject
+        get :new
         expect(response).to be_success
       end
     end
@@ -23,7 +21,7 @@ describe SrcImagesController do
     context 'when the user it not logged in' do
       let(:user) { nil }
       it 'redirects to the login form' do
-        subject
+        get :new
         expect(response).to redirect_to new_session_path
       end
     end
@@ -31,12 +29,8 @@ describe SrcImagesController do
 
   describe "GET 'index'" do
 
-    subject {
+    it 'returns http success' do
       get :index
-    }
-
-    it "returns http success" do
-      subject
 
       expect(response).to be_success
     end
@@ -46,7 +40,7 @@ describe SrcImagesController do
       si2 = FactoryGirl.create(:src_image, user: user, gend_images_count: 10)
       si3 = FactoryGirl.create(:src_image, user: user, gend_images_count: 30)
 
-      subject
+      get :index
 
       expect(assigns(:src_images)).to eq [si3, si1, si2]
     end
@@ -55,7 +49,7 @@ describe SrcImagesController do
       FactoryGirl.create(:src_image, user: user)
       FactoryGirl.create(:src_image, user: user, is_deleted: true)
 
-      subject
+      get :index
 
       expect(assigns(:src_images).size).to eq 1
     end
@@ -64,7 +58,7 @@ describe SrcImagesController do
       FactoryGirl.create(:src_image, private: true)
       3.times { FactoryGirl.create(:src_image) }
 
-      subject
+      get :index
 
       expect(assigns(:src_images).size).to eq 3
     end
@@ -95,22 +89,20 @@ describe SrcImagesController do
 
     let(:image) { fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
 
-    subject { post :create, src_image: { image: image } }
-
     context 'with valid attributes' do
 
       it 'saves the new source image to the database' do
-        expect { subject }.to change { SrcImage.count }.by(1)
+        expect { post :create, src_image: { image: image } }.to change { SrcImage.count }.by(1)
       end
 
       it 'redirects to the index page' do
-        subject
+        post :create, src_image: { image: image }
 
         expect(response).to redirect_to controller: :my, action: :show
       end
 
       it 'informs the user of success with flash' do
-        subject
+        post :create, src_image: { image: image }
 
         expect(flash[:notice]).to eq('Source image created.')
       end
@@ -122,11 +114,11 @@ describe SrcImagesController do
       let(:image) { nil }
 
       it 'does not save the new source image in the database' do
-        expect { subject }.to_not change { SrcImage.count }
+        expect { post :create, src_image: { image: image } }.to_not change { SrcImage.count }
       end
 
       it 're-renders the new template' do
-        subject
+        post :create, src_image: { image: image }
 
         expect(response).to render_template('new')
       end
@@ -138,7 +130,7 @@ describe SrcImagesController do
       let(:user) { nil }
 
       it 'redirects to the login form' do
-        subject
+        post :create, src_image: { image: image }
 
         expect(response).to redirect_to new_session_path
       end
@@ -150,9 +142,7 @@ describe SrcImagesController do
 
     context 'when the id is found' do
 
-      let(:src_image) {
-        mock_model(SrcImage)
-      }
+      let(:src_image) { mock_model(SrcImage) }
 
       before :each do
         SrcImage.should_receive(:find_by_id_hash!).and_return(src_image)
@@ -198,14 +188,10 @@ describe SrcImagesController do
 
     context 'when the id is found' do
 
-      subject {
+      it 'marks the record as deleted in the database' do
         post :create, src_image: {
             image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
         delete :destroy, id: assigns(:src_image).id_hash
-      }
-
-      it 'marks the record as deleted in the database' do
-        subject
 
         expect {
           SrcImage.find_by_id_hash!(assigns(:src_image).id_hash).is_deleted?
@@ -213,7 +199,10 @@ describe SrcImagesController do
       end
 
       it 'returns success' do
-        subject
+        post :create, src_image: {
+            image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+        delete :destroy, id: assigns(:src_image).id_hash
+
         expect(response).to be_success
       end
 
