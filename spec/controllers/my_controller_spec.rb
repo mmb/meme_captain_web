@@ -12,7 +12,7 @@ describe MyController do
     subject { get :show }
 
     before(:each) do
-      controller.stub(:current_user => user)
+      controller.stub(current_user: user)
     end
 
     context 'when the user is logged in' do
