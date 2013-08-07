@@ -17,12 +17,11 @@ describe GendImagesController do
   describe "GET 'new'" do
 
     let(:src_id) { 'abc' }
-    subject { get :new, src: src_id }
 
     it "returns http success" do
       SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
           src_image)
-      subject
+      get :new, src: src_id
       expect(response).to be_success
     end
 
@@ -33,7 +32,7 @@ describe GendImagesController do
       it 'returns http success' do
         SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
             src_image)
-        subject
+        get :new, src: src_id
         expect(response).to be_success
       end
 
@@ -45,12 +44,8 @@ describe GendImagesController do
 
     let(:src_image) { FactoryGirl.create(:src_image, user: user) }
 
-    subject {
-      get :index
-    }
-
     it "returns http success" do
-      subject
+      get :index
 
       expect(response).to be_success
     end
@@ -58,7 +53,7 @@ describe GendImagesController do
     it 'shows the images sorted by reverse updated time' do
       3.times { FactoryGirl.create(:gend_image, user: user) }
 
-      subject
+      get :index
 
       gend_images = assigns(:gend_images)
 
@@ -71,7 +66,7 @@ describe GendImagesController do
       FactoryGirl.create(:gend_image, user: user)
       FactoryGirl.create(:gend_image, user: user, is_deleted: true)
 
-      subject
+      get :index
 
       expect(assigns(:gend_images).size).to eq 1
     end
@@ -79,7 +74,7 @@ describe GendImagesController do
     it 'shows public images' do
       3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
 
-      subject
+      get :index
 
       expect(assigns(:gend_images).size).to eq 3
     end
@@ -88,7 +83,7 @@ describe GendImagesController do
       FactoryGirl.create(:gend_image, user: user, private: false)
       2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
 
-      subject
+      get :index
 
       expect(assigns(:gend_images).size).to eq 1
     end
@@ -154,8 +149,6 @@ describe GendImagesController do
     let(:caption1) { mock_model(Caption, text: '1&2') }
     let(:caption2) { mock_model(Caption, text: "3\n4") }
 
-    subject { get :show, id: id }
-
     context 'when the id is found' do
 
       let(:captions) { [caption1, caption2] }
@@ -169,7 +162,7 @@ describe GendImagesController do
       end
 
       it 'shows the source image' do
-        subject
+        get :show, id: id
 
         expect(response).to be_success
       end
@@ -177,7 +170,7 @@ describe GendImagesController do
       it 'has the right content type' do
         gend_image.should_receive(:content_type).and_return('content type')
 
-        subject
+        get :show, id: id
 
         expect(response.content_type).to eq 'content type'
       end
@@ -185,7 +178,7 @@ describe GendImagesController do
       it 'has the right content' do
         gend_image.should_receive(:image).and_return('image')
 
-        subject
+        get :show, id: id
 
         expect(response.body).to eq 'image'
       end
@@ -194,7 +187,7 @@ describe GendImagesController do
 
         context 'when there is more than one caption' do
           it 'returns the correct header' do
-            subject
+            get :show, id: id
 
             expect(response.headers['Meme-Text']).to eq '1%262&3%0A4'
           end
@@ -204,7 +197,7 @@ describe GendImagesController do
           let(:captions) { [caption1] }
 
           it 'returns the correct header' do
-            subject
+            get :show, id: id
 
             expect(response.headers['Meme-Text']).to eq '1%262'
           end
@@ -214,7 +207,7 @@ describe GendImagesController do
 
       context 'returning the meme name in the headers' do
         it 'returns the correct header' do
-          subject
+          get :show, id: id
 
           expect(response.headers['Meme-Name']).to eq name
         end
@@ -223,7 +216,7 @@ describe GendImagesController do
           let(:name) { nil }
 
           it 'returns nil' do
-            subject
+            get :show, id: id
 
             expect(response.headers['Meme-Name']).to be_nil
           end
@@ -233,7 +226,7 @@ describe GendImagesController do
           let(:name) { "a\r\nb" }
 
           it 'url encodes special characters' do
-            subject
+            get :show, id: id
 
             expect(response.headers['Meme-Name']).to eq 'a%0D%0Ab'
           end
@@ -241,7 +234,7 @@ describe GendImagesController do
       end
 
       it 'returns the meme src image url in the headers' do
-        subject
+        get :show, id: id
 
         expect(response.headers['Meme-Source-Image']).to eq "http://#{request.host}/src_images/#{src_id_hash}"
       end
@@ -251,9 +244,7 @@ describe GendImagesController do
     context 'when the id is not found' do
 
       it 'raises record not found' do
-        expect {
-          subject
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { get :show, id: id }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -265,12 +256,10 @@ describe GendImagesController do
     let(:gend_image) { FactoryGirl.create(:gend_image, user: user) }
     let(:id) { gend_image.id_hash }
 
-    subject { delete :destroy, id: id }
-
     context 'when the id is found' do
 
       it 'marks the record as deleted in the database' do
-        subject
+        delete :destroy, id: id
 
         expect {
           GendImage.find_by_id_hash!(gend_image.id_hash).is_deleted?
@@ -278,7 +267,7 @@ describe GendImagesController do
       end
 
       it 'returns success' do
-        subject
+        delete :destroy, id: id
         expect(response).to be_success
       end
 
@@ -288,9 +277,7 @@ describe GendImagesController do
 
       let(:id) { 'abc' }
       it 'raises record not found' do
-        expect {
-          subject
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { delete :destroy, id: id }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -299,7 +286,7 @@ describe GendImagesController do
       let(:gend_image) { FactoryGirl.create(:gend_image, user: user2) }
 
       it "doesn't allow it to be deleted" do
-        subject
+        delete :destroy, id: id
 
         expect(response).to be_forbidden
       end
@@ -310,7 +297,7 @@ describe GendImagesController do
       let(:user) { nil }
 
       it 'cannot be deleted' do
-        subject
+        delete :destroy, id: id
 
         expect(response).to be_forbidden
       end
