@@ -8,14 +8,12 @@ describe HomeController do
 
     let(:src_image) { FactoryGirl.create(:src_image, user: user) }
 
-    subject { get :index }
-
     before(:each) do
-      controller.stub(current_user: user)
+      session[:user_id] = user.try(:id)
     end
 
     it "returns http success" do
-      subject
+      get :index
       expect(response).to be_success
     end
 
@@ -26,7 +24,7 @@ describe HomeController do
 
         it 'does not show generated images that are under construction' do
           FactoryGirl.create(:gend_image, src_image: src_image, user: user)
-          subject
+          get :index
           expect(assigns(:gend_images)).to be_empty
         end
 
@@ -35,7 +33,7 @@ describe HomeController do
       it 'shows public images' do
         3.times { FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: false) }
 
-        subject
+        get :index
 
         expect(assigns(:gend_images).size).to eq 3
       end
@@ -44,7 +42,7 @@ describe HomeController do
         FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: false)
         2.times { FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: true) }
 
-        subject
+        get :index
 
         expect(assigns(:gend_images).size).to eq 1
       end
@@ -56,7 +54,7 @@ describe HomeController do
       set2 = FactoryGirl.create(:src_set_with_src_image, user: user, updated_at: 2.seconds.from_now)
       set3 = FactoryGirl.create(:src_set_with_src_image, user: user, updated_at: 3.seconds.from_now)
 
-      subject
+      get :index
 
       expect(assigns(:src_sets)).to eq [set1, set3, set2]
     end
@@ -65,7 +63,7 @@ describe HomeController do
       set1 = FactoryGirl.create(:src_set_with_src_image)
       FactoryGirl.create(:src_set)
 
-      subject
+      get :index
 
       expect(assigns(:src_sets)).to eq [set1]
     end
@@ -74,7 +72,7 @@ describe HomeController do
       si1 = FactoryGirl.create(:src_image, private: true)
       si2 = FactoryGirl.create(:src_image)
 
-      subject
+      get :index
 
       expect(assigns(:src_images)).to eq [si2]
     end
@@ -83,7 +81,7 @@ describe HomeController do
       si1 = FactoryGirl.create(:src_image, is_deleted: true)
       si2 = FactoryGirl.create(:src_image)
 
-      subject
+      get :index
 
       expect(assigns(:src_images)).to eq [si2]
     end
@@ -93,7 +91,7 @@ describe HomeController do
       si2 = FactoryGirl.create(:src_image, gend_images_count: 30)
       si3 = FactoryGirl.create(:src_image, gend_images_count: 20)
 
-      subject
+      get :index
 
       expect(assigns(:src_images)).to eq [si2, si3, si1]
     end
