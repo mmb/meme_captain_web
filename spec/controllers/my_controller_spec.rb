@@ -9,10 +9,8 @@ describe MyController do
 
   describe '#show' do
 
-    subject { get :show }
-
     before(:each) do
-      controller.stub(current_user: user)
+      session[:user_id] = user.try(:id)
     end
 
     context 'when the user is logged in' do
@@ -22,7 +20,7 @@ describe MyController do
         set2 = FactoryGirl.create(:src_set, user: user, updated_at: 2.seconds.from_now)
         set3 = FactoryGirl.create(:src_set, user: user, updated_at: 3.seconds.from_now)
 
-        subject
+        get :show
         expect(assigns(:src_sets)).to eq [set3, set2]
       end
 
@@ -31,7 +29,7 @@ describe MyController do
         si2 = FactoryGirl.create(:src_image, user: user2, updated_at: 2.seconds.from_now)
         si3 = FactoryGirl.create(:src_image, user: user, updated_at: 3.seconds.from_now)
 
-        subject
+        get :show
         expect(assigns(:src_images)).to eq [si3, si1]
       end
 
@@ -40,17 +38,17 @@ describe MyController do
         gi2 = FactoryGirl.create(:gend_image, user: user, updated_at: 2.seconds.from_now)
         gi3 = FactoryGirl.create(:gend_image, user: user2, updated_at: 3.seconds.from_now)
 
-        subject
+        get :show
         expect(assigns(:gend_images)).to eq [gi2, gi1]
       end
 
       it "sets the user's name" do
-        subject
+        get :show
         expect(assigns(:name)).to eq user.email
       end
 
       it "sets the user's avatar url" do
-        subject
+        get :show
 
         expect(assigns(:avatar_url)).to eq "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}"
       end
@@ -62,7 +60,7 @@ describe MyController do
       let(:user) { nil }
 
       it 'redirects to the login form' do
-        subject
+        get :show
         expect(response).to redirect_to new_session_path
       end
 
