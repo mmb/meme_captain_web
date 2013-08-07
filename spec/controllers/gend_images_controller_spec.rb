@@ -3,8 +3,8 @@ require 'spec_helper'
 describe GendImagesController do
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user, :email => 'user2@user2.com') }
-  let(:src_image2) { FactoryGirl.create(:src_image, :user => user2) }
+  let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
+  let(:src_image2) { FactoryGirl.create(:src_image, user: user2) }
 
   let(:src_image) {
     mock_model(SrcImage, FactoryGirl.attributes_for(:src_image))
@@ -17,7 +17,7 @@ describe GendImagesController do
   describe "GET 'new'" do
 
     let(:src_id) { 'abc' }
-    subject { get :new, :src => src_id }
+    subject { get :new, src: src_id }
 
     it "returns http success" do
       SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
@@ -43,7 +43,7 @@ describe GendImagesController do
 
   describe "GET 'index'" do
 
-    let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
+    let(:src_image) { FactoryGirl.create(:src_image, user: user) }
 
     subject {
       get :index
@@ -56,7 +56,7 @@ describe GendImagesController do
     end
 
     it 'shows the images sorted by reverse updated time' do
-      3.times { FactoryGirl.create(:gend_image, :user => user) }
+      3.times { FactoryGirl.create(:gend_image, user: user) }
 
       subject
 
@@ -68,8 +68,8 @@ describe GendImagesController do
     end
 
     it 'does not show deleted images' do
-      FactoryGirl.create(:gend_image, :user => user)
-      FactoryGirl.create(:gend_image, :user => user, :is_deleted => true)
+      FactoryGirl.create(:gend_image, user: user)
+      FactoryGirl.create(:gend_image, user: user, is_deleted: true)
 
       subject
 
@@ -77,7 +77,7 @@ describe GendImagesController do
     end
 
     it 'shows public images' do
-      3.times { FactoryGirl.create(:gend_image, :user => user, :private => false) }
+      3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
 
       subject
 
@@ -85,8 +85,8 @@ describe GendImagesController do
     end
 
     it 'does not show private images' do
-      FactoryGirl.create(:gend_image, :user => user, :private => false)
-      2.times { FactoryGirl.create(:gend_image, :user => user, :private => true) }
+      FactoryGirl.create(:gend_image, user: user, private: false)
+      2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
 
       subject
 
@@ -107,20 +107,20 @@ describe GendImagesController do
       it 'saves the new generated image to the database' do
         expect {
           post :create,
-               gend_image: { :src_image_id => 'abc' },
-               :text1 => 'hello',
-               :text2 => 'world'
+               gend_image: { src_image_id: 'abc' },
+               text1: 'hello',
+               text2: 'world'
         }.to change { GendImage.count }.by(1)
       end
 
       it 'redirects to the index' do
         post :create,
-             gend_image: { :src_image_id => 'abc' },
-             :text1 => 'hello',
-             :text2 => 'world'
+             gend_image: { src_image_id: 'abc' },
+             text1: 'hello',
+             text2: 'world'
 
-        expect(response).to redirect_to :controller => :gend_image_pages, :action => :show,
-                                        :id => assigns(:gend_image).id_hash
+        expect(response).to redirect_to controller: :gend_image_pages, action: :show,
+                                        id: assigns(:gend_image).id_hash
       end
 
     end
@@ -129,7 +129,7 @@ describe GendImagesController do
 
       it 'raises record not found' do
         expect {
-          post :create, gend_image: { :src_image_id => 'abc' }
+          post :create, gend_image: { src_image_id: 'abc' }
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -138,9 +138,9 @@ describe GendImagesController do
     context 'when the source image is owned by another user' do
 
       specify 'the gend image is owned by the current user' do
-        gend_image = FactoryGirl.create(:gend_image, :src_image => src_image2)
+        gend_image = FactoryGirl.create(:gend_image, src_image: src_image2)
 
-        post :create, gend_image: { :src_image_id => src_image2.id_hash }
+        post :create, gend_image: { src_image_id: src_image2.id_hash }
         expect(GendImage.last.user).to eq user
       end
 
@@ -151,10 +151,10 @@ describe GendImagesController do
   describe "GET 'show'" do
 
     let(:id) { 'abc' }
-    let(:caption1) { mock_model(Caption, :text => '1&2') }
-    let(:caption2) { mock_model(Caption, :text => "3\n4") }
+    let(:caption1) { mock_model(Caption, text: '1&2') }
+    let(:caption2) { mock_model(Caption, text: "3\n4") }
 
-    subject { get :show, :id => id }
+    subject { get :show, id: id }
 
     context 'when the id is found' do
 
@@ -262,10 +262,10 @@ describe GendImagesController do
 
   describe "DELETE 'destroy'" do
 
-    let(:gend_image) { FactoryGirl.create(:gend_image, :user => user) }
+    let(:gend_image) { FactoryGirl.create(:gend_image, user: user) }
     let(:id) { gend_image.id_hash }
 
-    subject { delete :destroy, :id => id }
+    subject { delete :destroy, id: id }
 
     context 'when the id is found' do
 
@@ -296,7 +296,7 @@ describe GendImagesController do
     end
 
     context 'when the image is owned by another user' do
-      let(:gend_image) { FactoryGirl.create(:gend_image, :user => user2) }
+      let(:gend_image) { FactoryGirl.create(:gend_image, user: user2) }
 
       it "doesn't allow it to be deleted" do
         subject
