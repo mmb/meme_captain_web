@@ -6,12 +6,12 @@ describe HomeController do
 
     let(:user) { FactoryGirl.create(:user) }
 
-    let(:src_image) { FactoryGirl.create(:src_image, :user => user) }
+    let(:src_image) { FactoryGirl.create(:src_image, user: user) }
 
     subject { get :index }
 
     before(:each) do
-      controller.stub(:current_user => user)
+      controller.stub(current_user: user)
     end
 
     it "returns http success" do
@@ -25,7 +25,7 @@ describe HomeController do
       context 'under construction images' do
 
         it 'does not show generated images that are under construction' do
-          FactoryGirl.create(:gend_image, :src_image => src_image, :user => user)
+          FactoryGirl.create(:gend_image, src_image: src_image, user: user)
           subject
           expect(assigns(:gend_images)).to be_empty
         end
@@ -33,7 +33,7 @@ describe HomeController do
       end
 
       it 'shows public images' do
-        3.times { FactoryGirl.create(:gend_image, :user => user, :work_in_progress => false, :private => false) }
+        3.times { FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: false) }
 
         subject
 
@@ -41,8 +41,8 @@ describe HomeController do
       end
 
       it 'does not show private images' do
-        FactoryGirl.create(:gend_image, :user => user, :work_in_progress => false, :private => false)
-        2.times { FactoryGirl.create(:gend_image, :user => user, :work_in_progress => false, :private => true) }
+        FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: false)
+        2.times { FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: true) }
 
         subject
 
