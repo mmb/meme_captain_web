@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe 'gend_images/_gend_images.html' do
 
-  subject { render :partial => 'gend_images/gend_images' }
-
   before do
     assign :gend_images, Kaminari.paginate_array([]).page(1)
     assign :show_toolbar, show_toolbar
@@ -13,7 +11,7 @@ describe 'gend_images/_gend_images.html' do
     let(:show_toolbar) { true }
 
     it 'shows the toolbar' do
-      subject
+      render partial: 'gend_images/gend_images'
 
       expect(rendered).to have_selector '.btn-toolbar'
     end
@@ -24,7 +22,7 @@ describe 'gend_images/_gend_images.html' do
     let(:show_toolbar) { false }
 
     it 'does not show the toolbar' do
-      subject
+      render partial: 'gend_images/gend_images'
 
       expect(rendered).to_not have_selector '.btn-toolbar'
     end
