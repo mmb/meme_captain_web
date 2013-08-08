@@ -17,23 +17,31 @@ describe "gend_image_pages/show.html.erb" do
     view.stub_chain(:browser, :android?) { android }
   end
 
-  subject { render }
-
   context 'browser' do
 
     context 'when the browser is not Android' do
-      it { should_not contain('SMS') }
+
+      it 'does not have the SMS button' do
+        expect(render).to_not contain 'SMS'
+      end
+
     end
 
     context 'when the browser is Android' do
       let(:android) { true }
 
-      it { should contain('SMS') }
+      it 'has the SMS button' do
+        expect(render).to contain 'SMS'
+      end
     end
   end
 
-  it { should have_selector 'img[width="399"]' }
+  it 'has the image width' do
+    expect(render).to have_selector 'img[width="399"]'
+  end
 
-  it { should have_selector 'img[height="399"]' }
+  it 'has the image height' do
+    expect(render).to have_selector 'img[height="399"]'
+  end
 
 end
