@@ -65,6 +65,7 @@ group :test, :development do
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
   gem 'travis_heroku'
+  gem 'rspec_stubout'
 end
 
 group :test do
