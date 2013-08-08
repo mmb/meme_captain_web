@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'src_images/_src_images.html' do
 
   subject {
-    render :partial => 'src_images/src_images',
-           :locals => {:current_user => user}
+    render partial: 'src_images/src_images',
+           locals: { current_user: user }
   }
 
   let(:user) { FactoryGirl.create(:user) }
@@ -14,7 +14,7 @@ describe 'src_images/_src_images.html' do
   context 'showing a set' do
 
     context 'when the user owns the set' do
-      let(:src_set) { FactoryGirl.create(:src_set, :user => user) }
+      let(:src_set) { FactoryGirl.create(:src_set, user: user) }
 
       it 'shows the remove from set button' do
         assign :src_images, src_images
@@ -27,7 +27,7 @@ describe 'src_images/_src_images.html' do
     end
 
     context "when the user doesn't own the set" do
-      let(:src_set) { FactoryGirl.create(:src_set, :user => user2) }
+      let(:src_set) { FactoryGirl.create(:src_set, user: user2) }
 
       it "doesn't show the remove from set button" do
         assign :src_images, src_images
@@ -41,7 +41,7 @@ describe 'src_images/_src_images.html' do
 
     context "when the user is not logged in" do
       let(:user) { nil }
-      let(:src_set) { FactoryGirl.create(:src_set, :user => user2) }
+      let(:src_set) { FactoryGirl.create(:src_set, user: user2) }
 
       it "doesn't show the remove from set button" do
         assign :src_images, src_images
