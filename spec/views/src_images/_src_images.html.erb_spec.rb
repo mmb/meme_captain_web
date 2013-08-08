@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe 'src_images/_src_images.html' do
 
-  subject {
-    render partial: 'src_images/src_images',
-           locals: { current_user: user }
-  }
-
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
   let(:src_images) { Kaminari.paginate_array([]).page(1) }
@@ -19,7 +14,7 @@ describe 'src_images/_src_images.html' do
       it 'shows the remove from set button' do
         assign :src_images, src_images
         assign :src_set, src_set
-        subject
+        render partial: 'src_images/src_images', locals: { current_user: user }
 
         expect(rendered).to contain /Remove 0 from Set/
       end
@@ -32,7 +27,7 @@ describe 'src_images/_src_images.html' do
       it "doesn't show the remove from set button" do
         assign :src_images, src_images
         assign :src_set, src_set
-        subject
+        render partial: 'src_images/src_images', locals: { current_user: user }
 
         expect(rendered).to_not contain /Remove 0 from Set/
       end
@@ -46,7 +41,7 @@ describe 'src_images/_src_images.html' do
       it "doesn't show the remove from set button" do
         assign :src_images, src_images
         assign :src_set, src_set
-        subject
+        render partial: 'src_images/src_images', locals: { current_user: user }
 
         expect(rendered).to_not contain /Remove 0 from Set/
       end
@@ -54,7 +49,7 @@ describe 'src_images/_src_images.html' do
       it "doesn't show the toolbar" do
         assign :src_images, src_images
         assign :src_set, src_set
-        subject
+        render partial: 'src_images/src_images', locals: { current_user: user }
 
         expect(rendered).to_not have_selector '.btn-toolbar'
       end
