@@ -3,20 +3,20 @@ require 'spec_helper'
 describe 'src_sets/_src_set.html' do
 
   subject {
-    render :partial => 'src_sets/src_set',
-           :locals => {:src_set => src_set}
+    render partial: 'src_sets/src_set',
+           locals: { src_set: src_set }
   }
 
-  let(:src_thumb) { mock_model(SrcThumb, :width => 19, :height => 78) }
+  let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
 
   let(:src_image) { mock_model(SrcImage,
-                               :work_in_progress => false,
-                               :src_thumb => src_thumb) }
+                               work_in_progress: false,
+                               src_thumb: src_thumb) }
 
   let(:src_set) {
-    mock_model(SrcSet, :name => 'set1', :src_images => [src_image],
-               :thumbnail => src_thumb, :thumb_width => src_thumb.width, :thumb_height => src_thumb.height,
-               :size_desc => :small)
+    mock_model(SrcSet, name: 'set1', src_images: [src_image],
+               thumbnail: src_thumb, thumb_width: src_thumb.width, thumb_height: src_thumb.height,
+               size_desc: :small)
   }
 
   context 'when the set contains a completed source image' do
@@ -39,7 +39,7 @@ describe 'src_sets/_src_set.html' do
   end
 
   context 'when the set is empty' do
-    let(:src_set) { mock_model(SrcSet, :name => 'set1', :thumbnail => nil, :src_images => [], :size_desc => :small) }
+    let(:src_set) { mock_model(SrcSet, name: 'set1', thumbnail: nil, src_images: [], size_desc: :small) }
 
     it 'shows the empty set' do
       subject
