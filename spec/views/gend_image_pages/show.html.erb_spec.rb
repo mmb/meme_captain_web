@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "gend_image_pages/show.html.erb" do
 
-  let(:gend_image) { FactoryGirl.create(:gend_image, :work_in_progress => false) }
+  let(:gend_image) { FactoryGirl.create(:gend_image, work_in_progress: false) }
   let(:src_image) { FactoryGirl.create(:src_image) }
   let(:gend_image_url) {
-    url_for(:controller => :gend_images, :action => :show, :id => gend_image.id_hash)
+    url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
   }
   let(:android) { false }
 
