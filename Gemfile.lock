@@ -54,7 +54,6 @@ GEM
     dynamic_form (1.1.4)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    excon (0.25.1)
     execjs (1.4.0)
       multi_json (~> 1.0)
     fabric-rails (1.2.1)
@@ -64,8 +63,6 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     gravatar-ultimate (1.0.3)
-    heroku-api (0.3.13)
-      excon (~> 0.25.0)
     hike (1.2.3)
     i18n (0.6.4)
     jasmine-core (1.3.1)
@@ -180,8 +177,6 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     timecop (0.6.2.2)
-    travis_heroku (0.0.5)
-      heroku-api
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
@@ -236,7 +231,6 @@ DEPENDENCIES
   therubyracer
   thin
   timecop
-  travis_heroku
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   webmock

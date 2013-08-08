@@ -8,15 +8,3 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 before_script: 
 - bundle exec rake db:migrate
-env: 
-  global: 
-  - secure: |-
-      bwGbgLE1l+jUjrPqbfYvGhXO0uvKFevTsS04dS63RHTeCrhoRTWdRitZm/sg
-      gOJkDE15hhnCTx7TDFdjz3k8gz3ZA1uqJ29yrgasTXGnrdiawTZoXx1kWFW5
-      xzPAj5Y/LEar0bOWIeRjLp8BqtG0uwnv9eBBasid2GlWbmIWKsw=
-  - HEROKU_APP=mcalpha
-after_success:
-  - travis-heroku
-  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-  - heroku run rake db:migrate
-  - heroku config:add HEROKU=true DELAY_JOBS=false
