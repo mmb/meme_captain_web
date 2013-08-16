@@ -6,7 +6,7 @@ describe HomeController do
 
     let(:user) { FactoryGirl.create(:user) }
 
-    let(:src_image) { FactoryGirl.create(:src_image, user: user) }
+    let(:src_image) { FactoryGirl.create(:src_image, user: user, work_in_progress: false) }
 
     before(:each) do
       session[:user_id] = user.try(:id)
@@ -69,8 +69,8 @@ describe HomeController do
     end
 
     it 'does not show private source images' do
-      si1 = FactoryGirl.create(:src_image, private: true)
-      si2 = FactoryGirl.create(:src_image)
+      si1 = FactoryGirl.create(:src_image, private: true, work_in_progress: false)
+      si2 = FactoryGirl.create(:src_image, work_in_progress: false)
 
       get :index
 
@@ -78,8 +78,17 @@ describe HomeController do
     end
 
     it 'does not show deleted source images' do
-      si1 = FactoryGirl.create(:src_image, is_deleted: true)
-      si2 = FactoryGirl.create(:src_image)
+      si1 = FactoryGirl.create(:src_image, is_deleted: true, work_in_progress: false)
+      si2 = FactoryGirl.create(:src_image, work_in_progress: false)
+
+      get :index
+
+      expect(assigns(:src_images)).to eq [si2]
+    end
+
+    it 'does not show source images that are under construction' do
+      si1 = FactoryGirl.create(:src_image)
+      si2 = FactoryGirl.create(:src_image, work_in_progress: false)
 
       get :index
 
@@ -87,9 +96,9 @@ describe HomeController do
     end
 
     it 'shows source images sorted by reverse gend_images_count' do
-      si1 = FactoryGirl.create(:src_image, gend_images_count: 10)
-      si2 = FactoryGirl.create(:src_image, gend_images_count: 30)
-      si3 = FactoryGirl.create(:src_image, gend_images_count: 20)
+      si1 = FactoryGirl.create(:src_image, gend_images_count: 10, work_in_progress: false)
+      si2 = FactoryGirl.create(:src_image, gend_images_count: 30, work_in_progress: false)
+      si3 = FactoryGirl.create(:src_image, gend_images_count: 20, work_in_progress: false)
 
       get :index
 
