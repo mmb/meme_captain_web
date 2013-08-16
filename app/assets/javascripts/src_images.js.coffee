@@ -15,7 +15,9 @@ window.load_urls_init = ->
   $('#load-urls-button').click ->
     urls = split_urls($('#load-urls').val())
     $.when((create_with_url url for url in urls)...).then ->
-      add_alert $('#load-urls-message'), "Loaded #{urls.length} source image URLs.", 'alert-info'
+      my_url = $('#load-urls-message').attr('data-myurl')
+      add_alert $('#load-urls-message'),
+        "Loaded #{urls.length} source image URLs. View them at <a href=\"#{my_url}\">your images</a>.", 'alert-info'
 
       $('#load-urls').val ''
 

@@ -45,7 +45,7 @@ describe 'src_images', ->
 
         $('#load-urls-button').click()
 
-        expect($('#load-urls-message').text()).toMatch /Loaded 1 source image URLs\./
+        expect($('#load-urls-message').text()).toMatch /Loaded 1 source image URLs\. View them at your images\./
 
       it 'clears the text area', ->
         $('#load-urls').val 'http://url1.com/'
