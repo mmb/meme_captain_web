@@ -43,7 +43,7 @@ class GendImagesController < ApplicationController
   def show
     gend_image = GendImage.find_by_id_hash!(params[:id])
 
-    expires_in 1.hour, public: true
+    expires_in 1.day, public: true
 
     headers['Meme-Text'] = gend_image.captions.map do |c|
       Rack::Utils.escape(c.text)

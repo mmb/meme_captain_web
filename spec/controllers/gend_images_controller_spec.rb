@@ -239,6 +239,12 @@ describe GendImagesController do
         expect(response.headers['Meme-Source-Image']).to eq "http://#{request.host}/src_images/#{src_id_hash}"
       end
 
+      it 'has the correct Cache-Control headers' do
+        get :show, id: id
+
+        expect(response.headers['Cache-Control']).to eq 'max-age=86400, public'
+      end
+
     end
 
     context 'when the id is not found' do
