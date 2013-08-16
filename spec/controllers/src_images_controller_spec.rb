@@ -36,9 +36,9 @@ describe SrcImagesController do
     end
 
     it 'shows the images sorted by reverse gend image count' do
-      si1 = FactoryGirl.create(:src_image, user: user, gend_images_count: 20)
-      si2 = FactoryGirl.create(:src_image, user: user, gend_images_count: 10)
-      si3 = FactoryGirl.create(:src_image, user: user, gend_images_count: 30)
+      si1 = FactoryGirl.create(:src_image, user: user, gend_images_count: 20, work_in_progress: false)
+      si2 = FactoryGirl.create(:src_image, user: user, gend_images_count: 10, work_in_progress: false)
+      si3 = FactoryGirl.create(:src_image, user: user, gend_images_count: 30, work_in_progress: false)
 
       get :index
 
@@ -46,8 +46,17 @@ describe SrcImagesController do
     end
 
     it 'does not show deleted images' do
+      FactoryGirl.create(:src_image, user: user, work_in_progress: false)
+      FactoryGirl.create(:src_image, user: user, is_deleted: true, work_in_progress: false)
+
+      get :index
+
+      expect(assigns(:src_images).size).to eq 1
+    end
+
+    it 'does not show work in progress images' do
       FactoryGirl.create(:src_image, user: user)
-      FactoryGirl.create(:src_image, user: user, is_deleted: true)
+      FactoryGirl.create(:src_image, user: user, work_in_progress: false)
 
       get :index
 
@@ -55,8 +64,8 @@ describe SrcImagesController do
     end
 
     it 'shows public images' do
-      FactoryGirl.create(:src_image, private: true)
-      3.times { FactoryGirl.create(:src_image) }
+      FactoryGirl.create(:src_image, private: true, work_in_progress: false)
+      3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
 
       get :index
 
@@ -66,16 +75,16 @@ describe SrcImagesController do
     context 'searching' do
 
       it 'filters the result by the query string' do
-        si1 = FactoryGirl.create(:src_image, user: user, name: 'abc')
-        si2 = FactoryGirl.create(:src_image, user: user, name: 'def')
-        si3 = FactoryGirl.create(:src_image, user: user, name: 'ghi')
+        si1 = FactoryGirl.create(:src_image, user: user, name: 'abc', work_in_progress: false)
+        si2 = FactoryGirl.create(:src_image, user: user, name: 'def', work_in_progress: false)
+        si3 = FactoryGirl.create(:src_image, user: user, name: 'ghi', work_in_progress: false)
 
         get :index, q: 'e'
         expect(assigns(:src_images)).to eq [si2]
       end
 
       it 'is case insensitive' do
-        si = FactoryGirl.create(:src_image, user: user, name: 'a')
+        si = FactoryGirl.create(:src_image, user: user, name: 'a', work_in_progress: false)
 
         get :index, q: 'A'
         expect(assigns(:src_images)).to eq [si]
