@@ -90,17 +90,17 @@ class SrcImage < ActiveRecord::Base
     self.src_thumb = SrcThumb.new(:image => thumb_img.to_blob)
   end
 
-  scope :active, where(:is_deleted => false)
+  scope :active, -> { where is_deleted: false }
 
-  scope :owned_by, lambda { |user| where(:user_id => user.id) }
+  scope :owned_by, ->(user) { where user_id: user.id }
 
-  scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
+  scope :most_recent, ->(limit=1) { order(:updated_at).reverse_order.limit(limit) }
 
-  scope :public, where(private: false)
+  scope :publick, -> { where private: false }
 
   scope :name_matches, ->(query) { where('name LIKE ?', "%#{query.downcase}%") if query }
 
-  scope :most_used, lambda { |limit=1| order(:gend_images_count).reverse_order.limit(limit) }
+  scope :most_used, ->(limit=1) { order(:gend_images_count).reverse_order.limit(limit) }
 
-  scope :finished, where(work_in_progress: false)
+  scope :finished, -> { where work_in_progress: false }
 end

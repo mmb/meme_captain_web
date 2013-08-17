@@ -6,10 +6,10 @@ class HomeController < ApplicationController
 
   def index
     @src_images = SrcImage.without_image.includes(
-        :src_thumb).public.active.finished.most_used(2 * PER_ROW)
+        :src_thumb).publick.active.finished.most_used(2 * PER_ROW)
     @src_sets = SrcSet.front_page.active.not_empty.most_recent(2 * PER_ROW)
     @gend_images = GendImage.without_image.includes(
-        :gend_thumb).public.active.finished.most_recent(3 * PER_ROW)
+        :gend_thumb).publick.active.finished.most_recent(3 * PER_ROW)
 
     @show_toolbar = false
   end

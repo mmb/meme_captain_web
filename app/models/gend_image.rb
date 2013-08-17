@@ -36,13 +36,13 @@ class GendImage < ActiveRecord::Base
     self.gend_thumb = GendThumb.new(:image => thumb_img.to_blob)
   end
 
-  scope :active, where(:is_deleted => false)
+  scope :active, -> { where is_deleted: false }
 
-  scope :owned_by, lambda { |user| where(:user_id => user.try(:id)) }
+  scope :owned_by, ->(user) { where user_id: user.try(:id) }
 
-  scope :most_recent, lambda { |limit=1| order(:updated_at).reverse_order.limit(limit) }
+  scope :most_recent, ->(limit=1) { order(:updated_at).reverse_order.limit(limit) }
 
-  scope :finished, where(:work_in_progress => false)
+  scope :finished, -> { where work_in_progress: false }
 
-  scope :public, where(:private => false)
+  scope :publick, -> { where private: false }
 end
