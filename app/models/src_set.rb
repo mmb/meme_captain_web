@@ -48,13 +48,13 @@ class SrcSet < ActiveRecord::Base
     thumb.height if thumb
   end
 
-  scope :active, where(:is_deleted => false)
+  scope :active, -> { where is_deleted: false }
 
-  scope :owned_by, lambda { |user| where(:user_id => user.id) }
+  scope :owned_by, ->(user) { where user_id: user.id }
 
-  scope :most_recent, lambda { |limit=1| order(:quality, :'src_sets.updated_at').reverse_order.limit(limit) }
+  scope :most_recent, ->(limit=1) { order(:quality, :'src_sets.updated_at').reverse_order.limit(limit) }
 
-  scope :front_page, where('quality >= ?', MemeCaptainWeb::Config::SetFrontPageMinQuality)
+  scope :front_page, -> { where('quality >= ?', MemeCaptainWeb::Config::SetFrontPageMinQuality) }
 
-  scope :not_empty, joins(:src_images).where('src_images.is_deleted' => false).group(:'src_sets.id')
+  scope :not_empty, -> { joins(:src_images).where('src_images.is_deleted' => false).group(:'src_sets.id') }
 end
