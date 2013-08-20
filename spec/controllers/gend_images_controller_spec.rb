@@ -102,17 +102,67 @@ describe GendImagesController do
       it 'saves the new generated image to the database' do
         expect {
           post :create,
-               gend_image: { src_image_id: 'abc' },
-               text1: 'hello',
-               text2: 'world'
+               gend_image: {
+                   src_image_id: 'abc',
+                   captions_attributes: {
+                       '0' => {
+                           'font' => 'font1',
+                           'text' => 'hello',
+                           'top_left_x_pct' => '0.01',
+                           'top_left_y_pct' => '0.02',
+                           'width_pct' => '0.03',
+                           'height_pct' => '0.04',
+                       },
+                       '1' => {
+                           'font' => 'font2',
+                           'text' => 'world',
+                           'top_left_x_pct' => '0.05',
+                           'top_left_y_pct' => '0.06',
+                           'width_pct' => '0.07',
+                           'height_pct' => '0.08',
+                       },
+                       '2' => {
+                           'font' => 'font3',
+                           'text' => '!',
+                           'top_left_x_pct' => '0.09',
+                           'top_left_y_pct' => '0.10',
+                           'width_pct' => '0.11',
+                           'height_pct' => '0.12',
+                       },
+                   },
+                   private: '1'
+               }
         }.to change { GendImage.count }.by(1)
+
+        created = GendImage.last
+
+        expect(created.captions[0].font).to eq 'font1'
+        expect(created.captions[0].text).to eq 'hello'
+        expect(created.captions[0].top_left_x_pct).to eq 0.01
+        expect(created.captions[0].top_left_y_pct).to eq 0.02
+        expect(created.captions[0].width_pct).to eq 0.03
+        expect(created.captions[0].height_pct).to eq 0.04
+
+        expect(created.captions[1].font).to eq 'font2'
+        expect(created.captions[1].text).to eq 'world'
+        expect(created.captions[1].top_left_x_pct).to eq 0.05
+        expect(created.captions[1].top_left_y_pct).to eq 0.06
+        expect(created.captions[1].width_pct).to eq 0.07
+        expect(created.captions[1].height_pct).to eq 0.08
+
+        expect(created.captions[2].font).to eq 'font3'
+        expect(created.captions[2].text).to eq '!'
+        expect(created.captions[2].top_left_x_pct).to eq 0.09
+        expect(created.captions[2].top_left_y_pct).to eq 0.10
+        expect(created.captions[2].width_pct).to eq 0.11
+        expect(created.captions[2].height_pct).to eq 0.12
+
+        expect(created.private).to be_true
       end
 
       it 'redirects to the index' do
         post :create,
-             gend_image: { src_image_id: 'abc' },
-             text1: 'hello',
-             text2: 'world'
+             gend_image: {src_image_id: 'abc'}
 
         expect(response).to redirect_to controller: :gend_image_pages, action: :show,
                                         id: assigns(:gend_image).id_hash
