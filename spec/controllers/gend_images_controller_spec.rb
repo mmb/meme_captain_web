@@ -174,7 +174,7 @@ describe GendImagesController do
 
       it 'raises record not found' do
         expect {
-          post :create, gend_image: { src_image_id: 'abc' }
+          post :create, gend_image: {src_image_id: 'abc'}
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -185,7 +185,7 @@ describe GendImagesController do
       specify 'the gend image is owned by the current user' do
         gend_image = FactoryGirl.create(:gend_image, src_image: src_image2)
 
-        post :create, gend_image: { src_image_id: src_image2.id_hash }
+        post :create, gend_image: {src_image_id: src_image2.id_hash}
         expect(GendImage.last.user).to eq user
       end
 
