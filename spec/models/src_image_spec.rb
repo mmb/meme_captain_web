@@ -3,29 +3,20 @@ require 'spec_helper'
 describe SrcImage do
 
   it { should_not validate_presence_of :content_type }
-  it { should_not allow_mass_assignment_of :content_type }
 
   it { should_not validate_presence_of :height }
-  it { should_not allow_mass_assignment_of :height }
 
-  it { should_not allow_mass_assignment_of :id_hash }
   it { should validate_uniqueness_of :id_hash }
 
   it { should_not validate_presence_of :image }
-  it { should allow_mass_assignment_of :image }
 
   it { should_not validate_presence_of :name }
 
-  it { should allow_mass_assignment_of :private }
-
   it { should_not validate_presence_of :size }
-  it { should_not allow_mass_assignment_of :size }
 
   it { should_not validate_presence_of :url }
-  it { should allow_mass_assignment_of :url }
 
   it { should_not validate_presence_of :width }
-  it { should_not allow_mass_assignment_of :width }
 
   it { should belong_to :user }
   it { should have_one :src_thumb }

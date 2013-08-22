@@ -3,19 +3,14 @@ require 'spec_helper'
 describe GendThumb do
 
   it { should validate_presence_of :content_type }
-  it { should allow_mass_assignment_of :content_type }
 
   it { should validate_presence_of :height }
-  it { should allow_mass_assignment_of :height }
 
   it { should validate_presence_of :image }
-  it { should allow_mass_assignment_of :image }
 
   it { should validate_presence_of :size }
-  it { should allow_mass_assignment_of :size }
 
   it { should validate_presence_of :width }
-  it { should allow_mass_assignment_of :width }
 
   it { should belong_to :gend_image }
 

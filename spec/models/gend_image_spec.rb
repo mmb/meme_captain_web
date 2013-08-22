@@ -2,16 +2,7 @@ require 'spec_helper'
 
 describe GendImage do
 
-  it { should_not allow_mass_assignment_of :id_hash }
   it { should validate_uniqueness_of :id_hash }
-
-  it { should allow_mass_assignment_of :image }
-
-  it { should allow_mass_assignment_of :src_image_id }
-
-  it { should allow_mass_assignment_of :captions_attributes }
-
-  it { should allow_mass_assignment_of :private }
 
   it { should belong_to :src_image }
 

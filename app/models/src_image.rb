@@ -5,8 +5,6 @@ class SrcImage < ActiveRecord::Base
   include IdHashConcern
   include HasPostProcessConcern
 
-  attr_accessible :image, :url, :private
-
   belongs_to :user
   has_one :src_thumb
   has_many :gend_images

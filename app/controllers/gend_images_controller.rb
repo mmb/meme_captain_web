@@ -28,7 +28,7 @@ class GendImagesController < ApplicationController
   def create
     src_image = SrcImage.find_by_id_hash!(params[:gend_image][:src_image_id])
 
-    @gend_image = GendImage.new(params[:gend_image])
+    @gend_image = GendImage.new(gend_image_params)
     @gend_image.src_image = src_image
     @gend_image.user = current_user
 
@@ -70,7 +70,12 @@ class GendImagesController < ApplicationController
     else
       head :forbidden
     end
-
   end
 
+  private
+
+  def gend_image_params
+    params.require(:gend_image).permit({captions_attributes: [
+        :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct, :height_pct]}, :private)
+  end
 end

@@ -3,8 +3,6 @@ class GendImage < ActiveRecord::Base
   include IdHashConcern
   include HasPostProcessConcern
 
-  attr_accessible :image, :src_image_id, :captions_attributes, :private
-
   belongs_to :src_image, counter_cache: true
   has_one :gend_thumb
   has_many :captions, :order => :id

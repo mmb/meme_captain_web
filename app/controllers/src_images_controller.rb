@@ -16,7 +16,7 @@ class SrcImagesController < ApplicationController
   def create
     return if not_logged_in 'Please login to create source images.'
 
-    @src_image = SrcImage.new(params[:src_image])
+    @src_image = SrcImage.new(src_image_params)
     @src_image.user = current_user
 
     if params.try(:[], :src_image).try(:[], :image)
@@ -63,4 +63,9 @@ class SrcImagesController < ApplicationController
 
   end
 
+  private
+
+  def src_image_params
+    params.require(:src_image).permit(:image, :private, :url)
+  end
 end

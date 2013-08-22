@@ -7,7 +7,7 @@ class SrcSetsController < ApplicationController
   end
 
   def create
-    @src_set = SrcSet.new(params[:src_set])
+    @src_set = SrcSet.new(src_set_params)
     @src_set.user = current_user
 
     if @src_set.save
@@ -34,13 +34,13 @@ class SrcSetsController < ApplicationController
     end
 
     if @src_set.user == current_user
-      @src_set.add_src_images(
-          params[:add_src_images]) if params[:add_src_images]
-      @src_set.delete_src_images(
-          params[:delete_src_images]) if params[:delete_src_images]
+      add_src_images = params.delete(:add_src_images)
+      @src_set.add_src_images(add_src_images) if add_src_images
+      delete_src_images = params.delete(:delete_src_images)
+      @src_set.delete_src_images(delete_src_images) if delete_src_images
 
       respond_to do |format|
-        if @src_set.update_attributes(params[:src_set])
+        if @src_set.update_attributes(src_set_params)
           format.html do
             redirect_to(
                 { action: :show, id: @src_set.name },
@@ -71,6 +71,16 @@ class SrcSetsController < ApplicationController
 
     @src_set.update_attribute(:is_deleted, true)
     redirect_to action: :index
+  end
+
+  private
+
+  def src_set_params
+    if params[:src_set] && !params[:src_set].empty?
+      params.require(:src_set).permit(:name)
+    else
+      {}
+    end
   end
 
 end

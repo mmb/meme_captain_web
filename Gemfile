@@ -53,6 +53,7 @@ gem 'thin'
 gem 'fabric-rails'
 gem 'browser'
 gem 'gravatar-ultimate'
+gem 'strong_parameters'
 
 group :test, :development do
   gem 'factory_girl_rails'
