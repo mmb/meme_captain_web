@@ -7,8 +7,7 @@ class SrcSet < ActiveRecord::Base
 
   def one_active_name
     if new_record? && SrcSet.active.exists?(:name => name) or
-        !is_deleted && SrcSet.count(
-            :conditions => ['name = ? AND id != ? AND is_deleted = ?', name, id, false]) > 0
+        !is_deleted && SrcSet.where('name = ? AND id != ?', name, id).active.count > 0
       errors.add :name, 'has already been taken'
     end
   end
