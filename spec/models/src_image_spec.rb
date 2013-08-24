@@ -90,11 +90,45 @@ describe SrcImage do
     let(:url) { 'http://www.example.com/image.jpg' }
     let(:image_data) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
 
+    before do
+      stub_const 'MemeCaptainWeb::Config::SourceImageSide', 1000000
+    end
+
     it 'loads the image from a url' do
       stub_request(:get, url).to_return(:body => image_data)
       src_image = FactoryGirl.create(:src_image, :image => nil, :url => url)
       src_image.post_process_job
       expect(src_image.magick_image_list.rows).to eq 399
+    end
+
+    context 'vertical join' do
+
+      it 'joins the image vertically' do
+        stub_request(:get, 'http://example.com/image.jpg').to_return(body: image_data)
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: image_data)
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: image_data)
+        src_image = FactoryGirl.create(:src_image, image: nil,
+                                       url: 'http://example.com/image.jpg|http://example.com/image2.jpg|http://example.com/image3.jpg')
+        src_image.post_process_job
+
+        expect(src_image.magick_image_list.columns).to eq 399
+        expect(src_image.magick_image_list.rows).to eq 1197
+      end
+    end
+
+    context 'horizontal join' do
+
+      it 'joins the image horizontally' do
+        stub_request(:get, 'http://example.com/image.jpg').to_return(body: image_data)
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: image_data)
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: image_data)
+        src_image = FactoryGirl.create(:src_image, image: nil,
+                                       url: 'http://example.com/image.jpg[]http://example.com/image2.jpg[]http://example.com/image3.jpg')
+        src_image.post_process_job
+
+        expect(src_image.magick_image_list.columns).to eq 1197
+        expect(src_image.magick_image_list.rows).to eq 399
+      end
     end
 
   end
