@@ -1,5 +1,3 @@
-require 'digest/md5'
-
 require 'spec_helper'
 
 describe SrcImage do
@@ -165,11 +163,8 @@ describe SrcImage do
   context 'adding a watermark' do
     it 'watermarks the image' do
       src_image = FactoryGirl.create(:src_image, image: create_image(100, 100))
-      src_image.post_process_job
 
-      excerpt = src_image.magick_image_list.export_pixels_to_str(54, 95, 46, 5)
-
-      expect(Digest::MD5.hexdigest(excerpt)).to eq 'a57400c12f72e87d50bf63075dc4be6c'
+      expect { src_image.post_process_job }.to change { src_image.magick_image_list.excerpt(54, 95, 46, 5) }
     end
   end
 
