@@ -76,9 +76,7 @@ class SrcImage < ActiveRecord::Base
 
     thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::ThumbSide)
 
-    watermark_img = Magick::ImageList.new(Rails.root + 'app/assets/images/watermark.png')
-    img.extend MemeCaptain::ImageList::Watermark
-    img.watermark_mc watermark_img
+    watermark img
 
     self.image = img.to_blob
 
@@ -106,6 +104,12 @@ class SrcImage < ActiveRecord::Base
         height > MemeCaptainWeb::Config::SourceImageSide
       img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
     end
+  end
+
+  def watermark(img)
+    watermark_img = Magick::ImageList.new(Rails.root + 'app/assets/images/watermark.png')
+    img.extend MemeCaptain::ImageList::Watermark
+    img.watermark_mc watermark_img
   end
 
 end
