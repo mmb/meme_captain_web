@@ -104,30 +104,46 @@ describe SrcImage do
     context 'vertical join' do
 
       it 'joins the image vertically' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(body: image_data)
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: image_data)
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: image_data)
+        stub_request(:get, 'http://example.com/image.jpg').to_return(body: create_image(100, 50))
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: create_image(105, 50))
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: create_image(110, 50))
         src_image = FactoryGirl.create(:src_image, image: nil,
                                        url: 'http://example.com/image.jpg|http://example.com/image2.jpg|http://example.com/image3.jpg')
         src_image.post_process_job
 
-        expect(src_image.magick_image_list.columns).to eq 399
-        expect(src_image.magick_image_list.rows).to eq 1197
+        expect(src_image.magick_image_list.columns).to eq 100
+        expect(src_image.magick_image_list.rows).to eq 143
       end
+
     end
 
     context 'horizontal join' do
 
       it 'joins the image horizontally' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(body: image_data)
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: image_data)
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: image_data)
+        stub_request(:get, 'http://example.com/image.jpg').to_return(body: create_image(100, 50))
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: create_image(100, 75))
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image, image: nil,
                                        url: 'http://example.com/image.jpg[]http://example.com/image2.jpg[]http://example.com/image3.jpg')
         src_image.post_process_job
 
-        expect(src_image.magick_image_list.columns).to eq 1197
-        expect(src_image.magick_image_list.rows).to eq 399
+        expect(src_image.magick_image_list.columns).to eq 217
+        expect(src_image.magick_image_list.rows).to eq 50
+      end
+    end
+
+    context 'mixed join' do
+
+      it 'joins the image vertically and then horizontally' do
+        stub_request(:get, 'http://example.com/image.jpg').to_return(body: create_image(100, 100))
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: create_image(100, 100))
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: create_image(100, 100))
+        src_image = FactoryGirl.create(:src_image, image: nil,
+                                       url: 'http://example.com/image.jpg|http://example.com/image2.jpg[]http://example.com/image3.jpg')
+        src_image.post_process_job
+
+        expect(src_image.magick_image_list.columns).to eq 100
+        expect(src_image.magick_image_list.rows).to eq 150
       end
     end
 

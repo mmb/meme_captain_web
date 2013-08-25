@@ -36,11 +36,7 @@ class SrcImage < ActiveRecord::Base
   def self.load_multi_vert(the_url)
     images = the_url.split('|').map { |u| Magick::ImageList.new.from_blob(load_from_url(u)).first }
 
-    min_width = images.map(&:columns).min
-
-    images.select { |i| i.columns > min_width }.each do |i|
-      i.resize_to_fit! min_width
-    end
+    equalize_width images
 
     img_list = Magick::ImageList.new
     img_list.push(*images)
@@ -48,19 +44,31 @@ class SrcImage < ActiveRecord::Base
     img_list.append(true).to_blob
   end
 
+  def self.equalize_width(images)
+    min_width = images.map(&:columns).min
+
+    images.select { |i| i.columns > min_width }.each do |i|
+      i.resize_to_fit! min_width
+    end
+  end
+
   def self.load_multi_horiz(the_url)
     images = the_url.split('[]').map { |u| Magick::ImageList.new.from_blob(load_from_url(u)).first }
 
-    min_height = images.map(&:rows).min
-
-    images.select { |i| i.rows > min_height }.each do |i|
-      i.resize_to_fit! nil, min_height
-    end
+    equalize_height images
 
     img_list = Magick::ImageList.new
     img_list.push(*images)
 
     img_list.append(false).to_blob
+  end
+
+  def self.equalize_height(images)
+    min_height = images.map(&:rows).min
+
+    images.select { |i| i.rows > min_height }.each do |i|
+      i.resize_to_fit! nil, min_height
+    end
   end
 
   def post_process
