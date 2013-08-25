@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class SrcThumb < ActiveRecord::Base
   include HasImageConcern
 

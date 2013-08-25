@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'net/http'
 
 class SrcImage < ActiveRecord::Base
@@ -87,20 +89,20 @@ class SrcImage < ActiveRecord::Base
 
   scope :owned_by, ->(user) { where user_id: user.id }
 
-  scope :most_recent, ->(limit=1) { order(:updated_at).reverse_order.limit(limit) }
+  scope :most_recent, ->(limit = 1) { order(:updated_at).reverse_order.limit(limit) }
 
   scope :publick, -> { where private: false }
 
   scope :name_matches, ->(query) { where('name LIKE ?', "%#{query.downcase}%") if query }
 
-  scope :most_used, ->(limit=1) { order(:gend_images_count).reverse_order.limit(limit) }
+  scope :most_used, ->(limit = 1) { order(:gend_images_count).reverse_order.limit(limit) }
 
   scope :finished, -> { where work_in_progress: false }
 
   private
 
   def constrain_size(img)
-    if width > MemeCaptainWeb::Config::SourceImageSide or
+    if width > MemeCaptainWeb::Config::SourceImageSide ||
         height > MemeCaptainWeb::Config::SourceImageSide
       img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
     end

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class SrcSet < ActiveRecord::Base
   validates :name, presence: true
   validate :name, :one_active_name
@@ -6,7 +8,7 @@ class SrcSet < ActiveRecord::Base
   belongs_to :user
 
   def one_active_name
-    if new_record? && SrcSet.active.exists?(:name => name) or
+    if new_record? && SrcSet.active.exists?(name: name) ||
         !is_deleted && SrcSet.where('name = ? AND id != ?', name, id).active.count > 0
       errors.add :name, 'has already been taken'
     end
