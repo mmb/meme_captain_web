@@ -133,4 +133,31 @@ describe SrcImage do
 
   end
 
+  context 'constraining the image to a maximum size' do
+
+    before do
+      stub_const 'MemeCaptainWeb::Config::SourceImageSide', 80
+    end
+
+    context 'when the the image is too wide' do
+      it "reduces the image's width" do
+        src_image = FactoryGirl.create(:src_image, image: create_image(100, 50))
+        src_image.post_process_job
+
+        expect(src_image.magick_image_list.columns).to eq 80
+        expect(src_image.magick_image_list.rows).to eq 40
+      end
+    end
+
+    context 'when the the image is too high' do
+      it "reduces the image's height" do
+        src_image = FactoryGirl.create(:src_image, image: create_image(100, 400))
+        src_image.post_process_job
+
+        expect(src_image.magick_image_list.columns).to eq 20
+        expect(src_image.magick_image_list.rows).to eq 80
+      end
+    end
+  end
+
 end

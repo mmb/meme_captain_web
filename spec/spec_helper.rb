@@ -45,3 +45,10 @@ RSpec.configure do |config|
   RspecStubout.prevent_stubout(config)
 end
 
+def create_image(width, height)
+  il = Magick::ImageList.new
+  il.new_image(width, height)
+  il.to_blob do |i|
+    i.format = 'JPEG'
+  end
+end

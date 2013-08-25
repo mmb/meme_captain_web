@@ -72,10 +72,7 @@ class SrcImage < ActiveRecord::Base
     img.auto_orient!
     img.strip!
 
-    if width > MemeCaptainWeb::Config::SourceImageSide or
-        height > MemeCaptainWeb::Config::SourceImageSide
-      img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
-    end
+    constrain_size img
 
     thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::ThumbSide)
 
@@ -101,4 +98,14 @@ class SrcImage < ActiveRecord::Base
   scope :most_used, ->(limit=1) { order(:gend_images_count).reverse_order.limit(limit) }
 
   scope :finished, -> { where work_in_progress: false }
+
+  private
+
+  def constrain_size(img)
+    if width > MemeCaptainWeb::Config::SourceImageSide or
+        height > MemeCaptainWeb::Config::SourceImageSide
+      img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
+    end
+  end
+
 end
