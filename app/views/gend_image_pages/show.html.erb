@@ -12,9 +12,15 @@
 
       <div class="span6">
 
-        <% @gend_image.captions.each do |c| %>
-            <h1><%= c.text %></h1>
-        <% end %>
+        <blockquote>
+          <% @gend_image.captions.each do |c| %>
+              <h1><%= c.text %></h1>
+          <% end %>
+
+          <% unless @gend_image.src_image.name.blank? %>
+              <small><%= @gend_image.src_image.name %></small>
+          <% end %>
+        </blockquote>
 
         <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn') do %>
             <i class="icon-arrow-up"></i> Reddit
