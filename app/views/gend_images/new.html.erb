@@ -1,4 +1,6 @@
-<h1>New Meme</h1>
+<% unless @gend_image.src_image.name.blank? %>
+    <h1><%= @gend_image.src_image.name %></h1>
+<% end %>
 
 <div class="text-positioner"
      data-img-url="<%= url_for :controller => :src_images, :action => :show, :id => @gend_image.src_image.id_hash %>"
