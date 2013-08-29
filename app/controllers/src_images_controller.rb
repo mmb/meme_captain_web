@@ -66,6 +66,6 @@ class SrcImagesController < ApplicationController
   private
 
   def src_image_params
-    params.require(:src_image).permit(:image, :private, :url)
+    params.require(:src_image).permit(:image, :private, :url, :name)
   end
 end

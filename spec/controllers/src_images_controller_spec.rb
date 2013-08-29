@@ -145,6 +145,14 @@ describe SrcImagesController do
       end
     end
 
+    context 'setting an optional name' do
+
+      it 'saves the name to the database' do
+        post :create, src_image: {image: image, name: 'a test name'}
+        expect(SrcImage.last.name).to eq 'a test name'
+      end
+    end
+
   end
 
   describe "GET 'show'" do
