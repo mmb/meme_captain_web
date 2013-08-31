@@ -54,6 +54,8 @@ gem 'fabric-rails'
 gem 'browser'
 gem 'gravatar-ultimate'
 gem 'strong_parameters'
+gem 'faraday'
+gem 'faraday_middleware'
 
 group :test, :development do
   gem 'factory_girl_rails'

@@ -1,10 +1,18 @@
-require 'net/http'
-require 'uri'
-
 class UrlGetter
 
   def get(url)
-    Net::HTTP.get(URI(url))
+    conn.get(url).body
+  end
+
+  private
+
+  def conn
+    Faraday.new do |c|
+      c.use FaradayMiddleware::FollowRedirects
+      c.use Faraday::Response::RaiseError
+
+      c.adapter Faraday.default_adapter
+    end
   end
 
 end
