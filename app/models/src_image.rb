@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-require 'net/http'
+require 'url_getter'
 
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
@@ -29,7 +29,7 @@ class SrcImage < ActiveRecord::Base
       when %r{\[\]}
         load_multi_horiz the_url
       else
-        Net::HTTP.get(URI(the_url))
+        UrlGetter.new.get(the_url)
     end
   end
 
