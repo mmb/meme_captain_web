@@ -21,4 +21,10 @@ describe 'gend_images/new.html.erb' do
     expect(rendered).to have_selector('h1', content: 'src image name')
   end
 
+  it 'has the src image name in the title' do
+    render
+
+    expect(view.content_for(:title)).to eq 'src image name meme'
+  end
+
 end
