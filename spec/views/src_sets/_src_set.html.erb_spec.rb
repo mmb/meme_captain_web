@@ -1,18 +1,20 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe 'src_sets/_src_set.html' do
 
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
 
-  let(:src_image) { mock_model(SrcImage,
-                               work_in_progress: false,
-                               src_thumb: src_thumb) }
+  let(:src_image) do
+    mock_model(SrcImage, work_in_progress: false, src_thumb: src_thumb)
+  end
 
-  let(:src_set) {
+  let(:src_set) do
     mock_model(SrcSet, name: 'set1', src_images: [src_image],
-               thumbnail: src_thumb, thumb_width: src_thumb.width, thumb_height: src_thumb.height,
-               size_desc: :small)
-  }
+               thumbnail: src_thumb, thumb_width: src_thumb.width,
+               thumb_height: src_thumb.height)
+  end
 
   context 'when the set contains a completed source image' do
 
@@ -34,7 +36,9 @@ describe 'src_sets/_src_set.html' do
   end
 
   context 'when the set is empty' do
-    let(:src_set) { mock_model(SrcSet, name: 'set1', thumbnail: nil, src_images: [], size_desc: :small) }
+    let(:src_set) do
+      mock_model(SrcSet, name: 'set1', thumbnail: nil, src_images: [])
+    end
 
     it 'shows the empty set' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
@@ -49,7 +53,7 @@ describe 'src_sets/_src_set.html' do
 
   it 'links to the source set' do
     render partial: 'src_sets/src_set', locals: { src_set: src_set }
-    expect(rendered).to match(%r{href=".+/#{src_set.name}"})
+    expect(rendered).to match(/href=".+\/#{src_set.name}"/)
   end
 
 end

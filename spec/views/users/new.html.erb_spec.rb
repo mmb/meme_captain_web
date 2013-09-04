@@ -1,6 +1,8 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
-describe "users/new.html.erb" do
+describe 'users/new.html.erb' do
 
   before(:each) do
     assign(:user, [stub_model(User)])
