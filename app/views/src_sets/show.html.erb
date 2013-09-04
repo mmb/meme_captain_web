@@ -1,3 +1,7 @@
+<% content_for(:title) do %>
+    <%- "#{@src_set.name} memes" -%>
+<% end %>
+
 <h1><%= @src_set.name %></h1>
 
 <%= render :partial => 'src_images/src_images' %>
