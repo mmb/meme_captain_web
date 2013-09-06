@@ -1,11 +1,13 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe 'src_images/_src_image.html' do
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
-  let(:src_image) { mock_model(SrcImage,
-                               work_in_progress: false,
-                               src_thumb: src_thumb) }
-  let(:user) { user = FactoryGirl.create(:user) }
+  let(:src_image) do
+    mock_model(SrcImage, work_in_progress: false, src_thumb: src_thumb)
+  end
+  let(:user) { FactoryGirl.create(:user) }
 
   before do
     view.stub(current_user: user)

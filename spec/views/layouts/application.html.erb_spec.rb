@@ -7,7 +7,8 @@ describe 'layouts/application.html.erb' do
   it 'has the right title' do
     render
 
-    expect(rendered).to have_selector('title', content: 'Meme Captain meme generator')
+    expect(rendered).to have_selector('title',
+                                      content: 'Meme Captain meme generator')
   end
 
 end

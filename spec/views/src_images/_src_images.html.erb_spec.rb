@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe 'src_images/_src_images.html' do
@@ -34,7 +36,7 @@ describe 'src_images/_src_images.html' do
 
     end
 
-    context "when the user is not logged in" do
+    context 'when the user is not logged in' do
       let(:user) { nil }
       let(:src_set) { FactoryGirl.create(:src_set, user: user2) }
 

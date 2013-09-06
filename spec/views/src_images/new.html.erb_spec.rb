@@ -1,7 +1,9 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
-describe "src_images/new.html.erb" do
-  let(:src_image) { FactoryGirl.build(:src_image, :image => nil) }
+describe 'src_images/new.html.erb' do
+  let(:src_image) { FactoryGirl.build(:src_image, image: nil) }
 
   before do
     src_image.valid?
@@ -17,7 +19,8 @@ describe "src_images/new.html.erb" do
   it 'has the my images url' do
     render
 
-    expect(rendered).to have_selector '#load-urls-message[data-myurl="http://test.host/my"]'
+    selector = '#load-urls-message[data-myurl="http://test.host/my"]'
+    expect(rendered).to have_selector(selector)
   end
 
 end
