@@ -13,7 +13,7 @@
       <div class="span6">
 
         <blockquote>
-          <% @gend_image.captions.each do |c| %>
+          <% @gend_image.captions.position_order.each do |c| %>
               <h1><%= c.text %></h1>
           <% end %>
 

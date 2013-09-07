@@ -29,4 +29,6 @@ class Caption < ActiveRecord::Base
     text.force_encoding('UTF-8').ascii_only?
   end
 
+  scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct') }
+
 end
