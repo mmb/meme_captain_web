@@ -55,6 +55,12 @@ describe Caption do
       its(:font) { should eq font }
     end
 
+    context 'when the text contains non-ascii characters' do
+      subject { FactoryGirl.create(:caption, font: nil, text: "abc\u{6666}") }
+
+      its(:font) { should eq MemeCaptainWeb::Config::DefaultUnicodeFont }
+    end
+
   end
 
 end

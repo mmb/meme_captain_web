@@ -7,7 +7,7 @@ class Caption < ActiveRecord::Base
 
   def default_values
     if font.blank?
-      self.font = MemeCaptainWeb::Config::DefaultFont
+      self.font = default_font
     end
   end
 
@@ -17,6 +17,16 @@ class Caption < ActiveRecord::Base
 
   def text_pos
     MemeCaptain::TextPos.new(text, top_left_x_pct, top_left_y_pct, width_pct, height_pct, :font => font_path)
+  end
+
+  private
+
+  def default_font
+    ascii_only? ? MemeCaptainWeb::Config::DefaultFont : MemeCaptainWeb::Config::DefaultUnicodeFont
+  end
+
+  def ascii_only?
+    text.force_encoding('UTF-8').ascii_only?
   end
 
 end
