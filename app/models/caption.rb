@@ -22,11 +22,11 @@ class Caption < ActiveRecord::Base
   private
 
   def default_font
-    ascii_only? ? MemeCaptainWeb::Config::DefaultFont : MemeCaptainWeb::Config::DefaultUnicodeFont
+    extended_ascii_only? ? MemeCaptainWeb::Config::DefaultFont : MemeCaptainWeb::Config::DefaultUnicodeFont
   end
 
-  def ascii_only?
-    text.force_encoding('UTF-8').ascii_only?
+  def extended_ascii_only?
+    text.force_encoding('UTF-8').chars.find { |c| c.ord > 255 }.nil?
   end
 
   scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct') }
