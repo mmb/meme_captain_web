@@ -23,16 +23,9 @@ class SrcImagesController < ApplicationController
 
     respond_to do |format|
       if @src_image.save
-        format.html do
-          redirect_to({ controller: :my, action: :show }, {
-              notice: 'Source image created.' })
-        end
-        format.json { render json: {} }
+        create_success(format)
       else
-        format.html { render :new }
-        format.json do
-          render json: @src_image.errors, status: :unprocessable_entity
-        end
+        create_fail(format)
       end
     end
   end
@@ -70,6 +63,21 @@ class SrcImagesController < ApplicationController
   def read_image_data(src_image)
     if params.try(:[], :src_image).try(:[], :image)
       src_image.image = params[:src_image][:image].read
+    end
+  end
+
+  def create_success(format)
+    format.html do
+      redirect_to({ controller: :my, action: :show }, {
+          notice: 'Source image created.' })
+    end
+    format.json { render json: {} }
+  end
+
+  def create_fail(format)
+    format.html { render :new }
+    format.json do
+      render json: @src_image.errors, status: :unprocessable_entity
     end
   end
 
