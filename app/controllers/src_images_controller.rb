@@ -19,9 +19,7 @@ class SrcImagesController < ApplicationController
     @src_image = SrcImage.new(src_image_params)
     @src_image.user = current_user
 
-    if params.try(:[], :src_image).try(:[], :image)
-      @src_image.image = params[:src_image][:image].read
-    end
+    read_image_data @src_image
 
     respond_to do |format|
       if @src_image.save
@@ -68,4 +66,11 @@ class SrcImagesController < ApplicationController
   def src_image_params
     params.require(:src_image).permit(:image, :private, :url, :name)
   end
+
+  def read_image_data(src_image)
+    if params.try(:[], :src_image).try(:[], :image)
+      src_image.image = params[:src_image][:image].read
+    end
+  end
+
 end
