@@ -200,6 +200,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     twitter-bootstrap-rails (2.2.8)
       actionpack (>= 3.1)
       execjs
@@ -255,6 +256,7 @@ DEPENDENCIES
   therubyracer
   thin
   timecop
+  ttfunk
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   webmock

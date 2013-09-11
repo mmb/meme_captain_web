@@ -35,42 +35,34 @@ describe Caption do
   end
 
   describe '#default_values' do
-    subject { FactoryGirl.create(:caption, :font => font) }
 
     context 'when the font is nil' do
-      let(:font) { nil }
 
-      its(:font) { should eq MemeCaptainWeb::Config::DefaultFont }
+      it 'uses the default font' do
+        MemeCaptainWeb::Font.stub(for: 'font.ttf')
+        caption = FactoryGirl.create(:caption, font: nil)
+        expect(caption.font).to eq 'font.ttf'
+      end
+
     end
 
     context 'when the font is empty' do
-      let(:font) { '' }
 
-      its(:font) { should eq MemeCaptainWeb::Config::DefaultFont }
+      it 'uses the default font' do
+        MemeCaptainWeb::Font.stub(for: 'font.ttf')
+        caption = FactoryGirl.create(:caption, font: '')
+        expect(caption.font).to eq 'font.ttf'
+      end
+
     end
 
     context 'when the font is set' do
-      let(:font) { 'some_font.ttf' }
 
-      its(:font) { should eq font }
-    end
+      it 'uses the font provided' do
+        caption = FactoryGirl.create(:caption, font: 'some_font.ttf')
+        expect(caption.font).to eq 'some_font.ttf'
+      end
 
-    context 'when the text contains characters above extended ascii' do
-      subject { FactoryGirl.create(:caption, font: nil, text: "abc\u{6666}") }
-
-      its(:font) { should eq MemeCaptainWeb::Config::DefaultUnicodeFont }
-    end
-
-    context 'when the text contains extended ascii characters' do
-      subject { FactoryGirl.create(:caption, font: nil, text: "abc\u{00ff}") }
-
-      its(:font) { should eq MemeCaptainWeb::Config::DefaultFont }
-    end
-
-    context 'when the text contains only ascii characters' do
-      subject { FactoryGirl.create(:caption, font: nil, text: 'abc') }
-
-      its(:font) { should eq MemeCaptainWeb::Config::DefaultFont }
     end
 
   end

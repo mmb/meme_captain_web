@@ -56,6 +56,7 @@ gem 'gravatar-ultimate'
 gem 'strong_parameters'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'ttfunk'
 
 group :test, :development do
   gem 'factory_girl_rails'

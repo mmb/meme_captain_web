@@ -7,7 +7,7 @@ class Caption < ActiveRecord::Base
 
   def default_values
     if font.blank?
-      self.font = default_font
+      self.font = MemeCaptainWeb::Font.for(text)
     end
   end
 
@@ -16,18 +16,10 @@ class Caption < ActiveRecord::Base
   end
 
   def text_pos
-    MemeCaptain::TextPos.new(text, top_left_x_pct, top_left_y_pct, width_pct, height_pct, :font => font_path)
+    MemeCaptain::TextPos.new(text, top_left_x_pct, top_left_y_pct, width_pct, height_pct, font: font_path)
   end
 
   private
-
-  def default_font
-    extended_ascii_only? ? MemeCaptainWeb::Config::DefaultFont : MemeCaptainWeb::Config::DefaultUnicodeFont
-  end
-
-  def extended_ascii_only?
-    text.force_encoding('UTF-8').chars.find { |c| c.ord > 255 }.nil?
-  end
 
   scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct') }
 
