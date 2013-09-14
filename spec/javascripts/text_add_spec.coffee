@@ -13,7 +13,7 @@ describe 'text_add', ->
         expect($('#new_gend_image')).toContainHtml '<label for="gend_image_captions_attributes_2_text">Caption 3<\/label>'
 
       it 'adds a new text input', ->
-        expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_text" name="gend_image[captions_attributes][2][text]" size="30" type="text" />'
+        expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_text" name="gend_image[captions_attributes][2][text]" class="input-xxlarge" type="text" />'
 
       it 'adds a new font input', ->
         expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_font" name="gend_image[captions_attributes][2][font]" type="hidden" value="" />'
@@ -38,7 +38,7 @@ describe 'text_add', ->
         expect($('#empty')).toContainHtml '<label for="gend_image_captions_attributes_0_text">Caption 1<\/label>'
 
       it 'adds a new text input', ->
-        expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" size="30" type="text" />'
+        expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" class="input-xxlarge" type="text" />'
 
       it 'adds a new font input', ->
         expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_font" name="gend_image[captions_attributes][0][font]" type="hidden" value="" />'
