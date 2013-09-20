@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe SrcThumbsController do
@@ -6,14 +8,12 @@ describe SrcThumbsController do
 
     context 'when the id is found' do
 
-      let(:src_thumb) {
-        mock_model(SrcThumb)
-      }
+      let(:src_thumb) { mock_model(SrcThumb) }
 
       it 'shows the thumbnail' do
         SrcThumb.should_receive(:find).and_return(src_thumb)
 
-        get 'show', :id => 1
+        get 'show', id: 1
 
         expect(response).to be_success
       end
@@ -22,7 +22,7 @@ describe SrcThumbsController do
         src_thumb.should_receive(:content_type).and_return('content type')
         SrcThumb.should_receive(:find).and_return(src_thumb)
 
-        get 'show', :id => 1
+        get 'show', id: 1
 
         expect(response.content_type).to eq('content type')
       end
@@ -31,7 +31,7 @@ describe SrcThumbsController do
         src_thumb.should_receive(:image).and_return('image')
         SrcThumb.should_receive(:find).and_return(src_thumb)
 
-        get 'show', :id => 1
+        get 'show', id: 1
 
         expect(response.body).to eq('image')
       end
@@ -41,7 +41,8 @@ describe SrcThumbsController do
 
         get :show, id: 1
 
-        expect(response.headers['Cache-Control']).to eq 'max-age=604800, public'
+        cache_control = response.headers['Cache-Control']
+        expect(cache_control).to eq('max-age=604800, public')
       end
 
     end
@@ -49,9 +50,8 @@ describe SrcThumbsController do
     context 'when the id is not found' do
 
       it 'raises record not found' do
-        expect {
-          get 'show', :id => 1
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { get 'show', id: 1 }.to raise_error(
+                                            ActiveRecord::RecordNotFound)
       end
 
     end
