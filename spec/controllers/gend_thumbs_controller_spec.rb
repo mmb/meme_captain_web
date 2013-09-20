@@ -36,6 +36,14 @@ describe GendThumbsController do
         expect(response.body).to eq('image')
       end
 
+      it 'has the correct Expires header' do
+        GendThumb.should_receive(:find).and_return(gend_thumb)
+
+        get :show, id: 1
+
+        expect(response.headers['Cache-Control']).to eq 'max-age=604800, public'
+      end
+
     end
 
     context 'when the id is not found' do
