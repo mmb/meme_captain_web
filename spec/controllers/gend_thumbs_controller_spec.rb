@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'time'
+
 require 'spec_helper'
 
 describe GendThumbsController do
@@ -48,12 +50,12 @@ describe GendThumbsController do
       it 'has the correct Expires header' do
         GendThumb.should_receive(:find).and_return(gend_thumb)
 
-        Timecop.freeze('feb 8 2010 16:55:00') do
+        Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
           get :show, id: 1
         end
 
         expires_header = response.headers['Expires']
-        expect(expires_header).to eq 'Tue, 16 Feb 2010 00:55:00 GMT'
+        expect(expires_header).to eq 'Mon, 15 Feb 2010 21:55:00 GMT'
       end
 
     end
