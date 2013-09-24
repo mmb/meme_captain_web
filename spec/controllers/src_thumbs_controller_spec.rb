@@ -36,13 +36,24 @@ describe SrcThumbsController do
         expect(response.body).to eq('image')
       end
 
-      it 'has the correct Expires header' do
+      it 'has the correct Cache-Control header' do
         SrcThumb.should_receive(:find).and_return(src_thumb)
 
         get :show, id: 1
 
         cache_control = response.headers['Cache-Control']
         expect(cache_control).to eq('max-age=604800, public')
+      end
+
+      it 'has the correct Expires header' do
+        SrcThumb.should_receive(:find).and_return(src_thumb)
+
+        Timecop.freeze('feb 8 2010 16:55:00') do
+          get :show, id: 1
+        end
+
+        expires_header = response.headers['Expires']
+        expect(expires_header).to eq 'Tue, 16 Feb 2010 00:55:00 GMT'
       end
 
     end
