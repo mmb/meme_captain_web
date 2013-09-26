@@ -116,8 +116,6 @@ GEM
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-cors (0.2.8)
-      rack
     rack-rewrite (1.3.3)
     rack-ssl (1.3.3)
       rack
@@ -243,7 +241,6 @@ DEPENDENCIES
   less-rails
   meme_captain
   pg
-  rack-cors
   rack-rewrite
   rails (= 3.2.9)
   rmagick
