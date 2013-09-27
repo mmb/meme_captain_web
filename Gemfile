@@ -57,6 +57,7 @@ gem 'strong_parameters'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'ttfunk'
+gem 'rack-cors', require: 'rack/cors'
 
 group :test, :development do
   gem 'factory_girl_rails'
