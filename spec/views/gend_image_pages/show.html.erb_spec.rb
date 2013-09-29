@@ -1,12 +1,14 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
-describe "gend_image_pages/show.html.erb" do
+describe 'gend_image_pages/show.html.erb' do
 
   let(:gend_image) { FactoryGirl.create(:gend_image, work_in_progress: false) }
   let(:src_image) { FactoryGirl.create(:src_image) }
-  let(:gend_image_url) {
+  let(:gend_image_url) do
     url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
-  }
+  end
   let(:android) { false }
 
   before do

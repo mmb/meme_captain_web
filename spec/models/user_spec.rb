@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe User do
@@ -74,7 +76,9 @@ describe User do
       let(:user2_password) { 'some other password' }
 
       before(:each) do
-        @user = FactoryGirl.create(:user, password: user_password, password_confirmation: user_password)
+        @user = FactoryGirl.create(
+            :user, password: user_password,
+            password_confirmation: user_password)
         @user2 = FactoryGirl.create(
             :user,
             email: @user.email.upcase,
