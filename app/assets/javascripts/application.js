@@ -15,4 +15,5 @@
 //= require twitter/bootstrap
 //= require fabric
 //= require shared
+//= require best_in_place
 //= require_tree .

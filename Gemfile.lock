@@ -33,6 +33,9 @@ GEM
     ast (1.1.0)
     backports (3.3.3)
     bcrypt-ruby (3.0.1)
+    best_in_place (2.1.0)
+      jquery-rails
+      rails (~> 3.1)
     browser (0.2.0)
     builder (3.0.4)
     coffee-rails (3.2.2)
@@ -225,6 +228,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
+  best_in_place
   browser
   coffee-rails (~> 3.2.1)
   daemons

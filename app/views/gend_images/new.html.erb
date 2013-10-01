@@ -1,5 +1,14 @@
-<% unless @gend_image.src_image.name.blank? %>
-    <h1><%= @gend_image.src_image.name %></h1>
+<% if @gend_image.src_image.name.blank? %>
+    <% if @gend_image.src_image.user == current_user %>
+        <h1><%= best_in_place(@gend_image.src_image, :name, path: @src_image_path, nil: 'Click to name this source image') %></h1>
+    <% end %>
+<% else %>
+    <% if @gend_image.src_image.user == current_user %>
+        <h1><%= best_in_place(@gend_image.src_image, :name, path: @src_image_path) %></h1>
+    <% else %>
+        <h1><%= @gend_image.src_image.name %></h1>
+    <% end %>
+
     <% content_for(:title) do %>
         <%- "#{@gend_image.src_image.name} meme" -%>
     <% end %>

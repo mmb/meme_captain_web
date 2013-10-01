@@ -155,6 +155,29 @@ describe SrcImagesController do
 
   end
 
+  describe "PUT 'update'" do
+
+    context 'when owned by the current user' do
+      let(:src_image) { FactoryGirl.create(:src_image, name: 'pre', user: user) }
+
+      it 'updates the name' do
+        put :update, id: src_image.id_hash, src_image: { name: 'test' }
+
+        expect(SrcImage.find_by_id_hash(src_image.id_hash).name).to eq('test')
+      end
+    end
+
+    context 'when not owned by the current user' do
+      let(:src_image) { FactoryGirl.create(:src_image, name: 'pre', user: user2) }
+
+      it 'does not change the name' do
+        put :update, id: src_image.id_hash, src_image: { name: 'test' }
+
+        expect(SrcImage.find_by_id_hash(src_image.id_hash).name).to eq('pre')
+      end
+    end
+  end
+
   describe "GET 'show'" do
 
     context 'when the id is found' do

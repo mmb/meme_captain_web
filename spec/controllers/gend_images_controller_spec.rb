@@ -4,11 +4,8 @@ describe GendImagesController do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
+  let(:src_image) { FactoryGirl.create(:src_image, user: user) }
   let(:src_image2) { FactoryGirl.create(:src_image, user: user2) }
-
-  let(:src_image) {
-    mock_model(SrcImage, FactoryGirl.attributes_for(:src_image))
-  }
 
   before(:each) do
     session[:user_id] = user.try(:id)
@@ -41,8 +38,6 @@ describe GendImagesController do
   end
 
   describe "GET 'index'" do
-
-    let(:src_image) { FactoryGirl.create(:src_image, user: user) }
 
     it "returns http success" do
       get :index
