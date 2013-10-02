@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe SrcThumb do
@@ -16,11 +18,11 @@ describe SrcThumb do
 
   context 'setting fields derived from the image' do
 
-    subject {
+    subject do
       src_thumb = SrcThumb.new(FactoryGirl.attributes_for(:src_thumb))
       src_thumb.valid?
       src_thumb
-    }
+    end
 
     its(:content_type) { should == 'image/png' }
     its(:height) { should == 50 }

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe SrcImage do
@@ -31,11 +33,11 @@ describe SrcImage do
 
   context 'setting fields derived from the image' do
 
-    subject {
+    subject do
       src_image = SrcImage.new(FactoryGirl.attributes_for(:src_image))
       src_image.valid?
       src_image
-    }
+    end
 
     its(:content_type) { should == 'image/jpeg' }
     its(:height) { should == 399 }
@@ -50,18 +52,20 @@ describe SrcImage do
 
   context 'generating a Magick::Image from its data' do
 
-    subject {
+    subject do
       SrcImage.new(FactoryGirl.attributes_for(:src_image))
-    }
+    end
 
+    # rubocop:disable SymbolName
     its(:'magick_image_list.columns') { should == 399 }
     its(:'magick_image_list.rows') { should == 399 }
+    # rubocop:enable SymbolName
 
   end
 
   describe '#image_if_not_url' do
 
-    let(:attrs) { {:image => nil, :url => nil} }
+    let(:attrs) { { image: nil, url: nil } }
 
     subject { FactoryGirl.build(:src_image, attrs) }
 
@@ -70,33 +74,35 @@ describe SrcImage do
     end
 
     context 'when image is set and url is blank' do
-      let(:attrs) { {:url => nil} }
+      let(:attrs) { { url: nil } }
       it { should be_valid }
     end
 
     context 'when image is blank and url is set' do
-      let(:attrs) { {:image => nil, :url => 'abc'} }
+      let(:attrs) { { image: nil, url: 'abc' } }
       it { should be_valid }
     end
 
     context 'when both are set' do
-      let(:attrs) { {:url => 'abc'} }
+      let(:attrs) { { url: 'abc' } }
       it { should be_valid }
     end
 
   end
 
-  describe "#load_from_url" do
+  describe '#load_from_url' do
     let(:url) { 'http://www.example.com/image.jpg' }
-    let(:image_data) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
+    let(:image_data) do
+      File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg')
+    end
 
     before do
-      stub_const 'MemeCaptainWeb::Config::SourceImageSide', 1000000
+      stub_const 'MemeCaptainWeb::Config::SourceImageSide', 1_000_000
     end
 
     it 'loads the image from a url' do
-      stub_request(:get, url).to_return(:body => image_data)
-      src_image = FactoryGirl.create(:src_image, :image => nil, :url => url)
+      stub_request(:get, url).to_return(body: image_data)
+      src_image = FactoryGirl.create(:src_image, image: nil, url: url)
       src_image.post_process_job
       expect(src_image.magick_image_list.rows).to eq 399
     end
@@ -104,11 +110,16 @@ describe SrcImage do
     context 'vertical join' do
 
       it 'joins the image vertically' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(body: create_image(100, 50))
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: create_image(105, 50))
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: create_image(110, 50))
+        stub_request(:get, 'http://example.com/image.jpg').to_return(
+            body: create_image(100, 50))
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(
+            body: create_image(105, 50))
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(
+            body: create_image(110, 50))
         src_image = FactoryGirl.create(:src_image, image: nil,
-                                       url: 'http://example.com/image.jpg|http://example.com/image2.jpg|http://example.com/image3.jpg')
+                                       url: 'http://example.com/image.jpg|' +
+                                           'http://example.com/image2.jpg|' +
+                                           'http://example.com/image3.jpg')
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 100
@@ -120,11 +131,16 @@ describe SrcImage do
     context 'horizontal join' do
 
       it 'joins the image horizontally' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(body: create_image(100, 50))
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: create_image(100, 75))
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: create_image(100, 100))
+        stub_request(:get, 'http://example.com/image.jpg').to_return(
+            body: create_image(100, 50))
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(
+            body: create_image(100, 75))
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(
+            body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image, image: nil,
-                                       url: 'http://example.com/image.jpg[]http://example.com/image2.jpg[]http://example.com/image3.jpg')
+                                       url: 'http://example.com/image.jpg[]' +
+                                           'http://example.com/image2.jpg[]' +
+                                           'http://example.com/image3.jpg')
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 217
@@ -135,11 +151,16 @@ describe SrcImage do
     context 'mixed join' do
 
       it 'joins the image vertically and then horizontally' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(body: create_image(100, 100))
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(body: create_image(100, 100))
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(body: create_image(100, 100))
+        stub_request(:get, 'http://example.com/image.jpg').to_return(
+            body: create_image(100, 100))
+        stub_request(:get, 'http://example.com/image2.jpg').to_return(
+            body: create_image(100, 100))
+        stub_request(:get, 'http://example.com/image3.jpg').to_return(
+            body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image, image: nil,
-                                       url: 'http://example.com/image.jpg|http://example.com/image2.jpg[]http://example.com/image3.jpg')
+                                       url: 'http://example.com/image.jpg|' +
+                                           'http://example.com/image2.jpg[]' +
+                                           'http://example.com/image3.jpg')
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 100
@@ -157,7 +178,8 @@ describe SrcImage do
 
     context 'when the the image is too wide' do
       it "reduces the image's width" do
-        src_image = FactoryGirl.create(:src_image, image: create_image(100, 50))
+        src_image = FactoryGirl.create(
+            :src_image, image: create_image(100, 50))
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 80
@@ -167,7 +189,8 @@ describe SrcImage do
 
     context 'when the the image is too high' do
       it "reduces the image's height" do
-        src_image = FactoryGirl.create(:src_image, image: create_image(100, 400))
+        src_image = FactoryGirl.create(
+            :src_image, image: create_image(100, 400))
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 20
@@ -180,7 +203,9 @@ describe SrcImage do
     it 'watermarks the image' do
       src_image = FactoryGirl.create(:src_image, image: create_image(100, 100))
 
-      expect { src_image.post_process_job }.to change { src_image.magick_image_list.excerpt(54, 95, 46, 5) }
+      expect do
+        src_image.post_process_job
+      end.to change { src_image.magick_image_list.excerpt(54, 95, 46, 5) }
     end
   end
 
