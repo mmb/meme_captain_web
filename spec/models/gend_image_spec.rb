@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe GendImage do
@@ -21,11 +23,11 @@ describe GendImage do
 
   context 'setting fields derived from the image' do
 
-    subject {
+    subject do
       gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image))
       gend_image.valid?
       gend_image
-    }
+    end
 
     its(:content_type) { should == 'image/jpeg' }
     its(:height) { should == 399 }
@@ -40,11 +42,12 @@ describe GendImage do
 
     let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
 
-    subject {
-      gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image, image: image))
+    subject do
+      gend_image = GendImage.new(
+          FactoryGirl.attributes_for(:gend_image, image: image))
       gend_image.valid?
       gend_image
-    }
+    end
 
     context 'jpg' do
       its(:format) { should == :jpg }

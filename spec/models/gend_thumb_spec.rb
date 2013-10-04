@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe GendThumb do
@@ -16,11 +18,11 @@ describe GendThumb do
 
   context 'setting fields derived from the image' do
 
-    subject {
+    subject do
       gend_thumb = GendThumb.new(FactoryGirl.attributes_for(:gend_thumb))
       gend_thumb.valid?
       gend_thumb
-    }
+    end
 
     its(:content_type) { should == 'image/png' }
     its(:height) { should == 50 }

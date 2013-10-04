@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe '#content_type' do
@@ -13,7 +15,9 @@ describe '#content_type' do
 
   it('detects gif') { expect(gif.content_type).to eq 'image/gif' }
 
-  it('detects animated gif') { expect(animated_gif.content_type).to eq 'image/gif' }
+  it('detects animated gif') do
+    expect(animated_gif.content_type).to eq 'image/gif'
+  end
 
   it('detects jpeg') { expect(jpeg.content_type).to eq 'image/jpeg' }
 
