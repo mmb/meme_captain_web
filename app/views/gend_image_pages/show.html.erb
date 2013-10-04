@@ -52,11 +52,9 @@
             <% end %>
         <% end %>
 
-        <%= link_to 'New', {
-                controller: :gend_images,
-                action: :new,
-                src: @src_image.id_hash,
-        }, class: 'btn' %>
+        <%= link_to({ controller: :gend_images, action: :new, src: @src_image.id_hash }, class: 'btn') do %>
+            <i class="icon-pencil"></i> New meme using this image
+        <% end %>
 
         <p class="meme-meta">
           <%= link_to @gend_image_url, @gend_image_url %>

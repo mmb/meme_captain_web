@@ -46,4 +46,9 @@ describe 'gend_image_pages/show.html.erb' do
     expect(render).to have_selector 'img[height="399"]'
   end
 
+  it 'has a link to create a new image' do
+    selector = "a[href=\"/gend_images/new?src=#{src_image.id_hash}\"]"
+
+    expect(render).to have_selector(selector)
+  end
 end
