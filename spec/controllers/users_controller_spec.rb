@@ -1,9 +1,11 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe UsersController do
 
   describe "GET 'new'" do
-    it "returns http success" do
+    it 'returns http success' do
       get 'new'
       expect(response).to be_success
     end
@@ -14,9 +16,9 @@ describe UsersController do
     context 'with valid attributes' do
 
       it 'saves the new user to the database' do
-        expect {
+        expect do
           post :create, user: FactoryGirl.attributes_for(:user)
-        }.to change{User.count}.by(1)
+        end.to change { User.count }.by(1)
       end
 
       it 'redirects to the my page' do
@@ -36,9 +38,9 @@ describe UsersController do
     context 'with invalid attributes' do
 
       it 'does not save the new user in the database' do
-        expect {
+        expect do
           post :create, user: FactoryGirl.attributes_for(:invalid_user)
-        }.to_not change{User.count}
+        end.to_not change { User.count }
       end
 
       it 're-renders the new template' do
