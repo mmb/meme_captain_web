@@ -92,10 +92,4 @@ MemeCaptainWeb::Application.configure do
     }
   end
 
-  config.middleware.insert_before(Rack::Lock, Rack::Cors) do
-    allow do
-      origins 'memecaptain.com'
-      resource '/assets/*', headers: :any, methods: [:get, :head, :options]
-    end
-  end
 end

@@ -57,7 +57,6 @@ gem 'strong_parameters'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'ttfunk'
-gem 'rack-cors', require: 'rack/cors'
 gem 'best_in_place'
 
 group :test, :development do
