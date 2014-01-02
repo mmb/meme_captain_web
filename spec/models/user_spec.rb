@@ -77,7 +77,8 @@ describe User do
 
       before(:each) do
         @user = FactoryGirl.create(
-            :user, password: user_password,
+            :user,
+            password: user_password,
             password_confirmation: user_password)
         @user2 = FactoryGirl.create(
             :user,

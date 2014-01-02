@@ -1,8 +1,10 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe ApplicationHelper do
 
-  let(:user) { user = FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user) }
 
   context 'when the user id is found' do
     it 'sets current user to the correct user' do

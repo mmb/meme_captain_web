@@ -11,8 +11,11 @@ describe 'src_sets/_src_set.html' do
   end
 
   let(:src_set) do
-    mock_model(SrcSet, name: 'set1', src_images: [src_image],
-               thumbnail: src_thumb, thumb_width: src_thumb.width,
+    mock_model(SrcSet,
+               name: 'set1',
+               src_images: [src_image],
+               thumbnail: src_thumb,
+               thumb_width: src_thumb.width,
                thumb_height: src_thumb.height)
   end
 

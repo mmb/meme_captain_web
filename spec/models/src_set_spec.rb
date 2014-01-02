@@ -14,13 +14,16 @@ describe SrcSet do
 
     it 'uses the most used image as the thumbnail for the set' do
       si1 = FactoryGirl.create(
-          :src_image, src_thumb: FactoryGirl.create(:src_thumb),
+          :src_image,
+          src_thumb: FactoryGirl.create(:src_thumb),
           gend_images_count: 3)
       si2 = FactoryGirl.create(
-          :src_image, src_thumb: FactoryGirl.create(:src_thumb),
+          :src_image,
+          src_thumb: FactoryGirl.create(:src_thumb),
           gend_images_count: 2)
       si3 = FactoryGirl.create(
-          :src_image, src_thumb: FactoryGirl.create(:src_thumb),
+          :src_image,
+          src_thumb: FactoryGirl.create(:src_thumb),
           gend_images_count: 1)
 
       set1.src_images << si1
