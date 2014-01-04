@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe SrcImagesController do
@@ -12,7 +14,7 @@ describe SrcImagesController do
   describe "GET 'new'" do
 
     context 'when the user is logged in' do
-      it "returns http success" do
+      it 'returns http success' do
         get :new
         expect(response).to be_success
       end
@@ -36,9 +38,18 @@ describe SrcImagesController do
     end
 
     it 'shows the images sorted by reverse gend image count' do
-      si1 = FactoryGirl.create(:src_image, user: user, gend_images_count: 20, work_in_progress: false)
-      si2 = FactoryGirl.create(:src_image, user: user, gend_images_count: 10, work_in_progress: false)
-      si3 = FactoryGirl.create(:src_image, user: user, gend_images_count: 30, work_in_progress: false)
+      si1 = FactoryGirl.create(:src_image,
+                               user: user,
+                               gend_images_count: 20,
+                               work_in_progress: false)
+      si2 = FactoryGirl.create(:src_image,
+                               user: user,
+                               gend_images_count: 10,
+                               work_in_progress: false)
+      si3 = FactoryGirl.create(:src_image,
+                               user: user,
+                               gend_images_count: 30,
+                               work_in_progress: false)
 
       get :index
 
@@ -47,7 +58,8 @@ describe SrcImagesController do
 
     it 'does not show deleted images' do
       FactoryGirl.create(:src_image, user: user, work_in_progress: false)
-      FactoryGirl.create(:src_image, user: user, is_deleted: true, work_in_progress: false)
+      FactoryGirl.create(
+          :src_image, user: user, is_deleted: true, work_in_progress: false)
 
       get :index
 
@@ -75,16 +87,20 @@ describe SrcImagesController do
     context 'searching' do
 
       it 'filters the result by the query string' do
-        si1 = FactoryGirl.create(:src_image, user: user, name: 'abc', work_in_progress: false)
-        si2 = FactoryGirl.create(:src_image, user: user, name: 'def', work_in_progress: false)
-        si3 = FactoryGirl.create(:src_image, user: user, name: 'ghi', work_in_progress: false)
+        FactoryGirl.create(
+            :src_image, user: user, name: 'abc', work_in_progress: false)
+        si2 = FactoryGirl.create(
+            :src_image, user: user, name: 'def', work_in_progress: false)
+        FactoryGirl.create(
+            :src_image, user: user, name: 'ghi', work_in_progress: false)
 
         get :index, q: 'e'
         expect(assigns(:src_images)).to eq [si2]
       end
 
       it 'is case insensitive' do
-        si = FactoryGirl.create(:src_image, user: user, name: 'a', work_in_progress: false)
+        si = FactoryGirl.create(
+            :src_image, user: user, name: 'a', work_in_progress: false)
 
         get :index, q: 'A'
         expect(assigns(:src_images)).to eq [si]
@@ -101,7 +117,9 @@ describe SrcImagesController do
     context 'with valid attributes' do
 
       it 'saves the new source image to the database' do
-        expect { post :create, src_image: { image: image } }.to change { SrcImage.count }.by(1)
+        expect do
+          post :create, src_image: { image: image }
+        end.to change { SrcImage.count }.by(1)
       end
 
       it 'redirects to the index page' do
@@ -123,7 +141,9 @@ describe SrcImagesController do
       let(:image) { nil }
 
       it 'does not save the new source image in the database' do
-        expect { post :create, src_image: { image: image } }.to_not change { SrcImage.count }
+        expect do
+          post :create, src_image: { image: image }
+        end.to_not change { SrcImage.count }
       end
 
       it 're-renders the new template' do
@@ -148,7 +168,7 @@ describe SrcImagesController do
     context 'setting an optional name' do
 
       it 'saves the name to the database' do
-        post :create, src_image: {image: image, name: 'a test name'}
+        post :create, src_image: { image: image, name: 'a test name' }
         expect(SrcImage.last.name).to eq 'a test name'
       end
     end
@@ -158,7 +178,9 @@ describe SrcImagesController do
   describe "PUT 'update'" do
 
     context 'when owned by the current user' do
-      let(:src_image) { FactoryGirl.create(:src_image, name: 'pre', user: user) }
+      let(:src_image) do
+        FactoryGirl.create(:src_image, name: 'pre', user: user)
+      end
 
       it 'updates the name' do
         put :update, id: src_image.id_hash, src_image: { name: 'test' }
@@ -168,7 +190,9 @@ describe SrcImagesController do
     end
 
     context 'when not owned by the current user' do
-      let(:src_image) { FactoryGirl.create(:src_image, name: 'pre', user: user2) }
+      let(:src_image) do
+        FactoryGirl.create(:src_image, name: 'pre', user: user2)
+      end
 
       it 'does not change the name' do
         put :update, id: src_image.id_hash, src_image: { name: 'test' }
@@ -215,9 +239,9 @@ describe SrcImagesController do
     context 'when the id is not found' do
 
       it 'raises record not found' do
-        expect {
+        expect do
           get 'show', id: 'abc'
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
@@ -233,9 +257,9 @@ describe SrcImagesController do
             image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
         delete :destroy, id: assigns(:src_image).id_hash
 
-        expect {
+        expect do
           SrcImage.find_by_id_hash!(assigns(:src_image).id_hash).is_deleted?
-        }.to be_true
+        end.to be_true
       end
 
       it 'returns success' do
@@ -251,9 +275,9 @@ describe SrcImagesController do
     context 'when the id is not found' do
 
       it 'raises record not found' do
-        expect {
+        expect do
           delete :destroy, id: 'abc'
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
