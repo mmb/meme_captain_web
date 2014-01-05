@@ -110,9 +110,11 @@ class SrcImage < ActiveRecord::Base
   private
 
   def constrain_size(img)
-    if width > MemeCaptainWeb::Config::SourceImageSide ||
-        height > MemeCaptainWeb::Config::SourceImageSide
-      img.resize_to_fit_anim!(MemeCaptainWeb::Config::SourceImageSide)
+    if !img.animated? && longest_side < MemeCaptainWeb::Config::MinSourceImageSide
+      img.resize_to_fit!(MemeCaptainWeb::Config::EnlargedSourceImageSide)
+    elsif width > MemeCaptainWeb::Config::MaxSourceImageSide ||
+        height > MemeCaptainWeb::Config::MaxSourceImageSide
+      img.resize_to_fit_anim!(MemeCaptainWeb::Config::MaxSourceImageSide)
     end
   end
 
@@ -120,6 +122,10 @@ class SrcImage < ActiveRecord::Base
     watermark_img = Magick::ImageList.new(Rails.root + 'app/assets/images/watermark.png')
     img.extend MemeCaptain::ImageList::Watermark
     img.watermark_mc watermark_img
+  end
+
+  def longest_side
+    [width, height].max
   end
 
 end

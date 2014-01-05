@@ -97,7 +97,7 @@ describe SrcImage do
     end
 
     before do
-      stub_const 'MemeCaptainWeb::Config::SourceImageSide', 1_000_000
+      stub_const 'MemeCaptainWeb::Config::MinSourceImageSide', 0
     end
 
     it 'loads the image from a url' do
@@ -173,7 +173,8 @@ describe SrcImage do
   context 'constraining the image to a maximum size' do
 
     before do
-      stub_const 'MemeCaptainWeb::Config::SourceImageSide', 80
+      stub_const 'MemeCaptainWeb::Config::MinSourceImageSide', 0
+      stub_const 'MemeCaptainWeb::Config::MaxSourceImageSide', 80
     end
 
     context 'when the the image is too wide' do
@@ -199,7 +200,26 @@ describe SrcImage do
     end
   end
 
+  context 'when the image is too small' do
+
+    before do
+      stub_const 'MemeCaptainWeb::Config::MinSourceImageSide', 60
+      stub_const 'MemeCaptainWeb::Config::EnlargedSourceImageSide', 100
+    end
+
+    it 'enlarges the image' do
+      src_image = FactoryGirl.create(:src_image, image: create_image(20, 50))
+      src_image.post_process_job
+
+      expect(src_image.magick_image_list.columns).to eq 40
+      expect(src_image.magick_image_list.rows).to eq 100
+    end
+
+  end
+
   context 'adding a watermark' do
+    before { stub_const 'MemeCaptainWeb::Config::MinSourceImageSide', 0 }
+
     it 'watermarks the image' do
       src_image = FactoryGirl.create(:src_image, image: create_image(100, 100))
 
