@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe HomeController do
@@ -6,13 +8,17 @@ describe HomeController do
 
     let(:user) { FactoryGirl.create(:user) }
 
-    let(:src_image) { FactoryGirl.create(:src_image, user: user, work_in_progress: false) }
+    let(:src_image) do
+      FactoryGirl.create(:src_image,
+                         user: user,
+                         work_in_progress: false)
+    end
 
     before(:each) do
       session[:user_id] = user.try(:id)
     end
 
-    it "returns http success" do
+    it 'returns http success' do
       get :index
       expect(response).to be_success
     end
@@ -31,7 +37,12 @@ describe HomeController do
       end
 
       it 'shows public images' do
-        3.times { FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: false) }
+        3.times do
+          FactoryGirl.create(:gend_image,
+                             user: user,
+                             work_in_progress: false,
+                             private: false)
+        end
 
         get :index
 
@@ -39,8 +50,16 @@ describe HomeController do
       end
 
       it 'does not show private images' do
-        FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: false)
-        2.times { FactoryGirl.create(:gend_image, user: user, work_in_progress: false, private: true) }
+        FactoryGirl.create(:gend_image,
+                           user: user,
+                           work_in_progress: false,
+                           private: false)
+        2.times do
+          FactoryGirl.create(:gend_image,
+                             user: user,
+                             work_in_progress: false,
+                             private: true)
+        end
 
         get :index
 
@@ -49,10 +68,17 @@ describe HomeController do
 
     end
 
-    it "shows src sets sorted by reverse quality and reverse updated time" do
-      set1 = FactoryGirl.create(:src_set_with_src_image, user: user, quality: 1, updated_at: 1.second.from_now)
-      set2 = FactoryGirl.create(:src_set_with_src_image, user: user, updated_at: 2.seconds.from_now)
-      set3 = FactoryGirl.create(:src_set_with_src_image, user: user, updated_at: 3.seconds.from_now)
+    it 'shows src sets sorted by reverse quality and reverse updated time' do
+      set1 = FactoryGirl.create(:src_set_with_src_image,
+                                user: user,
+                                quality: 1,
+                                updated_at: 1.second.from_now)
+      set2 = FactoryGirl.create(:src_set_with_src_image,
+                                user: user,
+                                updated_at: 2.seconds.from_now)
+      set3 = FactoryGirl.create(:src_set_with_src_image,
+                                user: user,
+                                updated_at: 3.seconds.from_now)
 
       get :index
 
@@ -69,7 +95,9 @@ describe HomeController do
     end
 
     it 'does not show private source images' do
-      si1 = FactoryGirl.create(:src_image, private: true, work_in_progress: false)
+      FactoryGirl.create(:src_image,
+                         private: true,
+                         work_in_progress: false)
       si2 = FactoryGirl.create(:src_image, work_in_progress: false)
 
       get :index
@@ -78,7 +106,9 @@ describe HomeController do
     end
 
     it 'does not show deleted source images' do
-      si1 = FactoryGirl.create(:src_image, is_deleted: true, work_in_progress: false)
+      FactoryGirl.create(:src_image,
+                         is_deleted: true,
+                         work_in_progress: false)
       si2 = FactoryGirl.create(:src_image, work_in_progress: false)
 
       get :index
@@ -87,7 +117,7 @@ describe HomeController do
     end
 
     it 'does not show source images that are under construction' do
-      si1 = FactoryGirl.create(:src_image)
+      FactoryGirl.create(:src_image)
       si2 = FactoryGirl.create(:src_image, work_in_progress: false)
 
       get :index
@@ -96,9 +126,15 @@ describe HomeController do
     end
 
     it 'shows source images sorted by reverse gend_images_count' do
-      si1 = FactoryGirl.create(:src_image, gend_images_count: 10, work_in_progress: false)
-      si2 = FactoryGirl.create(:src_image, gend_images_count: 30, work_in_progress: false)
-      si3 = FactoryGirl.create(:src_image, gend_images_count: 20, work_in_progress: false)
+      si1 = FactoryGirl.create(:src_image,
+                               gend_images_count: 10,
+                               work_in_progress: false)
+      si2 = FactoryGirl.create(:src_image,
+                               gend_images_count: 30,
+                               work_in_progress: false)
+      si3 = FactoryGirl.create(:src_image,
+                               gend_images_count: 20,
+                               work_in_progress: false)
 
       get :index
 

@@ -116,7 +116,8 @@ describe SrcImage do
             body: create_image(105, 50))
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
             body: create_image(110, 50))
-        src_image = FactoryGirl.create(:src_image, image: nil,
+        src_image = FactoryGirl.create(:src_image,
+                                       image: nil,
                                        url: 'http://example.com/image.jpg|' +
                                            'http://example.com/image2.jpg|' +
                                            'http://example.com/image3.jpg')
@@ -137,7 +138,8 @@ describe SrcImage do
             body: create_image(100, 75))
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
             body: create_image(100, 100))
-        src_image = FactoryGirl.create(:src_image, image: nil,
+        src_image = FactoryGirl.create(:src_image,
+                                       image: nil,
                                        url: 'http://example.com/image.jpg[]' +
                                            'http://example.com/image2.jpg[]' +
                                            'http://example.com/image3.jpg')
@@ -157,7 +159,8 @@ describe SrcImage do
             body: create_image(100, 100))
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
             body: create_image(100, 100))
-        src_image = FactoryGirl.create(:src_image, image: nil,
+        src_image = FactoryGirl.create(:src_image,
+                                       image: nil,
                                        url: 'http://example.com/image.jpg|' +
                                            'http://example.com/image2.jpg[]' +
                                            'http://example.com/image3.jpg')

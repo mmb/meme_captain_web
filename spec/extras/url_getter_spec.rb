@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe UrlGetter do
@@ -13,7 +15,9 @@ describe UrlGetter do
     end
 
     it 'follow redirects' do
-      stub_request(:get, 'http://example.com/').to_return(status: 302, headers: {'Location' => 'http://example.com/2'})
+      stub_request(:get, 'http://example.com/').to_return(
+          status: 302,
+          headers: { 'Location' => 'http://example.com/2' })
       stub_request(:get, 'http://example.com/2').to_return(body: 'body')
 
       url_getter = UrlGetter.new
