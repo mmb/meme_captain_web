@@ -36,5 +36,14 @@ describe GendImagePagesController do
       end
     end
 
+    context 'when the image has been deleted' do
+      let(:gend_image) { FactoryGirl.create(:gend_image, src_image: src_image, is_deleted: true) }
+
+      it 'raises record not found' do
+        expect { get :show, id: gend_image.id_hash }.to raise_error(
+                                                            ActiveRecord::RecordNotFound)
+      end
+    end
+
   end
 end
