@@ -7,10 +7,17 @@ describe 'MemeCaptainWeb::Font' do
 
   let(:tables) do
     [
-        double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-               code_map: { 1 => nil, 2 => nil }),
-        double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-               code_map: { 3 => nil }),
+        double(TTFunk::Table::Cmap::Subtable,
+               unicode?: true,
+               code_map: {
+                   1 => nil,
+                   2 => nil
+               }),
+        double(TTFunk::Table::Cmap::Subtable,
+               unicode?: true,
+               code_map: {
+                   3 => nil
+               })
     ]
   end
   let(:file) { double(TTFunk::File) }
@@ -33,10 +40,20 @@ describe 'MemeCaptainWeb::Font' do
     context 'when a subtable is not unicode' do
       let(:tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 1 => nil, 2 => nil, 3 => nil }),
-            double(TTFunk::Table::Cmap::Subtable, unicode?: false,
-                   code_map: { 4 => nil, 5 => nil, 6 => nil }),
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       1 => nil,
+                       2 => nil,
+                       3 => nil
+                   }),
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: false,
+                   code_map: {
+                       4 => nil,
+                       5 => nil,
+                       6 => nil
+                   })
         ]
       end
 
@@ -63,8 +80,14 @@ describe 'MemeCaptainWeb::Font' do
     context 'when the font has all of the characters' do
       let(:tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 97 => nil, 98 => nil, 99 => nil, 100 => nil })
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       97 => nil,
+                       98 => nil,
+                       99 => nil,
+                       100 => nil
+                   })
         ]
       end
 
@@ -78,8 +101,13 @@ describe 'MemeCaptainWeb::Font' do
     context 'when the font is missing some of the characters' do
       let(:tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 97 => nil, 98 => nil, 99 => nil })
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       97 => nil,
+                       98 => nil,
+                       99 => nil
+                   })
         ]
       end
 
@@ -106,15 +134,25 @@ describe 'MemeCaptainWeb::Font' do
     context 'when a font has all the characters' do
       let(:a_tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 97 => nil, 98 => nil, 100 => nil }),
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       97 => nil,
+                       98 => nil,
+                       100 => nil
+                   })
         ]
       end
 
       let(:b_tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 97 => nil, 98 => nil, 99 => nil }),
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       97 => nil,
+                       98 => nil,
+                       99 => nil
+                   })
         ]
       end
 
@@ -131,15 +169,22 @@ describe 'MemeCaptainWeb::Font' do
     context 'when no fonts have all the characters' do
       let(:a_tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 97 => nil, 98 => nil }),
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       97 => nil,
+                       98 => nil
+                   })
         ]
       end
 
       let(:b_tables) do
         [
-            double(TTFunk::Table::Cmap::Subtable, unicode?: true,
-                   code_map: { 97 => nil, 98 => nil }),
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                       97 => nil,
+                       98 => nil })
         ]
       end
 

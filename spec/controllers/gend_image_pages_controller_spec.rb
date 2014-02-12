@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe GendImagePagesController do
@@ -37,11 +39,14 @@ describe GendImagePagesController do
     end
 
     context 'when the image has been deleted' do
-      let(:gend_image) { FactoryGirl.create(:gend_image, src_image: src_image, is_deleted: true) }
+      let(:gend_image) do
+        FactoryGirl.create(:gend_image, src_image: src_image, is_deleted: true)
+      end
 
       it 'raises record not found' do
-        expect { get :show, id: gend_image.id_hash }.to raise_error(
-                                                            ActiveRecord::RecordNotFound)
+        expect do
+          get :show, id: gend_image.id_hash
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 

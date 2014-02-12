@@ -118,8 +118,8 @@ describe SrcImage do
             body: create_image(110, 50))
         src_image = FactoryGirl.create(:src_image,
                                        image: nil,
-                                       url: 'http://example.com/image.jpg|' +
-                                           'http://example.com/image2.jpg|' +
+                                       url: 'http://example.com/image.jpg|' \
+                                           'http://example.com/image2.jpg|' \
                                            'http://example.com/image3.jpg')
         src_image.post_process_job
 
@@ -140,8 +140,8 @@ describe SrcImage do
             body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image,
                                        image: nil,
-                                       url: 'http://example.com/image.jpg[]' +
-                                           'http://example.com/image2.jpg[]' +
+                                       url: 'http://example.com/image.jpg[]' \
+                                           'http://example.com/image2.jpg[]' \
                                            'http://example.com/image3.jpg')
         src_image.post_process_job
 
@@ -161,8 +161,8 @@ describe SrcImage do
             body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image,
                                        image: nil,
-                                       url: 'http://example.com/image.jpg|' +
-                                           'http://example.com/image2.jpg[]' +
+                                       url: 'http://example.com/image.jpg|' \
+                                           'http://example.com/image2.jpg[]' \
                                            'http://example.com/image3.jpg')
         src_image.post_process_job
 

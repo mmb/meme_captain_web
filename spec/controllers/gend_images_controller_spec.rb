@@ -103,7 +103,7 @@ describe GendImagesController do
                            'top_left_x_pct' => '0.01',
                            'top_left_y_pct' => '0.02',
                            'width_pct' => '0.03',
-                           'height_pct' => '0.04',
+                           'height_pct' => '0.04'
                        },
                        '1' => {
                            'font' => 'font2',
@@ -111,7 +111,7 @@ describe GendImagesController do
                            'top_left_x_pct' => '0.05',
                            'top_left_y_pct' => '0.06',
                            'width_pct' => '0.07',
-                           'height_pct' => '0.08',
+                           'height_pct' => '0.08'
                        },
                        '2' => {
                            'font' => 'font3',
@@ -119,8 +119,8 @@ describe GendImagesController do
                            'top_left_x_pct' => '0.09',
                            'top_left_y_pct' => '0.10',
                            'width_pct' => '0.11',
-                           'height_pct' => '0.12',
-                       },
+                           'height_pct' => '0.12'
+                       }
                    },
                    private: '1'
                }

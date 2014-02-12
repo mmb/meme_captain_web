@@ -18,7 +18,7 @@ describe 'src_images/_src_images.html' do
         assign :src_set, src_set
         render partial: 'src_images/src_images', locals: { current_user: user }
 
-        expect(rendered).to contain /Remove 0 from Set/
+        expect(rendered).to contain(/Remove 0 from Set/)
       end
 
     end
@@ -31,7 +31,7 @@ describe 'src_images/_src_images.html' do
         assign :src_set, src_set
         render partial: 'src_images/src_images', locals: { current_user: user }
 
-        expect(rendered).to_not contain /Remove 0 from Set/
+        expect(rendered).to_not contain(/Remove 0 from Set/)
       end
 
     end
@@ -45,7 +45,7 @@ describe 'src_images/_src_images.html' do
         assign :src_set, src_set
         render partial: 'src_images/src_images', locals: { current_user: user }
 
-        expect(rendered).to_not contain /Remove 0 from Set/
+        expect(rendered).to_not contain(/Remove 0 from Set/)
       end
 
       it "doesn't show the toolbar" do

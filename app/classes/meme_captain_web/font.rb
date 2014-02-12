@@ -4,9 +4,7 @@ require 'set'
 require 'ttfunk'
 
 module MemeCaptainWeb
-
   class Font
-
     attr_reader :char_set
     attr_reader :path
 
@@ -50,8 +48,6 @@ module MemeCaptainWeb
       @char_set = unicode_subtables.reduce(Set.new) do |char_set, subtable|
         char_set.merge(subtable.code_map.keys)
       end
-
     end
   end
-
 end

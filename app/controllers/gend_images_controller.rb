@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class GendImagesController < ApplicationController
-
   def new
     @gend_image = GendImage.new
     @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
@@ -11,11 +10,11 @@ class GendImagesController < ApplicationController
     @caption_defaults = [
         {
             autofocus: true,
-            top_left_y_pct: 0,
+            top_left_y_pct: 0
         },
         {
-            top_left_y_pct: 0.75,
-        },
+            top_left_y_pct: 0.75
+        }
     ]
 
     2.times { @gend_image.captions.build }
@@ -77,7 +76,8 @@ class GendImagesController < ApplicationController
   private
 
   def gend_image_params
-    params.require(:gend_image).permit({captions_attributes: [
-        :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct, :height_pct]}, :private)
+    params.require(:gend_image).permit({ captions_attributes: [
+        :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
+        :height_pct] }, :private)
   end
 end

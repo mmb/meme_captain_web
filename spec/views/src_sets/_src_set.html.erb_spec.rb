@@ -45,7 +45,7 @@ describe 'src_sets/_src_set.html' do
 
     it 'shows the empty set' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
-      expect(rendered).to match /class="empty-set"/
+      expect(rendered).to match(/class="empty-set"/)
     end
 
   end
