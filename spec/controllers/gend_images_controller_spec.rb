@@ -15,12 +15,8 @@ describe GendImagesController do
 
   describe "GET 'new'" do
 
-    let(:src_id) { 'abc' }
-
     it 'returns http success' do
-      SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
-          src_image)
-      get :new, src: src_id
+      get :new, src: src_image.id_hash
       expect(response).to be_success
     end
 
@@ -29,9 +25,7 @@ describe GendImagesController do
       let(:user) { nil }
 
       it 'returns http success' do
-        SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
-            src_image)
-        get :new, src: src_id
+        get :new, src: src_image.id_hash
         expect(response).to be_success
       end
 
