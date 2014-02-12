@@ -206,7 +206,8 @@ describe GendImagesController do
       end
 
       before do
-        GendImage.should_receive(:find_by_id_hash_and_is_deleted!).and_return(gend_image)
+        GendImage.should_receive(
+            :find_by_id_hash_and_is_deleted!).and_return(gend_image)
       end
 
       it 'shows the source image' do
@@ -309,8 +310,9 @@ describe GendImagesController do
       let(:gend_image) { FactoryGirl.create(:gend_image, is_deleted: true) }
 
       it 'raises record not found' do
-        expect { get :show, id: gend_image.id_hash }.to raise_error(
-                                                            ActiveRecord::RecordNotFound)
+        expect do
+          get :show, id: gend_image.id_hash
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
