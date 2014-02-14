@@ -90,7 +90,7 @@ class SrcImage < ActiveRecord::Base
 
     self.image = img.to_blob
 
-    self.src_thumb = SrcThumb.new(:image => thumb_img.to_blob)
+    self.src_thumb = SrcThumb.new(image: thumb_img.to_blob)
   end
 
   scope :active, -> { where is_deleted: false }
@@ -127,5 +127,4 @@ class SrcImage < ActiveRecord::Base
   def longest_side
     [width, height].max
   end
-
 end

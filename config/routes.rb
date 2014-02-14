@@ -1,9 +1,11 @@
+# encoding: UTF-8
+
 MemeCaptainWeb::Application.routes.draw do
-  get "home/index"
+  get 'home/index'
 
   resources :gend_images
 
-  resources :gend_image_pages, :only => :show
+  resources :gend_image_pages, only: :show
 
   resources :gend_thumbs
 
@@ -11,7 +13,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :src_images
 
-  resources :src_sets, :except => :new
+  resources :src_sets, except: :new
 
   resources :src_thumbs
 
@@ -30,7 +32,8 @@ MemeCaptainWeb::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  # Sample resource route (maps HTTP verbs to controller actions
+  # automatically):
   #   resources :products
 
   # Sample resource route with options:
@@ -68,11 +71,13 @@ MemeCaptainWeb::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root to: 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
+  # This is a legacy wild controller route that's not recommended for RESTful
+  # applications.
+  # Note: This route will make all actions in every controller accessible via
+  # GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 end

@@ -6,5 +6,4 @@ class SrcThumb < ActiveRecord::Base
   validates :content_type, :height, :image, :size, :width, presence: true
 
   belongs_to :src_image
-
 end

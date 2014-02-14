@@ -1,3 +1,3 @@
-if ENV['DELAY_JOBS'] == 'false'
-  Delayed::Worker.delay_jobs = false
-end
+# encoding: UTF-8
+
+Delayed::Worker.delay_jobs = false if ENV['DELAY_JOBS'] == 'false'

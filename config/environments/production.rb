@@ -1,10 +1,13 @@
+# encoding: UTF-8
+
 require 'digest/md5'
 
 require 'rack/cache'
 
 MemeCaptainWeb::Application.configure do
   heroku = !ENV['HEROKU'].blank?
-  # Settings specified here will take precedence over those in config/application.rb
+  # Settings specified here will take precedence over those in
+  # config/application.rb
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -14,14 +17,14 @@ MemeCaptainWeb::Application.configure do
   config.action_controller.perform_caching = true
 
   config.middleware.insert_before(Rack::Cache, Rack::Rewrite) do
-    r301 %r{/([a-f0-9]+\.(?:gif|jpg|png))$}, 'http://v1.memecaptain.com/$1'
-    r301 %r{/((?:g|i)\?.+)}, 'http://v1.memecaptain.com/$1'
+    r301(/\/([a-f0-9]+\.(?:gif|jpg|png))$/, 'http://v1.memecaptain.com/$1')
+    r301(/\/((?:g|i)\?.+)/, 'http://v1.memecaptain.com/$1')
   end
 
   if heroku
     config.serve_static_assets = true
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
-    config.static_cache_control = "public, max-age=31536000"
+    config.static_cache_control = 'public, max-age=31536000'
   else
     config.serve_static_assets = false
   end
@@ -42,7 +45,8 @@ MemeCaptainWeb::Application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Force all access to the app over SSL, use Strict-Transport-Security, and
+  # use secure cookies.
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
@@ -62,7 +66,8 @@ MemeCaptainWeb::Application.configure do
     "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.memecaptain.com"
   }
 
-  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  # Precompile additional assets (application.js, application.css, and all
+  # non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
   # Disable delivery errors, bad email addresses will be ignored
@@ -86,9 +91,9 @@ MemeCaptainWeb::Application.configure do
     config.cache_store = :dalli_store
 
     config.action_dispatch.rack_cache = {
-        :metastore => Dalli::Client.new,
-        :entitystore => 'file:tmp/cache/rack/body',
-        :allow_reload => false
+        metastore: Dalli::Client.new,
+        entitystore: 'file:tmp/cache/rack/body',
+        allow_reload: false
     }
   end
 
