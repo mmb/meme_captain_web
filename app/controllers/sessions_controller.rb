@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class SessionsController < ApplicationController
-
   def create
     user = User.auth_case_insens(params[:email], params[:password])
 
@@ -31,5 +30,4 @@ class SessionsController < ApplicationController
       redirect_to root_url
     end
   end
-
 end

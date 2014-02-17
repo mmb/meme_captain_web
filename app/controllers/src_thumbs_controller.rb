@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class SrcThumbsController < ApplicationController
-
   def show
     src_thumb = SrcThumb.find(params[:id])
 
@@ -11,5 +10,4 @@ class SrcThumbsController < ApplicationController
       render text: src_thumb.image, content_type: src_thumb.content_type
     end
   end
-
 end

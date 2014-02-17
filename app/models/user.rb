@@ -23,5 +23,4 @@ class User < ActiveRecord::Base
   end
 
   scope :for_auth, ->(email) { where('LOWER(email) = ?', email.downcase) }
-
 end

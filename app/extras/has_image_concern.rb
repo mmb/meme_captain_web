@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # ActiveRecord::Model mixin for models that store an image in a binary
 # column.
 module HasImageConcern
@@ -6,7 +8,7 @@ module HasImageConcern
   included do
     before_validation :set_derived_image_fields
 
-    scope :without_image, :select => (column_names - ['image']).map { |c| "#{table_name}.#{c}" }
+    scope :without_image, select: (column_names - ['image']).map { |c| "#{table_name}.#{c}" }
   end
 
   def set_derived_image_fields
@@ -23,5 +25,4 @@ module HasImageConcern
   def magick_image_list
     Magick::ImageList.new.from_blob(image)
   end
-
 end

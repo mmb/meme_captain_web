@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class SrcImagesController < ApplicationController
-
   def new
     return if not_logged_in 'Please login to create a source image.'
 
@@ -61,7 +60,6 @@ class SrcImagesController < ApplicationController
     else
       head :forbidden
     end
-
   end
 
   private
@@ -94,5 +92,4 @@ class SrcImagesController < ApplicationController
       render json: @src_image.errors, status: :unprocessable_entity
     end
   end
-
 end

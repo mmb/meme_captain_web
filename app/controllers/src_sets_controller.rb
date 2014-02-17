@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class SrcSetsController < ApplicationController
-
   def new
     @src_set = SrcSet.new
   end
@@ -82,5 +81,4 @@ class SrcSetsController < ApplicationController
       {}
     end
   end
-
 end

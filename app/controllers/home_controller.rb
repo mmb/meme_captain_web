@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-
   PER_ROW = 7
 
   def index
@@ -13,5 +12,4 @@ class HomeController < ApplicationController
 
     @show_toolbar = false
   end
-
 end

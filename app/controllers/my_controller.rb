@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 class MyController < ApplicationController
-
   def show
     return if not_logged_in
 
@@ -17,5 +16,4 @@ class MyController < ApplicationController
 
     @show_toolbar = true
   end
-
 end
