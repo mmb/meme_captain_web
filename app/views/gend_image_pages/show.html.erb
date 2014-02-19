@@ -64,11 +64,22 @@
 
         <p>Created: <%= @gend_image.created_at %></p>
 
-        <p>
-          <%= image_tag("https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=#{u(@gend_image_url)}") %>
-          <i class="icon-mobile-phone icon-4x"></i>
-        </p>
+        <a href="#qr-modal" role="button" class="btn" data-toggle="modal">QR code to phone</a>
 
+        <div id="qr-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="modal-label">QR code to phone</h3>
+          </div>
+
+          <div class="modal-body">
+            <%= image_tag("https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=#{u(@gend_image_url)}") %>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Done</button>
+          </div>
+        </div>
       </div>
     </div>
 <% end %>

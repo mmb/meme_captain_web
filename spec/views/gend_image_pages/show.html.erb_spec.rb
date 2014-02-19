@@ -2,6 +2,8 @@
 
 require 'spec_helper'
 
+require 'cgi'
+
 describe 'gend_image_pages/show.html.erb' do
 
   let(:gend_image) { FactoryGirl.create(:gend_image, work_in_progress: false) }
@@ -51,4 +53,11 @@ describe 'gend_image_pages/show.html.erb' do
 
     expect(render).to have_selector(selector)
   end
+
+  it 'has a modal body with a QR code' do
+    img_src = "https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=#{CGI.escape(gend_image_url)}"
+
+    expect(render).to have_selector('img', src: img_src)
+  end
+
 end
