@@ -1,5 +1,49 @@
 describe 'text positioner', ->
   describe 'TextPositioner', ->
+    beforeEach ->
+      loadFixtures 'text_positioner.html'
+      window.text_positioner_init()
+
+    it 'sets the initial canvas size to the image size', ->
+      text_positioner = $('#tp1').data('tp')
+      fabric_canvas = text_positioner.fabric_canvas
+
+      expect(fabric_canvas.getWidth()).toEqual(200)
+      expect(fabric_canvas.getHeight()).toEqual(100)
+
+    it 'resizes when the div changes size', ->
+      div = $('#tp1')
+      div.width(150)
+      text_positioner = div.data('tp')
+      text_positioner.set_fabric_canvas_size()
+
+      fabric_canvas = text_positioner.fabric_canvas
+
+      expect(fabric_canvas.getWidth()).toEqual(150)
+      expect(fabric_canvas.getHeight()).toEqual(75)
+
+      rect1 = fabric_canvas.getObjects()[0]
+      expect(rect1.getLeft()).toEqual(75)
+      expect(rect1.getTop()).toEqual(9.375)
+      expect(rect1.scaleX).toEqual(0.75)
+      expect(rect1.scaleY).toEqual(0.75)
+
+      rect2 = fabric_canvas.getObjects()[1]
+      expect(rect2.getLeft()).toEqual(75)
+      expect(rect2.getTop()).toEqual(65.625)
+      expect(rect2.scaleX).toEqual(0.75)
+      expect(rect2.scaleY).toEqual(0.75)
+
+    it 'does not resize when the div is larger than the image', ->
+      div = $('#tp1')
+      div.width(400)
+      text_positioner = div.data('tp')
+      text_positioner.set_fabric_canvas_size()
+
+      fabric_canvas = text_positioner.fabric_canvas
+
+      expect(fabric_canvas.getWidth()).toEqual(200)
+      expect(fabric_canvas.getHeight()).toEqual(100)
 
   describe 'Target', ->
     describe '#bound_top', ->

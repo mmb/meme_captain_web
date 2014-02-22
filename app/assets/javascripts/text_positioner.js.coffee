@@ -12,6 +12,8 @@ class TextPositioner
 
     @fabric_canvas = @create_fabric_canvas()
 
+    @set_fabric_canvas_size()
+
     @fabric_canvas.renderAll()
 
   add_rect: (name, x_input, y_input, width_input, height_input) ->
@@ -55,14 +57,33 @@ class TextPositioner
   create_fabric_canvas: ->
     canvas = new fabric.Canvas @canvas_id,
       'backgroundImage': @img_url
-    canvas.setWidth @img_width
-    canvas.setHeight @img_height
 
     canvas.observe 'object:moving', @object_moving
     canvas.observe 'object:scaling', @object_scaling
     canvas.observe 'object:modified', @object_modified
 
     canvas
+
+  set_fabric_canvas_size: ->
+    desired_width = Math.min(@img_width, @div.width())
+    desired_height = @img_height * (desired_width / @img_width)
+
+    x_scale = desired_width / @fabric_canvas.getWidth()
+    y_scale = desired_height / @fabric_canvas.getHeight()
+
+    @fabric_canvas.setWidth(@fabric_canvas.getWidth() * x_scale)
+    @fabric_canvas.setHeight(@fabric_canvas.getHeight() * y_scale)
+
+    for obj in @fabric_canvas.getObjects()
+      obj.set
+        left: obj.getLeft() * x_scale,
+        top: obj.getTop() * y_scale,
+        scaleX: obj.scaleX * x_scale,
+        scaleY: obj.scaleY * y_scale
+
+      obj.setCoords()
+
+    @fabric_canvas.renderAll()
 
   scale_width: (width_pct) ->
     @fabric_canvas.width * width_pct
@@ -170,7 +191,7 @@ class @Target
   half_height: ->
     @target.getHeight() / 2
 
-$(document).ready ->
+window.text_positioner_init = ->
   $('.text-positioner').each (index, element) ->
     tp = new TextPositioner
     tp.bind_div element
@@ -188,3 +209,9 @@ $(document).ready ->
       $('#gend_image_captions_attributes_1_height_pct')
 
     $(element).data 'tp', tp
+
+    $(window).resize ->
+      tp.set_fabric_canvas_size()
+
+$(document).ready ->
+  text_positioner_init()
