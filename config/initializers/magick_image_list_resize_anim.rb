@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 module Magick
+  # Add helpers for resizing all frames of animated images.
   class ImageList
     def resize_to_fit_anim!(*args)
       if animated?
