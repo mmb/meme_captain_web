@@ -8,8 +8,9 @@ class SrcImagesController < ApplicationController
   end
 
   def index
+    query = params[:q].try(:strip)
     @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(
-        params[:q]).publick.active.finished.most_used.page(params[:page])
+        query).publick.active.finished.most_used.page(params[:page])
   end
 
   def create

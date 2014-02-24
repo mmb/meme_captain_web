@@ -106,6 +106,20 @@ describe SrcImagesController do
         expect(assigns(:src_images)).to eq [si]
       end
 
+      it 'ignores leading whitespace' do
+        si = FactoryGirl.create(
+            :src_image, user: user, name: 'abc', work_in_progress: false)
+        get :index, q: " \t\r\nb"
+        expect(assigns(:src_images)).to eq([si])
+      end
+
+      it 'ignores trailing whitespace' do
+        si = FactoryGirl.create(
+            :src_image, user: user, name: 'abc', work_in_progress: false)
+        get :index, q: "b \t\n\r"
+        expect(assigns(:src_images)).to eq([si])
+      end
+
     end
 
   end
