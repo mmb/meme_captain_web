@@ -21,6 +21,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resource :my, only: :show, controller: :my
 
+  resources :terms, only: :index
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
