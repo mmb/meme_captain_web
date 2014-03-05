@@ -84,7 +84,7 @@ class SrcImagesController < ApplicationController
       redirect_to({ controller: :my, action: :show }, {
           notice: 'Source image created.' })
     end
-    format.json { render json: {} }
+    format.json { render json: { id: @src_image.id_hash } }
   end
 
   def create_fail(format)
