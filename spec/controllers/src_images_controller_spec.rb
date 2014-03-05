@@ -172,11 +172,12 @@ describe SrcImagesController do
 
       let(:user) { nil }
 
-      it 'redirects to the login form' do
-        post :create, src_image: { image: image }
-
-        expect(response).to redirect_to new_session_path
+      it 'saves the new source image to the database' do
+        expect do
+          post :create, src_image: { image: image }
+        end.to change { SrcImage.count }.by(1)
       end
+
     end
 
     context 'setting an optional name' do
