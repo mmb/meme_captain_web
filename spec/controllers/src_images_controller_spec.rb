@@ -224,7 +224,8 @@ describe SrcImagesController do
       let(:src_image) { mock_model(SrcImage) }
 
       before :each do
-        SrcImage.should_receive(:find_by_id_hash!).and_return(src_image)
+        SrcImage.should_receive(
+            :find_by_id_hash_and_work_in_progress!).and_return(src_image)
       end
 
       it 'shows the source image' do
