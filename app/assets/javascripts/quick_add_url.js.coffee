@@ -21,12 +21,10 @@ $(document).ready ->
             success: ->
               clearInterval(timer)
               window.location.replace("/gend_images/new?src=#{data.id}")
-            error: ->
-              clearInterval(timer)
-              status.text('Error loading URL')
           count += 1
           if count >= 10
             clearInterval(timer)
+            status.text('Error loading URL')
         , 1000
       error: ->
         status.text('Error submitting URL')
