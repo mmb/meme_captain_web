@@ -1,5 +1,6 @@
-class UrlGetter
+# encoding: UTF-8
 
+class UrlGetter
   def get(url)
     conn.get(url).body
   end
@@ -14,5 +15,4 @@ class UrlGetter
       c.adapter Faraday.default_adapter
     end
   end
-
 end

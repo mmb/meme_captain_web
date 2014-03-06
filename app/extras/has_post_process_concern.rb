@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # ActiveRecord::Model mixin for models that need post-processing by delayed
 # job after they have been committed.
 #

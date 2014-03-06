@@ -1,3 +1,6 @@
+# encoding: UTF-8
+
+# A caption is a box of text in a meme.
 class Caption < ActiveRecord::Base
   belongs_to :gend_image
 
@@ -16,11 +19,11 @@ class Caption < ActiveRecord::Base
   end
 
   def text_pos
-    MemeCaptain::TextPos.new(text, top_left_x_pct, top_left_y_pct, width_pct, height_pct, font: font_path)
+    MemeCaptain::TextPos.new(text, top_left_x_pct, top_left_y_pct, width_pct,
+                             height_pct, font: font_path)
   end
 
   private
 
   scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct') }
-
 end
