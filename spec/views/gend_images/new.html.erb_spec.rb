@@ -44,4 +44,13 @@ describe 'gend_images/new.html.erb' do
 
   end
 
+  it 'has a hidden negative captcha field called email' do
+    render
+
+    expect(rendered).to have_selector(
+                            '#gend_image_email') do |e|
+      expect(e.first['style']).to eq 'display: none'
+    end
+  end
+
 end
