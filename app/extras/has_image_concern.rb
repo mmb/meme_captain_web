@@ -8,7 +8,8 @@ module HasImageConcern
   included do
     before_validation :set_derived_image_fields
 
-    scope :without_image, select: (column_names - ['image']).map { |c| "#{table_name}.#{c}" }
+    scope :without_image,
+          select: (column_names - ['image']).map { |c| "#{table_name}.#{c}" }
   end
 
   def set_derived_image_fields

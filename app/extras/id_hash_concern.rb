@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # ActiveRecord::Model mixin to set a random id hash column.
 module IdHashConcern
   extend ActiveSupport::Concern
@@ -12,11 +14,12 @@ module IdHashConcern
   end
 
   def gen_id_hash
-    begin
+    id_hash = nil
+    loop do
       id_hash = SecureRandom.urlsafe_base64(4)
-    end while self.class.where(:id_hash => id_hash).exists?
+      break unless self.class.where(id_hash: id_hash).exists?
+    end
 
     id_hash
   end
-
 end
