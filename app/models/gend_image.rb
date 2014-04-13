@@ -13,6 +13,11 @@ class GendImage < ActiveRecord::Base
   accepts_nested_attributes_for :captions, reject_if:
       proc { |attrs| attrs['text'].blank? }
 
+  # This email field is a negative captcha. If form bots fill it in,
+  # validation will fail.
+  attr_accessor :email
+  validates :email, length: { is: 0 }
+
   def format
     mime = Mime::Type.lookup(content_type)
 

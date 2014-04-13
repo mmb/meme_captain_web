@@ -76,4 +76,23 @@ describe GendImage do
 
   end
 
+  describe '#email' do
+    let(:gend_image) { FactoryGirl.create(:gend_image) }
+
+    it 'passes validation when email is nil' do
+      gend_image.email = nil
+      expect(gend_image).to be_valid
+    end
+
+    it 'passes validation when email is the empty string' do
+      gend_image.email = ''
+      expect(gend_image).to be_valid
+    end
+
+    it 'fails validation when email is set' do
+      gend_image.email = 'bot@bots.com'
+      expect(gend_image).to_not be_valid
+    end
+  end
+
 end
