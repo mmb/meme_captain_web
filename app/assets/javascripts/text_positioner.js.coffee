@@ -196,17 +196,14 @@ window.text_positioner_init = ->
     tp = new TextPositioner
     tp.bind_div element
 
-    tp.add_rect '0',
-      $('#gend_image_captions_attributes_0_top_left_x_pct'),
-      $('#gend_image_captions_attributes_0_top_left_y_pct'),
-      $('#gend_image_captions_attributes_0_width_pct'),
-      $('#gend_image_captions_attributes_0_height_pct')
+    num_captions = $('.caption-label').size()
 
-    tp.add_rect '1',
-      $('#gend_image_captions_attributes_1_top_left_x_pct'),
-      $('#gend_image_captions_attributes_1_top_left_y_pct'),
-      $('#gend_image_captions_attributes_1_width_pct'),
-      $('#gend_image_captions_attributes_1_height_pct')
+    for index in [0..num_captions]
+      tp.add_rect index,
+        $("#gend_image_captions_attributes_#{index}_top_left_x_pct"),
+        $("#gend_image_captions_attributes_#{index}_top_left_y_pct"),
+        $("#gend_image_captions_attributes_#{index}_width_pct"),
+        $("#gend_image_captions_attributes_#{index}_height_pct")
 
     $(element).data 'tp', tp
 
