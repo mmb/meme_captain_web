@@ -9,7 +9,6 @@ class GendImagesController < ApplicationController
 
     @caption_defaults = [
         {
-            autofocus: true,
             top_left_y_pct: 0
         },
         {

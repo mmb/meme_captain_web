@@ -14,7 +14,7 @@ describe 'gend_images/new.html.erb' do
 
   before do
     assign(:gend_image, gend_image)
-    assign(:caption_defaults, [{ autofocus: true }, {}])
+    assign(:caption_defaults, [{}, {}])
   end
 
   it 'renders' do
