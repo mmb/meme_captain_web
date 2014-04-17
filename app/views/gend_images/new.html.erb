@@ -29,14 +29,14 @@
 
     <% @gend_image.captions.each.with_index do |caption, index| %>
         <%= f.fields_for :captions, caption do |cf| %>
-            <%= cf.label :text, "Caption #{index + 1}" %>
+            <%= cf.label :text, "Caption #{index + 1}", class: 'caption-label' %>
             <%= cf.text_area :text, autofocus: index == 0, class: 'input-xxlarge', rows: 2 %>
 
             <%= cf.hidden_field :font, value: '' %>
-            <%= cf.hidden_field :top_left_x_pct, value: 0.05 %>
-            <%= cf.hidden_field :top_left_y_pct, value: @caption_defaults[index][:top_left_y_pct] %>
-            <%= cf.hidden_field :width_pct, value: 0.9 %>
-            <%= cf.hidden_field :height_pct, value: 0.25 %>
+            <%= cf.hidden_field :top_left_x_pct %>
+            <%= cf.hidden_field :top_left_y_pct %>
+            <%= cf.hidden_field :width_pct %>
+            <%= cf.hidden_field :height_pct %>
         <% end %>
     <% end %>
 
