@@ -185,6 +185,22 @@ describe GendImagesController do
 
     end
 
+    context 'when an email is passed in' do
+
+      it 'does not save the new gend image to the database' do
+        expect do
+          post :create, gend_image: {
+              src_image_id: src_image.id_hash, email: 'not@empty.com' }
+        end.to_not change { GendImage.count }
+      end
+
+      it 're-renders the new template' do
+        post :create, gend_image: {
+            src_image_id: src_image.id_hash, email: 'not@empty.com' }
+
+        expect(response).to render_template('new')
+      end
+    end
   end
 
   describe "GET 'show'" do
