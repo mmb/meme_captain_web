@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Home page controller.
 class HomeController < ApplicationController
   PER_ROW = 7
 

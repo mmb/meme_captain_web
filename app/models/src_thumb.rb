@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Source image thumbnail model.
 class SrcThumb < ActiveRecord::Base
   include HasImageConcern
 

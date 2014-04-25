@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# URL content fetcher.
 class UrlGetter
   def get(url)
     conn.get(url).body

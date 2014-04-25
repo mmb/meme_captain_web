@@ -10,7 +10,7 @@ describe GendImagesHelper do
     let(:gend_image) { FactoryGirl.create(:gend_image) }
 
     it 'generates the gend image url' do
-      expected = "http://#{controller.request.host}/gend_images/" +
+      expected = "http://#{controller.request.host}/gend_images/" \
           "#{gend_image.id_hash}.#{gend_image.format}"
 
       expect(helper.gend_image_url_for(gend_image)).to eq(expected)
@@ -19,7 +19,7 @@ describe GendImagesHelper do
     it 'uses the gend image host from the config if set' do
       stub_const 'MemeCaptainWeb::Config::GendImageHost', host
 
-      expected = "http://#{host}/gend_images/" +
+      expected = "http://#{host}/gend_images/" \
           "#{gend_image.id_hash}.#{gend_image.format}"
 
       expect(helper.gend_image_url_for(gend_image)).to eq(expected)

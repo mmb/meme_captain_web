@@ -4,6 +4,7 @@ require 'set'
 require 'ttfunk'
 
 module MemeCaptainWeb
+  # Font class.
   class Font
     attr_reader :char_set
     attr_reader :path

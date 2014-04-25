@@ -56,7 +56,7 @@ describe 'gend_image_pages/show.html.erb' do
 
   context 'QR code modal' do
     let(:img_src) do
-      "https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=" \
+      'https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=' \
       "#{CGI.escape(gend_image_url)}"
     end
 

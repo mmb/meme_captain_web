@@ -270,7 +270,7 @@ describe SrcImagesController do
 
       it 'marks the record as deleted in the database' do
         post :create, src_image: {
-            image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
         delete :destroy, id: assigns(:src_image).id_hash
 
         expect do
@@ -280,7 +280,7 @@ describe SrcImagesController do
 
       it 'returns success' do
         post :create, src_image: {
-            image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
         delete :destroy, id: assigns(:src_image).id_hash
 
         expect(response).to be_success

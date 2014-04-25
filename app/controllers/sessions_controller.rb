@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Sessions controller.
 class SessionsController < ApplicationController
   def create
     user = User.auth_case_insens(params[:email], params[:password])

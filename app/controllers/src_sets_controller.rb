@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Source image sets controller.
 class SrcSetsController < ApplicationController
   def new
     @src_set = SrcSet.new

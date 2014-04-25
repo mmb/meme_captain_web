@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Generated (meme) image thumbnails controller.
 class GendThumbsController < ApplicationController
   def show
     gend_thumb = GendThumb.find(params[:id], select: :image)

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Source images controller.
 class SrcImagesController < ApplicationController
   def new
     return if not_logged_in 'Please login to create a source image.'
@@ -80,8 +81,10 @@ class SrcImagesController < ApplicationController
 
   def create_success(format)
     format.html do
-      redirect_to({ controller: :my, action: :show }, {
-          notice: 'Source image created.' })
+      redirect_to(
+        { controller: :my, action: :show },
+        { notice: 'Source image created.' }
+      )
     end
     format.json { render json: { id: @src_image.id_hash } }
   end

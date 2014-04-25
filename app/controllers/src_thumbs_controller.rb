@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Source image thumbnails controller.
 class SrcThumbsController < ApplicationController
   def show
     src_thumb = SrcThumb.find(params[:id])

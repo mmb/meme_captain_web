@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# User page controller.
 class MyController < ApplicationController
   def show
     return if not_logged_in

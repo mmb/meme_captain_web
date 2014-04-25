@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Users controller.
 class UsersController < ApplicationController
   def new
     @user = User.new

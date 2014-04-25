@@ -12,7 +12,7 @@ module HasPostProcessConcern
   end
 
   def create_post_process_job
-    self.delay.post_process_job if work_in_progress
+    delay.post_process_job if work_in_progress
   end
 
   def post_process_job
@@ -21,5 +21,4 @@ module HasPostProcessConcern
     self.work_in_progress = false
     save!
   end
-
 end

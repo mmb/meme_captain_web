@@ -1,5 +1,7 @@
-module ApplicationHelper
+# encoding: UTF-8
 
+# Application helper.
+module ApplicationHelper
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
   end
@@ -9,5 +11,4 @@ module ApplicationHelper
     headers['Expires'] = (Time.now + length_of_time).httpdate
     expires_in 1.week, public: true
   end
-
 end

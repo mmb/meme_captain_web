@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Source image set model.
 class SrcSet < ActiveRecord::Base
   validates :name, presence: true
   validate :name, :one_active_name

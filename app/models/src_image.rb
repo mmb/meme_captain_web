@@ -2,6 +2,7 @@
 
 require 'url_getter'
 
+# Source image model.
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern

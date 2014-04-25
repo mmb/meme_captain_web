@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Generated (meme) image pages controller.
 class GendImagePagesController < ApplicationController
   include GendImagesHelper
 

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Generated (meme) image model.
 class GendImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
@@ -23,7 +24,7 @@ class GendImage < ActiveRecord::Base
 
     if mime.kind_of?(Mime::Type)
       {
-          jpeg: :jpg
+        jpeg: :jpg
       }.fetch(mime.symbol, mime.symbol)
     else
       nil

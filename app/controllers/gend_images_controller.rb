@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# Generated (meme) images controller.
 class GendImagesController < ApplicationController
   def new
     @gend_image = GendImage.new
@@ -76,7 +77,7 @@ class GendImagesController < ApplicationController
 
   def gend_image_params
     params.require(:gend_image).permit({ captions_attributes: [
-        :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
-        :height_pct] }, :private, :email)
+      :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
+      :height_pct] }, :private, :email)
   end
 end
