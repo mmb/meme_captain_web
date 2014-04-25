@@ -1,4 +1,4 @@
 AllCops:
-  Excludes:
+  Exclude:
     - db/**
     - vendor/**
