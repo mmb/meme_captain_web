@@ -123,7 +123,7 @@ describe GendImagesController do
                    }
                  },
                  private: '1'
-             }
+               }
         end.to change { GendImage.count }.by(1)
 
         created = GendImage.last
@@ -157,9 +157,9 @@ describe GendImagesController do
              gend_image: { src_image_id: 'abc' }
 
         expect(response).to redirect_to(
-                                controller: :gend_image_pages,
-                                action: :show,
-                                id: assigns(:gend_image).id_hash)
+          controller: :gend_image_pages,
+          action: :show,
+          id: assigns(:gend_image).id_hash)
       end
 
     end
@@ -317,7 +317,7 @@ describe GendImagesController do
 
       it 'raises record not found' do
         expect { get :show, id: id }.to raise_error(
-                                            ActiveRecord::RecordNotFound)
+            ActiveRecord::RecordNotFound)
       end
 
     end
@@ -361,7 +361,7 @@ describe GendImagesController do
       let(:id) { 'abc' }
       it 'raises record not found' do
         expect { delete :destroy, id: id }.to raise_error(
-                                                  ActiveRecord::RecordNotFound)
+            ActiveRecord::RecordNotFound)
       end
 
     end
