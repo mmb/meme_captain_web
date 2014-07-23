@@ -23,16 +23,34 @@ describe GendImage do
 
   context 'setting fields derived from the image' do
 
-    subject do
-      gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image))
-      gend_image.valid?
-      gend_image
+    context 'when the image is not animated' do
+      subject(:gend_image) do
+        gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image))
+        gend_image.valid?
+        gend_image
+      end
+
+      its(:content_type) { should == 'image/jpeg' }
+      its(:height) { should == 399 }
+      its(:width) { should == 399 }
+      its(:size) { should == 9141 }
+      its(:is_animated) { should eq(false) }
     end
 
-    its(:content_type) { should == 'image/jpeg' }
-    its(:height) { should == 399 }
-    its(:width) { should == 399 }
-    its(:size) { should == 9141 }
+    context 'when the image is animated' do
+      subject(:gend_image) do
+        gend_image = GendImage.new(
+            FactoryGirl.attributes_for(
+                :gend_image,
+                image: File.read(
+                    Rails.root + 'spec/fixtures/files/omgcat.gif')))
+        gend_image.valid?
+        gend_image
+      end
+
+      its(:is_animated) { should eq(true) }
+    end
+
   end
 
   it 'generates a thumbnail'

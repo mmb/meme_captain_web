@@ -20,6 +20,10 @@ module HasImageConcern
       self.height = img.rows
       self.size = image.size
       self.width = img.columns
+      if self.respond_to?(:is_animated=)
+        self.is_animated = img.animated?
+      end
+      true # must return true for before_validation callback
     end
   end
 
