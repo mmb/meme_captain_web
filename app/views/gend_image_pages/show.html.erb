@@ -30,6 +30,12 @@
             <i class="icon-picture"></i> Imgur
         <% end %>
 
+        <% if @gend_image.is_animated %>
+            <%= link_to("http://gfycat.com/fetch/#{@gend_image_url}", class: 'btn') do %>
+                Gyfcat
+            <% end %>
+        <% end %>
+
         <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn') do %>
             <i class="icon-twitter"></i> Tweet
         <% end %>

@@ -69,4 +69,24 @@ describe 'gend_image_pages/show.html.erb' do
                             'img', src: img_src, 'data-dismiss' => 'modal')
     end
   end
+
+  context 'when the image is not animated' do
+    it 'does not have the gyfcat button' do
+      expect(render).to_not contain 'Gyfcat'
+    end
+  end
+
+  context 'when the image is animated' do
+    let(:gend_image) do
+      FactoryGirl.create(
+          :gend_image,
+          work_in_progress: false,
+          image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif'))
+    end
+
+    it 'has the gyfcat button' do
+      expect(render).to contain 'Gyfcat'
+    end
+  end
+
 end
