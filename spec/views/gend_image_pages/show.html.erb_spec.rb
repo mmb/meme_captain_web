@@ -71,8 +71,8 @@ describe 'gend_image_pages/show.html.erb' do
   end
 
   context 'when the image is not animated' do
-    it 'does not have the gyfcat button' do
-      expect(render).to_not contain 'Gyfcat'
+    it 'does not have the gfycat button' do
+      expect(render).to_not contain 'Gfycat'
     end
   end
 
@@ -84,8 +84,8 @@ describe 'gend_image_pages/show.html.erb' do
           image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif'))
     end
 
-    it 'has the gyfcat button' do
-      expect(render).to contain 'Gyfcat'
+    it 'has the gfycat button' do
+      expect(render).to contain 'Gfycat'
     end
   end
 
