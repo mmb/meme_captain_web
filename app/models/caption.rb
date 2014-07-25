@@ -9,9 +9,7 @@ class Caption < ActiveRecord::Base
   before_save :default_values
 
   def default_values
-    if font.blank?
-      self.font = MemeCaptainWeb::Font.for(text)
-    end
+    self.font = MemeCaptainWeb::Font.for(text) if font.blank?
   end
 
   def font_path

@@ -16,9 +16,11 @@ class SrcImage < ActiveRecord::Base
   validate :image_if_not_url
 
   def image_if_not_url
+    # rubocop:disable Style/GuardClause
     if url.blank? && image.blank?
       errors.add :image, 'is required if url is not set.'
     end
+    # rubocop:enable Style/GuardClause
   end
 
   protected

@@ -9,29 +9,29 @@ class SrcSet < ActiveRecord::Base
   belongs_to :user
 
   def one_active_name
+    # rubocop:disable Style/GuardClause
     if new_record? && SrcSet.active.exists?(name: name) ||
         !is_deleted && SrcSet.where(
             'name = ? AND id != ?', name, id).active.count > 0
       errors.add :name, 'has already been taken'
     end
+    # rubocop:enable Style/GuardClause
   end
 
   def add_src_images(add_id_hashes)
     to_add = SrcImage.find_all_by_id_hash(add_id_hashes) - src_images
+    return if to_add.empty?
 
-    unless to_add.empty?
-      src_images.concat(to_add)
-      touch
-    end
+    src_images.concat(to_add)
+    touch
   end
 
   def delete_src_images(delete_id_hashes)
     to_delete = SrcImage.find_all_by_id_hash(delete_id_hashes)
+    return if to_delete.empty?
 
-    unless to_delete.empty?
-      src_images.delete(*to_delete)
-      touch
-    end
+    src_images.delete(*to_delete)
+    touch
   end
 
   def thumbnail

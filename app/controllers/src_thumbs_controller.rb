@@ -7,8 +7,7 @@ class SrcThumbsController < ApplicationController
 
     cache_expires 1.week
 
-    if stale?(src_thumb)
-      render text: src_thumb.image, content_type: src_thumb.content_type
-    end
+    return unless stale?(src_thumb)
+    render text: src_thumb.image, content_type: src_thumb.content_type
   end
 end

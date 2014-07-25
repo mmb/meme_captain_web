@@ -22,7 +22,7 @@ class GendImage < ActiveRecord::Base
   def format
     mime = Mime::Type.lookup(content_type)
 
-    if mime.kind_of?(Mime::Type)
+    if mime.is_a?(Mime::Type)
       {
         jpeg: :jpg
       }.fetch(mime.symbol, mime.symbol)

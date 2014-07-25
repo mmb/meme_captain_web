@@ -13,18 +13,15 @@ module HasImageConcern
   end
 
   def set_derived_image_fields
-    if image
-      img = magick_image_list
+    return unless image
+    img = magick_image_list
 
-      self.content_type = img.content_type
-      self.height = img.rows
-      self.size = image.size
-      self.width = img.columns
-      if self.respond_to?(:is_animated=)
-        self.is_animated = img.animated?
-      end
-      true # must return true for before_validation callback
-    end
+    self.content_type = img.content_type
+    self.height = img.rows
+    self.size = image.size
+    self.width = img.columns
+    self.is_animated = img.animated? if self.respond_to?(:is_animated=)
+    true # must return true for before_validation callback
   end
 
   def magick_image_list

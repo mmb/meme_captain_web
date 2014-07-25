@@ -35,9 +35,8 @@ class SrcImagesController < ApplicationController
 
     expires_in 1.hour, public: true
 
-    if stale?(src_image)
-      render text: src_image.image, content_type: src_image.content_type
-    end
+    return unless stale?(src_image)
+    render text: src_image.image, content_type: src_image.content_type
   end
 
   def update
@@ -74,9 +73,11 @@ class SrcImagesController < ApplicationController
   end
 
   def read_image_data(src_image)
+    # rubocop:disable Style/GuardClause
     if params.try(:[], :src_image).try(:[], :image)
       src_image.image = params[:src_image][:image].read
     end
+    # rubocop:enable Style/GuardClause
   end
 
   def create_success(format)

@@ -55,9 +55,8 @@ class GendImagesController < ApplicationController
         controller: :src_images, action: :show,
         id: gend_image.src_image.id_hash)
 
-    if stale?(gend_image)
-      render text: gend_image.image, content_type: gend_image.content_type
-    end
+    return unless stale?(gend_image)
+    render text: gend_image.image, content_type: gend_image.content_type
   end
 
   def destroy

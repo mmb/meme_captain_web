@@ -24,9 +24,11 @@ class SrcSetsController < ApplicationController
   end
 
   def update
+    # rubocop:disable Style/IfUnlessModifier
     unless current_user
       render status: :forbidden, text: 'Forbidden' && return
     end
+    # rubocop:enable Style/IfUnlessModifier
 
     @src_set = SrcSet.where(
         name: params[:id], is_deleted: false).first_or_create do |ss|
