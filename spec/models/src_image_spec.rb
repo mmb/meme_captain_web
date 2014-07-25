@@ -45,7 +45,12 @@ describe SrcImage do
     its(:size) { should == 9141 }
   end
 
-  it 'should not delete child gend_images when deleted'
+  it 'should not delete child gend_images when deleted' do
+    src_image = FactoryGirl.create(:src_image)
+    FactoryGirl.create(:gend_image, src_image: src_image)
+    FactoryGirl.create(:gend_image, src_image: src_image)
+    expect { src_image.destroy }.not_to change { GendImage.count }
+  end
 
   it 'generates a thumbnail'
   # figure out how to use run a delayed job in spec
