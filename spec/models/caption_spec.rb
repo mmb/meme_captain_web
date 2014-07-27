@@ -41,7 +41,8 @@ describe Caption do
     context 'when the font is nil' do
 
       it 'uses the default font' do
-        MemeCaptainWeb::Font.stub(for: 'font.ttf')
+        allow(MemeCaptainWeb::Font).to receive(:for).with(
+                                           'MyString').and_return('font.ttf')
         caption = FactoryGirl.create(:caption, font: nil)
         expect(caption.font).to eq 'font.ttf'
       end
@@ -51,7 +52,8 @@ describe Caption do
     context 'when the font is empty' do
 
       it 'uses the default font' do
-        MemeCaptainWeb::Font.stub(for: 'font.ttf')
+        allow(MemeCaptainWeb::Font).to receive(:for).with(
+                                           'MyString').and_return('font.ttf')
         caption = FactoryGirl.create(:caption, font: '')
         expect(caption.font).to eq 'font.ttf'
       end
