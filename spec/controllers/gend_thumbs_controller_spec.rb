@@ -13,7 +13,7 @@ describe GendThumbsController do
       let(:gend_thumb) { mock_model(GendThumb) }
 
       it 'shows the thumbnail' do
-        GendThumb.should_receive(:find).and_return(gend_thumb)
+        expect(GendThumb).to receive(:find).and_return(gend_thumb)
 
         get 'show', id: 1
 
@@ -21,8 +21,8 @@ describe GendThumbsController do
       end
 
       it 'has the right content type' do
-        gend_thumb.should_receive(:content_type).and_return('content type')
-        GendThumb.should_receive(:find).and_return(gend_thumb)
+        expect(gend_thumb).to receive(:content_type).and_return('content type')
+        expect(GendThumb).to receive(:find).and_return(gend_thumb)
 
         get 'show', id: 1
 
@@ -30,8 +30,8 @@ describe GendThumbsController do
       end
 
       it 'has the right content' do
-        gend_thumb.should_receive(:image).and_return('image')
-        GendThumb.should_receive(:find).and_return(gend_thumb)
+        expect(gend_thumb).to receive(:image).and_return('image')
+        expect(GendThumb).to receive(:find).and_return(gend_thumb)
 
         get 'show', id: 1
 
@@ -39,7 +39,7 @@ describe GendThumbsController do
       end
 
       it 'has the correct Cache-Control header' do
-        GendThumb.should_receive(:find).and_return(gend_thumb)
+        expect(GendThumb).to receive(:find).and_return(gend_thumb)
 
         get :show, id: 1
 
@@ -48,7 +48,7 @@ describe GendThumbsController do
       end
 
       it 'has the correct Expires header' do
-        GendThumb.should_receive(:find).and_return(gend_thumb)
+        expect(GendThumb).to receive(:find).and_return(gend_thumb)
 
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
           get :show, id: 1

@@ -224,7 +224,7 @@ describe SrcImagesController do
       let(:src_image) { mock_model(SrcImage) }
 
       before :each do
-        SrcImage.should_receive(
+        expect(SrcImage).to receive(
             :find_by_id_hash_and_work_in_progress!).and_return(src_image)
       end
 
@@ -235,7 +235,7 @@ describe SrcImagesController do
       end
 
       it 'has the right content type' do
-        src_image.should_receive(:content_type).and_return('content type')
+        expect(src_image).to receive(:content_type).and_return('content type')
 
         get 'show', id: 'abc'
 
@@ -243,7 +243,7 @@ describe SrcImagesController do
       end
 
       it 'has the right content' do
-        src_image.should_receive(:image).and_return('image')
+        expect(src_image).to receive(:image).and_return('image')
 
         get 'show', id: 'abc'
 

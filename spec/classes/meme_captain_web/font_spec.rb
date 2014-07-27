@@ -30,7 +30,7 @@ describe 'MemeCaptainWeb::Font' do
   describe '#char_set' do
 
     it 'builds a list of the characters in the font' do
-      TTFunk::File.should_receive(:open).with(path).and_return(file)
+      expect(TTFunk::File).to receive(:open).with(path).and_return(file)
 
       font = MemeCaptainWeb::Font.new(path)
 
@@ -157,9 +157,9 @@ describe 'MemeCaptainWeb::Font' do
       end
 
       it 'returns the first font with the correct characters' do
-        TTFunk::File.should_receive(:open).with(
+        expect(TTFunk::File).to receive(:open).with(
             '/tmp/fonts/a.ttf').and_return(a_file)
-        TTFunk::File.should_receive(:open).with(
+        expect(TTFunk::File).to receive(:open).with(
             '/tmp/fonts/b.ttf').and_return(b_file)
 
         expect(MemeCaptainWeb::Font.for('abc')).to eq 'b.ttf'
@@ -189,9 +189,9 @@ describe 'MemeCaptainWeb::Font' do
       end
 
       it 'returns the first font' do
-        TTFunk::File.should_receive(:open).with(
+        expect(TTFunk::File).to receive(:open).with(
             '/tmp/fonts/a.ttf').and_return(a_file)
-        TTFunk::File.should_receive(:open).with(
+        expect(TTFunk::File).to receive(:open).with(
             '/tmp/fonts/b.ttf').and_return(b_file)
 
         expect(MemeCaptainWeb::Font.for('abc')).to eq 'a.ttf'
@@ -212,7 +212,7 @@ describe 'MemeCaptainWeb::Font' do
     end
 
     it 'caches the results' do
-      Dir.should_receive(:glob).once.and_return(%w(tmp/fonts/a.ttf))
+      expect(Dir).to receive(:glob).once.and_return(%w(tmp/fonts/a.ttf))
 
       2.times { MemeCaptainWeb::Font.default_fonts }
     end

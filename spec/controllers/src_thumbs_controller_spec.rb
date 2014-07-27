@@ -13,7 +13,7 @@ describe SrcThumbsController do
       let(:src_thumb) { mock_model(SrcThumb) }
 
       it 'shows the thumbnail' do
-        SrcThumb.should_receive(:find).and_return(src_thumb)
+        expect(SrcThumb).to receive(:find).and_return(src_thumb)
 
         get 'show', id: 1
 
@@ -21,8 +21,8 @@ describe SrcThumbsController do
       end
 
       it 'has the right content type' do
-        src_thumb.should_receive(:content_type).and_return('content type')
-        SrcThumb.should_receive(:find).and_return(src_thumb)
+        expect(src_thumb).to receive(:content_type).and_return('content type')
+        expect(SrcThumb).to receive(:find).and_return(src_thumb)
 
         get 'show', id: 1
 
@@ -30,8 +30,8 @@ describe SrcThumbsController do
       end
 
       it 'has the right content' do
-        src_thumb.should_receive(:image).and_return('image')
-        SrcThumb.should_receive(:find).and_return(src_thumb)
+        expect(src_thumb).to receive(:image).and_return('image')
+        expect(SrcThumb).to receive(:find).and_return(src_thumb)
 
         get 'show', id: 1
 
@@ -39,7 +39,7 @@ describe SrcThumbsController do
       end
 
       it 'has the correct Cache-Control header' do
-        SrcThumb.should_receive(:find).and_return(src_thumb)
+        expect(SrcThumb).to receive(:find).and_return(src_thumb)
 
         get :show, id: 1
 
@@ -48,7 +48,7 @@ describe SrcThumbsController do
       end
 
       it 'has the correct Expires header' do
-        SrcThumb.should_receive(:find).and_return(src_thumb)
+        expect(SrcThumb).to receive(:find).and_return(src_thumb)
 
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
           get :show, id: 1

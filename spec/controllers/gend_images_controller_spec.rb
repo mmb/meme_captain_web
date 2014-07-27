@@ -87,7 +87,7 @@ describe GendImagesController do
     context 'with valid attributes' do
 
       before :each do
-        SrcImage.should_receive(:find_by_id_hash!).with('abc').and_return(
+        expect(SrcImage).to receive(:find_by_id_hash!).with('abc').and_return(
             src_image)
       end
 
@@ -222,7 +222,7 @@ describe GendImagesController do
       end
 
       before do
-        GendImage.should_receive(
+        expect(GendImage).to receive(
             :find_by_id_hash_and_is_deleted!).and_return(gend_image)
       end
 
@@ -233,7 +233,7 @@ describe GendImagesController do
       end
 
       it 'has the right content type' do
-        gend_image.should_receive(:content_type).and_return('content type')
+        expect(gend_image).to receive(:content_type).and_return('content type')
 
         get :show, id: id
 
@@ -241,7 +241,7 @@ describe GendImagesController do
       end
 
       it 'has the right content' do
-        gend_image.should_receive(:image).and_return('image')
+        expect(gend_image).to receive(:image).and_return('image')
 
         get :show, id: id
 
