@@ -69,7 +69,6 @@ group :test, :development do
   gem 'webrat'
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
-  gem 'rspec_stubout'
   gem 'rubocop'
 end
 

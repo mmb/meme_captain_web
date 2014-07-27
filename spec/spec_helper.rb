@@ -6,7 +6,6 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'webmock/rspec'
-require 'rspec_stubout/prevent_stubout'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -43,8 +42,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |ec|
     ec.syntax = :expect
   end
-
-  RspecStubout.prevent_stubout(config)
 end
 
 def create_image(width, height, color = 'white')

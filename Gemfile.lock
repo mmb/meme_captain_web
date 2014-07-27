@@ -159,8 +159,6 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    rspec_stubout (0.0.4)
-      rspec
     rubocop (0.24.1)
       json (>= 1.7.7, < 2)
       parser (>= 2.2.0.pre.3, < 3.0)
@@ -252,7 +250,6 @@ DEPENDENCIES
   rmagick4j
   rspec
   rspec-rails (~> 2.0)
-  rspec_stubout
   rubocop
   sass-rails (~> 3.2.3)
   shoulda
