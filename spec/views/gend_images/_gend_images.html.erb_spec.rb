@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'gend_images/_gend_images.html' do
+describe 'gend_images/_gend_images.html', type: :view do
+  include Webrat::Matchers
 
   before do
     assign :gend_images, Kaminari.paginate_array([]).page(1)

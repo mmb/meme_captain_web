@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'src_images/_src_images.html' do
+describe 'src_images/_src_images.html', type: :view do
+  include Webrat::Matchers
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }

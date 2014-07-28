@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'gend_images/new.html.erb' do
+describe 'gend_images/new.html.erb', type: :view do
+  include Webrat::Matchers
 
   let(:src_image) do
     stub_model(SrcImage, id_hash: 'abc', name: 'src image name')

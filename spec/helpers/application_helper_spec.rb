@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe ApplicationHelper do
+describe ApplicationHelper, type: :helper do
 
   let(:user) { FactoryGirl.create(:user) }
 

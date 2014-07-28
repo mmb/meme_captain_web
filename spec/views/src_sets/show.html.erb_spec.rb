@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'src_sets/show.html.erb' do
+describe 'src_sets/show.html.erb', type: :view do
 
   let(:src_set) { stub_model(SrcSet, name: 'src set') }
 

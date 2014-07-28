@@ -1,8 +1,10 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'src_images/_src_image.html' do
+describe 'src_images/_src_image.html', type: :view do
+  include Webrat::Matchers
+
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
   let(:src_image) do
     mock_model(SrcImage, work_in_progress: false, src_thumb: src_thumb)

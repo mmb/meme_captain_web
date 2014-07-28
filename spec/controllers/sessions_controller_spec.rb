@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe SessionsController do
+describe SessionsController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
 

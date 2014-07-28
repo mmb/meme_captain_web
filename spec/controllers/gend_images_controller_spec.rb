@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe GendImagesController do
+describe GendImagesController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
@@ -149,7 +149,7 @@ describe GendImagesController do
         expect(created.captions[2].width_pct).to eq 0.11
         expect(created.captions[2].height_pct).to eq 0.12
 
-        expect(created.private).to be_true
+        expect(created.private).to eq(true)
       end
 
       it 'redirects to the index' do
@@ -344,9 +344,8 @@ describe GendImagesController do
       it 'marks the record as deleted in the database' do
         delete :destroy, id: id
 
-        expect do
-          GendImage.find_by_id_hash!(gend_image.id_hash).is_deleted?
-        end.to be_true
+        expect(GendImage.find_by_id_hash!(
+                   gend_image.id_hash).is_deleted?).to eq(true)
       end
 
       it 'returns success' do

@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe GendImagesHelper do
+describe GendImagesHelper, type: :helper do
 
   describe '#gend_image_url_for' do
 

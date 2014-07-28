@@ -2,9 +2,9 @@
 
 require 'time'
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe SrcThumbsController do
+describe SrcThumbsController, type: :controller do
 
   describe "GET 'show'" do
 

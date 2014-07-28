@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'src_sets/new.html.erb' do
+describe 'src_sets/new.html.erb', type: :view do
 
   it 'renders' do
     assign(:src_set, stub_model(SrcSet))

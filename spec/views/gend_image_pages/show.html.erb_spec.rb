@@ -1,10 +1,11 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
 require 'cgi'
 
-describe 'gend_image_pages/show.html.erb' do
+describe 'gend_image_pages/show.html.erb', type: :view do
+  include Webrat::Matchers
 
   let(:gend_image) { FactoryGirl.create(:gend_image, work_in_progress: false) }
   let(:src_image) { FactoryGirl.create(:src_image) }

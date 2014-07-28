@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'sessions/new.html.erb' do
+describe 'sessions/new.html.erb', type: :view do
+  include Webrat::Matchers
 
   it 'has an email field' do
     render

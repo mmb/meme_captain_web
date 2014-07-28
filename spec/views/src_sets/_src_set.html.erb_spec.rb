@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'src_sets/_src_set.html' do
+describe 'src_sets/_src_set.html', type: :view do
 
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
 

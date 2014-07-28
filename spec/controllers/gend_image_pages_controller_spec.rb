@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe GendImagePagesController do
+describe GendImagePagesController, type: :controller do
 
   describe 'show' do
 

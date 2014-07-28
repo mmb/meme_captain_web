@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe SrcImagesController do
+describe SrcImagesController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
@@ -273,9 +273,8 @@ describe SrcImagesController do
           image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
         delete :destroy, id: assigns(:src_image).id_hash
 
-        expect do
-          SrcImage.find_by_id_hash!(assigns(:src_image).id_hash).is_deleted?
-        end.to be_true
+        expect(SrcImage.find_by_id_hash!(
+                   assigns(:src_image).id_hash).is_deleted?).to eq(true)
       end
 
       it 'returns success' do

@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'users/new.html.erb' do
+describe 'users/new.html.erb', type: :view do
+  include Webrat::Matchers
 
   before(:each) do
     assign(:user, [stub_model(User)])

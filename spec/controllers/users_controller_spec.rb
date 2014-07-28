@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe UsersController do
+describe UsersController, type: :controller do
 
   describe "GET 'new'" do
     it 'returns http success' do

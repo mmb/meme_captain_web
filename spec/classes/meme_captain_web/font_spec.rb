@@ -96,7 +96,7 @@ describe 'MemeCaptainWeb::Font' do
       it 'has the characters' do
         font = MemeCaptainWeb::Font.new(path)
 
-        expect(font.has_chars_for?('abc')).to be_true
+        expect(font.has_chars_for?('abc')).to eq(true)
       end
     end
 
@@ -116,7 +116,7 @@ describe 'MemeCaptainWeb::Font' do
       it 'does not have the characters' do
         font = MemeCaptainWeb::Font.new(path)
 
-        expect(font.has_chars_for?('abcd')).to be_false
+        expect(font.has_chars_for?('abcd')).to eq(false)
       end
     end
   end

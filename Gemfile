@@ -63,10 +63,11 @@ group :test, :development do
   gem 'factory_girl_rails'
   # Should not be needed. Workaround described in:
   #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
-  gem 'rspec'
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.0.2'
+  gem 'rspec-activemodel-mocks', '~> 1.0.1'
   gem 'shoulda'
-  gem 'webrat'
+  gem 'webrat', '~> 0.7.3'
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
   gem 'rubocop'

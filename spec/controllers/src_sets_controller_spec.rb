@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe SrcSetsController do
+describe SrcSetsController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
@@ -69,7 +69,7 @@ describe SrcSetsController do
 
       expect(
           src_sets[0].updated_at >= src_sets[1].updated_at &&
-              src_sets[1].updated_at >= src_sets[2].updated_at).to be_true
+              src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
     end
 
     it 'does not show deleted src sets' do
@@ -103,7 +103,7 @@ describe SrcSetsController do
 
         expect(
             src_sets[0].updated_at >= src_sets[1].updated_at &&
-                src_sets[1].updated_at >= src_sets[2].updated_at).to be_true
+                src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
       end
 
     end
@@ -335,7 +335,7 @@ describe SrcSetsController do
 
       it 'marks the record as deleted in the database' do
         delete :destroy, id: src_set.name
-        expect { SrcSet.find(src_set).is_deleted? }.to be_true
+        expect(SrcSet.find(src_set).is_deleted?).to eq(true)
       end
 
       it 'redirects to the index page' do

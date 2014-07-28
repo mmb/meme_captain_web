@@ -1,10 +1,10 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
 require 'digest/md5'
 
-describe MyController do
+describe MyController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }

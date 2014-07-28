@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe MemeCaptainWeb::Config do
 
@@ -14,9 +14,7 @@ describe MemeCaptainWeb::Config do
 
   context 'when the MC_SET_FRONT_PAGE_MIN_QUALITY env var is set' do
 
-    it 'uses the environment variable' do
-      pending
-    end
+    xit 'uses the environment variable'
 
   end
 

@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'layouts/application.html.erb' do
+describe 'layouts/application.html.erb', type: :view do
+  include Webrat::Matchers
 
   it 'has the right title' do
     render

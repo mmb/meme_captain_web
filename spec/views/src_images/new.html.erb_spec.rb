@@ -1,8 +1,10 @@
 # encoding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'src_images/new.html.erb' do
+describe 'src_images/new.html.erb', type: :view do
+  include Webrat::Matchers
+
   let(:src_image) { FactoryGirl.build(:src_image, image: nil) }
 
   before do
