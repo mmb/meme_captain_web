@@ -12,13 +12,15 @@ describe 'gend_image_pages/show.html.erb' do
     url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
   end
   let(:android) { false }
+  let(:browser) { double(Browser) }
 
   before do
     assign(:gend_image, gend_image)
     assign(:src_image, src_image)
     assign(:gend_image_url, gend_image_url)
 
-    view.stub_chain(:browser, :android?) { android }
+    allow(view).to receive(:browser).with(no_args).and_return(browser)
+    allow(browser).to receive(:android?).with(no_args).and_return(android)
   end
 
   context 'browser' do
