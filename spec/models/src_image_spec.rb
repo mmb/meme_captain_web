@@ -26,7 +26,8 @@ describe SrcImage do
   it { should have_and_belong_to_many :src_sets }
 
   it 'should generate a unique id hash' do
-    SrcImage.any_instance.stub(:gen_id_hash).and_return 'some_id_hash'
+    allow(SecureRandom).to receive(:urlsafe_base64).with(4).and_return(
+                               'some_id_hash')
     src_image = SrcImage.create(FactoryGirl.attributes_for(:src_image))
     expect(src_image.id_hash).to eq('some_id_hash')
   end
