@@ -66,7 +66,7 @@ group :test, :development do
   gem 'rspec', '~> 3.0.0'
   gem 'rspec-rails', '~> 3.0.2'
   gem 'rspec-activemodel-mocks', '~> 1.0.1'
-  gem 'shoulda'
+  gem 'shoulda', '~> 3.5.0'
   gem 'webrat', '~> 0.7.3'
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
