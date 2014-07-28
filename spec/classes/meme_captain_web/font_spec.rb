@@ -20,11 +20,13 @@ describe 'MemeCaptainWeb::Font' do
              })
     ]
   end
+  let(:cmap) { double(TTFunk::Table::Cmap) }
   let(:file) { double(TTFunk::File) }
 
   before do
-    TTFunk::File.stub(open: file)
-    file.stub_chain(:cmap, :tables) { tables }
+    allow(TTFunk::File).to receive(:open).with(path).and_return(file)
+    allow(file).to receive(:cmap).with(no_args).and_return(cmap)
+    allow(cmap).to receive(:tables).with(no_args).and_return(tables)
   end
 
   describe '#char_set' do
@@ -123,12 +125,19 @@ describe 'MemeCaptainWeb::Font' do
     let(:a_file) { double(TTFunk::File) }
     let(:b_file) { double(TTFunk::File) }
 
+    let(:a_cmap) { double(TTFunk::Table::Cmap) }
+    let(:b_cmap) { double(TTFunk::Table::Cmap) }
+
     before do
       MemeCaptainWeb::Font.instance_variable_set(:@default_fonts, nil)
 
-      Dir.stub(glob: %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf))
-      a_file.stub_chain(:cmap, :tables) { a_tables }
-      b_file.stub_chain(:cmap, :tables) { b_tables }
+      allow(Dir).to receive(:glob).with("#{Rails.root}/fonts/*.ttf").and_return(
+                        %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf))
+      allow(a_file).to receive(:cmap).with(no_args).and_return(a_cmap)
+      allow(a_cmap).to receive(:tables).with(no_args).and_return(a_tables)
+
+      allow(b_file).to receive(:cmap).with(no_args).and_return(b_cmap)
+      allow(b_cmap).to receive(:tables).with(no_args).and_return(b_tables)
     end
 
     context 'when a font has all the characters' do
@@ -205,14 +214,23 @@ describe 'MemeCaptainWeb::Font' do
     end
 
     it 'loads the fonts in the correct order' do
-      Dir.stub(glob: %w(/tmp/fonts/b.ttf /tmp/fonts/a.ttf))
+      allow(Dir).to receive(:glob).with("#{Rails.root}/fonts/*.ttf").and_return(
+                        %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf))
+      allow(TTFunk::File).to receive(:open).with(
+                                 '/tmp/fonts/a.ttf').and_return(file)
+      allow(TTFunk::File).to receive(:open).with(
+                                 '/tmp/fonts/b.ttf').and_return(file)
 
       expect(MemeCaptainWeb::Font.default_fonts.map(&:path)
       ).to eq %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf)
     end
 
     it 'caches the results' do
-      expect(Dir).to receive(:glob).once.and_return(%w(tmp/fonts/a.ttf))
+      allow(Dir).to receive(:glob).with(
+                        "#{Rails.root}/fonts/*.ttf").once.and_return(
+                        %w(/tmp/fonts/a.ttf))
+      allow(TTFunk::File).to receive(:open).with(
+                                 '/tmp/fonts/a.ttf').once.and_return(file)
 
       2.times { MemeCaptainWeb::Font.default_fonts }
     end
