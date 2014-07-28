@@ -10,7 +10,7 @@ describe 'src_images/_src_image.html' do
   let(:user) { FactoryGirl.create(:user) }
 
   before do
-    view.stub(current_user: user)
+    allow(view).to receive(:current_user).with(no_args).and_return(user)
 
     render partial: 'src_images/src_image',
            locals: { src_image: src_image }
