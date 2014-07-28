@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'spec_helper'
-
 describe SrcSet do
   it { should validate_presence_of :name }
 

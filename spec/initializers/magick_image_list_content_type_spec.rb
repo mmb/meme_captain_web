@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'spec_helper'
-
 describe '#content_type' do
 
   def image_fixture(path)

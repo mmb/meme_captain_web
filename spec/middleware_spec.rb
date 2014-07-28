@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'spec_helper'
-
 describe 'rack middleware' do
 
   it 'assembles production middleware' do

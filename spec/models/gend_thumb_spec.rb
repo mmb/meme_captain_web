@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'spec_helper'
-
 describe GendThumb do
 
   it { should validate_presence_of :content_type }

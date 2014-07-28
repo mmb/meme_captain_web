@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'spec_helper'
-
 describe Caption do
 
   it { should_not validate_presence_of :font }

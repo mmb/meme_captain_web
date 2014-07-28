@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'spec_helper'
-
 describe GendImage do
 
   it { should validate_uniqueness_of :id_hash }
