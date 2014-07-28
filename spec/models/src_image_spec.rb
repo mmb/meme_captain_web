@@ -34,16 +34,16 @@ describe SrcImage do
 
   context 'setting fields derived from the image' do
 
-    subject do
+    subject(:src_image) do
       src_image = SrcImage.new(FactoryGirl.attributes_for(:src_image))
       src_image.valid?
       src_image
     end
 
-    its(:content_type) { should == 'image/jpeg' }
-    its(:height) { should == 399 }
-    its(:width) { should == 399 }
-    its(:size) { should == 9141 }
+    specify { expect(src_image.content_type).to eq('image/jpeg') }
+    specify { expect(src_image.height).to eq(399) }
+    specify { expect(src_image.width).to eq(399) }
+    specify { expect(src_image.size).to eq(9141) }
   end
 
   it 'should not delete child gend_images when deleted' do
@@ -58,15 +58,12 @@ describe SrcImage do
 
   context 'generating a Magick::Image from its data' do
 
-    subject do
+    subject(:src_image) do
       SrcImage.new(FactoryGirl.attributes_for(:src_image))
     end
 
-    # rubocop:disable SymbolName
-    its(:'magick_image_list.columns') { should == 399 }
-    its(:'magick_image_list.rows') { should == 399 }
-    # rubocop:enable SymbolName
-
+    specify { expect(src_image.magick_image_list.columns).to eq(399) }
+    specify { expect(src_image.magick_image_list.rows).to eq(399) }
   end
 
   describe '#image_if_not_url' do

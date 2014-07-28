@@ -22,13 +22,13 @@ describe Caption do
 
     let(:caption) { FactoryGirl.create(:caption) }
 
-    subject { caption.text_pos }
+    subject(:text_pos) { caption.text_pos }
 
-    its(:text) { should == caption.text }
-    its(:x) { should == caption.top_left_x_pct }
-    its(:y) { should == caption.top_left_y_pct }
-    its(:width) { should == caption.width_pct }
-    its(:height) { should == caption.height_pct }
+    specify { expect(text_pos.text).to eq(caption.text) }
+    specify { expect(text_pos.x).to eq(caption.top_left_x_pct) }
+    specify { expect(text_pos.y).to eq(caption.top_left_y_pct) }
+    specify { expect(text_pos.width).to eq(caption.width_pct) }
+    specify { expect(text_pos.height).to eq(caption.height_pct) }
 
     it 'has the correct font' do
       expect(subject.draw_options[:font]).to include caption.font

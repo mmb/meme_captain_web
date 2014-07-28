@@ -30,11 +30,11 @@ describe GendImage do
         gend_image
       end
 
-      its(:content_type) { should == 'image/jpeg' }
-      its(:height) { should == 399 }
-      its(:width) { should == 399 }
-      its(:size) { should == 9141 }
-      its(:is_animated) { should eq(false) }
+      specify { expect(gend_image.content_type).to eq('image/jpeg') }
+      specify { expect(gend_image.height).to eq(399) }
+      specify { expect(gend_image.width).to eq(399) }
+      specify { expect(gend_image.size).to eq(9141) }
+      specify { expect(gend_image.is_animated).to eq(false) }
     end
 
     context 'when the image is animated' do
@@ -48,7 +48,7 @@ describe GendImage do
         gend_image
       end
 
-      its(:is_animated) { should eq(true) }
+      specify { expect(gend_image.is_animated).to eq(true) }
     end
 
   end
@@ -60,7 +60,7 @@ describe GendImage do
 
     let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
 
-    subject do
+    subject(:gend_image) do
       gend_image = GendImage.new(
           FactoryGirl.attributes_for(:gend_image, image: image))
       gend_image.valid?
@@ -68,19 +68,19 @@ describe GendImage do
     end
 
     context 'jpg' do
-      its(:format) { should == :jpg }
+      specify { expect(gend_image.format).to eq(:jpg) }
     end
 
     context 'gif' do
       let(:image) { File.read(Rails.root + 'spec/fixtures/files/omgcat.gif') }
 
-      its(:format) { should == :gif }
+      specify { expect(gend_image.format).to eq(:gif) }
     end
 
     context 'png' do
       let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.png') }
 
-      its(:format) { should == :png }
+      specify { expect(gend_image.format).to eq(:png) }
     end
 
     context 'other' do

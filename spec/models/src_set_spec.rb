@@ -35,12 +35,11 @@ describe SrcSet do
 
     context 'when the set is empty' do
 
-      subject { FactoryGirl.create(:src_set) }
+      subject(:src_set) { FactoryGirl.create(:src_set) }
 
-      its(:thumbnail) { should be_nil }
-      its(:thumb_width) { should be_nil }
-      its(:thumb_height) { should be_nil }
-
+      specify { expect(src_set.thumbnail).to eq(nil) }
+      specify { expect(src_set.thumb_width).to eq(nil) }
+      specify { expect(src_set.thumb_height).to eq(nil) }
     end
 
   end

@@ -18,16 +18,16 @@ describe SrcThumb do
 
   context 'setting fields derived from the image' do
 
-    subject do
+    subject(:src_thumb) do
       src_thumb = SrcThumb.new(FactoryGirl.attributes_for(:src_thumb))
       src_thumb.valid?
       src_thumb
     end
 
-    its(:content_type) { should == 'image/png' }
-    its(:height) { should == 50 }
-    its(:width) { should == 460 }
-    its(:size) { should == 279 }
+    specify { expect(src_thumb.content_type).to eq('image/png') }
+    specify { expect(src_thumb.height).to eq(50) }
+    specify { expect(src_thumb.width).to eq(460) }
+    specify { expect(src_thumb.size).to eq(279) }
   end
 
 end
