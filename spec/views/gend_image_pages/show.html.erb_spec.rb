@@ -13,7 +13,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
   end
   let(:android) { false }
-  let(:browser) { double(Browser) }
+  let(:browser) { instance_double('Browser') }
 
   before do
     assign(:gend_image, gend_image)

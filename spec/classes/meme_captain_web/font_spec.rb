@@ -20,8 +20,8 @@ describe 'MemeCaptainWeb::Font' do
              })
     ]
   end
-  let(:cmap) { double(TTFunk::Table::Cmap) }
-  let(:file) { double(TTFunk::File) }
+  let(:cmap) { instance_double('TTFunk::Table::Cmap') }
+  let(:file) { instance_double('TTFunk::File') }
 
   before do
     allow(TTFunk::File).to receive(:open).with(path).and_return(file)
@@ -122,11 +122,11 @@ describe 'MemeCaptainWeb::Font' do
   end
 
   describe '.for' do
-    let(:a_file) { double(TTFunk::File) }
-    let(:b_file) { double(TTFunk::File) }
+    let(:a_file) { instance_double('TTFunk::File') }
+    let(:b_file) { instance_double('TTFunk::File') }
 
-    let(:a_cmap) { double(TTFunk::Table::Cmap) }
-    let(:b_cmap) { double(TTFunk::Table::Cmap) }
+    let(:a_cmap) { instance_double('TTFunk::Table::Cmap') }
+    let(:b_cmap) { instance_double('TTFunk::Table::Cmap') }
 
     before do
       MemeCaptainWeb::Font.instance_variable_set(:@default_fonts, nil)
