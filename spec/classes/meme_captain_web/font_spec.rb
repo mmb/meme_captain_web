@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rails_helper'
+
 describe 'MemeCaptainWeb::Font' do
   let(:path) { '/tmp/font.ttf' }
 
