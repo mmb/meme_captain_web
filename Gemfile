@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '~> 4.1.4'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -8,8 +8,8 @@ gem 'rails', '3.2.9'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails', '~> 4.0.3'
+  gem 'coffee-rails', '~> 4.0.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -42,7 +42,7 @@ gem 'dynamic_form'
 gem 'rmagick', :platforms => [:ruby, :mswin], :require => 'RMagick'
 gem 'rmagick4j', :platforms => :jruby, :require => 'RMagick'
 
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'daemons'
 
 gem 'meme_captain'
@@ -53,11 +53,10 @@ gem 'thin'
 gem 'fabric-rails'
 gem 'browser'
 gem 'gravatar-ultimate'
-gem 'strong_parameters'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'ttfunk'
-gem 'best_in_place'
+gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 
 group :test, :development do
   gem 'factory_girl_rails'

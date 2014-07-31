@@ -8,7 +8,7 @@ class GendImage < ActiveRecord::Base
 
   belongs_to :src_image, counter_cache: true
   has_one :gend_thumb
-  has_many :captions, order: :id
+  has_many :captions, -> { order :id }
   belongs_to :user
 
   accepts_nested_attributes_for :captions, reject_if:
@@ -17,7 +17,7 @@ class GendImage < ActiveRecord::Base
   # This email field is a negative captcha. If form bots fill it in,
   # validation will fail.
   attr_accessor :email
-  validates :email, length: { is: 0 }
+  validates :email, length: { maximum: 0 }
 
   def format
     mime = Mime::Type.lookup(content_type)

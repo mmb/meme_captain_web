@@ -5,7 +5,8 @@ class SrcSet < ActiveRecord::Base
   validates :name, presence: true
   validate :name, :one_active_name
 
-  has_and_belongs_to_many :src_images
+  has_and_belongs_to_many :src_images, join_table: :src_images_src_sets
+
   belongs_to :user
 
   def one_active_name
@@ -19,7 +20,7 @@ class SrcSet < ActiveRecord::Base
   end
 
   def add_src_images(add_id_hashes)
-    to_add = SrcImage.find_all_by_id_hash(add_id_hashes) - src_images
+    to_add = SrcImage.where(id_hash: add_id_hashes) - src_images
     return if to_add.empty?
 
     src_images.concat(to_add)
@@ -27,7 +28,7 @@ class SrcSet < ActiveRecord::Base
   end
 
   def delete_src_images(delete_id_hashes)
-    to_delete = SrcImage.find_all_by_id_hash(delete_id_hashes)
+    to_delete = SrcImage.where(id_hash: delete_id_hashes)
     return if to_delete.empty?
 
     src_images.delete(*to_delete)
