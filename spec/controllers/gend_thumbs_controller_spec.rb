@@ -9,37 +9,32 @@ describe GendThumbsController, type: :controller do
   describe "GET 'show'" do
 
     context 'when the id is found' do
-
-      let(:gend_thumb) { mock_model(GendThumb) }
-
       it 'shows the thumbnail' do
-        expect(GendThumb).to receive(:find).and_return(gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get 'show', id: 1
+        get :show, id: 1
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
-        expect(gend_thumb).to receive(:content_type).and_return('content type')
-        expect(GendThumb).to receive(:find).and_return(gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get 'show', id: 1
+        get :show, id: 1
 
-        expect(response.content_type).to eq('content type')
+        expect(response.content_type).to eq(gend_thumb.content_type)
       end
 
       it 'has the right content' do
-        expect(gend_thumb).to receive(:image).and_return('image')
-        expect(GendThumb).to receive(:find).and_return(gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get 'show', id: 1
+        get :show, id: 1
 
-        expect(response.body).to eq('image')
+        expect(response.body).to eq(gend_thumb.image)
       end
 
       it 'has the correct Cache-Control header' do
-        expect(GendThumb).to receive(:find).and_return(gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
         get :show, id: 1
 
@@ -48,7 +43,7 @@ describe GendThumbsController, type: :controller do
       end
 
       it 'has the correct Expires header' do
-        expect(GendThumb).to receive(:find).and_return(gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
           get :show, id: 1
@@ -63,7 +58,7 @@ describe GendThumbsController, type: :controller do
     context 'when the id is not found' do
 
       it 'raises record not found' do
-        expect { get 'show', id: 1 }.to raise_error(
+        expect { get :show, id: 1 }.to raise_error(
                                             ActiveRecord::RecordNotFound)
       end
 
