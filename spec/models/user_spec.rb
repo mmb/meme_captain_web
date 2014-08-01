@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rails_helper'
+
 describe User do
 
   it { should validate_presence_of :email }
@@ -8,8 +10,6 @@ describe User do
   end
 
   it { should validate_confirmation_of :password }
-
-  it { should validate_presence_of :password_digest }
 
   it { should have_many(:gend_images).through(:src_images) }
   it { should have_many :src_images }
