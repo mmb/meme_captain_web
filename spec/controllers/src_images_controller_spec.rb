@@ -198,6 +198,7 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'updates the name' do
+        request.accept = 'application/json'
         put :update, id: src_image.id_hash, src_image: { name: 'test' }
 
         expect(SrcImage.find_by_id_hash(src_image.id_hash).name).to eq('test')
@@ -210,6 +211,7 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'does not change the name' do
+        request.accept = 'application/json'
         put :update, id: src_image.id_hash, src_image: { name: 'test' }
 
         expect(SrcImage.find_by_id_hash(src_image.id_hash).name).to eq('pre')
