@@ -47,8 +47,8 @@ gem 'daemons'
 
 gem 'meme_captain'
 
-gem 'kaminari'
-gem 'kaminari-bootstrap'
+gem 'kaminari', '~> 0.16.1'
+gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'thin'
 gem 'fabric-rails'
 gem 'browser'
