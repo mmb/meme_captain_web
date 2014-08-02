@@ -10,7 +10,7 @@ describe GendThumbsController, type: :controller do
 
     context 'when the id is found' do
       it 'shows the thumbnail' do
-        gend_thumb = FactoryGirl.create(:gend_thumb)
+        FactoryGirl.create(:gend_thumb)
 
         get :show, id: 1
 
@@ -34,7 +34,7 @@ describe GendThumbsController, type: :controller do
       end
 
       it 'has the correct Cache-Control header' do
-        gend_thumb = FactoryGirl.create(:gend_thumb)
+        FactoryGirl.create(:gend_thumb)
 
         get :show, id: 1
 
@@ -43,7 +43,7 @@ describe GendThumbsController, type: :controller do
       end
 
       it 'has the correct Expires header' do
-        gend_thumb = FactoryGirl.create(:gend_thumb)
+        FactoryGirl.create(:gend_thumb)
 
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
           get :show, id: 1
