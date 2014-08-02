@@ -24,15 +24,3 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 end
-
-module Rack
-  module Test
-    # Monkey patch because UploadedFile does not respond to encoding and it gets
-    # called.
-    class UploadedFile
-      def encoding
-        Encoding::ASCII_8BIT
-      end
-    end
-  end
-end

@@ -15,10 +15,11 @@ class SrcImagesController < ApplicationController
   end
 
   def create
-    @src_image = SrcImage.new(src_image_params)
-    @src_image.user = current_user
+    submitted_params = src_image_params
+    read_image_data(submitted_params)
 
-    read_image_data @src_image
+    @src_image = SrcImage.new(submitted_params)
+    @src_image.user = current_user
 
     respond_to do |format|
       if @src_image.save
@@ -72,10 +73,10 @@ class SrcImagesController < ApplicationController
     params.require(:src_image).permit(:name)
   end
 
-  def read_image_data(src_image)
+  def read_image_data(submitted_params)
     # rubocop:disable Style/GuardClause
-    if params.try(:[], :src_image).try(:[], :image)
-      src_image.image = params[:src_image][:image].read
+    if submitted_params.try(:[], :image)
+      submitted_params[:image] = submitted_params[:image].read
     end
     # rubocop:enable Style/GuardClause
   end
