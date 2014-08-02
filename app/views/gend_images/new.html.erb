@@ -1,11 +1,11 @@
 <% if @gend_image.src_image.name.blank? %>
     <% if @gend_image.src_image.user == current_user %>
-        <h1><%= best_in_place(@gend_image.src_image, :name, path: @src_image_path, nil: 'Click to name this source image') %></h1>
+        <h1><%= best_in_place(@gend_image.src_image, :name, url: @src_image_path, place_holder: 'Click to name this source image') %></h1>
     <% end %>
 <% else %>
     <h1>
       <%= best_in_place_if(@gend_image.src_image.user == current_user,
-                           @gend_image.src_image, :name, path: @src_image_path) %>
+                           @gend_image.src_image, :name, url: @src_image_path) %>
     </h1>
 
     <% content_for(:title) do %>
