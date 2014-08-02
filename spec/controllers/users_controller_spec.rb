@@ -33,6 +33,24 @@ describe UsersController, type: :controller do
         expect(session[:user_id]).to eq(User.last.id)
       end
 
+      context 'when ActiveModel::SecurePassword.min_cost is false' do
+
+        before do
+          @prev = ActiveModel::SecurePassword.min_cost
+          ActiveModel::SecurePassword.min_cost = false
+        end
+
+        after do
+          ActiveModel::SecurePassword.min_cost = @prev
+        end
+
+        it 'saves the new user to the database' do
+          expect do
+            post :create, user: FactoryGirl.attributes_for(:user)
+          end.to change { User.count }.by(1)
+        end
+      end
+
     end
 
     context 'with invalid attributes' do
