@@ -89,7 +89,7 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kaminari-bootstrap (3.0.1)
+    kaminari-bootstrap (0.1.3)
       kaminari (>= 0.13.0)
       rails
     less (2.3.2)
@@ -249,7 +249,7 @@ DEPENDENCIES
   jasmine-headless-webkit
   jquery-rails
   kaminari (~> 0.16.1)
-  kaminari-bootstrap (~> 3.0.1)
+  kaminari-bootstrap (~> 0.1.3)
   less-rails
   meme_captain
   pg

@@ -48,7 +48,7 @@ gem 'daemons'
 gem 'meme_captain'
 
 gem 'kaminari', '~> 0.16.1'
-gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'kaminari-bootstrap', '~> 0.1.3'
 gem 'thin'
 gem 'browser'
 gem 'gravatar-ultimate'
