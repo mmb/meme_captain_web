@@ -19,12 +19,12 @@ class TextPositioner
   add_rect: (name, x_input, y_input, width_input, height_input) ->
     rect = new fabric.Rect
       name: name
-      top: @scale_height(y_input.val()) + @scale_height(height_input.val()) / 2.0
-      left: @scale_width(x_input.val()) + @scale_width(width_input.val()) / 2.0
+      top: @scale_height(y_input.val())
+      left: @scale_width(x_input.val())
       width: @scale_width(width_input.val())
       height: @scale_height(height_input.val())
       fill: '#808080'
-      cornersize: 20
+      cornerSize: 20
       lockRotation: true
       hasRotatingPoint: false
 
@@ -55,8 +55,8 @@ class TextPositioner
     $('<canvas />').attr('id', @canvas_id)
 
   create_fabric_canvas: ->
-    canvas = new fabric.Canvas @canvas_id,
-      'backgroundImage': @img_url
+    canvas = new fabric.Canvas @canvas_id
+    canvas.setBackgroundImage(@img_url, canvas.renderAll.bind(canvas))
 
     canvas.observe 'object:moving', @object_moving
     canvas.observe 'object:scaling', @object_scaling
@@ -122,32 +122,38 @@ class @Target
     @canvas = @target.canvas
 
   bound_top: ->
-    if @top_side() < 0
-      @target.setTop @half_height()
+    if @target.getTop() < 0
+      @target.setTop(0)
 
   bound_right: ->
-    if @right_side() > @canvas.width
-      @target.setLeft(@canvas.width - @half_width())
+    if @right_side() > @canvas.getWidth()
+      @target.setLeft(@canvas.getWidth() - @target.getWidth())
 
   bound_bottom: ->
-    if @bottom_side() > @canvas.height
-      @target.setTop(@canvas.height - @half_height())
+    if @bottom_side() > @canvas.getHeight()
+      @target.setTop(@canvas.getHeight() - @target.getHeight())
 
   bound_left: ->
-    if @left_side() < 0
-      @target.setLeft @half_width()
+    if @target.getLeft() < 0
+      @target.setLeft(0)
 
   bound_scale_x: ->
-    max = @max_scale_x()
-
-    if @target.scaleX > max
-      @target.scaleX = max
+    if @right_side() > @canvas.getWidth()
+      @target.setScaleX(
+        (@target.getScaleX() / @target.getWidth()) * (@canvas.getWidth() - @target.getLeft()))
+    else if @target.getLeft() < 0
+      @target.setScaleX(
+        (@target.getScaleX() / @target.getWidth()) * @right_side())
+      @target.setLeft(0)
 
   bound_scale_y: ->
-    max = @max_scale_y()
-
-    if @target.scaleY > max
-      @target.scaleY = max
+    if @bottom_side() > @canvas.getHeight()
+      @target.setScaleY(
+        (@target.getScaleY() / @target.getHeight()) * (@canvas.getHeight() - @target.getTop()))
+    else if @target.getTop() < 0
+      @target.setScaleY(
+        (@target.getScaleY() / @target.getHeight()) * @bottom_side())
+      @target.setTop(0)
 
   fire: (event) ->
     @canvas.fire event, target: @target
@@ -156,40 +162,22 @@ class @Target
     @target.name
 
   left_pct: ->
-    (@target.getLeft() - (@target.getWidth() / 2)) / @canvas.width
+    @target.getLeft() / @canvas.getWidth()
 
   top_pct: ->
-    (@target.getTop() - (@target.getHeight() / 2)) / @canvas.height
+    @target.getTop() / @canvas.getHeight()
 
   width_pct: ->
-    @target.getWidth() / @canvas.width
+    @target.getWidth() / @canvas.getWidth()
 
   height_pct: ->
-    @target.getHeight() / @canvas.height
-
-  max_scale_x: ->
-    @canvas.width / @target.width
-
-  max_scale_y: ->
-    @canvas.height / @target.height
-
-  top_side: ->
-    @target.getTop() - @half_height()
+    @target.getHeight() / @canvas.getHeight()
 
   right_side: ->
-    @target.getLeft() + @half_width()
+    @target.getLeft() + @target.getWidth()
 
   bottom_side: ->
-    @target.getTop() + @half_height()
-
-  left_side: ->
-    @target.getLeft() - @half_width()
-
-  half_width: ->
-    @target.getWidth() / 2
-
-  half_height: ->
-    @target.getHeight() / 2
+    @target.getTop() + @target.getHeight()
 
 window.text_positioner_init = ->
   $('.text-positioner').each (index, element) ->

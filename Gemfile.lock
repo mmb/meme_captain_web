@@ -65,7 +65,6 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.0)
-    fabric-rails (1.2.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -243,7 +242,6 @@ DEPENDENCIES
   dalli
   delayed_job_active_record (~> 4.0.1)
   dynamic_form
-  fabric-rails
   factory_girl_rails
   faraday
   faraday_middleware

@@ -23,14 +23,14 @@ describe 'text positioner', ->
       expect(fabric_canvas.getHeight()).toEqual(75)
 
       rect1 = fabric_canvas.getObjects()[0]
-      expect(rect1.getLeft()).toEqual(75)
-      expect(rect1.getTop()).toEqual(9.375)
+      expect(rect1.getLeft()).toEqual(7.5)
+      expect(rect1.getTop()).toEqual(0)
       expect(rect1.scaleX).toEqual(0.75)
       expect(rect1.scaleY).toEqual(0.75)
 
       rect2 = fabric_canvas.getObjects()[1]
-      expect(rect2.getLeft()).toEqual(75)
-      expect(rect2.getTop()).toEqual(65.625)
+      expect(rect2.getLeft()).toEqual(7.5)
+      expect(rect2.getTop()).toEqual(56.25)
       expect(rect2.scaleX).toEqual(0.75)
       expect(rect2.scaleY).toEqual(0.75)
 
@@ -52,7 +52,7 @@ describe 'text positioner', ->
           object = target:
             setTop: ->
             getTop: ->
-              9
+              -1
             getHeight: ->
               20
 
@@ -62,7 +62,7 @@ describe 'text positioner', ->
 
           t.bound_top()
 
-          expect(object.target.setTop).toHaveBeenCalledWith(10)
+          expect(object.target.setTop).toHaveBeenCalledWith(0)
 
       describe 'when the target is inside the canvas', ->
         it 'does not move the target back inside the canvas', ->
@@ -91,7 +91,8 @@ describe 'text positioner', ->
             getWidth: ->
               50
             canvas:
-              width: 100
+              getWidth: ->
+                100
 
           t = new Target(object)
 
@@ -99,18 +100,19 @@ describe 'text positioner', ->
 
           t.bound_right()
 
-          expect(object.target.setLeft).toHaveBeenCalledWith(75)
+          expect(object.target.setLeft).toHaveBeenCalledWith(50)
 
       describe 'when the target is inside the canvas', ->
         it 'does not move the target back inside the canvas', ->
           object = target:
             setLeft: ->
             getLeft: ->
-              75
+              50
             getWidth: ->
               50
             canvas:
-              width: 100
+              getWidth: ->
+                100
 
           t = new Target(object)
 
@@ -130,7 +132,8 @@ describe 'text positioner', ->
             getHeight: ->
               20
             canvas:
-              height: 50
+              getHeight: ->
+                50
 
           t = new Target(object)
 
@@ -138,7 +141,7 @@ describe 'text positioner', ->
 
           t.bound_bottom()
 
-          expect(object.target.setTop).toHaveBeenCalledWith(40)
+          expect(object.target.setTop).toHaveBeenCalledWith(30)
 
       describe 'when the target is inside the canvas', ->
         it 'does not move the target back inside the canvas', ->
@@ -149,7 +152,8 @@ describe 'text positioner', ->
             getHeight: ->
               20
             canvas:
-              height: 80
+              getHeight: ->
+                80
 
           t = new Target(object)
 
@@ -165,7 +169,7 @@ describe 'text positioner', ->
           object = target:
             setLeft: ->
             getLeft: ->
-              10
+              -5
             getWidth: ->
               30
 
@@ -175,7 +179,7 @@ describe 'text positioner', ->
 
           t.bound_left()
 
-          expect(object.target.setLeft).toHaveBeenCalledWith(15)
+          expect(object.target.setLeft).toHaveBeenCalledWith(0)
 
       describe 'when the target is inside the canvas', ->
         it 'does not move the target back inside the canvas', ->
@@ -195,93 +199,171 @@ describe 'text positioner', ->
           expect(object.target.setLeft).not.toHaveBeenCalled()
 
     describe '#bound_scale_x', ->
-      it 'does not change the x scale if it is less than or equal to the maximum', ->
+      it 'does not change the x scale if the target is within the canvas', ->
         object = target:
           canvas:
-            width: 100
-          scaleX: 9
-          width: 10
+            getWidth: ->
+              100
+          getLeft: ->
+            10
+          getWidth: ->
+            10
+          setScaleX: ->
 
         t = new Target(object)
 
+        spyOn(object.target, 'setScaleX')
+
         t.bound_scale_x()
 
-        expect(object.target.scaleX).toEqual(9)
+        expect(object.target.setScaleX).not.toHaveBeenCalled()
 
-      it 'sets the x scale to the maximum if it is over the maximum', ->
+      it 'changes the x scale if the target is outside the canvas on the right', ->
         object =
           target:
             canvas:
-              width: 100
-            scaleX: 11
-            width: 10
+              getWidth: ->
+                100
+            getLeft: ->
+              95
+            getWidth: ->
+              10
+            getScaleX: ->
+              2
+            setScaleX: ->
 
         t = new Target(object)
+
+        spyOn(object.target, 'setScaleX')
 
         t.bound_scale_x()
 
-        expect(object.target.scaleX).toEqual(10)
+        expect(object.target.setScaleX).toHaveBeenCalledWith(1)
+
+      it 'changes the x scale if the target is outside the canvas on the left', ->
+        object =
+          target:
+            canvas:
+              getWidth: ->
+                100
+            getLeft: ->
+              -5
+            getWidth: ->
+              10
+            getScaleX: ->
+              2
+            setScaleX: ->
+            setLeft: ->
+
+        t = new Target(object)
+
+        spyOn(object.target, 'setScaleX')
+        spyOn(object.target, 'setLeft')
+
+        t.bound_scale_x()
+
+        expect(object.target.setScaleX).toHaveBeenCalledWith(1)
+        expect(object.target.setLeft).toHaveBeenCalledWith(0)
 
     describe '#bound_scale_y', ->
-      it 'does not change the y scale if it is less than or equal to the maximum', ->
+      it 'does not change the y scale if the target is within the canvas', ->
         object = target:
           canvas:
-            height: 200
-          height: 20
-          scaleY: 9
+            getHeight: ->
+              200
+          getTop: ->
+            10
+          getHeight: ->
+            20
+          setScaleY: ->
 
         t = new Target(object)
 
+        spyOn(object.target, 'setScaleY')
+
         t.bound_scale_y()
 
-        expect(object.target.scaleY).toEqual(9)
+        expect(object.target.setScaleY).not.toHaveBeenCalled()
 
-      it 'sets the y scale to the maximum if it is over the maximum', ->
-        object = target:
-          canvas:
-            height: 200
-          height: 20
-          scaleY: 11
+      it 'changes the y scale if the target is outside the canvas on the bottom', ->
+        object =
+          target:
+            canvas:
+              getHeight: ->
+                100
+            getTop: ->
+              95
+            getHeight: ->
+              10
+            getScaleY: ->
+              2
+            setScaleY: ->
 
         t = new Target(object)
 
+        spyOn(object.target, 'setScaleY')
+
         t.bound_scale_y()
 
-        expect(object.target.scaleY).toEqual(10)
+        expect(object.target.setScaleY).toHaveBeenCalledWith(1)
+
+      it 'changes the y scale if the target is outside the canvas on the top', ->
+        object =
+          target:
+            canvas:
+              getHeight: ->
+                100
+            getTop: ->
+              -5
+            getHeight: ->
+              10
+            getScaleY: ->
+              2
+            setScaleY: ->
+            setTop: ->
+
+        t = new Target(object)
+
+        spyOn(object.target, 'setScaleY')
+        spyOn(object.target, 'setTop')
+
+        t.bound_scale_y()
+
+        expect(object.target.setScaleY).toHaveBeenCalledWith(1)
+        expect(object.target.setTop).toHaveBeenCalledWith(0)
 
     describe '#left_pct', ->
       it 'calculates the left percentage', ->
         object = target:
           canvas:
-            width: 150
+            getWidth: ->
+              200
           getLeft: ->
-            100
-          getWidth: ->
-            50
+            150
 
         t = new Target(object)
 
-        expect(t.left_pct()).toEqual(0.5)
+        expect(t.left_pct()).toEqual(0.75)
 
     describe '#top_pct', ->
       it 'calculates the top percentage', ->
         object = target:
           canvas:
-            height: 100
-          getHeight: ->
-            100
+            getHeight: ->
+              100
           getTop: ->
             90
 
         t = new Target(object)
 
-        expect(t.top_pct()).toEqual(0.4)
+        expect(t.top_pct()).toEqual(0.9)
 
     describe '#width_pct', ->
       it 'calculates the width percentage', ->
         object = target:
           canvas:
-            width: 100
+            getWidth: ->
+              100
           getWidth: ->
             30
 
@@ -293,7 +375,8 @@ describe 'text positioner', ->
       it 'calculates the height percentage', ->
         object = target:
           canvas:
-            height: 200
+            getHeight: ->
+              200
           getHeight: ->
             120
 
