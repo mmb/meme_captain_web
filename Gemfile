@@ -80,4 +80,5 @@ group :production do
   gem 'dalli'
   gem 'pg'
   gem 'rack-rewrite'
+  gem 'rack-cache', '~> 1.2'
 end
