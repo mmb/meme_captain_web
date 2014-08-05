@@ -28,6 +28,7 @@ class TextPositioner
       transparentCorners: false,
       lockRotation: true
       hasRotatingPoint: false
+      opacity: 0.9
 
     rect.setGradient 'fill',
       type: 'linear',
