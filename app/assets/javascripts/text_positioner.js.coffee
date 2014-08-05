@@ -57,7 +57,6 @@ class TextPositioner
 
   create_fabric_canvas: ->
     canvas = new fabric.Canvas @canvas_id
-    canvas.setBackgroundImage(@img_url, canvas.renderAll.bind(canvas))
 
     canvas.observe 'object:moving', @object_moving
     canvas.observe 'object:scaling', @object_scaling
@@ -74,6 +73,12 @@ class TextPositioner
 
     @fabric_canvas.setWidth(@fabric_canvas.getWidth() * x_scale)
     @fabric_canvas.setHeight(@fabric_canvas.getHeight() * y_scale)
+
+    @fabric_canvas.setBackgroundImage(@img_url,
+      @fabric_canvas.renderAll.bind(@fabric_canvas),
+      width: @fabric_canvas.getWidth(),
+      height: @fabric_canvas.getHeight(),
+    )
 
     for obj in @fabric_canvas.getObjects()
       obj.set

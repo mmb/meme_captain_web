@@ -45,6 +45,18 @@ describe 'text positioner', ->
       expect(fabric_canvas.getWidth()).toEqual(200)
       expect(fabric_canvas.getHeight()).toEqual(100)
 
+    it 'sets the canvas background image and and its width and height', ->
+      div = $('#tp1')
+      text_positioner = div.data('tp')
+      fabric_canvas = text_positioner.fabric_canvas
+
+      spyOn(fabric_canvas, 'setBackgroundImage')
+
+      text_positioner.set_fabric_canvas_size()
+
+      expect(fabric_canvas.setBackgroundImage).toHaveBeenCalledWith('',
+        jasmine.any(Function), width: 200, height: 100)
+
   describe 'Target', ->
     describe '#bound_top', ->
       describe 'when the target is outside the canvas', ->
