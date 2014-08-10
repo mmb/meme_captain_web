@@ -19,7 +19,7 @@
      data-img-height="<%= @gend_image.src_image.height %>"
 /></div>
 
-<%= form_for @gend_image, :url => {:action => 'create'} do |f| %>
+<%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
     <%= f.error_messages %>
 
     <%= f.hidden_field :src_image_id, :value => @gend_image.src_image.id_hash %>
