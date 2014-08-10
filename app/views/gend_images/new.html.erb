@@ -1,55 +1,59 @@
-<% if @gend_image.src_image.name.blank? %>
-    <% if @gend_image.src_image.user == current_user %>
-        <h1><%= best_in_place(@gend_image.src_image, :name, url: @src_image_path, place_holder: 'Click to name this source image') %></h1>
-    <% end %>
-<% else %>
-    <h1>
-      <%= best_in_place_if(@gend_image.src_image.user == current_user,
-                           @gend_image.src_image, :name, url: @src_image_path) %>
-    </h1>
+<div class="row-fluid">
+  <div class="span6">
+    <div class="text-positioner"
+         data-img-url="<%= url_for :controller => :src_images, :action => :show, :id => @gend_image.src_image.id_hash %>"
+         data-img-width="<%= @gend_image.src_image.width %>"
+         data-img-height="<%= @gend_image.src_image.height %>"
+    />
+  </div>
+</div>
 
-    <% content_for(:title) do %>
-        <%- "#{@gend_image.src_image.name} meme" -%>
-    <% end %>
-<% end %>
+<div class="span6">
+  <% if @gend_image.src_image.name.blank? %>
+      <% if @gend_image.src_image.user == current_user %>
+          <h1><%= best_in_place(@gend_image.src_image, :name, url: @src_image_path, place_holder: 'Click to name this source image') %></h1>
+      <% end %>
+  <% else %>
+      <h1>
+        <%= best_in_place_if(@gend_image.src_image.user == current_user,
+                             @gend_image.src_image, :name, url: @src_image_path) %>
+      </h1>
 
-<div class="text-positioner"
-     data-img-url="<%= url_for :controller => :src_images, :action => :show, :id => @gend_image.src_image.id_hash %>"
-     data-img-width="<%= @gend_image.src_image.width %>"
-     data-img-height="<%= @gend_image.src_image.height %>"
-/></div>
+      <% content_for(:title) do %>
+          <%- "#{@gend_image.src_image.name} meme" -%>
+      <% end %>
+  <% end %>
 
-<%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
-    <%= f.error_messages %>
+  <%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
+      <%= f.error_messages %>
 
-    <%= f.hidden_field :src_image_id, :value => @gend_image.src_image.id_hash %>
-    <p>
-      Source image: <%= @gend_image.src_image.id_hash %>
-    </p>
+      <%= f.hidden_field :src_image_id, :value => @gend_image.src_image.id_hash %>
 
-    <% @gend_image.captions.each.with_index do |caption, index| %>
-        <%= f.fields_for :captions, caption do |cf| %>
-            <%= cf.label :text, "Caption #{index + 1}", class: 'caption-label' %>
-            <%= cf.text_area :text, autofocus: index == 0, class: 'input-xxlarge', rows: 2 %>
+      <% @gend_image.captions.each.with_index do |caption, index| %>
+          <%= f.fields_for :captions, caption do |cf| %>
+              <%= cf.label :text, "Caption #{index + 1}", class: 'caption-label' %>
+              <%= cf.text_area :text, autofocus: index == 0, class: 'input-xxlarge', rows: 2 %>
 
-            <%= cf.hidden_field :font, value: '' %>
-            <%= cf.hidden_field :top_left_x_pct %>
-            <%= cf.hidden_field :top_left_y_pct %>
-            <%= cf.hidden_field :width_pct %>
-            <%= cf.hidden_field :height_pct %>
-        <% end %>
-    <% end %>
+              <%= cf.hidden_field :font, value: '' %>
+              <%= cf.hidden_field :top_left_x_pct %>
+              <%= cf.hidden_field :top_left_y_pct %>
+              <%= cf.hidden_field :width_pct %>
+              <%= cf.hidden_field :height_pct %>
+          <% end %>
+      <% end %>
 
-    <%= button_tag 'Add another caption', :class => "btn text-add", :type => :button %>
+      <%= button_tag 'Add another caption', :class => "btn text-add", :type => :button %>
 
-    <%= f.label :private do %>
-        Private?
-        <%= f.check_box :private %>
-    <% end %>
+      <%= f.label :private do %>
+          Private?
+          <%= f.check_box :private %>
+      <% end %>
 
-    <p>
-      <%= f.submit 'Create', :class => 'btn btn-primary' %>
-    </p>
+      <p>
+        <%= f.submit 'Create', :class => 'btn btn-primary' %>
+      </p>
 
-    <%= f.text_field :email, style: 'display: none' %>
-<% end %>
+      <%= f.text_field :email, style: 'display: none' %>
+  <% end %>
+</div>
+</div>
