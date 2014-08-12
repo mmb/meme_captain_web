@@ -5,10 +5,11 @@ describe 'text_add', ->
     text_add_init()
 
   describe 'adding a text box to the form', ->
-    beforeEach ->
-      $('.text-add').click()
 
     describe 'when the form has inputs', ->
+      beforeEach ->
+        $('#text-add-has-inputs').click()
+
       it 'adds a new label', ->
         expect($('#new_gend_image')).toContainHtml '<label for="gend_image_captions_attributes_2_text">Caption 3<\/label>'
 
@@ -34,6 +35,9 @@ describe 'text_add', ->
         expect(window.add_text_positioner).toHaveBeenCalledWith 2
 
     describe 'when the form has no inputs', ->
+      beforeEach ->
+        $('#text-add-empty').click()
+
       it 'adds a new label', ->
         expect($('#empty')).toContainHtml '<label for="gend_image_captions_attributes_0_text">Caption 1<\/label>'
 
