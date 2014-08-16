@@ -55,4 +55,9 @@ class GendImage < ActiveRecord::Base
   scope :finished, -> { where work_in_progress: false }
 
   scope :publick, -> { where private: false }
+
+  scope :caption_matches, lambda { |query|
+    joins(:captions).where(
+        'LOWER(captions.text) LIKE ?', "%#{query.downcase}%") if query
+  }
 end

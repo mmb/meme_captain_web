@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rails_helper'
+
 describe GendImage do
 
   it { should validate_uniqueness_of :id_hash }
@@ -111,4 +113,31 @@ describe GendImage do
     end
   end
 
+  describe '.caption_matches' do
+    let(:caption1) { FactoryGirl.create(:caption, text: 'abc') }
+    let(:caption2) { FactoryGirl.create(:caption, text: 'def') }
+    before do
+      @gend_image = FactoryGirl.create(
+          :gend_image, captions: [caption1, caption2])
+    end
+
+    context "when one of the image's captions matches" do
+      it 'returns the matching image' do
+        expect(GendImage.caption_matches('b')).to eq([@gend_image])
+      end
+    end
+
+    context "when one of the image's captions matches case insensitive" do
+      it 'returns the matching image' do
+        expect(GendImage.caption_matches('C')).to eq([@gend_image])
+      end
+    end
+
+    context "when none of the image's captions matches" do
+      it 'returns no matches' do
+        expect(GendImage.caption_matches('g')).to eq([])
+      end
+    end
+
+  end
 end
