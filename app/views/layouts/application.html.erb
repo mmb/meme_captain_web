@@ -31,7 +31,7 @@
             <li><%= link_to "Login", new_session_path %></li>
         <% end %>
       </ul>
-      <%= form_tag({ controller: :src_images, action: :index }, method: 'get', class: 'navbar-search pull-left') do %>
+      <%= form_tag({ controller: :search, action: :show }, method: 'get', class: 'navbar-search pull-left') do %>
           <%= text_field_tag :q, nil, class: 'input-medium search-query', placeholder: 'Search' %>
       <% end %>
 
