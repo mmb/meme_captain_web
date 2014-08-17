@@ -10,10 +10,10 @@ module MemeCaptainWeb
     # reduced. After reduction their maximum side will be MaxSourceImageSide.
     MaxSourceImageSide = 800
 
-    # Source images with their longest side shorter than MinSourceImageSide
+    # Source images with their longest side shorter than MIN_SOURCE_IMAGE_SIDE
     # will be enlarged. After enlargement their maximum side will be
     # ENLARGED_SOURCE_IMAGE_SIDE.
-    MinSourceImageSide = 400
+    MIN_SOURCE_IMAGE_SIDE = 400
 
     ENLARGED_SOURCE_IMAGE_SIDE = 600
 
