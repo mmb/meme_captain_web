@@ -125,7 +125,7 @@ class SrcImage < ActiveRecord::Base
   def constrain_size(img)
     if !img.animated? &&
         longest_side < MemeCaptainWeb::Config::MinSourceImageSide
-      img.resize_to_fit!(MemeCaptainWeb::Config::EnlargedSourceImageSide)
+      img.resize_to_fit!(MemeCaptainWeb::Config::ENLARGED_SOURCE_IMAGE_SIDE)
     elsif width > MemeCaptainWeb::Config::MaxSourceImageSide ||
         height > MemeCaptainWeb::Config::MaxSourceImageSide
       img.resize_to_fit_anim!(MemeCaptainWeb::Config::MaxSourceImageSide)

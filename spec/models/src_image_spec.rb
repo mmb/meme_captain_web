@@ -208,7 +208,7 @@ describe SrcImage do
 
     before do
       stub_const 'MemeCaptainWeb::Config::MinSourceImageSide', 60
-      stub_const 'MemeCaptainWeb::Config::EnlargedSourceImageSide', 100
+      stub_const 'MemeCaptainWeb::Config::ENLARGED_SOURCE_IMAGE_SIDE', 100
     end
 
     it 'enlarges the image' do

@@ -12,10 +12,10 @@ module MemeCaptainWeb
 
     # Source images with their longest side shorter than MinSourceImageSide
     # will be enlarged. After enlargement their maximum side will be
-    # EnlargedSourceImageSide.
+    # ENLARGED_SOURCE_IMAGE_SIDE.
     MinSourceImageSide = 400
 
-    EnlargedSourceImageSide = 600
+    ENLARGED_SOURCE_IMAGE_SIDE = 600
 
     # Minimum source set quality to be shown on the front page.
     SetFrontPageMinQuality = (ENV['MC_SET_FRONT_PAGE_MIN_QUALITY'] || 0).to_i
