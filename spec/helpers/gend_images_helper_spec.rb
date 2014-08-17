@@ -17,7 +17,7 @@ describe GendImagesHelper, type: :helper do
     end
 
     it 'uses the gend image host from the config if set' do
-      stub_const 'MemeCaptainWeb::Config::GendImageHost', host
+      stub_const 'MemeCaptainWeb::Config::GEND_IMAGE_HOST', host
 
       expected = "http://#{host}/gend_images/" \
           "#{gend_image.id_hash}.#{gend_image.format}"

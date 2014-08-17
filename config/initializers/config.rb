@@ -20,7 +20,7 @@ module MemeCaptainWeb
     # Minimum source set quality to be shown on the front page.
     SetFrontPageMinQuality = (ENV['MC_SET_FRONT_PAGE_MIN_QUALITY'] || 0).to_i
 
-    GendImageHost =
+    GEND_IMAGE_HOST =
         ENV['GEND_IMAGE_HOST'].blank? ? nil : ENV['GEND_IMAGE_HOST']
   end
 end

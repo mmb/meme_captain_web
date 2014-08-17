@@ -8,7 +8,7 @@ module GendImagesHelper
         action: :show,
         id: gend_image.id_hash,
         format: gend_image.format,
-        host: MemeCaptainWeb::Config::GendImageHost || request.host
+        host: MemeCaptainWeb::Config::GEND_IMAGE_HOST || request.host
     )
   end
 end
