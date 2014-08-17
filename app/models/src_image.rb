@@ -91,7 +91,7 @@ class SrcImage < ActiveRecord::Base
 
     constrain_size img
 
-    thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::ThumbSide)
+    thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::THUMB_SIDE)
 
     watermark img
 

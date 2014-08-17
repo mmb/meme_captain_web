@@ -39,7 +39,7 @@ class GendImage < ActiveRecord::Base
 
     thumb_img = magick_image_list
 
-    thumb_img.resize_to_fit_anim!(MemeCaptainWeb::Config::ThumbSide)
+    thumb_img.resize_to_fit_anim!(MemeCaptainWeb::Config::THUMB_SIDE)
 
     self.gend_thumb = GendThumb.new(image: thumb_img.to_blob)
   end
