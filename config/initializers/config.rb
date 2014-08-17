@@ -6,9 +6,9 @@ module MemeCaptainWeb
     # Maximum size of any side for generated thumbnail images.
     ThumbSide = 128
 
-    # Source images with any side longer than MaxSourceImageSide will be
-    # reduced. After reduction their maximum side will be MaxSourceImageSide.
-    MaxSourceImageSide = 800
+    # Source images with any side longer than MAX_SOURCE_IMAGE_SIDE will be
+    # reduced. After reduction their maximum side will be MAX_SOURCE_IMAGE_SIDE.
+    MAX_SOURCE_IMAGE_SIDE = 800
 
     # Source images with their longest side shorter than MIN_SOURCE_IMAGE_SIDE
     # will be enlarged. After enlargement their maximum side will be

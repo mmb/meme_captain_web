@@ -126,9 +126,9 @@ class SrcImage < ActiveRecord::Base
     if !img.animated? &&
         longest_side < MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE
       img.resize_to_fit!(MemeCaptainWeb::Config::ENLARGED_SOURCE_IMAGE_SIDE)
-    elsif width > MemeCaptainWeb::Config::MaxSourceImageSide ||
-        height > MemeCaptainWeb::Config::MaxSourceImageSide
-      img.resize_to_fit_anim!(MemeCaptainWeb::Config::MaxSourceImageSide)
+    elsif width > MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE ||
+        height > MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE
+      img.resize_to_fit_anim!(MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE)
     end
   end
 

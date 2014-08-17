@@ -178,7 +178,7 @@ describe SrcImage do
 
     before do
       stub_const 'MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0
-      stub_const 'MemeCaptainWeb::Config::MaxSourceImageSide', 80
+      stub_const 'MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE', 80
     end
 
     context 'when the the image is too wide' do
