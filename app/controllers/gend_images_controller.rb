@@ -18,6 +18,7 @@ class GendImagesController < ApplicationController
         top_left_y_pct: 0.75,
         width_pct: 0.9,
         height_pct: 0.25)
+    @gend_image.private = @gend_image.src_image.private
   end
 
   def index

@@ -31,6 +31,29 @@ describe GendImagesController, type: :controller do
 
     end
 
+    context 'when the source image is not private' do
+      let(:src_image) do
+        FactoryGirl.create(:src_image, user: user, private: false)
+      end
+
+      it "sets the new image's private flag to false" do
+        get :new, src: src_image.id_hash
+
+        expect(assigns(:gend_image).private).to eq(false)
+      end
+    end
+
+    context 'when the source image is private' do
+      let(:src_image) do
+        FactoryGirl.create(:src_image, user: user, private: true)
+      end
+
+      it "sets the new image's private flag to true" do
+        get :new, src: src_image.id_hash
+
+        expect(assigns(:gend_image).private).to eq(true)
+      end
+    end
   end
 
   describe "GET 'index'" do

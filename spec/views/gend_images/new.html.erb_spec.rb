@@ -54,4 +54,31 @@ describe 'gend_images/new.html.erb', type: :view do
     end
   end
 
+  context 'when the gend image is not private' do
+    let(:gend_image) do
+      stub_model(
+          GendImage, src_image: src_image, captions: [caption1], private: false)
+    end
+
+    it 'does not check the private checkbox' do
+      expect(render).to_not have_selector(
+                                'input[checked=checked]',
+                                type: 'checkbox',
+                                name: 'gend_image[private]')
+    end
+  end
+
+  context 'when the gend image is private' do
+    let(:gend_image) do
+      stub_model(
+          GendImage, src_image: src_image, captions: [caption1], private: true)
+    end
+
+    it 'checks the private checkbox' do
+      expect(render).to have_selector(
+                            'input[checked=checked]',
+                            type: 'checkbox',
+                            name: 'gend_image[private]')
+    end
+  end
 end
