@@ -8,7 +8,5 @@
                 :src => src_image.id_hash %>
 <% end %>
 <% if current_user %>
-    <p>
-      <input type="checkbox" class="selector" data-id="<%= src_image.id_hash %>"/>
-    </p>
+    <input type="checkbox" class="selector" data-id="<%= src_image.id_hash %>"/>
 <% end %>

@@ -20,7 +20,6 @@ end
 gem 'jquery-rails'
 gem 'therubyracer'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
@@ -48,7 +47,7 @@ gem 'daemons'
 gem 'meme_captain'
 
 gem 'kaminari', '~> 0.16.1'
-gem 'kaminari-bootstrap', '~> 0.1.3'
+gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'thin'
 gem 'browser'
 gem 'gravatar-ultimate'

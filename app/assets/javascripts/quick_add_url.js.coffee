@@ -1,9 +1,8 @@
 $(document).ready ->
-  quick_add_url_button = $('#quick-add-url-button')
   input = $('#quick-add-url')
-  status = quick_add_url_button
+  status = $('#quick-add-url-status')
 
-  quick_add_url_button.click ->
+  quick_add_url = ->
     status.text('Submitting URL')
     url = input.val()
 
@@ -16,6 +15,7 @@ $(document).ready ->
         status.text('Submitted URL')
         count = 0
         timer = setInterval ->
+          status.append('.')
           $.ajax "/src_images/#{data.id}",
             type: 'head',
             success: ->
@@ -31,4 +31,4 @@ $(document).ready ->
 
   input.keypress (e) ->
     if e.which == 13
-      quick_add_url_button.click()
+      quick_add_url()

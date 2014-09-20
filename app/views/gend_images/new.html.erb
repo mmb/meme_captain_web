@@ -1,5 +1,5 @@
-<div class="row-fluid">
-  <div class="span6">
+<div class="row">
+  <div class="col-md-6">
     <div class="text-positioner"
          data-img-url="<%= url_for :controller => :src_images, :action => :show, :id => @gend_image.src_image.id_hash %>"
          data-img-width="<%= @gend_image.src_image.width %>"
@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<div class="span6">
+<div class="col-md-6">
   <% if @gend_image.src_image.name.blank? %>
       <% if @gend_image.src_image.user == current_user %>
           <h1><%= best_in_place(@gend_image.src_image, :name, url: @src_image_path, place_holder: 'Click to name this source image') %></h1>
@@ -30,9 +30,10 @@
       <%= f.hidden_field :src_image_id, :value => @gend_image.src_image.id_hash %>
 
       <% @gend_image.captions.each.with_index do |caption, index| %>
+        <div class="form-group">
           <%= f.fields_for :captions, caption do |cf| %>
               <%= cf.label :text, "Caption #{index + 1}", class: 'caption-label' %>
-              <%= cf.text_area :text, autofocus: index == 0, class: 'input-xxlarge', rows: 2 %>
+              <%= cf.text_area :text, autofocus: index == 0, class: 'form-control', rows: 2 %>
 
               <%= cf.hidden_field :font, value: '' %>
               <%= cf.hidden_field :top_left_x_pct %>
@@ -40,9 +41,10 @@
               <%= cf.hidden_field :width_pct %>
               <%= cf.hidden_field :height_pct %>
           <% end %>
+        </div>
       <% end %>
 
-      <%= button_tag 'Add another caption', :class => "btn text-add", :type => :button %>
+      <%= button_tag 'Add another caption', :class => "btn btn-default text-add", :type => :button %>
 
       <%= f.label :private do %>
           Private?

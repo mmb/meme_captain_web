@@ -14,10 +14,10 @@ describe 'text_add', ->
         expect($('#new_gend_image')).toContainHtml '<label for="gend_image_captions_attributes_2_text">Caption 3<\/label>'
 
       it 'adds a new text input', ->
-        expect($('#new_gend_image')).toContainHtml '<textarea id="gend_image_captions_attributes_2_text" name="gend_image[captions_attributes][2][text]" class="input-xxlarge" cols="40" rows="2" />'
+        expect($('#new_gend_image')).toContainHtml '<textarea id="gend_image_captions_attributes_2_text" name="gend_image[captions_attributes][2][text]" class="form-control" cols="40" rows="2" />'
 
       it 'focuses the new text input', ->
-        expect($(document.activeElement)).toBe($('#new_gend_image > #gend_image_captions_attributes_2_text'))
+        expect($(document.activeElement)).toBe($('#new_gend_image > div.form-group > #gend_image_captions_attributes_2_text'))
 
       it 'adds a new font input', ->
         expect($('#new_gend_image')).toContainHtml '<input id="gend_image_captions_attributes_2_font" name="gend_image[captions_attributes][2][font]" type="hidden" value="" />'
@@ -45,10 +45,10 @@ describe 'text_add', ->
         expect($('#empty')).toContainHtml '<label for="gend_image_captions_attributes_0_text">Caption 1<\/label>'
 
       it 'adds a new text input', ->
-        expect($('#empty')).toContainHtml '<textarea id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" class="input-xxlarge" cols="40" rows="2" />'
+        expect($('#empty')).toContainHtml '<textarea id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" class="form-control" cols="40" rows="2" />'
 
       it 'focuses the new text input', ->
-        expect($(document.activeElement)).toBe($('#empty > #gend_image_captions_attributes_0_text'))
+        expect($(document.activeElement)).toBe($('#empty > div.form-group > #gend_image_captions_attributes_0_text'))
 
       it 'adds a new font input', ->
         expect($('#empty')).toContainHtml '<input id="gend_image_captions_attributes_0_font" name="gend_image[captions_attributes][0][font]" type="hidden" value="" />'

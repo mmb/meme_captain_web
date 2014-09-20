@@ -3,14 +3,14 @@
       This image is still being processed. Wait a few seconds or reload the page.
     </p>
 <% else %>
-    <div class="row-fluid">
-      <div class="span6">
+    <div class="row">
+      <div class="col-md-6">
         <p>
-          <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}"), @gend_image_url %>
+          <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}", class: 'img-responsive'), @gend_image_url %>
         </p>
       </div>
 
-      <div class="span6">
+      <div class="col-md-6">
 
         <blockquote>
           <% @gend_image.captions.position_order.each do |c| %>
@@ -22,44 +22,44 @@
           <% end %>
         </blockquote>
 
-        <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn') do %>
-            <i class="icon-arrow-up"></i> Reddit
+        <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+            Reddit
         <% end %>
 
-        <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", class: 'btn') do %>
-            <i class="icon-picture"></i> Imgur
+        <%= link_to("http://api.imgur.com/2/upload?url=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+            Imgur
         <% end %>
 
         <% if @gend_image.is_animated %>
-            <%= link_to("http://gfycat.com/fetch/#{@gend_image_url}", class: 'btn') do %>
+            <%= link_to("http://gfycat.com/fetch/#{@gend_image_url}", class: 'btn btn-default') do %>
                 Gfycat
             <% end %>
         <% end %>
 
-        <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn') do %>
-            <i class="icon-twitter"></i> Tweet
+        <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn btn-default') do %>
+            Tweet
         <% end %>
 
-        <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn') do %>
-            <i class="icon-pinterest"></i> Pinterest
+        <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+            Pinterest
         <% end %>
 
-        <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn') do %>
-            <i class="icon-facebook"></i> Facebook
+        <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+            Facebook
         <% end %>
 
-        <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn') do %>
-            <i class="icon-google-plus"></i> Google+
+        <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn btn-default') do %>
+            Google+
         <% end %>
 
         <% if browser.android? %>
-            <%= link_to("sms:?body=#{u(@gend_image_url)}", class: 'btn') do %>
-                <i class="icon-mobile-phone"></i> SMS
+            <%= link_to("sms:?body=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+                SMS
             <% end %>
         <% end %>
 
-        <%= link_to({ controller: :gend_images, action: :new, src: @src_image.id_hash }, class: 'btn') do %>
-            <i class="icon-pencil"></i> New meme using this image
+        <%= link_to({ controller: :gend_images, action: :new, src: @src_image.id_hash }, class: 'btn btn-default') do %>
+            New meme using this image
         <% end %>
 
         <p class="meme-meta">
@@ -70,21 +70,25 @@
 
         <p>Created: <%= @gend_image.created_at %></p>
 
-        <a href="#qr-modal" role="button" class="btn" data-toggle="modal">QR code to phone</a>
+        <a href="#qr-modal" role="button" class="btn btn-default" data-toggle="modal">QR code to phone</a>
 
-        <div id="qr-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="modal-label">QR code to phone</h3>
-          </div>
+        <div id="qr-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="modal-label"><%= @gend_image_url %></h3>
+              </div>
 
-          <div class="modal-body">
-            <%= image_tag("https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=#{u(@gend_image_url)}",
-                          'data-dismiss' => 'modal') %>
-          </div>
+              <div class="modal-body">
+                <%= image_tag("https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=#{u(@gend_image_url)}",
+                              'data-dismiss' => 'modal') %>
+              </div>
 
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Done</button>
+              <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Done</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

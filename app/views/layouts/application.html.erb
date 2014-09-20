@@ -12,37 +12,39 @@
 </head>
 <body>
 
-<div class="navbar navbar-static-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container-fluid">
 
-      <%= link_to image_tag('logo.png'), root_url, class: 'brand' %>
+    <%= link_to image_tag('logo.png', class: 'header img-responsive'), root_url, class: 'navbar-left' %>
 
-      <ul class="nav">
-        <% if current_user %>
-            <li>
-              <%= link_to(my_url) do %>
-                  <%= image_tag(current_user.avatar.image_url(size: 20)) %>
-                  My images
-              <% end %>
-            </li>
-            <li><%= link_to "Logout #{current_user.email}", session_path, :method => :delete %></li>
-        <% else %>
-            <li><%= link_to "Login", new_session_path %></li>
-        <% end %>
-      </ul>
-      <%= form_tag({ controller: :search, action: :show }, method: 'get', class: 'navbar-search pull-left') do %>
-          <%= text_field_tag :q, nil, class: 'input-medium search-query', placeholder: 'Search' %>
+    <ul class="nav navbar-nav">
+      <% if current_user %>
+          <li>
+            <%= link_to(my_url) do %>
+                <%= image_tag(current_user.avatar.image_url(size: 20)) %>
+                My images
+            <% end %>
+          </li>
+          <li><%= link_to "Logout #{current_user.email}", session_path, :method => :delete %></li>
+      <% else %>
+          <li><%= link_to "Login", new_session_path %></li>
       <% end %>
+    </ul>
+    <%= form_tag({ controller: :search, action: :show }, method: 'get', class: 'navbar-form navbar-left') do %>
+        <%= text_field_tag :q, nil, placeholder: 'Search' %>
+    <% end %>
 
+    <div class="navbar-form">
+      <input type="text" id="quick-add-url" placeholder="Load URL"/>
+      <span id="quick-add-url-status"/>
     </div>
   </div>
-</div>
+</nav>
 
 <div class="container-fluid">
 
   <% if ENV['DEPLOYED_TIME'] %>
-      <div class="alert alert-error">
+      <div class="alert alert-danger">
         <p>
           This is a a test build and images may not be preserved. Send feedback
           to <%= mail_to 'matthewm@boedicker.org' %>. Last
@@ -53,7 +55,7 @@
   <% end %>
 
   <% if flash[:error] -%>
-      <div class="alert alert-error">
+      <div class="alert alert-danger">
         <%= h flash[:error] %>
       </div>
   <% end -%>
@@ -73,10 +75,7 @@
       |
 
       <%= link_to 'https://github.com/mmb/meme_captain_web/issues' do %>
-          Send
-          <i class="icon-bug"></i> bug reports
-          and
-          <i class="icon-lightbulb"></i> suggestions
+          Send bug reports and suggestions
       <% end %>
 
       |

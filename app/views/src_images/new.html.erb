@@ -3,19 +3,23 @@
 <%= form_for @src_image, :url => {:action => 'create'} do |f| %>
     <%= f.error_messages %>
 
-    <%= f.file_field :image %>
+    <div class="form-group">
+      <%= f.file_field :image %>
+    </div>
 
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
 
-    <%= f.label :private do %>
-        Private?
-        <%= f.check_box :private %>
-    <% end %>
+    <div class="form-group">
+      <%= f.label :private do %>
+          Private?
+          <%= f.check_box :private %>
+      <% end %>
+    </div>
 
-    <p>
-      <%= f.submit 'Create', :class => 'btn' %>
-    </p>
+    <%= f.submit 'Create', :class => 'btn btn-default' %>
 <% end %>
 
 <h1>Load images from the web</h1>
@@ -31,8 +35,10 @@
 
 <div id="load-urls-message" data-myurl="<%= my_url %>"</div>
 
-<textarea id="load-urls" rows="8"></textarea>
+<div class="form-group">
+  <textarea id="load-urls" rows="8"></textarea>
+</div>
 
 <p>
-  <button class="btn" id="load-urls-button">Load</button>
+  <button class="btn btn-default" id="load-urls-button">Load</button>
 </p>

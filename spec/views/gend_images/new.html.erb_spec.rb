@@ -34,13 +34,13 @@ describe 'gend_images/new.html.erb', type: :view do
     expect(view.content_for(:title)).to eq 'src image name meme'
   end
 
-  it 'has xxlarge text inputs' do
+  it 'has text inputs with the form control class' do
     render
 
     expect(rendered).to have_selector(
                             '#gend_image_captions_attributes_0_text') do |s|
       expect(s.first['class']).to_not be_nil
-      expect(s.first['class']).to include 'input-xxlarge'
+      expect(s.first['class']).to include 'form-control'
     end
 
   end

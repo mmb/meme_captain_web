@@ -1,34 +1,18 @@
-$orange: #ffb700;
-$lightgrey: #f5f5f5;
-$darkgrey: #e3e3e3;
-
 .thumb-index .selected {
-  background-color: $orange;
-}
-
-.input-prepend {
-  margin-top: 10px;
+  background-color: yellow;
 }
 
 .under-construction {
   color: #999;
   background-color: black;
   text-align: center;
-}
-
-.under-construction-icon {
-  color: white;
+  margin: auto;
 }
 
 #load-urls {
   width: 32em;
 }
 
-.thumb-index {
-  background-color: darken($lightgrey, 4%);
-  border: 1px solid darken($darkgrey, 4%);
-}
-
-.thumbnail {
-  background-color: $lightgrey;
+.well-toolbar {
+  margin-bottom: 5px;
 }

@@ -1,18 +1,22 @@
 <h1>Sign Up</h1>
 
-<%= form_for @user, :url => {:action => 'create'} do |f| %>
+<%= form_for @user, url: { action: 'create' } do |f| %>
     <%= f.error_messages %>
 
-    <%= f.label :email %>
-    <%= f.text_field :email, :autofocus => true %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.text_field :email, autofocus: true, class: 'form-control' %>
+    </div>
 
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
 
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <div class="form-group">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
 
-    <p>
-      <%= f.submit 'Sign Up', :class => 'btn' %>
-    </p>
+    <%= f.submit 'Sign Up', :class => 'btn btn-primary' %>
 <% end %>
