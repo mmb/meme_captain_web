@@ -28,7 +28,7 @@
   </div>
 
   <% if current_page? root_url %>
-      <%= link_to 'More images', :gend_images %>
+      <%= link_to 'More images', controller: :gend_images, page: 2 %>
   <% else %>
       <%= paginate @gend_images %>
   <% end %>
