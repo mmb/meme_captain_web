@@ -68,10 +68,7 @@
 
         <p>Size: <%= @gend_image.width %>x<%= @gend_image.height %></p>
 
-        <p>
-          Created <%= local_time_ago(@gend_image.created_at) %>
-          on <%= local_time(@gend_image.created_at) %>
-        </p>
+        <p>Created <%= local_time_ago(@gend_image.created_at) %></p>
 
         <a href="#qr-modal" role="button" class="btn btn-default" data-toggle="modal">QR code to phone</a>
 
