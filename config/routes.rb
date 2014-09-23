@@ -1,9 +1,17 @@
 # encoding: UTF-8
 
 MemeCaptainWeb::Application.routes.draw do
+  concern :paginatable do
+    get '(page/:page)', action: :index, on: :collection, as: ''
+  end
+
+  concern :show_paginatable do
+    get '(page/:page)', action: :show, on: :collection, as: ''
+  end
+
   get 'home/index'
 
-  resources :gend_images
+  resources :gend_images, concerns: :paginatable
 
   resources :gend_image_pages, only: :show
 
@@ -11,19 +19,22 @@ MemeCaptainWeb::Application.routes.draw do
 
   resource :session
 
-  resources :src_images
+  resources :src_images, concerns: :paginatable
 
-  resources :src_sets, except: :new
+  resources :src_sets, except: :new, concerns: :paginatable
 
   resources :src_thumbs
 
   resources :users
 
-  resource :my, only: :show, controller: :my
+  resource :my, only: :show, controller: :my, concerns: :show_paginatable
 
   resources :terms, only: :index
 
-  resource :search, only: :show, controller: :search
+  resource :search,
+           only: :show,
+           controller: :search,
+           concerns: :show_paginatable
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
