@@ -16,4 +16,5 @@
 //= require fabric
 //= require shared
 //= require best_in_place
+//= require local_time
 //= require_tree .

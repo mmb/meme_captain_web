@@ -92,4 +92,9 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     end
   end
 
+  it 'includes the created time as a time element' do
+    expect(render).to have_selector('time',
+                                    datetime: gend_image.created_at.strftime(
+                                        '%Y-%m-%dT%H:%M:%SZ'))
+  end
 end

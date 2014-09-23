@@ -55,6 +55,7 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'ttfunk'
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
+gem 'local_time', '~> 1.0.0'
 
 group :test, :development do
   gem 'factory_girl_rails'
