@@ -22,6 +22,10 @@
           <% end %>
         </blockquote>
 
+        <% if @gend_image.private %>
+            <p><span class="label label-warning">Private</span></p>
+        <% end %>
+
         <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
             Reddit
         <% end %>
