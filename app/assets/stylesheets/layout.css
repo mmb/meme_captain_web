@@ -2,3 +2,8 @@ img.header {
   padding-top: 10px;
   padding-bottom: 5px;
 }
+
+.footer {
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
