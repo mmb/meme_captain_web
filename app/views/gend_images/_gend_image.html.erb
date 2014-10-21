@@ -1,8 +1,7 @@
 <% if gend_image.work_in_progress %>
     <%= render :partial => 'application/under_construction' %>
 <% else %>
-    <div class="thumb-background"
-         style="width: <%= MemeCaptainWeb::Config::THUMB_SIDE %>px; height: <%= MemeCaptainWeb::Config::THUMB_SIDE %>px;">
+    <div class="thumb-background">
       <%= link_to image_tag(url_for(gend_image.gend_thumb),
                             :size => "#{gend_image.gend_thumb.width}x#{gend_image.gend_thumb.height}"),
                   :controller => :gend_image_pages,
