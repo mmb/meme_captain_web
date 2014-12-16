@@ -3,7 +3,6 @@
 require 'digest/md5'
 
 MemeCaptainWeb::Application.configure do
-  heroku = !ENV['HEROKU'].blank?
   # Settings specified here will take precedence over those in
   # config/application.rb
 
@@ -19,12 +18,15 @@ MemeCaptainWeb::Application.configure do
     r301(/\/((?:g|i)\?.+)/, 'http://v1.memecaptain.com/$1')
   end
 
-  if heroku
+  if !ENV['ASSET_DOMAIN'].blank?
+    config.serve_static_assets = false
+    config.action_controller.asset_host = proc { |asset|
+      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
+    }
+  else
     config.serve_static_assets = true
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
     config.static_cache_control = 'public, max-age=31536000'
-  else
-    config.serve_static_assets = false
   end
 
   # Compress JavaScripts and CSS
@@ -58,13 +60,6 @@ MemeCaptainWeb::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
-
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  if ENV['ASSET_DOMAIN']
-    config.action_controller.asset_host = proc { |asset|
-      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
-    }
-  end
 
   # Precompile additional assets (application.js, application.css, and all
   # non-JS/CSS are already added)
