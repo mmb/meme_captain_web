@@ -60,9 +60,11 @@ MemeCaptainWeb::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = proc { |asset|
-    "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.memecaptain.com"
-  }
+  if ENV['ASSET_DOMAIN']
+    config.action_controller.asset_host = proc { |asset|
+      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
+    }
+  end
 
   # Precompile additional assets (application.js, application.css, and all
   # non-JS/CSS are already added)
