@@ -56,6 +56,7 @@ gem 'faraday_middleware'
 gem 'ttfunk'
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 gem 'local_time', '~> 1.0.0'
+gem 'rubocop'
 
 group :test, :development do
   gem 'factory_girl_rails'
@@ -68,7 +69,6 @@ group :test, :development do
   gem 'webrat', '~> 0.7.3'
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
-  gem 'rubocop'
 end
 
 group :test do
