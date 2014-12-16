@@ -40,6 +40,8 @@ Get the `postgres://` URI under VCAP_SERVICES.elephantsql.
 psql <PostgreSQL URI>
 ```
 
+Change bytea_output from hex to escape so images will display properly:
+
 ```sql
 ALTER DATABASE get_database_name_from_prompt SET bytea_output TO 'escape';
 ```
