@@ -38,8 +38,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'dynamic_form'
 
-gem 'rmagick', :platforms => [:ruby, :mswin], :require => 'RMagick'
-gem 'rmagick4j', :platforms => :jruby, :require => 'RMagick'
+gem 'rmagick', platforms: [:ruby, :mswin], require: 'RMagick'
+gem 'rmagick4j', platforms: :jruby, require: 'RMagick'
 
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'daemons'
