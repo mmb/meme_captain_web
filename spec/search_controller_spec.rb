@@ -6,11 +6,11 @@ describe SearchController, type: :controller do
   describe "GET 'show'" do
     before do
       @src_image_1 = FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false)
+        :src_image, name: 'foo', work_in_progress: false)
       @src_image_2 = FactoryGirl.create(
-          :src_image, name: 'not a match', work_in_progress: false)
+        :src_image, name: 'not a match', work_in_progress: false)
       @src_image_3 = FactoryGirl.create(
-          :src_image, name: 'foo2', work_in_progress: false)
+        :src_image, name: 'foo2', work_in_progress: false)
 
       caption1 = FactoryGirl.create(:caption, text: 'foo')
       caption2 = FactoryGirl.create(:caption, text: 'bar')
@@ -40,7 +40,7 @@ describe SearchController, type: :controller do
 
     it 'does not find private images' do
       FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false, private: true)
+        :src_image, name: 'foo', work_in_progress: false, private: true)
       get :show, q: 'foo'
 
       expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
@@ -48,7 +48,7 @@ describe SearchController, type: :controller do
 
     it 'does not find deleted images' do
       FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
+        :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
       get :show, q: 'foo'
 
       expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])

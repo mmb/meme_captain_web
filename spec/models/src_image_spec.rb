@@ -25,7 +25,7 @@ describe SrcImage do
 
   it 'should generate a unique id hash' do
     allow(SecureRandom).to receive(:urlsafe_base64).with(4).and_return(
-                               'some_id_hash')
+      'some_id_hash')
     src_image = SrcImage.create(FactoryGirl.attributes_for(:src_image))
     expect(src_image.id_hash).to eq('some_id_hash')
   end
@@ -112,11 +112,11 @@ describe SrcImage do
 
       it 'joins the image vertically' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-            body: create_image(100, 50))
+          body: create_image(100, 50))
         stub_request(:get, 'http://example.com/image2.jpg').to_return(
-            body: create_image(105, 50))
+          body: create_image(105, 50))
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
-            body: create_image(110, 50))
+          body: create_image(110, 50))
         src_image = FactoryGirl.create(:src_image,
                                        image: nil,
                                        url: 'http://example.com/image.jpg|' \
@@ -134,11 +134,11 @@ describe SrcImage do
 
       it 'joins the image horizontally' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-            body: create_image(100, 50))
+          body: create_image(100, 50))
         stub_request(:get, 'http://example.com/image2.jpg').to_return(
-            body: create_image(100, 75))
+          body: create_image(100, 75))
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
-            body: create_image(100, 100))
+          body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image,
                                        image: nil,
                                        url: 'http://example.com/image.jpg[]' \
@@ -155,11 +155,11 @@ describe SrcImage do
 
       it 'joins the image vertically and then horizontally' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-            body: create_image(100, 100))
+          body: create_image(100, 100))
         stub_request(:get, 'http://example.com/image2.jpg').to_return(
-            body: create_image(100, 100))
+          body: create_image(100, 100))
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
-            body: create_image(100, 100))
+          body: create_image(100, 100))
         src_image = FactoryGirl.create(:src_image,
                                        image: nil,
                                        url: 'http://example.com/image.jpg|' \
@@ -184,7 +184,7 @@ describe SrcImage do
     context 'when the the image is too wide' do
       it "reduces the image's width" do
         src_image = FactoryGirl.create(
-            :src_image, image: create_image(100, 50))
+          :src_image, image: create_image(100, 50))
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 80
@@ -195,7 +195,7 @@ describe SrcImage do
     context 'when the the image is too high' do
       it "reduces the image's height" do
         src_image = FactoryGirl.create(
-            :src_image, image: create_image(100, 400))
+          :src_image, image: create_image(100, 400))
         src_image.post_process_job
 
         expect(src_image.magick_image_list.columns).to eq 20

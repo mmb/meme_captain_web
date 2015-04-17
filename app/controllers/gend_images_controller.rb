@@ -9,21 +9,21 @@ class GendImagesController < ApplicationController
                               id: @gend_image.src_image.id_hash)
 
     @gend_image.captions.build(
-        top_left_x_pct: 0.05,
-        top_left_y_pct: 0,
-        width_pct: 0.9,
-        height_pct: 0.25)
+      top_left_x_pct: 0.05,
+      top_left_y_pct: 0,
+      width_pct: 0.9,
+      height_pct: 0.25)
     @gend_image.captions.build(
-        top_left_x_pct: 0.05,
-        top_left_y_pct: 0.75,
-        width_pct: 0.9,
-        height_pct: 0.25)
+      top_left_x_pct: 0.05,
+      top_left_y_pct: 0.75,
+      width_pct: 0.9,
+      height_pct: 0.25)
     @gend_image.private = @gend_image.src_image.private
   end
 
   def index
     @gend_images = GendImage.without_image.includes(
-        :gend_thumb).publick.active.most_recent.page(params[:page])
+      :gend_thumb).publick.active.most_recent.page(params[:page])
     @show_toolbar = false
   end
 
@@ -51,10 +51,10 @@ class GendImagesController < ApplicationController
       Rack::Utils.escape(c.text)
     end.join('&')
     headers['Meme-Name'] = Rack::Utils.escape(
-        gend_image.src_image.name) if gend_image.src_image.name
+      gend_image.src_image.name) if gend_image.src_image.name
     headers['Meme-Source-Image'] = url_for(
-        controller: :src_images, action: :show,
-        id: gend_image.src_image.id_hash)
+      controller: :src_images, action: :show,
+      id: gend_image.src_image.id_hash)
 
     return unless stale?(gend_image)
     render text: gend_image.image, content_type: gend_image.content_type

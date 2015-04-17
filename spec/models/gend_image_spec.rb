@@ -40,10 +40,10 @@ describe GendImage do
     context 'when the image is animated' do
       subject(:gend_image) do
         gend_image = GendImage.new(
-            FactoryGirl.attributes_for(
-                :gend_image,
-                image: File.read(
-                    Rails.root + 'spec/fixtures/files/omgcat.gif')))
+          FactoryGirl.attributes_for(
+            :gend_image,
+            image: File.read(
+              Rails.root + 'spec/fixtures/files/omgcat.gif')))
         gend_image.valid?
         gend_image
       end
@@ -62,7 +62,7 @@ describe GendImage do
 
     subject(:gend_image) do
       gend_image = GendImage.new(
-          FactoryGirl.attributes_for(:gend_image, image: image))
+        FactoryGirl.attributes_for(:gend_image, image: image))
       gend_image.valid?
       gend_image
     end
@@ -118,7 +118,7 @@ describe GendImage do
     let(:caption2) { FactoryGirl.create(:caption, text: 'def') }
     before do
       @gend_image = FactoryGirl.create(
-          :gend_image, captions: [caption1, caption2])
+        :gend_image, captions: [caption1, caption2])
     end
 
     context "when one of the image's captions matches" do

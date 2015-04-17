@@ -47,9 +47,9 @@ describe User do
 
       before(:each) do
         @user = FactoryGirl.create(
-            :user,
-            password: user_password,
-            password_confirmation: user_password)
+          :user,
+          password: user_password,
+          password_confirmation: user_password)
       end
 
       let(:try_email) { @user.email }
@@ -75,14 +75,14 @@ describe User do
 
       before(:each) do
         @user = FactoryGirl.create(
-            :user,
-            password: user_password,
-            password_confirmation: user_password)
+          :user,
+          password: user_password,
+          password_confirmation: user_password)
         @user2 = FactoryGirl.create(
-            :user,
-            email: @user.email.upcase,
-            password: user2_password,
-            password_confirmation: user2_password)
+          :user,
+          email: @user.email.upcase,
+          password: user2_password,
+          password_confirmation: user2_password)
       end
 
       context 'when no passwords match' do
