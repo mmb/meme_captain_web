@@ -1,16 +1,31 @@
 FROM ruby:2.1
 MAINTAINER matthewm@boedicker.org
 
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "--assume-yes", \
+  "memcached", \
+  "monit", \
+  "varnish" \
+  ]
+
 RUN ln -s \
   /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/Magick-config \
   /usr/local/bin
 
-COPY . /usr/src/app
+COPY . /app
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-RUN ["bundle"]
+RUN ["bundle", "install", "--jobs=4"]
 
 RUN ["bundle", "exec", "rake", "assets:precompile"]
 
-CMD ["bundle", "exec", "rails", "server"]
+COPY docker/default.vcl /etc/varnish/default.vcl
+
+ENV MEMCACHE_SERVERS 127.0.0.1
+
+RUN ["chmod", "0700", "./docker/monitrc"]
+
+CMD ["/usr/bin/monit", "-I", "-c", "docker/monitrc"]
+
+EXPOSE 6081

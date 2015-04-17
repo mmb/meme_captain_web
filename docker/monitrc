@@ -1,0 +1,28 @@
+set daemon 120
+set logfile /var/log/monit.log
+set idfile /var/lib/monit/id
+set statefile /var/lib/monit/state
+set eventqueue
+  basedir /var/lib/monit/events
+  slots 100
+
+check process rails
+  with pidfile /var/run/rails.pid
+  start program = "/app/script/rails server --daemon --pid=/var/run/rails.pid"
+  stop program = "/usr/bin/pkill --pidfile /var/run/rails.pid"
+
+check process memcache
+  with pidfile /var/run/memcached.pid
+  start program = "/etc/init.d/memcached start"
+  stop program = "/etc/init.d/memcached stop"
+
+check process varnish
+  with pidfile /var/run/varnishd.pid
+  start program = "/etc/init.d/varnish start"
+  stop program = "/etc/init.d/varnish stop"
+  if failed port 6081 protocol http then restart
+
+check process delayed_job.0
+  with pidfile /var/run/delayed_job.0.pid
+  start program = "/app/script/delayed_job start --pid-dir=/var/run --identifier=0"
+  stop program = "/app/script/delayed_job stop --pid-dir=/var/run --identifier=0"
