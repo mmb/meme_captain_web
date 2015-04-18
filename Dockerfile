@@ -25,8 +25,6 @@ COPY docker/default.vcl /etc/varnish/default.vcl
 
 ENV MEMCACHE_SERVERS 127.0.0.1
 
-RUN ["chmod", "0700", "docker/monitrc"]
-
 CMD ["/usr/bin/runsvdir", "-P", "/app/docker/runit"]
 
 EXPOSE 6081
