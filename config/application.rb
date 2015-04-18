@@ -11,9 +11,6 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-# rubocop switches yamler to syck
-YAML::ENGINE.yamler = 'psych'
-
 module MemeCaptainWeb
   # Main application class.
   class Application < Rails::Application
