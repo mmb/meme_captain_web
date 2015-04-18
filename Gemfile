@@ -48,7 +48,7 @@ gem 'meme_captain'
 
 gem 'kaminari', '~> 0.16.1'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'thin'
+gem 'puma'
 gem 'browser'
 gem 'gravatar-ultimate'
 gem 'faraday'
