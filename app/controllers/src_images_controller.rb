@@ -11,7 +11,7 @@ class SrcImagesController < ApplicationController
   def index
     query = params[:q].try(:strip)
     @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(
-        query).publick.active.finished.most_used.page(params[:page])
+      query).publick.active.finished.most_used.page(params[:page])
   end
 
   def create
@@ -32,7 +32,7 @@ class SrcImagesController < ApplicationController
 
   def show
     src_image = SrcImage.find_by_id_hash_and_work_in_progress!(
-        params[:id], false)
+      params[:id], false)
 
     expires_in 1.hour, public: true
 
@@ -85,7 +85,7 @@ class SrcImagesController < ApplicationController
     format.html do
       redirect_to(
         { controller: :my, action: :show },
-        { notice: 'Source image created.' }
+        notice: 'Source image created.'
       )
     end
     format.json { render json: { id: @src_image.id_hash } }

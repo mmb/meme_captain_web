@@ -12,7 +12,7 @@ class GendImagePagesController < ApplicationController
 
     # rubocop:disable Style/GuardClause
     if @gend_image.work_in_progress? &&
-        (Time.now - @gend_image.created_at < 10)
+       (Time.now - @gend_image.created_at < 10)
       @refresh_in = 2
     end
     # rubocop:enable Style/GuardClause

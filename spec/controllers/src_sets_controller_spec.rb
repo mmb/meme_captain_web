@@ -68,8 +68,8 @@ describe SrcSetsController, type: :controller do
       src_sets = assigns(:src_sets)
 
       expect(
-          src_sets[0].updated_at >= src_sets[1].updated_at &&
-              src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
+        src_sets[0].updated_at >= src_sets[1].updated_at &&
+        src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
     end
 
     it 'does not show deleted src sets' do
@@ -102,8 +102,8 @@ describe SrcSetsController, type: :controller do
         src_sets = assigns(:src_sets)
 
         expect(
-            src_sets[0].updated_at >= src_sets[1].updated_at &&
-                src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
+          src_sets[0].updated_at >= src_sets[1].updated_at &&
+          src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
       end
 
     end

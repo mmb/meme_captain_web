@@ -12,8 +12,8 @@ class SrcSetsController < ApplicationController
 
     if @src_set.save
       redirect_to(
-          { action: :index },
-          { notice: 'Source set created.' })
+        { action: :index },
+        notice: 'Source set created.')
     else
       render :new
     end
@@ -31,7 +31,7 @@ class SrcSetsController < ApplicationController
     # rubocop:enable Style/IfUnlessModifier
 
     @src_set = SrcSet.where(
-        name: params[:id], is_deleted: false).first_or_create do |ss|
+      name: params[:id], is_deleted: false).first_or_create do |ss|
       ss.user = current_user
     end
 
@@ -45,8 +45,8 @@ class SrcSetsController < ApplicationController
         if @src_set.update_attributes(src_set_params)
           format.html do
             redirect_to(
-                { action: :show, id: @src_set.name },
-                notice: 'The set was successfully updated.')
+              { action: :show, id: @src_set.name },
+              notice: 'The set was successfully updated.')
           end
           format.json { render json: {} }
         else
@@ -64,12 +64,12 @@ class SrcSetsController < ApplicationController
   def show
     @src_set = SrcSet.find_by_name_and_is_deleted!(params[:id], false)
     @src_images = @src_set.src_images.without_image.active.most_used.page(
-        params[:page])
+      params[:page])
   end
 
   def destroy
     @src_set = SrcSet.find_by_name_and_user_id_and_is_deleted!(
-        params[:id], current_user.try(:id), false)
+      params[:id], current_user.try(:id), false)
 
     @src_set.update_attribute(:is_deleted, true)
     redirect_to action: :index

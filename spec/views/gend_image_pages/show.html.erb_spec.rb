@@ -69,7 +69,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
     it 'dismisses the modal when the QR code image is clicked' do
       expect(render).to have_selector(
-                            'img', src: img_src, 'data-dismiss' => 'modal')
+        'img', src: img_src, 'data-dismiss' => 'modal')
     end
   end
 
@@ -82,9 +82,9 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   context 'when the image is animated' do
     let(:gend_image) do
       FactoryGirl.create(
-          :gend_image,
-          work_in_progress: false,
-          image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif'))
+        :gend_image,
+        work_in_progress: false,
+        image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif'))
     end
 
     it 'has the gfycat button' do
@@ -93,8 +93,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   end
 
   it 'includes the created time as a time element' do
-    expect(render).to have_selector('time',
-                                    datetime: gend_image.created_at.strftime(
-                                        '%Y-%m-%dT%H:%M:%SZ'))
+    expect(render).to have_selector(
+      'time',
+      datetime: gend_image.created_at.strftime('%Y-%m-%dT%H:%M:%SZ'))
   end
 end

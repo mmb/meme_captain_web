@@ -16,7 +16,7 @@ module MemeCaptainWeb
 
     def self.for(text)
       best_font = default_fonts.find { |f| f.has_chars_for?(text) } ||
-          default_fonts.first
+                  default_fonts.first
       File.basename(best_font.path)
     end
 

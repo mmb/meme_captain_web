@@ -11,9 +11,10 @@ class SrcSet < ActiveRecord::Base
 
   def one_active_name
     # rubocop:disable Style/GuardClause
-    if new_record? && SrcSet.active.exists?(name: name) ||
-        !is_deleted && SrcSet.where(
-            'name = ? AND id != ?', name, id).active.count > 0
+    if new_record? &&
+       SrcSet.active.exists?(name: name) ||
+       !is_deleted && SrcSet.where(
+         'name = ? AND id != ?', name, id).active.count > 0
       errors.add :name, 'has already been taken'
     end
     # rubocop:enable Style/GuardClause
@@ -64,6 +65,6 @@ class SrcSet < ActiveRecord::Base
 
   scope :not_empty, lambda {
     joins(:src_images).where(
-        'src_images.is_deleted' => false).group(:'src_sets.id')
+      'src_images.is_deleted' => false).group(:'src_sets.id')
   }
 end

@@ -35,7 +35,7 @@ class GendImage < ActiveRecord::Base
 
   def post_process
     self.image = MemeCaptain.meme(
-        src_image.image, captions.map(&:text_pos)).to_blob
+      src_image.image, captions.map(&:text_pos)).to_blob
 
     thumb_img = magick_image_list
 
@@ -58,6 +58,6 @@ class GendImage < ActiveRecord::Base
 
   scope :caption_matches, lambda { |query|
     joins(:captions).where(
-        'LOWER(captions.text) LIKE ?', "%#{query.downcase}%") if query
+      'LOWER(captions.text) LIKE ?', "%#{query.downcase}%") if query
   }
 end

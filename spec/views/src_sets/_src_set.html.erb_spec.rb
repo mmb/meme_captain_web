@@ -56,7 +56,7 @@ describe 'src_sets/_src_set.html', type: :view do
 
   it 'links to the source set' do
     render partial: 'src_sets/src_set', locals: { src_set: src_set }
-    expect(rendered).to match(/href=".+\/#{src_set.name}"/)
+    expect(rendered).to match(%r{href=".+\/#{src_set.name}"})
   end
 
 end

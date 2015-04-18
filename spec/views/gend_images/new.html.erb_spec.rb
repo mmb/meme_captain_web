@@ -38,7 +38,7 @@ describe 'gend_images/new.html.erb', type: :view do
     render
 
     expect(rendered).to have_selector(
-                            '#gend_image_captions_attributes_0_text') do |s|
+      '#gend_image_captions_attributes_0_text') do |s|
       expect(s.first['class']).to_not be_nil
       expect(s.first['class']).to include 'form-control'
     end
@@ -49,7 +49,7 @@ describe 'gend_images/new.html.erb', type: :view do
     render
 
     expect(rendered).to have_selector(
-                            '#gend_image_email') do |e|
+      '#gend_image_email') do |e|
       expect(e.first['style']).to eq 'display: none'
     end
   end
@@ -57,28 +57,28 @@ describe 'gend_images/new.html.erb', type: :view do
   context 'when the gend image is not private' do
     let(:gend_image) do
       stub_model(
-          GendImage, src_image: src_image, captions: [caption1], private: false)
+        GendImage, src_image: src_image, captions: [caption1], private: false)
     end
 
     it 'does not check the private checkbox' do
       expect(render).to_not have_selector(
-                                'input[checked=checked]',
-                                type: 'checkbox',
-                                name: 'gend_image[private]')
+        'input[checked=checked]',
+        type: 'checkbox',
+        name: 'gend_image[private]')
     end
   end
 
   context 'when the gend image is private' do
     let(:gend_image) do
       stub_model(
-          GendImage, src_image: src_image, captions: [caption1], private: true)
+        GendImage, src_image: src_image, captions: [caption1], private: true)
     end
 
     it 'checks the private checkbox' do
       expect(render).to have_selector(
-                            'input[checked=checked]',
-                            type: 'checkbox',
-                            name: 'gend_image[private]')
+        'input[checked=checked]',
+        type: 'checkbox',
+        name: 'gend_image[private]')
     end
   end
 end

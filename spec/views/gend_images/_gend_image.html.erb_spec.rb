@@ -9,10 +9,10 @@ describe 'gend_images/_gend_image.html', type: :view do
 
   let(:gend_image) do
     mock_model(
-        GendImage,
-        work_in_progress: false,
-        gend_thumb: gend_thumb,
-        id_hash: 'id_hash')
+      GendImage,
+      work_in_progress: false,
+      gend_thumb: gend_thumb,
+      id_hash: 'id_hash')
   end
 
   let(:show_toolbar) { true }

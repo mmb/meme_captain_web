@@ -59,7 +59,7 @@ describe SrcImagesController, type: :controller do
     it 'does not show deleted images' do
       FactoryGirl.create(:src_image, user: user, work_in_progress: false)
       FactoryGirl.create(
-          :src_image, user: user, is_deleted: true, work_in_progress: false)
+        :src_image, user: user, is_deleted: true, work_in_progress: false)
 
       get :index
 
@@ -88,11 +88,11 @@ describe SrcImagesController, type: :controller do
 
       it 'filters the result by the query string' do
         FactoryGirl.create(
-            :src_image, user: user, name: 'abc', work_in_progress: false)
+          :src_image, user: user, name: 'abc', work_in_progress: false)
         si2 = FactoryGirl.create(
-            :src_image, user: user, name: 'def', work_in_progress: false)
+          :src_image, user: user, name: 'def', work_in_progress: false)
         FactoryGirl.create(
-            :src_image, user: user, name: 'ghi', work_in_progress: false)
+          :src_image, user: user, name: 'ghi', work_in_progress: false)
 
         get :index, q: 'e'
         expect(assigns(:src_images)).to eq [si2]
@@ -100,7 +100,7 @@ describe SrcImagesController, type: :controller do
 
       it 'is case insensitive' do
         si = FactoryGirl.create(
-            :src_image, user: user, name: 'a', work_in_progress: false)
+          :src_image, user: user, name: 'a', work_in_progress: false)
 
         get :index, q: 'A'
         expect(assigns(:src_images)).to eq [si]
@@ -108,14 +108,14 @@ describe SrcImagesController, type: :controller do
 
       it 'ignores leading whitespace' do
         si = FactoryGirl.create(
-            :src_image, user: user, name: 'abc', work_in_progress: false)
+          :src_image, user: user, name: 'abc', work_in_progress: false)
         get :index, q: " \t\r\nb"
         expect(assigns(:src_images)).to eq([si])
       end
 
       it 'ignores trailing whitespace' do
         si = FactoryGirl.create(
-            :src_image, user: user, name: 'abc', work_in_progress: false)
+          :src_image, user: user, name: 'abc', work_in_progress: false)
         get :index, q: "b \t\n\r"
         expect(assigns(:src_images)).to eq([si])
       end
@@ -227,7 +227,7 @@ describe SrcImagesController, type: :controller do
 
       before :each do
         expect(SrcImage).to receive(
-            :find_by_id_hash_and_work_in_progress!).and_return(src_image)
+          :find_by_id_hash_and_work_in_progress!).and_return(src_image)
       end
 
       it 'shows the source image' do
@@ -276,7 +276,7 @@ describe SrcImagesController, type: :controller do
         delete :destroy, id: assigns(:src_image).id_hash
 
         expect(SrcImage.find_by_id_hash!(
-                   assigns(:src_image).id_hash).is_deleted?).to eq(true)
+          assigns(:src_image).id_hash).is_deleted?).to eq(true)
       end
 
       it 'returns success' do

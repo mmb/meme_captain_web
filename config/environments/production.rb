@@ -14,14 +14,15 @@ MemeCaptainWeb::Application.configure do
   config.action_controller.perform_caching = true
 
   config.middleware.insert_before(Rack::Sendfile, Rack::Rewrite) do
-    r301(/\/([a-f0-9]+\.(?:gif|jpg|png))$/, 'http://v1.memecaptain.com/$1')
-    r301(/\/((?:g|i)\?.+)/, 'http://v1.memecaptain.com/$1')
+    r301(%r{\/([a-f0-9]+\.(?:gif|jpg|png))$}, 'http://v1.memecaptain.com/$1')
+    r301(%r{\/((?:g|i)\?.+)}, 'http://v1.memecaptain.com/$1')
   end
 
   if !ENV['ASSET_DOMAIN'].blank?
     config.serve_static_assets = false
     config.action_controller.asset_host = proc { |asset|
-      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
+      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}
+      .#{ENV['ASSET_DOMAIN']}"
     }
   else
     config.serve_static_assets = true
@@ -89,5 +90,4 @@ MemeCaptainWeb::Application.configure do
       allow_reload: false
     }
   end
-
 end

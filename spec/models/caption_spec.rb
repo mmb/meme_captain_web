@@ -40,7 +40,7 @@ describe Caption do
 
       it 'uses the default font' do
         allow(MemeCaptainWeb::Font).to receive(:for).with(
-                                           'MyString').and_return('font.ttf')
+          'MyString').and_return('font.ttf')
         caption = FactoryGirl.create(:caption, font: nil)
         expect(caption.font).to eq 'font.ttf'
       end
@@ -51,7 +51,7 @@ describe Caption do
 
       it 'uses the default font' do
         allow(MemeCaptainWeb::Font).to receive(:for).with(
-                                           'MyString').and_return('font.ttf')
+          'MyString').and_return('font.ttf')
         caption = FactoryGirl.create(:caption, font: '')
         expect(caption.font).to eq 'font.ttf'
       end

@@ -72,8 +72,8 @@ describe GendImagesController, type: :controller do
       gend_images = assigns(:gend_images)
 
       expect(
-          gend_images[0].updated_at >= gend_images[1].updated_at &&
-              gend_images[1].updated_at >= gend_images[2].updated_at
+        gend_images[0].updated_at >= gend_images[1].updated_at &&
+        gend_images[1].updated_at >= gend_images[2].updated_at
       ).to be(true)
     end
 
@@ -111,7 +111,7 @@ describe GendImagesController, type: :controller do
 
       before :each do
         expect(SrcImage).to receive(:find_by_id_hash!).with('abc').and_return(
-            src_image)
+          src_image)
       end
 
       it 'saves the new generated image to the database' do
@@ -246,7 +246,7 @@ describe GendImagesController, type: :controller do
 
       before do
         expect(GendImage).to receive(
-            :find_by_id_hash_and_is_deleted!).and_return(gend_image)
+          :find_by_id_hash_and_is_deleted!).and_return(gend_image)
       end
 
       it 'shows the source image' do
@@ -340,7 +340,7 @@ describe GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect { get :show, id: id }.to raise_error(
-            ActiveRecord::RecordNotFound)
+          ActiveRecord::RecordNotFound)
       end
 
     end
@@ -368,7 +368,7 @@ describe GendImagesController, type: :controller do
         delete :destroy, id: id
 
         expect(GendImage.find_by_id_hash!(
-                   gend_image.id_hash).is_deleted?).to eq(true)
+          gend_image.id_hash).is_deleted?).to eq(true)
       end
 
       it 'returns success' do
@@ -383,7 +383,7 @@ describe GendImagesController, type: :controller do
       let(:id) { 'abc' }
       it 'raises record not found' do
         expect { delete :destroy, id: id }.to raise_error(
-            ActiveRecord::RecordNotFound)
+          ActiveRecord::RecordNotFound)
       end
 
     end
