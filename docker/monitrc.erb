@@ -6,10 +6,10 @@ set eventqueue
   basedir /var/lib/monit/events
   slots 100
 
-check process rails
-  with pidfile /var/run/rails.pid
-  start program = "/app/script/rails server --daemon --pid=/var/run/rails.pid"
-  stop program = "/usr/bin/pkill --pidfile /var/run/rails.pid"
+check process puma
+  with pidfile /var/run/puma.pid
+  start program = "/usr/local/bundle/bin/puma --config /app/docker/puma_config.rb"
+  stop program = "/usr/bin/pkill --pidfile /var/run/puma.pid"
 
 check process memcache
   with pidfile /var/run/memcached.pid

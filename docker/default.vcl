@@ -2,7 +2,7 @@ vcl 4.0;
 
 backend default {
   .host = "127.0.0.1";
-  .port = "3000";
+  .port = "9292";
 }
 
 sub vcl_recv {
