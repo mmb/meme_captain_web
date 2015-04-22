@@ -1,6 +1,91 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "dbPassword": {
+      "NoEcho": "TRUE",
+      "Type": "String"
+    },
+    "dbUser": {
+      "Type": "String"
+    }
+  },
   "Resources": {
+    "db": {
+      "DeletionPolicy": "Snapshot",
+      "Properties": {
+        "AllocatedStorage": "50",
+        "AvailabilityZone": "us-east-1d",
+        "DBInstanceClass": "db.t2.small",
+        "DBName": "memecaptain",
+        "DBSubnetGroupName": {
+          "Ref": "dbSubnetGroup"
+        },
+        "Engine": "postgres",
+        "MasterUserPassword": {
+          "Ref": "dbPassword"
+        },
+        "MasterUsername": {
+          "Ref": "dbUser"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "memecaptain"
+          }
+        ],
+        "VPCSecurityGroups": [
+          {
+            "Ref": "dbSecurityGroup"
+          }
+        ]
+      },
+      "Type": "AWS::RDS::DBInstance"
+    },
+    "dbSecurityGroup": {
+      "Properties": {
+        "GroupDescription": "db security group",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "1",
+            "IpProtocol": "tcp",
+            "ToPort": "65535"
+          }
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "5432",
+            "IpProtocol": "tcp",
+            "ToPort": "5432"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "db"
+          }
+        ],
+        "VpcId": {
+          "Ref": "vpc"
+        }
+      },
+      "Type": "AWS::EC2::SecurityGroup"
+    },
+    "dbSubnetGroup": {
+      "Properties": {
+        "DBSubnetGroupDescription": "db subnet group",
+        "SubnetIds": [
+          {
+            "Ref": "privateSubnet1"
+          },
+          {
+            "Ref": "privateSubnet2"
+          }
+        ]
+      },
+      "Type": "AWS::RDS::DBSubnetGroup"
+    },
     "elb": {
       "DependsOn": "internetGatewayAttachment",
       "Properties": {
