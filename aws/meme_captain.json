@@ -219,7 +219,7 @@
     },
     "privateSubnet1": {
       "Properties": {
-        "AvailabilityZone": "us-east-1a",
+        "AvailabilityZone": "us-east-1d",
         "CidrBlock": "10.0.2.0/24",
         "Tags": [
           {
@@ -246,7 +246,7 @@
     },
     "privateSubnet2": {
       "Properties": {
-        "AvailabilityZone": "us-east-1b",
+        "AvailabilityZone": "us-east-1e",
         "CidrBlock": "10.0.3.0/24",
         "Tags": [
           {
@@ -273,7 +273,7 @@
     },
     "publicSubnet1": {
       "Properties": {
-        "AvailabilityZone": "us-east-1a",
+        "AvailabilityZone": "us-east-1d",
         "CidrBlock": "10.0.0.0/24",
         "Tags": [
           {
@@ -300,7 +300,7 @@
     },
     "publicSubnet2": {
       "Properties": {
-        "AvailabilityZone": "us-east-1b",
+        "AvailabilityZone": "us-east-1e",
         "CidrBlock": "10.0.1.0/24",
         "Tags": [
           {
