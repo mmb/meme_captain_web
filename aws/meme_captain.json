@@ -1,15 +1,99 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+  "Outputs": {
+    "dbHost": {
+      "Value": {
+        "Fn::GetAtt": [
+          "db",
+          "Endpoint.Address"
+        ]
+      }
+    }
+  },
   "Parameters": {
+    "canaryMaxSize": {
+      "Type": "Number"
+    },
+    "canaryMinSize": {
+      "Type": "Number"
+    },
     "dbPassword": {
       "NoEcho": "TRUE",
       "Type": "String"
     },
     "dbUser": {
       "Type": "String"
+    },
+    "onDemandMaxSize": {
+      "Type": "Number"
+    },
+    "onDemandMinSize": {
+      "Type": "Number"
     }
   },
   "Resources": {
+    "canaryAutoScalingGroup": {
+      "Properties": {
+        "LaunchConfigurationName": {
+          "Ref": "canaryLaunchConfig"
+        },
+        "LoadBalancerNames": [
+          {
+            "Ref": "elb"
+          }
+        ],
+        "MaxSize": {
+          "Ref": "canaryMaxSize"
+        },
+        "MinSize": {
+          "Ref": "canaryMinSize"
+        },
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "privateSubnet1"
+          }
+        ]
+      },
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {}
+      }
+    },
+    "canaryLaunchConfig": {
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "secretsInstanceProfile"
+        },
+        "ImageId": "ami-1ecae776",
+        "InstanceType": "t2.micro",
+        "KeyName": "memecaptain",
+        "SecurityGroups": [
+          {
+            "Ref": "webSecurityGroup"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "\n",
+              [
+                "#!/bin/bash",
+                "set -e",
+                "yum update -y",
+                "yum install -y docker",
+                "service docker start",
+                "docker pull mm62/meme-captain-web",
+                "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
+                "aws s3 cp s3://memecaptain-secrets/env /env",
+                "docker run --env='RAILS_ENV=production' --env-file=/env  --privileged=true --rm -v /database.yml:/app/config/database.yml mm62/meme-captain-web bundle exec rake db:migrate",
+                "docker run --env='RAILS_ENV=production' --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml mm62/meme-captain-web"
+              ]
+            ]
+          }
+        }
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration"
+    },
     "db": {
       "DeletionPolicy": "Snapshot",
       "Properties": {
@@ -154,35 +238,6 @@
       },
       "Type": "AWS::EC2::RouteTable"
     },
-    "launchConfig": {
-      "Properties": {
-        "ImageId": "ami-1ecae776",
-        "InstanceType": "t2.micro",
-        "KeyName": "memecaptain",
-        "SecurityGroups": [
-          {
-            "Ref": "webSecurityGroup"
-          }
-        ],
-        "UserData": {
-          "Fn::Base64": {
-            "Fn::Join": [
-              "\n",
-              [
-                "#!/bin/sh",
-                "curl --retry 60 --retry-delay 5 google.com",
-                "yum update -y",
-                "yum install -y docker",
-                "service docker start",
-                "docker pull mm62/meme-captain-web",
-                "docker run --env='RAILS_ENV=production' --privileged=true -d -p 80:6081 mm62/meme-captain-web"
-              ]
-            ]
-          }
-        }
-      },
-      "Type": "AWS::AutoScaling::LaunchConfiguration"
-    },
     "natInstance": {
       "DependsOn": "internetGatewayAttachment",
       "Properties": {
@@ -282,25 +337,66 @@
       },
       "Type": "AWS::EC2::SecurityGroup"
     },
-    "onDemand": {
+    "onDemandAutoScalingGroup": {
       "Properties": {
         "LaunchConfigurationName": {
-          "Ref": "launchConfig"
+          "Ref": "onDemandLaunchConfig"
         },
         "LoadBalancerNames": [
           {
             "Ref": "elb"
           }
         ],
-        "MaxSize": "1",
-        "MinSize": "1",
+        "MaxSize": {
+          "Ref": "onDemandMaxSize"
+        },
+        "MinSize": {
+          "Ref": "onDemandMinSize"
+        },
         "VPCZoneIdentifier": [
           {
             "Ref": "privateSubnet1"
           }
         ]
       },
-      "Type": "AWS::AutoScaling::AutoScalingGroup"
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {}
+      }
+    },
+    "onDemandLaunchConfig": {
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "secretsInstanceProfile"
+        },
+        "ImageId": "ami-1ecae776",
+        "InstanceType": "t2.micro",
+        "KeyName": "memecaptain",
+        "SecurityGroups": [
+          {
+            "Ref": "webSecurityGroup"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "\n",
+              [
+                "#!/bin/bash",
+                "set -e",
+                "yum update -y",
+                "yum install -y docker",
+                "service docker start",
+                "docker pull mm62/meme-captain-web",
+                "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
+                "aws s3 cp s3://memecaptain-secrets/env /env",
+                "docker run --env='RAILS_ENV=production' --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml mm62/meme-captain-web"
+              ]
+            ]
+          }
+        }
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration"
     },
     "privateSubnet1": {
       "Properties": {
@@ -409,6 +505,64 @@
         }
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation"
+    },
+    "secretsBucket": {
+      "Properties": {
+        "AccessControl": "Private",
+        "BucketName": "memecaptain-secrets"
+      },
+      "Type": "AWS::S3::Bucket"
+    },
+    "secretsInstanceProfile": {
+      "Properties": {
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "secretsRole"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::InstanceProfile"
+    },
+    "secretsRole": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "sts:AssumeRole"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "s3:Get*",
+                    "s3:List*"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:s3:::memecaptain-secrets/*"
+                }
+              ],
+              "Version": "2012-10-17"
+            },
+            "PolicyName": "secretsPolicy"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::Role"
     },
     "vpc": {
       "Properties": {
