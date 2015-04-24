@@ -48,6 +48,8 @@ aws s3 cp database.yml s3://memecaptain-secrets/database.yml
 touch env
 aws s3 cp env s3://memecaptain-secrets/env
 
+aws s3 sync fonts s3://memecaptain-secrets/fonts
+
 aws \
   cloudformation \
   update-stack \
