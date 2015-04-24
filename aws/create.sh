@@ -22,7 +22,7 @@ aws \
 
 while true; do
   STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` create status $STATUS
+  echo `date` stack create status $STATUS
 
   if [ "$STATUS" = "CREATE_COMPLETE" ]; then break; fi
   if [ "$STATUS" != "CREATE_IN_PROGRESS" ]; then
@@ -66,7 +66,7 @@ aws \
 
 while true; do
   STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` canary update status $STATUS
+  echo `date` canary create status $STATUS
 
   if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
   if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
@@ -92,7 +92,7 @@ aws \
 
 while true; do
   STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` onDemand update status $STATUS
+  echo `date` on demand create status $STATUS
 
   if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
   if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
