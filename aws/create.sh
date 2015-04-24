@@ -32,7 +32,7 @@ while true; do
   sleep 4
 done
 
-DB_HOST=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].Outputs[0].OutputValue`
+DB_HOST=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output '.Stacks[0].Outputs | map(select(.OutputKey=="dbHost"))[0].OutputValue'`
 
 cat << EOF > database.yml
 production:
