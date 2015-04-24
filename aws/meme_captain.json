@@ -555,8 +555,14 @@
               "Statement": [
                 {
                   "Action": [
-                    "s3:Get*",
-                    "s3:List*"
+                    "s3:ListBucket"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:s3:::memecaptain-secrets"
+                },
+                {
+                  "Action": [
+                    "s3:GetObject"
                   ],
                   "Effect": "Allow",
                   "Resource": "arn:aws:s3:::memecaptain-secrets/*"
