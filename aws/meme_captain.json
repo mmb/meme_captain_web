@@ -198,6 +198,7 @@
             "Protocol": "HTTP"
           }
         ],
+        "LoadBalancerName": "memecaptain",
         "SecurityGroups": [
           {
             "Ref": "webSecurityGroup"
