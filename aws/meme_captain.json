@@ -29,6 +29,12 @@
     },
     "onDemandMinSize": {
       "Type": "Number"
+    },
+    "spotMaxSize": {
+      "Type": "Number"
+    },
+    "spotMinSize": {
+      "Type": "Number"
     }
   },
   "Resources": {
@@ -592,6 +598,79 @@
         ]
       },
       "Type": "AWS::IAM::Role"
+    },
+    "spotAutoScalingGroup": {
+      "Properties": {
+        "HealthCheckGracePeriod": 600,
+        "HealthCheckType": "ELB",
+        "LaunchConfigurationName": {
+          "Ref": "spotLaunchConfig"
+        },
+        "LoadBalancerNames": [
+          {
+            "Ref": "elb"
+          }
+        ],
+        "MaxSize": {
+          "Ref": "spotMaxSize"
+        },
+        "MinSize": {
+          "Ref": "spotMinSize"
+        },
+        "Tags": [
+          {
+            "Key": "pool",
+            "PropagateAtLaunch": true,
+            "Value": "spot"
+          }
+        ],
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "privateSubnet1"
+          }
+        ]
+      },
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {}
+      }
+    },
+    "spotLaunchConfig": {
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "secretsInstanceProfile"
+        },
+        "ImageId": "ami-1ecae776",
+        "InstanceType": "m3.medium",
+        "KeyName": "memecaptain",
+        "SecurityGroups": [
+          {
+            "Ref": "webSecurityGroup"
+          }
+        ],
+        "SpotPrice": "0.0082",
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "\n",
+              [
+                "#!/bin/bash",
+                "set -e",
+                "yum update -y",
+                "yum install -y docker",
+                "service docker start",
+                "docker pull mm62/meme-captain-web",
+                "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
+                "aws s3 cp s3://memecaptain-secrets/env /env",
+                "mkdir /fonts",
+                "aws s3 sync s3://memecaptain-secrets/fonts /fonts",
+                "docker run --env='RAILS_ENV=production' --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts mm62/meme-captain-web"
+              ]
+            ]
+          }
+        }
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration"
     },
     "vpc": {
       "Properties": {

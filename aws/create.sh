@@ -20,7 +20,9 @@ aws \
   "ParameterKey=canaryMinSize,ParameterValue=0" \
   "ParameterKey=canaryMaxSize,ParameterValue=0" \
   "ParameterKey=onDemandMinSize,ParameterValue=0" \
-  "ParameterKey=onDemandMaxSize,ParameterValue=0"
+  "ParameterKey=onDemandMaxSize,ParameterValue=0" \
+  "ParameterKey=spotMinSize,ParameterValue=0" \
+  "ParameterKey=spotMaxSize,ParameterValue=0"
 
 while true; do
   STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
@@ -64,7 +66,9 @@ aws \
   "ParameterKey=canaryMinSize,ParameterValue=1" \
   "ParameterKey=canaryMaxSize,ParameterValue=1" \
   "ParameterKey=onDemandMinSize,ParameterValue=0" \
-  "ParameterKey=onDemandMaxSize,ParameterValue=0"
+  "ParameterKey=onDemandMaxSize,ParameterValue=0" \
+  "ParameterKey=spotMinSize,ParameterValue=0" \
+  "ParameterKey=spotMaxSize,ParameterValue=0"
 
 wait_for_update "$STACK_NAME" "canary create"
 
@@ -82,8 +86,10 @@ aws \
   "ParameterKey=canaryMinSize,ParameterValue=1" \
   "ParameterKey=canaryMaxSize,ParameterValue=1" \
   "ParameterKey=onDemandMinSize,ParameterValue=1" \
-  "ParameterKey=onDemandMaxSize,ParameterValue=1"
+  "ParameterKey=onDemandMaxSize,ParameterValue=1" \
+  "ParameterKey=spotMinSize,ParameterValue=1" \
+  "ParameterKey=spotMaxSize,ParameterValue=3"
 
-wait_for_update "$STACK_NAME" "ondemand create"
+wait_for_update "$STACK_NAME" "ondemand and spot create"
 
 wait_for_all_healthy
