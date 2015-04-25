@@ -26,19 +26,7 @@ aws \
   "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
   "ParameterKey=onDemandMaxSize,UsePreviousValue=true"
 
-while true; do
-  STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` killing canary status $STATUS
-
-  if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-  if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-    exit 1
-  fi
-
-  sleep 4
-done
-
-wait_for_all_healthy
+wait_for_update "$STACK_NAME" "killing canary"
 
 aws \
   cloudformation \
@@ -54,17 +42,7 @@ aws \
   "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
   "ParameterKey=onDemandMaxSize,UsePreviousValue=true"
 
-while true; do
-  STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` reviving canary status $STATUS
-
-  if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-  if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-    exit 1
-  fi
-
-  sleep 4
-done
+wait_for_update "$STACK_NAME" "reviving canary"
 
 wait_for_all_healthy
 
@@ -82,19 +60,7 @@ aws \
   "ParameterKey=onDemandMinSize,ParameterValue=0" \
   "ParameterKey=onDemandMaxSize,ParameterValue=0"
 
-while true; do
-  STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` killing on demand status $STATUS
-
-  if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-  if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-    exit 1
-  fi
-
-  sleep 4
-done
-
-wait_for_all_healthy
+wait_for_update "$STACK_NAME" "killing ondemand"
 
 aws \
   cloudformation \
@@ -110,16 +76,6 @@ aws \
   "ParameterKey=onDemandMinSize,ParameterValue=$NUM_ON_DEMAND" \
   "ParameterKey=onDemandMaxSize,ParameterValue=$NUM_ON_DEMAND"
 
-while true; do
-  STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` reviving on demand status $STATUS
-
-  if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-  if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-    exit 1
-  fi
-
-  sleep 4
-done
+wait_for_update "$STACK_NAME" "reviving ondemand"
 
 wait_for_all_healthy

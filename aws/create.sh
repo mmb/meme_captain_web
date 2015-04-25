@@ -66,17 +66,7 @@ aws \
   "ParameterKey=onDemandMinSize,ParameterValue=0" \
   "ParameterKey=onDemandMaxSize,ParameterValue=0"
 
-while true; do
-  STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` canary create status $STATUS
-
-  if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-  if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-    exit 1
-  fi
-
-  sleep 4
-done
+wait_for_update "$STACK_NAME" "canary create"
 
 wait_for_all_healthy
 
@@ -94,16 +84,6 @@ aws \
   "ParameterKey=onDemandMinSize,ParameterValue=1" \
   "ParameterKey=onDemandMaxSize,ParameterValue=1"
 
-while true; do
-  STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
-  echo `date` on demand create status $STATUS
-
-  if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-  if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-    exit 1
-  fi
-
-  sleep 4
-done
+wait_for_update "$STACK_NAME" "ondemand create"
 
 wait_for_all_healthy
