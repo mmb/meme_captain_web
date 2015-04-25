@@ -9,10 +9,6 @@ RUN ["apt-get", "install", "--assume-yes", \
   "varnish" \
   ]
 
-RUN ln -s \
-  /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/Magick-config \
-  /usr/local/bin
-
 COPY . /app
 
 WORKDIR /app
