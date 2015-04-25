@@ -50,6 +50,13 @@
         "MinSize": {
           "Ref": "canaryMinSize"
         },
+        "Tags": [
+          {
+            "Key": "pool",
+            "PropagateAtLaunch": true,
+            "Value": "canary"
+          }
+        ],
         "VPCZoneIdentifier": [
           {
             "Ref": "privateSubnet1"
@@ -359,6 +366,13 @@
         "MinSize": {
           "Ref": "onDemandMinSize"
         },
+        "Tags": [
+          {
+            "Key": "pool",
+            "PropagateAtLaunch": true,
+            "Value": "ondemand"
+          }
+        ],
         "VPCZoneIdentifier": [
           {
             "Ref": "privateSubnet1"
