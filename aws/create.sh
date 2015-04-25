@@ -72,8 +72,6 @@ aws \
 
 wait_for_update "$STACK_NAME" "canary create"
 
-wait_for_all_healthy
-
 aws \
   cloudformation \
   update-stack \
@@ -91,5 +89,3 @@ aws \
   "ParameterKey=spotMaxSize,ParameterValue=3"
 
 wait_for_update "$STACK_NAME" "ondemand and spot create"
-
-wait_for_all_healthy

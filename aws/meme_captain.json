@@ -40,6 +40,9 @@
   "Resources": {
     "canaryAutoScalingGroup": {
       "Properties": {
+        "DesiredCapacity": {
+          "Ref": "canaryMinSize"
+        },
         "HealthCheckGracePeriod": 600,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
@@ -357,6 +360,9 @@
     },
     "onDemandAutoScalingGroup": {
       "Properties": {
+        "DesiredCapacity": {
+          "Ref": "onDemandMinSize"
+        },
         "HealthCheckGracePeriod": 600,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
@@ -601,6 +607,9 @@
     },
     "spotAutoScalingGroup": {
       "Properties": {
+        "DesiredCapacity": {
+          "Ref": "spotMinSize"
+        },
         "HealthCheckGracePeriod": 600,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
