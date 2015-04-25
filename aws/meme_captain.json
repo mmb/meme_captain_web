@@ -185,7 +185,7 @@
       "DependsOn": "internetGatewayAttachment",
       "Properties": {
         "HealthCheck": {
-          "HealthyThreshold": "10",
+          "HealthyThreshold": "4",
           "Interval": "30",
           "Target": "HTTP:80/",
           "Timeout": "5",
