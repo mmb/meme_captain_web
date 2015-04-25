@@ -2,6 +2,8 @@
 
 set -e
 
+source functions.sh
+
 STACK_NAME=memecaptain
 DB_USER=memecaptain
 DB_PASSWORD=`ha-gen -l 31 -d-`
@@ -76,6 +78,8 @@ while true; do
   sleep 4
 done
 
+wait_for_all_healthy
+
 aws \
   cloudformation \
   update-stack \
@@ -101,3 +105,5 @@ while true; do
 
   sleep 4
 done
+
+wait_for_all_healthy

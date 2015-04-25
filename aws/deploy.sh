@@ -2,6 +2,8 @@
 
 set -e
 
+source functions.sh
+
 STACK_NAME=memecaptain
 NUM_ON_DEMAND=1
 
@@ -36,6 +38,8 @@ while true; do
   sleep 4
 done
 
+wait_for_all_healthy
+
 aws \
   cloudformation \
   update-stack \
@@ -61,6 +65,8 @@ while true; do
 
   sleep 4
 done
+
+wait_for_all_healthy
 
 aws \
   cloudformation \
@@ -88,6 +94,8 @@ while true; do
   sleep 4
 done
 
+wait_for_all_healthy
+
 aws \
   cloudformation \
   update-stack \
@@ -113,3 +121,5 @@ while true; do
 
   sleep 4
 done
+
+wait_for_all_healthy
