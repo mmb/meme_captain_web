@@ -1,4 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+export NPROC=`nproc`
+NUM_DELAYED_JOB_WORKERS=$((NPROC - 1))
+NUM_DELAYED_JOB_WORKERS=$((
+  NUM_DELAYED_JOB_WORKERS > 0 ? NUM_DELAYED_JOB_WORKERS : 1
+  ))
+export NUM_DELAYED_JOB_WORKERS
 
 erb /app/docker/monitrc.erb > /app/docker/monitrc
 
