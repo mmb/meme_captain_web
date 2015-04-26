@@ -15,10 +15,17 @@ wait_for_update() {
     STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME | jq --raw-output .Stacks[0].StackStatus`
     echo "`date` $MESSAGE $STATUS"
 
-    if [[ "$STATUS" == UPDATE_COMPLETE* ]]; then break; fi
-    if [ "$STATUS" != "UPDATE_IN_PROGRESS" ]; then
-      exit 1
-    fi
+    case "$STATUS" in
+      UPDATE_COMPLETE)
+        break
+        ;;
+      UPDATE_IN_PROGRESS)
+        ;;
+      UPDATE_COMPLETE_CLEANUP_IN_PROGRESS)
+        ;;
+      *)
+        exit 1
+    esac
 
     sleep 4
   done
