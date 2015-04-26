@@ -722,7 +722,7 @@
           "Ref": "secretsInstanceProfile"
         },
         "ImageId": "ami-1ecae776",
-        "InstanceType": "m3.medium",
+        "InstanceType": "t2.micro",
         "KeyName": "memecaptain",
         "SecurityGroups": [
           {
