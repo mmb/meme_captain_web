@@ -49,6 +49,8 @@ aws \
 
 wait_for_update "$STACK_NAME" "reviving canary"
 
+wait_for_all_healthy
+
 aws \
   cloudformation \
   update-stack \
@@ -84,3 +86,5 @@ aws \
   "ParameterKey=spotMaxSize,ParameterValue=$MAX_SPOT"
 
 wait_for_update "$STACK_NAME" "reviving ondemand and spot"
+
+wait_for_all_healthy
