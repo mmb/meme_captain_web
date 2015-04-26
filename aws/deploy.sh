@@ -6,7 +6,7 @@ source functions.sh
 
 STACK_NAME=memecaptain
 NUM_ON_DEMAND=1
-MAX_SPOT=3
+MAX_SPOT=10
 
 touch env
 aws s3 cp env s3://memecaptain-secrets/env
