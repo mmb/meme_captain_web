@@ -253,6 +253,12 @@
     },
     "internetGatewayRouteTable": {
       "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "igw"
+          }
+        ],
         "VpcId": {
           "Ref": "vpc"
         }
@@ -279,7 +285,13 @@
             }
           }
         ],
-        "SourceDestCheck": "false"
+        "SourceDestCheck": "false",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "nat"
+          }
+        ]
       },
       "Type": "AWS::EC2::Instance"
     },
@@ -297,6 +309,12 @@
     },
     "natRouteTable": {
       "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "nat"
+          }
+        ],
         "VpcId": {
           "Ref": "vpc"
         }
