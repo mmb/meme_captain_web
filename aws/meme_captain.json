@@ -38,6 +38,68 @@
     }
   },
   "Resources": {
+    "assetRecordSetGroup": {
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "memecaptainHostedZone"
+        },
+        "RecordSets": [
+          {
+            "AliasTarget": {
+              "DNSName": {
+                "Fn::GetAtt": [
+                  "cloudFront",
+                  "DomainName"
+                ]
+              },
+              "HostedZoneId": "Z2FDTNDATAQYW2"
+            },
+            "Name": "a0.memecaptain.com.",
+            "Type": "A"
+          },
+          {
+            "AliasTarget": {
+              "DNSName": {
+                "Fn::GetAtt": [
+                  "cloudFront",
+                  "DomainName"
+                ]
+              },
+              "HostedZoneId": "Z2FDTNDATAQYW2"
+            },
+            "Name": "a1.memecaptain.com.",
+            "Type": "A"
+          },
+          {
+            "AliasTarget": {
+              "DNSName": {
+                "Fn::GetAtt": [
+                  "cloudFront",
+                  "DomainName"
+                ]
+              },
+              "HostedZoneId": "Z2FDTNDATAQYW2"
+            },
+            "Name": "a2.memecaptain.com.",
+            "Type": "A"
+          },
+          {
+            "AliasTarget": {
+              "DNSName": {
+                "Fn::GetAtt": [
+                  "cloudFront",
+                  "DomainName"
+                ]
+              },
+              "HostedZoneId": "Z2FDTNDATAQYW2"
+            },
+            "Name": "i.memecaptain.com.",
+            "Type": "A"
+          }
+        ]
+      },
+      "Type": "AWS::Route53::RecordSetGroup"
+    },
     "canaryAutoScalingGroup": {
       "Properties": {
         "DesiredCapacity": {
@@ -113,6 +175,36 @@
         }
       },
       "Type": "AWS::AutoScaling::LaunchConfiguration"
+    },
+    "cloudFront": {
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
+            "a0.memecaptain.com",
+            "a1.memecaptain.com",
+            "a2.memecaptain.com",
+            "i.memecaptain.com"
+          ],
+          "DefaultCacheBehavior": {
+            "ForwardedValues": {
+              "QueryString": false
+            },
+            "TargetOriginId": "memecaptain.com",
+            "ViewerProtocolPolicy": "allow-all"
+          },
+          "Enabled": true,
+          "Origins": [
+            {
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "http-only"
+              },
+              "DomainName": "memecaptain.com",
+              "Id": "memecaptain.com"
+            }
+          ]
+        }
+      },
+      "Type": "AWS::CloudFront::Distribution"
     },
     "db": {
       "DeletionPolicy": "Snapshot",
@@ -264,6 +356,12 @@
         }
       },
       "Type": "AWS::EC2::RouteTable"
+    },
+    "memecaptainHostedZone": {
+      "Properties": {
+        "Name": "memecaptain.com"
+      },
+      "Type": "AWS::Route53::HostedZone"
     },
     "natInstance": {
       "DependsOn": "internetGatewayAttachment",
@@ -558,6 +656,30 @@
         }
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation"
+    },
+    "rootAlias": {
+      "Properties": {
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "elb",
+              "CanonicalHostedZoneName"
+            ]
+          },
+          "HostedZoneId": {
+            "Fn::GetAtt": [
+              "elb",
+              "CanonicalHostedZoneNameID"
+            ]
+          }
+        },
+        "HostedZoneId": {
+          "Ref": "memecaptainHostedZone"
+        },
+        "Name": "memecaptain.com.",
+        "Type": "A"
+      },
+      "Type": "AWS::Route53::RecordSet"
     },
     "secretsBucket": {
       "Properties": {
