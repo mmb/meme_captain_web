@@ -19,15 +19,14 @@ MemeCaptainWeb::Application.configure do
   end
 
   if !ENV['ASSET_DOMAIN'].blank?
-    config.serve_static_assets = false
     config.action_controller.asset_host = proc { |asset|
       "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
     }
-  else
-    config.serve_static_assets = true
-    config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
-    config.static_cache_control = 'public, max-age=31536000'
   end
+
+  config.serve_static_assets = true
+  config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
+  config.static_cache_control = 'public, max-age=31536000'
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
