@@ -21,8 +21,7 @@ MemeCaptainWeb::Application.configure do
   if !ENV['ASSET_DOMAIN'].blank?
     config.serve_static_assets = false
     config.action_controller.asset_host = proc { |asset|
-      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}
-      .#{ENV['ASSET_DOMAIN']}"
+      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
     }
   else
     config.serve_static_assets = true
