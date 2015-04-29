@@ -886,7 +886,7 @@
           "Ref": "secretsInstanceProfile"
         },
         "ImageId": "ami-1ecae776",
-        "InstanceType": "t2.micro",
+        "InstanceType": "m3.medium",
         "KeyName": "memecaptain",
         "SecurityGroups": [
           {
