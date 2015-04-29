@@ -61,8 +61,8 @@ aws \
   --template-body file://meme_captain.json \
   --capabilities CAPABILITY_IAM \
   --parameters \
-  "ParameterKey=dbUser,ParameterValue=$DB_USER" \
-  "ParameterKey=dbPassword,ParameterValue=$DB_PASSWORD" \
+  "ParameterKey=dbUser,UsePreviousValue=true" \
+  "ParameterKey=dbPassword,UsePreviousValue=true" \
   "ParameterKey=canaryMinSize,ParameterValue=1" \
   "ParameterKey=canaryMaxSize,ParameterValue=1" \
   "ParameterKey=onDemandMinSize,ParameterValue=0" \
@@ -81,8 +81,8 @@ aws \
   --template-body file://meme_captain.json \
   --capabilities CAPABILITY_IAM \
   --parameters \
-  "ParameterKey=dbUser,ParameterValue=$DB_USER" \
-  "ParameterKey=dbPassword,ParameterValue=$DB_PASSWORD" \
+  "ParameterKey=dbUser,UsePreviousValue=true" \
+  "ParameterKey=dbPassword,UsePreviousValue=true" \
   "ParameterKey=canaryMinSize,ParameterValue=1" \
   "ParameterKey=canaryMaxSize,ParameterValue=1" \
   "ParameterKey=onDemandMinSize,ParameterValue=1" \
