@@ -88,7 +88,7 @@ aws \
   "ParameterKey=onDemandMinSize,ParameterValue=1" \
   "ParameterKey=onDemandMaxSize,ParameterValue=1" \
   "ParameterKey=spotMinSize,ParameterValue=1" \
-  "ParameterKey=spotMaxSize,ParameterValue=3"
+  "ParameterKey=spotMaxSize,ParameterValue=10"
 
 wait_for_update "$STACK_NAME" "ondemand and spot create"
 
