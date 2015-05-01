@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'digest/md5'
-
 MemeCaptainWeb::Application.configure do
   # Settings specified here will take precedence over those in
   # config/application.rb
@@ -18,11 +16,7 @@ MemeCaptainWeb::Application.configure do
     r301(%r{\/((?:g|i)\?.+)}, 'http://v1.memecaptain.com/$1')
   end
 
-  if !ENV['ASSET_DOMAIN'].blank?
-    config.action_controller.asset_host = proc { |asset|
-      "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.#{ENV['ASSET_DOMAIN']}"
-    }
-  end
+  MemeCaptainWeb::AssetHostConfig.new.configure(config, ENV)
 
   config.serve_static_assets = true
   config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
