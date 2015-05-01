@@ -139,5 +139,13 @@ describe GendImage do
       end
     end
 
+    context 'when both of the captions match' do
+      let(:caption1) { FactoryGirl.create(:caption, text: 'abc') }
+      let(:caption2) { FactoryGirl.create(:caption, text: 'cba') }
+
+      it 'returns only one match' do
+        expect(GendImage.caption_matches('C')).to eq([@gend_image])
+      end
+    end
   end
 end

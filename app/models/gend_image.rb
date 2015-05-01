@@ -58,6 +58,6 @@ class GendImage < ActiveRecord::Base
 
   scope :caption_matches, lambda { |query|
     joins(:captions).where(
-      'LOWER(captions.text) LIKE ?', "%#{query.downcase}%") if query
+      'LOWER(captions.text) LIKE ?', "%#{query.downcase}%").uniq if query
   }
 end
