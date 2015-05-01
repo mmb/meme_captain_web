@@ -4,6 +4,29 @@ require 'rails_helper'
 
 describe SearchController, type: :controller do
   describe "GET 'show'" do
+    context 'when no results are found' do
+      before { get :show, q: 'test' }
+
+      it 'sets no_results' do
+        expect(assigns(:no_results)).to be(true)
+      end
+
+      it 'sets template_search' do
+        expect(assigns(:template_search)).to eq('test meme template')
+      end
+
+      it 'sets google_search_url' do
+        expect(assigns(:google_search_url)).to eq(
+          'https://www.google.com/search?q=test+meme+template&tbm=isch')
+      end
+
+      it 'correctly encodes google_search_url' do
+        get :show, q: '<hi&>'
+        expect(assigns(:google_search_url)).to eq(
+          'https://www.google.com/search?q=%3Chi%26%3E+meme+template&tbm=isch')
+      end
+    end
+
     context 'when some results are found' do
       before do
         @src_image_1 = FactoryGirl.create(

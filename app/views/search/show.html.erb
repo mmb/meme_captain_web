@@ -5,3 +5,26 @@
 <% unless @gend_images.empty? %>
     <%= render partial: 'gend_images/gend_images' %>
 <% end %>
+
+<% if @no_results %>
+<h1>No matches found</h1>
+
+<p>
+&hellip; but you can fix this.
+</p>
+
+<p>
+Google image search for
+<a href="<%= @google_search_url %>"><%= h @template_search %></a>,
+find a good image with no words, and add it yourself. Make sure to
+give it a descriptive name so other people can find it.
+</p>
+
+<p>
+You can also
+<a href="https://twitter.com/intent/tweet?text=@memecaptain&related=memecaptain">tweet @memecaptain</a>
+or
+<a href="https://github.com/mmb/meme_captain_web/issues">open a GitHub issue</a>
+and request that it be added.
+</p>
+<% end %>
