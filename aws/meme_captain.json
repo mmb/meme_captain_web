@@ -261,6 +261,14 @@
             "ViewerProtocolPolicy": "allow-all"
           },
           "Enabled": true,
+          "Logging": {
+            "Bucket": {
+              "Fn::GetAtt": [
+                "cloudFrontLogsBucket",
+                "DomainName"
+              ]
+            }
+          },
           "Origins": [
             {
               "CustomOriginConfig": {
@@ -273,6 +281,13 @@
         }
       },
       "Type": "AWS::CloudFront::Distribution"
+    },
+    "cloudFrontLogsBucket": {
+      "Properties": {
+        "AccessControl": "Private",
+        "BucketName": "memecaptain-cloudfront-logs"
+      },
+      "Type": "AWS::S3::Bucket"
     },
     "db": {
       "DeletionPolicy": "Snapshot",
