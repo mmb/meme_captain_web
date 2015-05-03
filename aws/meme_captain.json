@@ -900,7 +900,7 @@
             "Ref": "spotScaleUpPolicy"
           }
         ],
-        "AlarmDescription": "Scale up if CPU > 50% for 1 minute",
+        "AlarmDescription": "Scale up if CPU > 50% for 2 minutes",
         "AlarmName": "spotCpuHigh",
         "ComparisonOperator": "GreaterThanThreshold",
         "Dimensions": [
@@ -911,7 +911,7 @@
             }
           }
         ],
-        "EvaluationPeriods": "1",
+        "EvaluationPeriods": "2",
         "MetricName": "CPUUtilization",
         "Namespace": "AWS/EC2",
         "Period": "60",
