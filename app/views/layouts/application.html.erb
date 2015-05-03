@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag %>
+  <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
   <% if @refresh_in %>
       <meta http-equiv="refresh" content="<%= @refresh_in %>"/>
   <% end %>

@@ -21,4 +21,13 @@ describe 'layouts/application.html.erb', type: :view do
       'content' => 'width=device-width, ' \
       'initial-scale=1, maximum-scale=1')
   end
+
+  it 'has an apple-touch-icon.png' do
+    render
+
+    expect(rendered).to have_selector(
+      'link',
+      'rel' => 'apple-touch-icon',
+      'href' => '/assets/apple-touch-icon.png')
+  end
 end
