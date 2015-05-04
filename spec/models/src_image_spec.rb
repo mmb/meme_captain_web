@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rails_helper'
+
 describe SrcImage do
 
   it { should_not validate_presence_of :content_type }
@@ -51,8 +53,15 @@ describe SrcImage do
     expect { src_image.destroy }.not_to change { GendImage.count }
   end
 
-  it 'generates a thumbnail'
-  # figure out how to use run a delayed job in spec
+  it 'generates a thumbnail' do
+    src_image = FactoryGirl.create(:src_image)
+    src_image.post_process_job
+    expect(src_image.src_thumb).not_to be_nil
+    expect(src_image.src_thumb.width).to eq(
+      MemeCaptainWeb::Config::THUMB_SIDE)
+    expect(src_image.src_thumb.height).to eq(
+      MemeCaptainWeb::Config::THUMB_SIDE)
+  end
 
   context 'generating a Magick::Image from its data' do
 

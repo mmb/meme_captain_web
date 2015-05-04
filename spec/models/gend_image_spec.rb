@@ -53,8 +53,15 @@ describe GendImage do
 
   end
 
-  it 'generates a thumbnail'
-  # figure out how to use run a delayed job in spec
+  it 'generates a thumbnail' do
+    gend_image = FactoryGirl.create(:gend_image)
+    gend_image.post_process_job
+    expect(gend_image.gend_thumb).not_to be_nil
+    expect(gend_image.gend_thumb.width).to eq(
+      MemeCaptainWeb::Config::THUMB_SIDE)
+    expect(gend_image.gend_thumb.height).to eq(
+      MemeCaptainWeb::Config::THUMB_SIDE)
+  end
 
   describe '#ext' do
 
