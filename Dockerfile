@@ -1,4 +1,4 @@
-FROM ruby:2.1
+FROM ruby:2.2
 MAINTAINER matthewm@boedicker.org
 
 RUN ["apt-get", "update"]
