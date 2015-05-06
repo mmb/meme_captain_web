@@ -32,7 +32,7 @@ module MemeCaptainWeb
 
     def initialize(path)
       @path = path
-      @char_set = get_char_set
+      @char_set = extract_char_set
     end
 
     def has_chars_for?(text)
@@ -41,7 +41,7 @@ module MemeCaptainWeb
 
     private
 
-    def get_char_set
+    def extract_char_set
       file = TTFunk::File.open(path)
 
       unicode_subtables = file.cmap.tables.select(&:unicode?)
