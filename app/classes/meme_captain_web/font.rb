@@ -46,7 +46,7 @@ module MemeCaptainWeb
 
       unicode_subtables = file.cmap.tables.select(&:unicode?)
 
-      @char_set = unicode_subtables.reduce(Set.new) do |char_set, subtable|
+      unicode_subtables.reduce(Set.new) do |char_set, subtable|
         char_set.merge(subtable.code_map.keys)
       end
     end
