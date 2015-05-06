@@ -77,7 +77,7 @@ describe 'MemeCaptainWeb::Font' do
 
   end
 
-  describe '#has_chars_for?' do
+  describe '#chars_for?' do
 
     context 'when the font has all of the characters' do
       let(:tables) do
@@ -96,7 +96,7 @@ describe 'MemeCaptainWeb::Font' do
       it 'has the characters' do
         font = MemeCaptainWeb::Font.new(path)
 
-        expect(font.has_chars_for?('abc')).to eq(true)
+        expect(font.chars_for?('abc')).to eq(true)
       end
     end
 
@@ -116,7 +116,7 @@ describe 'MemeCaptainWeb::Font' do
       it 'does not have the characters' do
         font = MemeCaptainWeb::Font.new(path)
 
-        expect(font.has_chars_for?('abcd')).to eq(false)
+        expect(font.chars_for?('abcd')).to eq(false)
       end
     end
   end

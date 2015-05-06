@@ -15,7 +15,7 @@ module MemeCaptainWeb
     # first one will be used.
 
     def self.for(text)
-      best_font = default_fonts.find { |f| f.has_chars_for?(text) } ||
+      best_font = default_fonts.find { |f| f.chars_for?(text) } ||
                   default_fonts.first
       File.basename(best_font.path)
     end
@@ -35,7 +35,7 @@ module MemeCaptainWeb
       @char_set = extract_char_set
     end
 
-    def has_chars_for?(text)
+    def chars_for?(text)
       Set.new(text.chars.map(&:ord)).subset?(char_set)
     end
 
