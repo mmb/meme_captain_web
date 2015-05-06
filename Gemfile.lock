@@ -209,7 +209,7 @@ GEM
     thread_safe (0.3.5)
     tilt (1.4.1)
     timecop (0.6.3)
-    ttfunk (1.0.3)
+    ttfunk (1.4.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.1.2)
@@ -263,7 +263,7 @@ DEPENDENCIES
   sqlite3
   therubyracer
   timecop
-  ttfunk
+  ttfunk (~> 1.4.0)
   uglifier (>= 1.0.3)
   webmock
   webrat (~> 0.7.3)
