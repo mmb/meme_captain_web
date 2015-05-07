@@ -368,6 +368,12 @@
     "elb": {
       "DependsOn": "internetGatewayAttachment",
       "Properties": {
+        "AccessLoggingPolicy": {
+          "Enabled": true,
+          "S3BucketName": {
+            "Ref": "elbLogsBucket"
+          }
+        },
         "HealthCheck": {
           "HealthyThreshold": "4",
           "Interval": "30",
@@ -398,6 +404,48 @@
         ]
       },
       "Type": "AWS::ElasticLoadBalancing::LoadBalancer"
+    },
+    "elbLogsBucket": {
+      "Properties": {
+        "AccessControl": "Private",
+        "BucketName": "memecaptain-elb-logs"
+      },
+      "Type": "AWS::S3::Bucket"
+    },
+    "elbLogsBucketPolicy": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "elbLogsBucket"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": [
+                  "127311923021"
+                ]
+              },
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "elbLogsBucket"
+                    },
+                    "/AWSLogs/165945320610/*"
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "Type": "AWS::S3::BucketPolicy"
     },
     "internetGateway": {
       "Type": "AWS::EC2::InternetGateway"
