@@ -6,7 +6,9 @@ set eventqueue
   basedir /var/lib/monit/events
   slots 100
 
-<%= ENV['MONIT_MAILSERVER'] %>
+<% if ENV['MONIT_MAILSERVER'] %>
+set mailserver <%= ENV['MONIT_MAILSERVER'] %>
+<% end %>
 
 <% if ENV['MONIT_ALERT'] %>
 set alert <%= ENV['MONIT_ALERT'] %>
