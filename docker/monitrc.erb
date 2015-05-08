@@ -6,19 +6,10 @@ set eventqueue
   basedir /var/lib/monit/events
   slots 100
 
-<% unless ENV['MONIT_MAILSERVER'].to_s.empty? %>
-set mailserver <%= ENV['MONIT_MAILSERVER'] %>
-<% end %>
-
-<% unless ENV['MONIT_ALERT'].to_s.empty? %>
-set alert <%= ENV['MONIT_ALERT'] %>
-<% end %>
-
 check process puma
   with pidfile /var/run/puma.pid
   start program = "/usr/local/bundle/bin/puma --config /app/docker/puma_config.rb"
   stop program = "/usr/bin/pkill --pidfile /var/run/puma.pid"
-  if total memory > 75% for 1 cycles then alert
 
 check process memcache
   with pidfile /var/run/memcached.pid
@@ -34,5 +25,4 @@ check process delayed_job.<%= i %>
   with pidfile /var/run/delayed_job.<%= i %>.pid
   start program = "/app/script/delayed_job start --pid-dir=/var/run --identifier=<%= i %>"
   stop program = "/app/script/delayed_job stop --pid-dir=/var/run --identifier=<%= i %>"
-  if total memory > 75% for 1 cycles then alert
 <% end %>
