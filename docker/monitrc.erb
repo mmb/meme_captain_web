@@ -8,6 +8,10 @@ set eventqueue
 
 <%= ENV['MONIT_MAILSERVER'] %>
 
+<% if ENV['MONIT_ALERT'] %>
+set alert <%= ENV['MONIT_ALERT'] %>
+<% end %>
+
 check process puma
   with pidfile /var/run/puma.pid
   start program = "/usr/local/bundle/bin/puma --config /app/docker/puma_config.rb"
