@@ -45,6 +45,7 @@ production:
   password: "$DB_PASSWORD"
   database: memecaptain
   host: $DB_HOST
+  pool: <%= ENV['DB_POOL'] || 5 %>
 EOF
 
 aws s3 cp database.yml s3://memecaptain-secrets/database.yml
