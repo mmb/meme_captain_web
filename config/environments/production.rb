@@ -18,7 +18,7 @@ MemeCaptainWeb::Application.configure do
 
   MemeCaptainWeb::AssetHostConfig.new.configure(config, ENV)
 
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
   config.static_cache_control = 'public, max-age=31536000'
 

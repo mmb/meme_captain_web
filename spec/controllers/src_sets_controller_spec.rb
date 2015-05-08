@@ -14,7 +14,7 @@ describe SrcSetsController, type: :controller do
   describe "GET 'new'" do
 
     it 'does not match a route' do
-      expect { get :new }.to raise_error ActionController::RoutingError
+      expect { get :new }.to raise_error ActionController::UrlGenerationError
     end
   end
 
@@ -335,7 +335,7 @@ describe SrcSetsController, type: :controller do
 
       it 'marks the record as deleted in the database' do
         delete :destroy, id: src_set.name
-        expect(SrcSet.find(src_set).is_deleted?).to eq(true)
+        expect(SrcSet.find(src_set.id).is_deleted?).to eq(true)
       end
 
       it 'redirects to the index page' do

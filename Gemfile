@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.6'
+gem 'rails', '~> 4.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -41,7 +41,7 @@ gem 'dynamic_form'
 gem 'rmagick', platforms: [:ruby, :mswin], require: 'rmagick'
 gem 'rmagick4j', platforms: :jruby, require: 'rmagick'
 
-gem 'delayed_job_active_record', '~> 4.0.1'
+gem 'delayed_job_active_record', '~> 4.0.3'
 gem 'daemons'
 
 gem 'meme_captain'
@@ -70,6 +70,7 @@ group :test, :development do
   gem 'webrat', '~> 0.7.3'
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
+  gem 'web-console', '~> 2.0'
 end
 
 group :test do
