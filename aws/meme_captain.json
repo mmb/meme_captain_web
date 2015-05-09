@@ -374,6 +374,9 @@
             "Ref": "elbLogsBucket"
           }
         },
+        "ConnectionDrainingPolicy": {
+          "Enabled": true
+        },
         "HealthCheck": {
           "HealthyThreshold": "4",
           "Interval": "30",
