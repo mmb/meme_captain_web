@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'url_getter'
-
 # Source image model.
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
@@ -32,7 +30,7 @@ class SrcImage < ActiveRecord::Base
     when /\[\]/
       load_multi_horiz the_url
     else
-      UrlGetter.new.get(the_url)
+      MemeCaptainWeb::UrlGetter.new.get(the_url)
     end
   end
 
