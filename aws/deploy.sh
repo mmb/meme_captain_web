@@ -49,7 +49,7 @@ aws \
 
 wait_for_update "$STACK_NAME" "reviving canary"
 
-wait_for_all_healthy
+wait_for_pool_healthy canary
 
 aws \
   cloudformation \
@@ -87,4 +87,4 @@ aws \
 
 wait_for_update "$STACK_NAME" "reviving ondemand and spot"
 
-wait_for_all_healthy
+wait_for_pool_healthy ondemand,spot

@@ -73,7 +73,7 @@ aws \
 
 wait_for_update "$STACK_NAME" "canary create"
 
-wait_for_all_healthy
+wait_for_pool_healthy canary
 
 aws \
   cloudformation \
@@ -93,4 +93,4 @@ aws \
 
 wait_for_update "$STACK_NAME" "ondemand and spot create"
 
-wait_for_all_healthy
+wait_for_pool_healthy ondemand,spot
