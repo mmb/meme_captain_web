@@ -90,6 +90,40 @@ describe SrcImage do
 
   end
 
+  describe '#load_from_url' do
+    context 'when url is nil' do
+      it 'does not load the image' do
+        src_image = FactoryGirl.create(:src_image, url: nil)
+        expect do
+          src_image.load_from_url
+        end.not_to change { src_image.image }
+      end
+    end
+
+    context 'when url is not nil' do
+      before do
+        stub_request(:get, 'http://example.com/image.jpg').to_return(
+          body: create_image(37, 22))
+      end
+
+      it 'loads the image' do
+        src_image = FactoryGirl.create(
+          :src_image, url: 'http://example.com/image.jpg')
+        src_image.load_from_url
+        expect(src_image.magick_image_list.columns).to eq(37)
+        expect(src_image.magick_image_list.rows).to eq(22)
+      end
+
+      it 'sets derived image fields' do
+        src_image = FactoryGirl.create(
+          :src_image, url: 'http://example.com/image.jpg')
+        src_image.load_from_url
+        expect(src_image.width).to eq(37)
+        expect(src_image.height).to eq(22)
+      end
+    end
+  end
+
   describe '#create_jobs' do
     context 'when the src image is a work in progress' do
       it 'enqueues a src image processing job' do
