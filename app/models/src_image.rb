@@ -21,13 +21,17 @@ class SrcImage < ActiveRecord::Base
     # rubocop:enable Style/GuardClause
   end
 
-  protected
-
-  def post_process
+  def load_from_url
     if url
       self.image = MemeCaptainWeb::ImgUrlComposer.new.load(url)
       set_derived_image_fields
     end
+  end
+
+  protected
+
+  def post_process
+    load_from_url
 
     img = magick_image_list
 
