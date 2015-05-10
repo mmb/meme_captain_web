@@ -53,16 +53,6 @@ describe SrcImage do
     expect { src_image.destroy }.not_to change { GendImage.count }
   end
 
-  it 'generates a thumbnail' do
-    src_image = FactoryGirl.create(:src_image)
-    src_image.post_process_job
-    expect(src_image.src_thumb).not_to be_nil
-    expect(src_image.src_thumb.width).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
-    expect(src_image.src_thumb.height).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
-  end
-
   context 'generating a Magick::Image from its data' do
 
     subject(:src_image) do
@@ -114,65 +104,65 @@ describe SrcImage do
         expect(src_image.magick_image_list.rows).to eq(399)
       end
     end
-  end
 
-  context 'constraining the image to a maximum size' do
+    it 'auto orients the image'
 
-    before do
-      stub_const 'MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0
-      stub_const 'MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE', 80
-    end
+    it 'strips profiles and comments from the image'
 
-    context 'when the the image is too wide' do
+    context 'when the image is too wide' do
       it "reduces the image's width" do
+        stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
+        stub_const('MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE', 80)
         src_image = FactoryGirl.create(
           :src_image, image: create_image(100, 50))
         src_image.post_process_job
 
-        expect(src_image.magick_image_list.columns).to eq 80
-        expect(src_image.magick_image_list.rows).to eq 40
+        expect(src_image.magick_image_list.columns).to eq(80)
+        expect(src_image.magick_image_list.rows).to eq(40)
       end
     end
 
     context 'when the the image is too high' do
       it "reduces the image's height" do
+        stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
+        stub_const('MemeCaptainWeb::Config::MAX_SOURCE_IMAGE_SIDE', 80)
         src_image = FactoryGirl.create(
           :src_image, image: create_image(100, 400))
         src_image.post_process_job
 
-        expect(src_image.magick_image_list.columns).to eq 20
-        expect(src_image.magick_image_list.rows).to eq 80
+        expect(src_image.magick_image_list.columns).to eq(20)
+        expect(src_image.magick_image_list.rows).to eq(80)
       end
     end
-  end
 
-  context 'when the image is too small' do
+    context 'when the image is too small' do
+      it 'enlarges the image' do
+        stub_const('MemeCaptainWeb::Config::ENLARGED_SOURCE_IMAGE_SIDE', 100)
+        src_image = FactoryGirl.create(:src_image, image: create_image(20, 50))
+        src_image.post_process_job
 
-    before do
-      stub_const 'MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 60
-      stub_const 'MemeCaptainWeb::Config::ENLARGED_SOURCE_IMAGE_SIDE', 100
+        expect(src_image.magick_image_list.columns).to eq 40
+        expect(src_image.magick_image_list.rows).to eq 100
+      end
     end
-
-    it 'enlarges the image' do
-      src_image = FactoryGirl.create(:src_image, image: create_image(20, 50))
-      src_image.post_process_job
-
-      expect(src_image.magick_image_list.columns).to eq 40
-      expect(src_image.magick_image_list.rows).to eq 100
-    end
-
-  end
-
-  context 'adding a watermark' do
-    before { stub_const 'MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0 }
 
     it 'watermarks the image' do
+      stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
       src_image = FactoryGirl.create(:src_image, image: create_image(100, 100))
 
       expect do
         src_image.post_process_job
       end.to change { src_image.magick_image_list.excerpt(54, 95, 46, 5) }
     end
-  end
 
+    it 'generates a thumbnail' do
+      src_image = FactoryGirl.create(:src_image)
+      src_image.post_process_job
+      expect(src_image.src_thumb).not_to be_nil
+      expect(src_image.src_thumb.width).to eq(
+        MemeCaptainWeb::Config::THUMB_SIDE)
+      expect(src_image.src_thumb.height).to eq(
+        MemeCaptainWeb::Config::THUMB_SIDE)
+    end
+  end
 end
