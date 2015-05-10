@@ -100,87 +100,20 @@ describe SrcImage do
 
   end
 
-  describe '#load_from_url' do
-    let(:url) { 'http://www.example.com/image.jpg' }
-    let(:image_data) do
-      File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg')
-    end
+  describe '#post_process' do
+    context 'when the image needs to be loaded from a url' do
+      it 'loads the image using the image url composer' do
+        url = 'http://www.example.com/image.jpg'
+        image_data = File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg')
+        stub_request(:get, url).to_return(body: image_data)
 
-    before do
-      stub_const 'MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0
-    end
+        stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
 
-    it 'loads the image from a url' do
-      stub_request(:get, url).to_return(body: image_data)
-      src_image = FactoryGirl.create(:src_image, image: nil, url: url)
-      src_image.post_process_job
-      expect(src_image.magick_image_list.rows).to eq 399
-    end
-
-    context 'vertical join' do
-
-      it 'joins the image vertically' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(100, 50))
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(
-          body: create_image(105, 50))
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(
-          body: create_image(110, 50))
-        src_image = FactoryGirl.create(:src_image,
-                                       image: nil,
-                                       url: 'http://example.com/image.jpg|' \
-                                           'http://example.com/image2.jpg|' \
-                                           'http://example.com/image3.jpg')
+        src_image = FactoryGirl.create(:src_image, image: nil, url: url)
         src_image.post_process_job
-
-        expect(src_image.magick_image_list.columns).to eq 100
-        expect(src_image.magick_image_list.rows).to eq 143
-      end
-
-    end
-
-    context 'horizontal join' do
-
-      it 'joins the image horizontally' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(100, 50))
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(
-          body: create_image(100, 75))
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(
-          body: create_image(100, 100))
-        src_image = FactoryGirl.create(:src_image,
-                                       image: nil,
-                                       url: 'http://example.com/image.jpg[]' \
-                                           'http://example.com/image2.jpg[]' \
-                                           'http://example.com/image3.jpg')
-        src_image.post_process_job
-
-        expect(src_image.magick_image_list.columns).to eq 217
-        expect(src_image.magick_image_list.rows).to eq 50
+        expect(src_image.magick_image_list.rows).to eq(399)
       end
     end
-
-    context 'mixed join' do
-
-      it 'joins the image vertically and then horizontally' do
-        stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(100, 100))
-        stub_request(:get, 'http://example.com/image2.jpg').to_return(
-          body: create_image(100, 100))
-        stub_request(:get, 'http://example.com/image3.jpg').to_return(
-          body: create_image(100, 100))
-        src_image = FactoryGirl.create(:src_image,
-                                       image: nil,
-                                       url: 'http://example.com/image.jpg|' \
-                                           'http://example.com/image2.jpg[]' \
-                                           'http://example.com/image3.jpg')
-        src_image.post_process_job
-
-        expect(src_image.magick_image_list.columns).to eq 100
-        expect(src_image.magick_image_list.rows).to eq 150
-      end
-    end
-
   end
 
   context 'constraining the image to a maximum size' do
