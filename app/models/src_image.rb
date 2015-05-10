@@ -4,7 +4,6 @@
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
-  include HasPostProcessConcern
 
   belongs_to :user
   has_one :src_thumb
@@ -12,6 +11,8 @@ class SrcImage < ActiveRecord::Base
   has_and_belongs_to_many :src_sets, join_table: :src_images_src_sets
 
   validate :image_if_not_url
+
+  after_commit :create_jobs
 
   def image_if_not_url
     # rubocop:disable Style/GuardClause
@@ -22,32 +23,16 @@ class SrcImage < ActiveRecord::Base
   end
 
   def load_from_url
-    if url
-      self.image = MemeCaptainWeb::ImgUrlComposer.new.load(url)
-      set_derived_image_fields
-    end
+    return unless url
+    self.image = MemeCaptainWeb::ImgUrlComposer.new.load(url)
+    set_derived_image_fields
+  end
+
+  def create_jobs
+    SrcImageProcessJob.perform_later(self) if work_in_progress
   end
 
   protected
-
-  def post_process
-    load_from_url
-
-    img = magick_image_list
-
-    img.auto_orient!
-    img.strip!
-
-    MemeCaptainWeb::ImgSizeConstrainer.new.constrain_size(img)
-
-    thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::THUMB_SIDE)
-
-    watermark img
-
-    self.image = img.to_blob
-
-    self.src_thumb = SrcThumb.new(image: thumb_img.to_blob)
-  end
 
   scope :active, -> { where is_deleted: false }
 
@@ -68,14 +53,4 @@ class SrcImage < ActiveRecord::Base
   }
 
   scope :finished, -> { where work_in_progress: false }
-
-  private
-
-  def watermark(img)
-    watermark_img = Magick::ImageList.new(
-      Rails.root + 'app/assets/images/watermark.png')
-    img.extend MemeCaptain::ImageList::Watermark
-    img.watermark_mc watermark_img
-  end
-
 end
