@@ -4,7 +4,6 @@
 class GendImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
-  include HasPostProcessConcern
 
   belongs_to :src_image, counter_cache: true
   has_one :gend_thumb
@@ -19,6 +18,8 @@ class GendImage < ActiveRecord::Base
   attr_accessor :email
   validates :email, length: { maximum: 0 }
 
+  after_commit :create_jobs
+
   def format
     mime = Mime::Type.lookup(content_type)
 
@@ -31,18 +32,11 @@ class GendImage < ActiveRecord::Base
     end
   end
 
-  protected
-
-  def post_process
-    self.image = MemeCaptain.meme(
-      src_image.image, captions.map(&:text_pos)).to_blob
-
-    thumb_img = magick_image_list
-
-    thumb_img.resize_to_fit_anim!(MemeCaptainWeb::Config::THUMB_SIDE)
-
-    self.gend_thumb = GendThumb.new(image: thumb_img.to_blob)
+  def create_jobs
+    GendImageProcessJob.perform_later(self) if work_in_progress
   end
+
+  protected
 
   scope :active, -> { where is_deleted: false }
 

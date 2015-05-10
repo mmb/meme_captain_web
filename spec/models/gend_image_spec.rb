@@ -53,16 +53,6 @@ describe GendImage do
 
   end
 
-  it 'generates a thumbnail' do
-    gend_image = FactoryGirl.create(:gend_image)
-    gend_image.post_process_job
-    expect(gend_image.gend_thumb).not_to be_nil
-    expect(gend_image.gend_thumb.width).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
-    expect(gend_image.gend_thumb.height).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
-  end
-
   describe '#ext' do
 
     let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
@@ -117,6 +107,24 @@ describe GendImage do
     it 'fails validation when email is set' do
       gend_image.email = 'bot@bots.com'
       expect(gend_image).to_not be_valid
+    end
+  end
+
+  describe '#create_jobs' do
+    context 'when the gend image is a work in progress' do
+      it 'enqueues a gend image processing job' do
+        gend_image = FactoryGirl.create(:gend_image)
+        expect(GendImageProcessJob).to receive(:perform_later).with(gend_image)
+        gend_image.run_callbacks(:commit)
+      end
+    end
+
+    context 'when the gend image is not a work in progress' do
+      it 'does not enqueues a gend image processing job' do
+        gend_image = FactoryGirl.create(:gend_image, work_in_progress: false)
+        expect(GendImageProcessJob).not_to receive(:perform_later)
+        gend_image.run_callbacks(:commit)
+      end
     end
   end
 
