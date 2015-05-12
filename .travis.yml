@@ -5,10 +5,10 @@ rvm:
 - 2.0.0
 - 2.1.6
 - 2.2.2
-- rbx-19mode
+- rbx-2
 matrix:
   allow_failures:
-    - rvm: rbx-19mode
+    - rvm: rbx-2
 env:
   global:
     - DISPLAY=:99.0
