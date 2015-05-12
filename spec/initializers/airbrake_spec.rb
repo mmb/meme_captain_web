@@ -5,6 +5,12 @@ require 'rails_helper'
 describe 'Airbrake initializer' do
 
   context 'when the AIRBRAKE_API_KEY is not set' do
+    before do
+      stub_const(
+        'ENV',
+        ENV.to_hash.delete_if { |key| key == 'AIRBRAKE_API_KEY' })
+    end
+
     it 'does not initializes Airbrake' do
       expect(Airbrake).not_to receive(:configure)
       load(
