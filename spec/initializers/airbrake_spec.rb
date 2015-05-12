@@ -43,5 +43,13 @@ describe 'Airbrake initializer' do
         File.expand_path(
           '../../../config/initializers/airbrake.rb', __FILE__))
     end
+
+    it 'enables the delayed job Airbrake plugin' do
+      load(
+        File.expand_path(
+          '../../../config/initializers/airbrake.rb', __FILE__))
+      expect(Delayed::Worker.plugins).to include(
+        Delayed::Plugins::Airbrake::Plugin)
+    end
   end
 end
