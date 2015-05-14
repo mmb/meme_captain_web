@@ -41,11 +41,11 @@
         <% end %>
       </ul>
       <%= form_tag({ controller: :search, action: :show }, method: 'get', class: 'navbar-form navbar-left') do %>
-          <%= text_field_tag :q, nil, placeholder: 'Search' %>
+          <%= text_field_tag :q, nil, placeholder: 'Search', tabindex: '1' %>
       <% end %>
 
       <div class="navbar-form">
-        <input type="text" id="quick-add-url" placeholder="Load URL"/>
+        <input type="text" id="quick-add-url" placeholder="Load URL" tabindex="2"/>
         <span id="quick-add-url-status"/>
       </div>
     </div>

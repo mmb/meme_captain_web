@@ -30,4 +30,20 @@ describe 'layouts/application.html.erb', type: :view do
       'rel' => 'apple-touch-icon',
       'href' => '/assets/apple-touch-icon.png')
   end
+
+  it 'sets the tabindex of the search box to 1' do
+    render
+
+    expect(rendered).to have_selector(
+      'input#q',
+      'tabindex' => '1')
+  end
+
+  it 'sets the tabindex of the load url box to 2' do
+    render
+
+    expect(rendered).to have_selector(
+      'input#quick-add-url',
+      'tabindex' => '2')
+  end
 end
