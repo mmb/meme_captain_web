@@ -15,6 +15,7 @@ module MemeCaptainWeb
         c.use Faraday::Response::RaiseError
 
         c.adapter Faraday.default_adapter
+        c.ssl.verify = false
       end
     end
   end
