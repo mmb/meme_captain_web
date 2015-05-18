@@ -9,6 +9,15 @@ rvm:
 matrix:
   allow_failures:
     - rvm: rbx-2
+  exclude:
+    - rvm: 1.9.3
+      env: DB=database.yml.postgresql
+    - rvm: 2.0.0
+      env: DB=database.yml.postgresql
+    - rvm: 2.1.6
+      env: DB=database.yml.postgresql
+    - rvm: rbx-2
+      env: DB=database.yml.postgresql
 env:
   global:
     - DISPLAY=:99.0
