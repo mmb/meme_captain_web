@@ -10,9 +10,9 @@ describe GendThumbsController, type: :controller do
 
     context 'when the id is found' do
       it 'shows the thumbnail' do
-        FactoryGirl.create(:gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: 1
+        get :show, id: gend_thumb.id
 
         expect(response).to be_success
       end
@@ -20,7 +20,7 @@ describe GendThumbsController, type: :controller do
       it 'has the right content type' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: 1
+        get :show, id: gend_thumb.id
 
         expect(response.content_type).to eq(gend_thumb.content_type)
       end
@@ -28,25 +28,25 @@ describe GendThumbsController, type: :controller do
       it 'has the right content' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: 1
+        get :show, id: gend_thumb.id
 
         expect(response.body).to eq(gend_thumb.image)
       end
 
       it 'has the correct Cache-Control header' do
-        FactoryGirl.create(:gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: 1
+        get :show, id: gend_thumb.id
 
         cache_control = response.headers['Cache-Control']
         expect(cache_control).to eq 'max-age=604800, public'
       end
 
       it 'has the correct Expires header' do
-        FactoryGirl.create(:gend_thumb)
+        gend_thumb = FactoryGirl.create(:gend_thumb)
 
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
-          get :show, id: 1
+          get :show, id: gend_thumb.id
         end
 
         expires_header = response.headers['Expires']
