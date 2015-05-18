@@ -2,8 +2,11 @@
 
 FactoryGirl.define do
 
+
   factory :src_image do
-    image File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg')
+    File.open(Rails.root + 'spec/fixtures/files/ti_duck.jpg', 'rb') do |f|
+      image(f.read)
+    end
   end
 
 end
