@@ -1,0 +1,8 @@
+test:
+  adapter: postgresql
+  database: memecaptain_test
+  username: postgres
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3

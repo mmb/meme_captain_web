@@ -12,8 +12,14 @@ matrix:
 env:
   global:
     - DISPLAY=:99.0
+  matrix:
+    - DB=database.yml.postgresql
+    - DB=database.yml.sqlite
 before_install:
 - sh -e /etc/init.d/xvfb start
 before_script:
-- bundle exec rake db:migrate
+- cp config/$DB config/database.yml
+- bundle exec rake db:create db:migrate
 sudo: false
+addons:
+  postgresql: "9.3"
