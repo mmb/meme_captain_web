@@ -81,7 +81,7 @@ end
 
 group :production do
   gem 'dalli'
-  gem 'pg'
+  gem 'pg', '~> 0.18.2'
   gem 'rack-rewrite'
   gem 'rack-cache', '~> 1.2'
 end
