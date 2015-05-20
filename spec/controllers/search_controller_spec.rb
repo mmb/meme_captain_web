@@ -46,14 +46,17 @@ describe SearchController, type: :controller do
                                            captions: [caption1, caption2],
                                            work_in_progress: false,
                                            src_image: @src_image_1)
+        Timecop.travel(Time.now + 1)
         @gend_image_2 = FactoryGirl.create(:gend_image,
                                            captions: [caption3, caption4],
                                            work_in_progress: false,
                                            src_image: @src_image_3)
+        Timecop.travel(Time.now + 1)
         @gend_image_3 = FactoryGirl.create(:gend_image,
                                            captions: [caption5, caption6],
                                            work_in_progress: false,
                                            src_image: @src_image_3)
+        Timecop.return
       end
 
       it 'finds src images with matching names ordered by most used' do
