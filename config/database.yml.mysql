@@ -1,0 +1,8 @@
+test:
+  adapter: mysql2
+  database: memecaptain_test
+  username: root
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
