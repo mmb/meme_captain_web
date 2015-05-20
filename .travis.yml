@@ -35,7 +35,7 @@ env:
     - DB=database.yml.sqlite
 before_install:
 - sh -e /etc/init.d/xvfb start
-- [ "$DB" = "database.yml.mysql" ] && echo "gem 'mysql2'" >> Gemfile
+- '[ "$DB" = "database.yml.mysql" ] && echo "gem \"mysql2\"" >> Gemfile'
 before_script:
 - cp config/$DB config/database.yml
 - bundle exec rake db:create db:migrate
