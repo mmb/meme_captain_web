@@ -31,6 +31,35 @@ describe GendImagesController, type: :controller do
 
     end
 
+    it 'assigns the source image path' do
+      get :new, src: src_image.id_hash
+      expect(assigns(:src_image_path)).to eq(
+        "http://test.host/src_images/#{src_image.id_hash}")
+    end
+
+    it 'assigns a new gend image with the src_image' do
+      get :new, src: src_image.id_hash
+      expect(assigns(:gend_image).src_image).to eq(src_image)
+    end
+
+    it 'assigns caption 1' do
+      get :new, src: src_image.id_hash
+      caption = assigns(:gend_image).captions[0]
+      expect(caption.top_left_x_pct).to eq(0.05)
+      expect(caption.top_left_y_pct).to eq(0)
+      expect(caption.width_pct).to eq(0.9)
+      expect(caption.height_pct).to eq(0.25)
+    end
+
+    it 'assigns caption 2' do
+      get :new, src: src_image.id_hash
+      caption = assigns(:gend_image).captions[1]
+      expect(caption.top_left_x_pct).to eq(0.05)
+      expect(caption.top_left_y_pct).to eq(0.75)
+      expect(caption.width_pct).to eq(0.9)
+      expect(caption.height_pct).to eq(0.25)
+    end
+
     context 'when the source image is not private' do
       let(:src_image) do
         FactoryGirl.create(:src_image, user: user, private: false)
