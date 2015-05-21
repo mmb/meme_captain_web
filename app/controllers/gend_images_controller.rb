@@ -4,7 +4,8 @@
 class GendImagesController < ApplicationController
   def new
     @gend_image = GendImage.new
-    @gend_image.src_image = SrcImage.find_by_id_hash!(params[:src])
+    @gend_image.src_image = SrcImage.without_image.find_by_id_hash!(
+      params[:src])
     @src_image_path = url_for(controller: :src_images, action: :show,
                               id: @gend_image.src_image.id_hash)
 
