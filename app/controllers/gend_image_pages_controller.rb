@@ -5,7 +5,7 @@ class GendImagePagesController < ApplicationController
   include GendImagesHelper
 
   def show
-    @gend_image = GendImage.find_by_id_hash_and_is_deleted!(params[:id], false)
+    @gend_image = GendImage.active.find_by_id_hash!(params[:id])
 
     @src_image = SrcImage.without_image.find(@gend_image.src_image_id)
     @gend_image_url = gend_image_url_for(@gend_image)
