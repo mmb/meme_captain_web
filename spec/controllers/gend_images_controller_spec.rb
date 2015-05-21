@@ -257,56 +257,43 @@ describe GendImagesController, type: :controller do
 
   describe "GET 'show'" do
 
-    let(:id) { 'abc' }
-    let(:caption1) { mock_model(Caption, text: '1&2') }
-    let(:caption2) { mock_model(Caption, text: "3\n4") }
-
     context 'when the id is found' do
-
+      let(:caption1) { FactoryGirl.create(:caption, text: 'caption 1') }
+      let(:caption2) { FactoryGirl.create(:caption, text: 'caption 2') }
       let(:captions) { [caption1, caption2] }
-      let(:name) { 'name' }
-      let(:src_id_hash) { 'test_hash' }
-      let(:src_image) do
-        mock_model(SrcImage, id_hash: src_id_hash, name: name)
-      end
+      let(:name) { 'meme name' }
+      let(:src_image) { FactoryGirl.create(:src_image, name: name) }
       let(:gend_image) do
-        mock_model(GendImage, captions: captions, src_image: src_image)
-      end
-
-      before do
-        expect(GendImage).to receive(
-          :find_by_id_hash_and_is_deleted!).and_return(gend_image)
+        FactoryGirl.create(
+          :gend_image, src_image: src_image, captions: captions)
       end
 
       it 'shows the source image' do
-        get :show, id: id
+        get :show, id: gend_image.id_hash
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
-        expect(gend_image).to receive(:content_type).and_return('content type')
+        get :show, id: gend_image.id_hash
 
-        get :show, id: id
-
-        expect(response.content_type).to eq 'content type'
+        expect(response.content_type).to eq(gend_image.content_type)
       end
 
       it 'has the right content' do
-        expect(gend_image).to receive(:image).and_return('image')
+        get :show, id: gend_image.id_hash
 
-        get :show, id: id
-
-        expect(response.body).to eq 'image'
+        expect(response.body).to eq(gend_image.image)
       end
 
       context 'returning the meme text in the headers' do
 
         context 'when there is more than one caption' do
           it 'returns the correct header' do
-            get :show, id: id
+            get :show, id: gend_image.id_hash
 
-            expect(response.headers['Meme-Text']).to eq '1%262&3%0A4'
+            expect(response.headers['Meme-Text']).to eq(
+              'caption+1&caption+2')
           end
         end
 
@@ -314,9 +301,9 @@ describe GendImagesController, type: :controller do
           let(:captions) { [caption1] }
 
           it 'returns the correct header' do
-            get :show, id: id
+            get :show, id: gend_image.id_hash
 
-            expect(response.headers['Meme-Text']).to eq '1%262'
+            expect(response.headers['Meme-Text']).to eq('caption+1')
           end
         end
 
@@ -324,16 +311,16 @@ describe GendImagesController, type: :controller do
 
       context 'returning the meme name in the headers' do
         it 'returns the correct header' do
-          get :show, id: id
+          get :show, id: gend_image.id_hash
 
-          expect(response.headers['Meme-Name']).to eq name
+          expect(response.headers['Meme-Name']).to eq('meme+name')
         end
 
         context 'when the name is nil' do
           let(:name) { nil }
 
           it 'returns nil' do
-            get :show, id: id
+            get :show, id: gend_image.id_hash
 
             expect(response.headers['Meme-Name']).to be_nil
           end
@@ -343,24 +330,25 @@ describe GendImagesController, type: :controller do
           let(:name) { "a\r\nb" }
 
           it 'url encodes special characters' do
-            get :show, id: id
+            get :show, id: gend_image.id_hash
 
-            expect(response.headers['Meme-Name']).to eq 'a%0D%0Ab'
+            expect(response.headers['Meme-Name']).to eq('a%0D%0Ab')
           end
         end
       end
 
       it 'returns the meme src image url in the headers' do
-        get :show, id: id
+        get :show, id: gend_image.id_hash
 
-        expected_url = "http://#{request.host}/src_images/#{src_id_hash}"
+        expected_url = "http://#{request.host}/src_images/#{src_image.id_hash}"
         expect(response.headers['Meme-Source-Image']).to eq(expected_url)
       end
 
       it 'has the correct Cache-Control headers' do
-        get :show, id: id
+        get :show, id: gend_image.id_hash
 
-        expect(response.headers['Cache-Control']).to eq 'max-age=86400, public'
+        expect(response.headers['Cache-Control']).to eq(
+          'max-age=86400, public')
       end
 
     end
@@ -368,8 +356,9 @@ describe GendImagesController, type: :controller do
     context 'when the id is not found' do
 
       it 'raises record not found' do
-        expect { get :show, id: id }.to raise_error(
-          ActiveRecord::RecordNotFound)
+        expect do
+          get :show, id: 'does not exist'
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
 
     end
