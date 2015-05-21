@@ -45,6 +45,7 @@ class GendImagesController < ApplicationController
 
   def show
     gend_image = GendImage.find_by_id_hash_and_is_deleted!(params[:id], false)
+    src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
     expires_in 1.day, public: true
 
@@ -52,10 +53,10 @@ class GendImagesController < ApplicationController
       Rack::Utils.escape(c.text)
     end.join('&')
     headers['Meme-Name'] = Rack::Utils.escape(
-      gend_image.src_image.name) if gend_image.src_image.name
+      src_image.name) if src_image.name
     headers['Meme-Source-Image'] = url_for(
       controller: :src_images, action: :show,
-      id: gend_image.src_image.id_hash)
+      id: src_image.id_hash)
 
     return unless stale?(gend_image)
     render text: gend_image.image, content_type: gend_image.content_type
