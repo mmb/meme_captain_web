@@ -3,23 +3,14 @@
 # Generated (meme) images controller.
 class GendImagesController < ApplicationController
   def new
-    @gend_image = GendImage.new
-    @gend_image.src_image = SrcImage.without_image.find_by_id_hash!(
-      params[:src])
-    @src_image_path = url_for(controller: :src_images, action: :show,
-                              id: @gend_image.src_image.id_hash)
+    src_image = SrcImage.without_image.find_by_id_hash!(params[:src])
+    @src_image_path = url_for(
+      controller: :src_images, action: :show, id: src_image.id_hash)
 
-    @gend_image.captions.build(
-      top_left_x_pct: 0.05,
-      top_left_y_pct: 0,
-      width_pct: 0.9,
-      height_pct: 0.25)
-    @gend_image.captions.build(
-      top_left_x_pct: 0.05,
-      top_left_y_pct: 0.75,
-      width_pct: 0.9,
-      height_pct: 0.25)
-    @gend_image.private = @gend_image.src_image.private
+    @gend_image = GendImage.new(
+      src_image: src_image,
+      private: src_image.private)
+    build_captions
   end
 
   def index
@@ -76,6 +67,19 @@ class GendImagesController < ApplicationController
   end
 
   private
+
+  def build_captions
+    @gend_image.captions.build(
+      top_left_x_pct: 0.05,
+      top_left_y_pct: 0,
+      width_pct: 0.9,
+      height_pct: 0.25)
+    @gend_image.captions.build(
+      top_left_x_pct: 0.05,
+      top_left_y_pct: 0.75,
+      width_pct: 0.9,
+      height_pct: 0.25)
+  end
 
   def gend_image_params
     params.require(:gend_image).permit({ captions_attributes: [
