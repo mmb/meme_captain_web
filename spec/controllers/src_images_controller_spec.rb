@@ -201,7 +201,7 @@ describe SrcImagesController, type: :controller do
         request.accept = 'application/json'
         put :update, id: src_image.id_hash, src_image: { name: 'test' }
 
-        expect(SrcImage.find_by_id_hash(src_image.id_hash).name).to eq('test')
+        expect(SrcImage.find_by(id_hash: src_image.id_hash).name).to eq('test')
       end
     end
 
@@ -214,7 +214,7 @@ describe SrcImagesController, type: :controller do
         request.accept = 'application/json'
         put :update, id: src_image.id_hash, src_image: { name: 'test' }
 
-        expect(SrcImage.find_by_id_hash(src_image.id_hash).name).to eq('pre')
+        expect(SrcImage.find_by(id_hash: src_image.id_hash).name).to eq('pre')
       end
     end
   end
@@ -267,8 +267,8 @@ describe SrcImagesController, type: :controller do
           image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
         delete :destroy, id: assigns(:src_image).id_hash
 
-        expect(SrcImage.find_by_id_hash!(
-          assigns(:src_image).id_hash).is_deleted?).to eq(true)
+        expect(SrcImage.find_by(
+          id_hash: assigns(:src_image).id_hash).is_deleted?).to eq(true)
       end
 
       it 'returns success' do
