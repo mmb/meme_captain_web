@@ -30,8 +30,8 @@ class SrcSetsController < ApplicationController
     end
     # rubocop:enable Style/IfUnlessModifier
 
-    @src_set = SrcSet.where(
-      name: params[:id], is_deleted: false).first_or_create do |ss|
+    @src_set = SrcSet.active.where(
+      name: params[:id]).first_or_create do |ss|
       ss.user = current_user
     end
 
@@ -62,14 +62,14 @@ class SrcSetsController < ApplicationController
   end
 
   def show
-    @src_set = SrcSet.find_by_name_and_is_deleted!(params[:id], false)
+    @src_set = SrcSet.active.find_by_name!(params[:id])
     @src_images = @src_set.src_images.without_image.active.most_used.page(
       params[:page])
   end
 
   def destroy
-    @src_set = SrcSet.find_by_name_and_user_id_and_is_deleted!(
-      params[:id], current_user.try(:id), false)
+    @src_set = SrcSet.active.find_by_name_and_user_id!(
+      params[:id], current_user.try(:id))
 
     @src_set.update_attribute(:is_deleted, true)
     redirect_to action: :index
