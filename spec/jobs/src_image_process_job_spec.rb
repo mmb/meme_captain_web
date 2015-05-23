@@ -65,6 +65,14 @@ describe SrcImageProcessJob, type: :job do
     end.to change { src_image.magick_image_list.excerpt(54, 95, 46, 5) }
   end
 
+  it 'updates the image' do
+    src_image = FactoryGirl.create(:src_image)
+    expect do
+      SrcImageProcessJob.perform_now(src_image)
+    end.to change { src_image.image }
+    expect(src_image.image).to_not be(nil)
+  end
+
   it 'generates a thumbnail' do
     src_image = FactoryGirl.create(:src_image)
     SrcImageProcessJob.perform_now(src_image)
