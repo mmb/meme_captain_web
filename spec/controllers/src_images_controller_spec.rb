@@ -222,34 +222,26 @@ describe SrcImagesController, type: :controller do
   describe "GET 'show'" do
 
     context 'when the id is found' do
-
-      let(:src_image) { mock_model(SrcImage) }
-
-      before :each do
-        expect(SrcImage).to receive(
-          :find_by_id_hash_and_work_in_progress!).and_return(src_image)
+      let(:src_image) do
+        FactoryGirl.create(:src_image, work_in_progress: false)
       end
 
       it 'shows the source image' do
-        get 'show', id: 'abc'
+        get 'show', id: src_image.id_hash
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
-        expect(src_image).to receive(:content_type).and_return('content type')
+        get 'show', id: src_image.id_hash
 
-        get 'show', id: 'abc'
-
-        expect(response.content_type).to eq('content type')
+        expect(response.content_type).to eq(src_image.content_type)
       end
 
       it 'has the right content' do
-        expect(src_image).to receive(:image).and_return('image')
+        get 'show', id: src_image.id_hash
 
-        get 'show', id: 'abc'
-
-        expect(response.body).to eq('image')
+        expect(response.body).to eq(src_image.image)
       end
 
     end
@@ -258,7 +250,7 @@ describe SrcImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get 'show', id: 'abc'
+          get 'show', id: 'does not exist'
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
 
