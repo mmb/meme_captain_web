@@ -90,4 +90,13 @@ describe SrcImageProcessJob, type: :job do
     end.to change { src_image.work_in_progress }.from(true).to(false)
   end
 
+  context 'when the source image fails to save' do
+    it 'raises a record invalid exception' do
+      src_image = FactoryGirl.create(:src_image)
+      expect(src_image).to receive(:valid?).and_return(false)
+      expect do
+        SrcImageProcessJob.perform_now(src_image)
+      end.to raise_error(ActiveRecord::RecordInvalid)
+    end
+  end
 end
