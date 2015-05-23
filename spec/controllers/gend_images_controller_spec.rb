@@ -138,16 +138,11 @@ describe GendImagesController, type: :controller do
 
     context 'with valid attributes' do
 
-      before :each do
-        expect(SrcImage).to receive(:find_by_id_hash!).with('abc').and_return(
-          src_image)
-      end
-
       it 'saves the new generated image to the database' do
         expect do
           post :create,
                gend_image: {
-                 src_image_id: 'abc',
+                 src_image_id: src_image.id_hash,
                  captions_attributes: {
                    '0' => {
                      'font' => 'font1',
@@ -206,7 +201,7 @@ describe GendImagesController, type: :controller do
 
       it 'redirects to the index' do
         post :create,
-             gend_image: { src_image_id: 'abc' }
+             gend_image: { src_image_id: src_image.id_hash }
 
         expect(response).to redirect_to(
           controller: :gend_image_pages,
@@ -385,8 +380,8 @@ describe GendImagesController, type: :controller do
       it 'marks the record as deleted in the database' do
         delete :destroy, id: id
 
-        expect(GendImage.find_by_id_hash!(
-          gend_image.id_hash).is_deleted?).to eq(true)
+        expect(GendImage.find_by(
+          id_hash: gend_image.id_hash).is_deleted?).to eq(true)
       end
 
       it 'returns success' do

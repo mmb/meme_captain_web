@@ -3,7 +3,7 @@
 # Generated (meme) images controller.
 class GendImagesController < ApplicationController
   def new
-    src_image = SrcImage.without_image.find_by_id_hash!(params[:src])
+    src_image = SrcImage.without_image.find_by!(id_hash: params[:src])
     @src_image_path = url_for(
       controller: :src_images, action: :show, id: src_image.id_hash)
 
@@ -20,7 +20,8 @@ class GendImagesController < ApplicationController
   end
 
   def create
-    src_image = SrcImage.find_by_id_hash!(params[:gend_image][:src_image_id])
+    src_image = SrcImage.find_by!(
+      id_hash: params[:gend_image][:src_image_id])
 
     @gend_image = GendImage.new(gend_image_params)
     @gend_image.src_image = src_image
@@ -35,7 +36,7 @@ class GendImagesController < ApplicationController
   end
 
   def show
-    gend_image = GendImage.active.find_by_id_hash!(params[:id])
+    gend_image = GendImage.active.find_by!(id_hash: params[:id])
     src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
     expires_in 1.day, public: true
@@ -54,7 +55,7 @@ class GendImagesController < ApplicationController
   end
 
   def destroy
-    gend_image = GendImage.find_by_id_hash!(params[:id])
+    gend_image = GendImage.find_by!(id_hash: params[:id])
 
     if gend_image.user && gend_image.user == current_user
       gend_image.is_deleted = true
