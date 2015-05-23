@@ -62,14 +62,14 @@ class SrcSetsController < ApplicationController
   end
 
   def show
-    @src_set = SrcSet.active.find_by_name!(params[:id])
+    @src_set = SrcSet.active.find_by!(name: params[:id])
     @src_images = @src_set.src_images.without_image.active.most_used.page(
       params[:page])
   end
 
   def destroy
-    @src_set = SrcSet.active.find_by_name_and_user_id!(
-      params[:id], current_user.try(:id))
+    @src_set = SrcSet.active.find_by!(
+      name: params[:id], user_id: current_user.try(:id))
 
     @src_set.update_attribute(:is_deleted, true)
     redirect_to action: :index
