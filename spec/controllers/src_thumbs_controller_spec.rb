@@ -10,48 +10,38 @@ describe SrcThumbsController, type: :controller do
 
     context 'when the id is found' do
 
-      let(:src_thumb) { mock_model(SrcThumb) }
+      let(:src_thumb) { FactoryGirl.create(:src_thumb) }
 
       it 'shows the thumbnail' do
-        expect(SrcThumb).to receive(:find).and_return(src_thumb)
-
-        get 'show', id: 1
+        get 'show', id: src_thumb.id
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
-        expect(src_thumb).to receive(:content_type).and_return('content type')
-        expect(SrcThumb).to receive(:find).and_return(src_thumb)
+        get 'show', id: src_thumb.id
 
-        get 'show', id: 1
-
-        expect(response.content_type).to eq('content type')
+        expect(response.content_type).to eq(src_thumb.content_type)
       end
 
       it 'has the right content' do
-        expect(src_thumb).to receive(:image).and_return('image')
-        expect(SrcThumb).to receive(:find).and_return(src_thumb)
+        get 'show', id: src_thumb.id
 
-        get 'show', id: 1
-
-        expect(response.body).to eq('image')
+        expect(response.body).to eq(src_thumb.image)
       end
 
       it 'has the correct Cache-Control header' do
-        expect(SrcThumb).to receive(:find).and_return(src_thumb)
-
-        get :show, id: 1
+        get 'show', id: src_thumb.id
 
         cache_control = response.headers['Cache-Control']
         expect(cache_control).to eq('max-age=604800, public')
       end
 
       it 'has the correct Expires header' do
-        expect(SrcThumb).to receive(:find).and_return(src_thumb)
+        get 'show', id: src_thumb.id
 
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
-          get :show, id: 1
+          get 'show', id: src_thumb.id
         end
 
         expires_header = response.headers['Expires']
