@@ -56,7 +56,7 @@ gem 'faraday_middleware', '~> 0.9.1'
 gem 'ttfunk', '~> 1.4.0'
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 gem 'local_time', '~> 1.0.0'
-gem 'rubocop', '~> 0.30.1'
+gem 'rubocop', '~> 0.31.0'
 gem 'airbrake', '~> 4.1.0'
 gem 'delayed-plugins-airbrake', '~> 1.1.0'
 
