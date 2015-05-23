@@ -23,6 +23,8 @@ class SrcImageProcessJob < ActiveJob::Base
     )
   end
 
+  private
+
   def watermark(img)
     watermark_img = Magick::ImageList.new(
       Rails.root + 'app/assets/images/watermark.png')
