@@ -16,13 +16,11 @@ class SrcImageProcessJob < ActiveJob::Base
 
     watermark(img)
 
-    src_image.image = img.to_blob
-
-    src_image.src_thumb = SrcThumb.new(image: thumb_img.to_blob)
-
-    src_image.work_in_progress = false
-
-    src_image.save!
+    src_image.update!(
+      image: img.to_blob,
+      src_thumb: SrcThumb.new(image: thumb_img.to_blob),
+      work_in_progress: false
+    )
   end
 
   def watermark(img)
