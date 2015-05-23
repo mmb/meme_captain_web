@@ -31,8 +31,8 @@ class SrcImagesController < ApplicationController
   end
 
   def show
-    src_image = SrcImage.find_by_id_hash_and_work_in_progress!(
-      params[:id], false)
+    src_image = SrcImage.find_by!(
+      id_hash: params[:id], work_in_progress: false)
 
     expires_in 1.hour, public: true
 
@@ -41,7 +41,7 @@ class SrcImagesController < ApplicationController
   end
 
   def update
-    @src_image = SrcImage.find_by_id_hash!(params[:id])
+    @src_image = SrcImage.find_by!(id_hash: params[:id])
 
     if @src_image.user == current_user
       @src_image.update_attributes(src_image_edit_params)
@@ -51,7 +51,7 @@ class SrcImagesController < ApplicationController
   end
 
   def destroy
-    src_image = SrcImage.find_by_id_hash!(params[:id])
+    src_image = SrcImage.find_by!(id_hash: params[:id])
 
     if src_image.user == current_user
       src_image.is_deleted = true
