@@ -2,14 +2,15 @@ require 'rails_helper'
 
 describe SrcImageNameJob, type: :job do
   let(:src_image) { FactoryGirl.create(:src_image, name: current_name) }
+  let(:x) { double(:x) }
 
   before do
-    allow(Rails.application.config).to receive(:asset_host).and_return(
-      asset_host)
+    allow(Rails.configuration).to receive(:x).and_return(x)
+    allow(x).to receive(:src_image_name_lookup_host).and_return(lookup_host)
   end
 
-  context 'when no asset host is configured' do
-    let(:asset_host) { nil }
+  context 'when src image name lookups are turned off' do
+    let(:lookup_host) { nil }
     let(:current_name) { nil }
 
     it 'does not change the src image name' do
@@ -19,8 +20,8 @@ describe SrcImageNameJob, type: :job do
     end
   end
 
-  context 'when an asset host is configured' do
-    let(:asset_host) { 'yourassets.com' }
+  context 'when src image name lookups are turned on' do
+    let(:lookup_host) { 'test.com' }
 
     context 'when the src image is private' do
       let(:src_image) do
@@ -50,7 +51,7 @@ describe SrcImageNameJob, type: :job do
       before do
         stub_request(:get, 'http://google.com/imghp?hl=en&tab=wi')
         search_url = 'http://google.com/searchbyimage?' \
-          "image_url=http://yourassets.com/src_images/#{src_image.id_hash}"
+          "image_url=http://test.com/src_images/#{src_image.id_hash}"
         stub_request(:get, search_url).to_return(body: body)
       end
 
@@ -86,7 +87,7 @@ describe SrcImageNameJob, type: :job do
       before do
         stub_request(:get, 'http://google.com/imghp?hl=en&tab=wi')
         search_url = 'http://google.com/searchbyimage?' \
-          "image_url=http://yourassets.com/src_images/#{src_image.id_hash}"
+          "image_url=http://test.com/src_images/#{src_image.id_hash}"
         stub_request(:get, search_url).to_return(body: body)
       end
 

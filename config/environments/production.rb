@@ -17,6 +17,7 @@ MemeCaptainWeb::Application.configure do
   end
 
   MemeCaptainWeb::AssetHostConfig.new.configure(config, ENV)
+  MemeCaptainWeb::SrcImageNameLookupConfig.new.configure(config, ENV)
 
   config.serve_static_files = true
   config.middleware.insert_before ActionDispatch::Static, Rack::Deflater

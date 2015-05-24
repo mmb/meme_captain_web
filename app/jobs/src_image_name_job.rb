@@ -3,7 +3,7 @@ class SrcImageNameJob < ActiveJob::Base
   queue_as :default
 
   def perform(src_image)
-    return unless host
+    return unless Rails.configuration.x.src_image_name_lookup_host
     return if src_image.private?
     return unless src_image.name.blank?
 
@@ -21,10 +21,6 @@ class SrcImageNameJob < ActiveJob::Base
 
   private
 
-  def host
-    Rails.application.config.asset_host
-  end
-
   def create_connection
     Faraday.new(url: 'http://google.com') do |faraday|
       faraday.use(:cookie_jar)
@@ -37,8 +33,8 @@ class SrcImageNameJob < ActiveJob::Base
 
   def src_image_url(src_image)
     Rails.application.routes.url_helpers.url_for(
-      host: host, controller: :src_images, action: :show,
-      id: src_image.id_hash)
+      host: Rails.configuration.x.src_image_name_lookup_host,
+      controller: :src_images, action: :show, id: src_image.id_hash)
   end
 
   def extract_name(body)
