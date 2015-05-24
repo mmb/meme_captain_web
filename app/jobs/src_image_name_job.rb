@@ -4,6 +4,7 @@ class SrcImageNameJob < ActiveJob::Base
 
   def perform(src_image)
     return unless host
+    return if src_image.private?
     return unless src_image.name.blank?
 
     conn = create_connection

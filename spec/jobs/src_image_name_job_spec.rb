@@ -22,6 +22,18 @@ describe SrcImageNameJob, type: :job do
   context 'when an asset host is configured' do
     let(:asset_host) { 'yourassets.com' }
 
+    context 'when the src image is private' do
+      let(:src_image) do
+        FactoryGirl.create(:src_image, private: true, name: '')
+      end
+
+      it 'does not change the src image name' do
+        expect do
+          SrcImageNameJob.perform_now(src_image)
+        end.to_not change { src_image.name }
+      end
+    end
+
     context 'when the src image already has a name' do
       let(:current_name) { 'current name' }
 
