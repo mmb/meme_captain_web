@@ -90,6 +90,12 @@ describe SrcImageProcessJob, type: :job do
     end.to change { src_image.work_in_progress }.from(true).to(false)
   end
 
+  it "enqueues a job to set the src image's name" do
+    src_image = FactoryGirl.create(:src_image)
+    expect(SrcImageNameJob).to receive(:perform_later).with(src_image)
+    SrcImageProcessJob.perform_now(src_image)
+  end
+
   context 'when the source image fails to save' do
     it 'raises a record invalid exception' do
       src_image = FactoryGirl.create(:src_image)

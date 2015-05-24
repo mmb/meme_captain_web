@@ -21,6 +21,8 @@ class SrcImageProcessJob < ActiveJob::Base
       src_thumb: SrcThumb.new(image: thumb_img.to_blob),
       work_in_progress: false
     )
+
+    SrcImageNameJob.perform_later(src_image)
   end
 
   private
