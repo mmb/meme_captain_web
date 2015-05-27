@@ -12,6 +12,18 @@ describe 'layouts/application.html.erb', type: :view do
                                       content: 'Meme Captain meme generator')
   end
 
+  it 'sets the meta description using content_for' do
+    allow(view).to receive(:content_for).with(:description).and_return(
+      'test description')
+
+    render
+
+    expect(rendered).to have_selector(
+      'meta',
+      'name' => 'description',
+      'content' => 'test description')
+  end
+
   it 'sets the viewport' do
     render
 
