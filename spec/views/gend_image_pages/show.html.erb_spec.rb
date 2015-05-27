@@ -7,7 +7,16 @@ require 'cgi'
 describe 'gend_image_pages/show.html.erb', type: :view do
   include Webrat::Matchers
 
-  let(:gend_image) { FactoryGirl.create(:gend_image, work_in_progress: false) }
+  let(:gend_image) do
+    FactoryGirl.create(
+      :gend_image,
+      work_in_progress: false,
+      captions: [
+        FactoryGirl.create(:caption, text: 'caption 1'),
+        FactoryGirl.create(:caption, text: 'caption 2')
+      ])
+  end
+
   let(:src_image) { FactoryGirl.create(:src_image) }
   let(:gend_image_url) do
     url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
@@ -22,6 +31,13 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
     allow(view).to receive(:browser).with(no_args).and_return(browser)
     allow(browser).to receive(:android?).with(no_args).and_return(android)
+  end
+
+  it 'sets the content for the description to the meme captions' do
+    expect(view).to receive(:content_for).with(:description) do |&block|
+      expect(block.call).to eq('caption 1 caption 2')
+    end
+    render
   end
 
   context 'browser' do
