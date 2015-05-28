@@ -1,3 +1,7 @@
+<% content_for(:title) do %>
+  <%- "Meme Captain meme generator upload" -%>
+<% end %>
+
 <h1>Upload source image</h1>
 
 <%= form_for @src_image, :url => {:action => 'create'} do |f| %>
