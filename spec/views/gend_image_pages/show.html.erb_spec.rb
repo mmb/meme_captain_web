@@ -12,8 +12,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       :gend_image,
       work_in_progress: false,
       captions: [
-        FactoryGirl.create(:caption, text: 'caption 1'),
-        FactoryGirl.create(:caption, text: 'caption 2')
+        FactoryGirl.create(:caption, text: 'caption 1', top_left_y_pct: 0.8),
+        FactoryGirl.create(:caption, text: 'caption 2', top_left_y_pct: 0.2)
       ])
   end
 
@@ -35,7 +35,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
   it 'sets the content for the description to the meme captions' do
     expect(view).to receive(:content_for).with(:description) do |&block|
-      expect(block.call).to eq('caption 1 caption 2')
+      expect(block.call).to eq('caption 2 caption 1')
     end
     render
   end

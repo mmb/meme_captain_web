@@ -1,5 +1,5 @@
 <% content_for(:description) do %>
-  <%- @gend_image.captions.map(&:text).join(' ') -%>
+  <%- @gend_image.captions.position_order.map(&:text).join(' ') -%>
 <% end %>
 
 <% if @gend_image.work_in_progress? %>
