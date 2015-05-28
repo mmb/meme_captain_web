@@ -31,7 +31,7 @@ describe 'gend_images/new.html.erb', type: :view do
   it 'has the src image name in the title' do
     render
 
-    expect(view.content_for(:title)).to eq 'src image name meme'
+    expect(view.content_for(:title)).to eq 'src image name meme generator'
   end
 
   it 'has text inputs with the form control class' do
