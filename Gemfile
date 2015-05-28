@@ -73,6 +73,7 @@ group :test, :development do
   gem 'jasmine-headless-webkit'
   gem 'sqlite3'
   gem 'web-console', '~> 2.0'
+  gem 'w3c_validators', '~> 1.2'
 end
 
 group :test do

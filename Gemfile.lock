@@ -253,6 +253,9 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    w3c_validators (1.2)
+      json
+      nokogiri
     web-console (2.1.2)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -310,6 +313,7 @@ DEPENDENCIES
   timecop
   ttfunk (~> 1.4.0)
   uglifier (>= 1.0.3)
+  w3c_validators (~> 1.2)
   web-console (~> 2.0)
   webmock
   webrat (~> 0.7.3)
