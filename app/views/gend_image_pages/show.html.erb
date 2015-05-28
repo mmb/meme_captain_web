@@ -22,6 +22,9 @@
           <% end %>
 
           <% unless @src_image.name.blank? %>
+              <% content_for(:title) do %>
+                  <%- "#{@src_image.name} meme" -%>
+              <% end %>
               <small><%= @src_image.name %></small>
           <% end %>
         </blockquote>

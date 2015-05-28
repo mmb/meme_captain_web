@@ -31,6 +31,27 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
     allow(view).to receive(:browser).with(no_args).and_return(browser)
     allow(browser).to receive(:android?).with(no_args).and_return(android)
+    allow(view).to receive(:content_for)
+  end
+
+  context 'when the src image has a name' do
+    let(:src_image) { FactoryGirl.create(:src_image, name: 'test src') }
+
+    it 'sets the content for the title to the src image name' do
+      expect(view).to receive(:content_for).with(:title) do |&block|
+        expect(block.call).to eq('test src meme')
+      end
+      render
+    end
+  end
+
+  context 'when the src image does not have a name' do
+    let(:src_image) { FactoryGirl.create(:src_image, name: '') }
+
+    it 'does not set the content for the title to the src image name' do
+      expect(view).to_not receive(:content_for).with(:title)
+      render
+    end
   end
 
   it 'sets the content for the description to the meme captions' do
