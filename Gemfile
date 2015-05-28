@@ -78,7 +78,7 @@ end
 
 group :test do
   gem 'timecop'
-  gem 'webmock'
+  gem 'webmock', '~> 1.21.0'
 end
 
 group :production do
