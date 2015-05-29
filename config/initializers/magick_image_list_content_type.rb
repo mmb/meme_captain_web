@@ -5,6 +5,9 @@ module Magick
   class ImageList
     def content_type
       {
+        'BMP' => 'image/bmp',
+        'BMP2' => 'image/bmp',
+        'BMP3' => 'image/bmp',
         'GIF' => 'image/gif',
         'JPEG' => 'image/jpeg',
         'PNG' => 'image/png'

@@ -31,4 +31,25 @@ describe '#content_type' do
       expect(image_list.content_type).to eq('image/png')
     end
   end
+
+  context 'when the image format is BMP' do
+    let(:format) { 'BMP' }
+    it 'return image/bmp for the content type' do
+      expect(image_list.content_type).to eq('image/bmp')
+    end
+  end
+
+  context 'when the image format is BMP2' do
+    let(:format) { 'BMP2' }
+    it 'return image/bmp for the content type' do
+      expect(image_list.content_type).to eq('image/bmp')
+    end
+  end
+
+  context 'when the image format is BMP3' do
+    let(:format) { 'BMP3' }
+    it 'return image/bmp for the content type' do
+      expect(image_list.content_type).to eq('image/bmp')
+    end
+  end
 end
