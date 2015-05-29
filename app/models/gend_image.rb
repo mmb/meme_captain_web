@@ -23,13 +23,9 @@ class GendImage < ActiveRecord::Base
   def format
     mime = Mime::Type.lookup(content_type)
 
-    if mime.is_a?(Mime::Type)
-      {
-        jpeg: :jpg
-      }.fetch(mime.symbol, mime.symbol)
-    else
-      nil
-    end
+    return unless mime.is_a?(Mime::Type)
+
+    { jpeg: :jpg }.fetch(mime.symbol, mime.symbol)
   end
 
   def create_jobs
