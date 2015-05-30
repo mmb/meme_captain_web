@@ -7,7 +7,15 @@ describe GendImagePagesController, type: :controller do
   describe 'show' do
 
     let(:src_image) { FactoryGirl.create(:src_image) }
-    let(:gend_image) { FactoryGirl.create(:gend_image, src_image: src_image) }
+    let(:gend_image) do
+      FactoryGirl.create(
+        :gend_image,
+        src_image: src_image,
+        captions: [
+          FactoryGirl.create(:caption, text: 'caption 1', top_left_y_pct: 0.8),
+          FactoryGirl.create(:caption, text: 'caption 2', top_left_y_pct: 0.2)
+        ])
+    end
 
     it 'sets the gend image' do
       get :show, id: gend_image.id_hash
@@ -23,6 +31,11 @@ describe GendImagePagesController, type: :controller do
       get :show, id: gend_image.id_hash
       expect(assigns(:gend_image_url)).to eq(
         "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
+    end
+
+    it 'sets the meme_text' do
+      get :show, id: gend_image.id_hash
+      expect(assigns(:meme_text)).to eq('caption 2 caption 1')
     end
 
     context 'when the gend image is less than 10 seconds old' do
