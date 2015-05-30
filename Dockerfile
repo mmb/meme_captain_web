@@ -18,6 +18,7 @@ RUN ["bundle", "install", "--jobs=4"]
 RUN ["bundle", "exec", "rake", "assets:precompile"]
 
 COPY docker/default.vcl /etc/varnish/default.vcl
+COPY docker/varnish_defaults /etc/default/varnish
 
 ENV MEMCACHE_SERVERS 127.0.0.1
 
