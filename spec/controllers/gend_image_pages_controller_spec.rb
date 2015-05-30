@@ -19,6 +19,12 @@ describe GendImagePagesController, type: :controller do
       expect(assigns(:src_image)).to eq src_image
     end
 
+    it 'sets the gend image url' do
+      get :show, id: gend_image.id_hash
+      expect(assigns(:gend_image_url)).to eq(
+        "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
+    end
+
     context 'when the gend image is less than 10 seconds old' do
       it 'refreshes in 2 seconds' do
         get :show, id: gend_image.id_hash
