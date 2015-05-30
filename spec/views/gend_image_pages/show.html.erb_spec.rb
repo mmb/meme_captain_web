@@ -134,4 +134,12 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       'time',
       datetime: gend_image.created_at.strftime('%Y-%m-%dT%H:%M:%SZ'))
   end
+
+  it "uses the image's meme text as alt text" do
+    expect(render).to have_selector(
+      'img',
+      src: "/gend_images/#{gend_image.id_hash}",
+      alt: 'caption 2 caption 1')
+  end
+
 end
