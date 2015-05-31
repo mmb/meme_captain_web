@@ -55,7 +55,7 @@ describe 'thumb_selector', ->
       it 'redirects to the set', ->
         spyOn $, 'attr'
 
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
 
         $('.add-to-set').click()
@@ -64,7 +64,7 @@ describe 'thumb_selector', ->
 
     describe 'when the response is forbidden', ->
       it 'shows the user an error message', ->
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.error({status: 403}, '')
 
         $('.add-to-set').click()
@@ -73,7 +73,7 @@ describe 'thumb_selector', ->
 
     describe 'when the response is another error', ->
       it 'shows the user an error message', ->
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.error({status: 500}, 'some error')
 
         $('.add-to-set').click()
@@ -87,7 +87,7 @@ describe 'thumb_selector', ->
 
     describe 'when successful', ->
       it 'removes the images from the DOM', ->
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
 
         $('.remove-from-set').click()
@@ -97,7 +97,7 @@ describe 'thumb_selector', ->
 
     describe 'when the response is forbidden', ->
       it 'shows the user an error message', ->
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.error({status: 403}, '')
 
         $('.remove-from-set').click()
@@ -106,7 +106,7 @@ describe 'thumb_selector', ->
 
     describe 'when the response is another error', ->
       it 'shows the user an error message', ->
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.error({status: 500}, 'some error')
 
         $('.remove-from-set').click()
@@ -119,9 +119,9 @@ describe 'thumb_selector', ->
         $('#div1').click()
         $('#div3').click()
 
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
-        spyOn(window, 'confirm').andReturn(true)
+        spyOn(window, 'confirm').and.returnValue(true)
 
         $('.delete-src').click()
 
@@ -133,9 +133,9 @@ describe 'thumb_selector', ->
       beforeEach ->
         $('#div1').click()
 
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.error({status: 500}, '')
-        spyOn(window, 'confirm').andReturn(true)
+        spyOn(window, 'confirm').and.returnValue(true)
 
         $('.delete-src').click()
 
@@ -149,7 +149,7 @@ describe 'thumb_selector', ->
 
       it "doesn't delete the image", ->
         $('#div1').click()
-        spyOn(window, 'confirm').andReturn(false)
+        spyOn(window, 'confirm').and.returnValue(false)
         $('.delete-src').click()
         expect($('#div1').length).toBe(1)
 
@@ -160,9 +160,9 @@ describe 'thumb_selector', ->
         $('#div1').click()
         $('#div3').click()
 
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
-        spyOn(window, 'confirm').andReturn(true)
+        spyOn(window, 'confirm').and.returnValue(true)
 
         $('.delete-gend').click()
 
@@ -174,9 +174,9 @@ describe 'thumb_selector', ->
       beforeEach ->
         $('#div1').click()
 
-        spyOn($, 'ajax').andCallFake (url, params) ->
+        spyOn($, 'ajax').and.callFake (url, params) ->
           params.error({status: 500}, '')
-        spyOn(window, 'confirm').andReturn(true)
+        spyOn(window, 'confirm').and.returnValue(true)
 
         $('.delete-gend').click()
 
@@ -190,7 +190,7 @@ describe 'thumb_selector', ->
 
       it "doesn't delete the image", ->
         $('#div1').click()
-        spyOn(window, 'confirm').andReturn(false)
+        spyOn(window, 'confirm').and.returnValue(false)
         $('.delete-gend').click()
         expect($('#div1').length).toBe(1)
 

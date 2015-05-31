@@ -1,1 +1,1 @@
-task spec: :'jasmine:headless'
+task spec: :'spec:javascript'

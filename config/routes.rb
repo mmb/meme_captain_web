@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 MemeCaptainWeb::Application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   concern :paginatable do
     get '(page/:page)', action: :index, on: :collection, as: ''
   end

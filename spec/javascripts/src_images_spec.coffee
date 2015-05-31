@@ -8,7 +8,7 @@ describe 'src_images', ->
       it 'makes the AJAX requests to add the source images', ->
         $('#load-urls').val "http://url1.com/ http://url2.com/\n\nhttp://url3.com/"
 
-        ajax_spy = spyOn($, 'ajax').andCallFake (url, params) ->
+        ajax_spy = spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
 
         $('#load-urls-button').click()
@@ -40,7 +40,7 @@ describe 'src_images', ->
       it 'displays a message to the user', ->
         $('#load-urls').val 'http://url1.com/'
 
-        ajax_spy = spyOn($, 'ajax').andCallFake (url, params) ->
+        ajax_spy = spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
 
         $('#load-urls-button').click()
@@ -50,7 +50,7 @@ describe 'src_images', ->
       it 'clears the text area', ->
         $('#load-urls').val 'http://url1.com/'
 
-        ajax_spy = spyOn($, 'ajax').andCallFake (url, params) ->
+        ajax_spy = spyOn($, 'ajax').and.callFake (url, params) ->
           params.success()
 
         $('#load-urls-button').click()

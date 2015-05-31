@@ -70,7 +70,7 @@ group :test, :development do
   gem 'rspec-activemodel-mocks', '~> 1.0.1'
   gem 'shoulda', '~> 3.5.0'
   gem 'webrat', '~> 0.7.3'
-  gem 'jasmine-headless-webkit'
+  gem 'jasmine-rails', '~> 0.10.8'
   gem 'sqlite3'
   gem 'web-console', '~> 2.0'
   gem 'w3c_validators', '~> 1.2'
