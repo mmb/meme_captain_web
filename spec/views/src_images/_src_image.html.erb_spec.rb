@@ -7,7 +7,11 @@ describe 'src_images/_src_image.html', type: :view do
 
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
   let(:src_image) do
-    mock_model(SrcImage, work_in_progress: false, src_thumb: src_thumb)
+    mock_model(
+      SrcImage,
+      work_in_progress: false,
+      src_thumb: src_thumb,
+      name: 'test src image')
   end
   let(:user) { FactoryGirl.create(:user) }
 
@@ -36,6 +40,12 @@ describe 'src_images/_src_image.html', type: :view do
       expect(rendered).to match("data-id=\"#{src_image.id_hash}\"")
     end
 
+    it 'sets the image alt tag to the src image name ' do
+      expect(rendered).to have_selector(
+        'img',
+        src: "/src_thumbs/#{src_thumb.id}",
+        alt: 'test src image')
+    end
   end
 
   context 'the image has not been processed yet' do
