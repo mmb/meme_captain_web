@@ -2,10 +2,10 @@
     <%= render :partial => 'application/under_construction' %>
 <% else %>
     <%= link_to image_tag(url_for(src_image.src_thumb),
-                          :size => "#{src_image.src_thumb.width}x#{src_image.src_thumb.height}", alt: src_image.name),
-                :controller => :gend_images,
-                :action => :new,
-                :src => src_image.id_hash %>
+                          size: "#{src_image.src_thumb.width}x#{src_image.src_thumb.height}", alt: src_image.name),
+                controller: :gend_images,
+                action: :new,
+                src: src_image.id_hash %>
 <% end %>
 <% if current_user %>
     <input type="checkbox" class="selector" data-id="<%= src_image.id_hash %>"/>
