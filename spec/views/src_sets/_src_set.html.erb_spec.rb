@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe 'src_sets/_src_set.html', type: :view do
+  include Webrat::Matchers
 
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
 
@@ -36,6 +37,13 @@ describe 'src_sets/_src_set.html', type: :view do
       expect(rendered).to match('height="78"')
     end
 
+    it 'sets the image alt tag to the src image name ' do
+      render partial: 'src_sets/src_set', locals: { src_set: src_set }
+      expect(rendered).to have_selector(
+        'img',
+        src: "/src_thumbs/#{src_thumb.id}",
+        alt: 'set1')
+    end
   end
 
   context 'when the set is empty' do
