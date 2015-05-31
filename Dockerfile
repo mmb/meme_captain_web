@@ -15,7 +15,7 @@ WORKDIR /app
 
 RUN ["bundle", "install", "--jobs=4"]
 
-RUN ["bundle", "exec", "rake", "assets:precompile"]
+RUN ["bundle", "exec", "rake", "assets:precompile", "RAILS_ENV=production"]
 
 COPY docker/default.vcl /etc/varnish/default.vcl
 COPY docker/varnish_defaults /etc/default/varnish
