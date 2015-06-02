@@ -12,11 +12,13 @@ class GendImagePagesController < ApplicationController
     @gend_image_url = gend_image_url_for(@gend_image)
     @meme_text = @gend_image.captions.position_order.map(&:text).join(' ')
 
-    # rubocop:disable Style/GuardClause
-    if @gend_image.work_in_progress? &&
-       (Time.now - @gend_image.created_at < 10)
-      @refresh_in = 2
-    end
-    # rubocop:enable Style/GuardClause
+    set_refresh
+  end
+
+  private
+
+  def set_refresh
+    return unless @gend_image.work_in_progress?
+    @refresh_in = 2 if Time.now - @gend_image.created_at < 10
   end
 end
