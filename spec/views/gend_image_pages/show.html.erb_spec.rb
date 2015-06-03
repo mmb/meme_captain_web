@@ -17,7 +17,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
   let(:src_image) { FactoryGirl.create(:src_image) }
   let(:gend_image_url) do
-    url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
+    "http://test.host/gend_images/#{gend_image.id_hash}.jpg"
   end
   let(:android) { false }
   let(:mobile) { false }
@@ -159,7 +159,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   it "uses the image's meme text as alt text" do
     expect(render).to have_selector(
       'img',
-      src: "/gend_images/#{gend_image.id_hash}",
+      src: gend_image_url,
       alt: 'test meme text')
   end
 
