@@ -67,6 +67,12 @@
             <% end %>
         <% end %>
 
+        <% if browser.mobile? %>
+            <%= link_to("whatsapp://send?text=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+                WhatsApp
+            <% end %>
+        <% end %>
+
         <%= link_to({ controller: :gend_images, action: :new, src: @src_image.id_hash }, class: 'btn btn-default') do %>
             New meme using this image
         <% end %>

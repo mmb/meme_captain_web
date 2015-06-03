@@ -22,6 +22,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     url_for(controller: :gend_images, action: :show, id: gend_image.id_hash)
   end
   let(:android) { false }
+  let(:mobile) { false }
   let(:browser) { instance_double('Browser') }
 
   before do
@@ -32,6 +33,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
     allow(view).to receive(:browser).with(no_args).and_return(browser)
     allow(browser).to receive(:android?).with(no_args).and_return(android)
+    allow(browser).to receive(:mobile?).with(no_args).and_return(mobile)
     allow(view).to receive(:content_for)
   end
 
@@ -75,6 +77,28 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
       it 'has the SMS button' do
         expect(render).to contain 'SMS'
+      end
+    end
+
+    context 'when the browser is not mobile' do
+      let(:mobile) { false }
+
+      it 'does not have the WhatsApp button' do
+        params = { text: gend_image_url }.to_query
+        expect(render).to_not have_selector(
+          'a',
+          href: "whatsapp://send?#{params}")
+      end
+    end
+
+    context 'when the browser is mobile' do
+      let(:mobile) { true }
+
+      it 'has the WhatsApp button' do
+        params = { text: gend_image_url }.to_query
+        expect(render).to have_selector(
+          'a',
+          href: "whatsapp://send?#{params}")
       end
     end
   end
