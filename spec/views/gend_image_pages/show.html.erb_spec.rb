@@ -2,8 +2,6 @@
 
 require 'rails_helper'
 
-require 'cgi'
-
 describe 'gend_image_pages/show.html.erb', type: :view do
   include Webrat::Matchers
 
