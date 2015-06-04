@@ -55,17 +55,6 @@
 
 <div class="container-fluid">
 
-  <% if ENV['DEPLOYED_TIME'] %>
-      <div class="alert alert-danger">
-        <p>
-          This is a a test build and images may not be preserved. Send feedback
-          to <%= mail_to 'matthewm@boedicker.org' %>. Last
-          updated: <%= ENV['DEPLOYED_TIME'] %>, commit
-          <a href="https://github.com/mmb/meme_captain_web/tree/<%= ENV['DEPLOYED_SHA'] %>"><%= ENV['DEPLOYED_SHA'][0, 4] %></a>
-        </p>
-      </div>
-  <% end %>
-
   <% if flash[:error] -%>
       <div class="alert alert-danger">
         <%= h flash[:error] %>
