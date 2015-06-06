@@ -199,7 +199,7 @@ describe GendImagesController, type: :controller do
         expect(created.private).to eq(true)
       end
 
-      it 'redirects to the index' do
+      it 'redirects to the gend image page' do
         post :create,
              gend_image: { src_image_id: src_image.id_hash }
 
