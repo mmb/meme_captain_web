@@ -199,16 +199,34 @@ describe GendImagesController, type: :controller do
         expect(created.private).to eq(true)
       end
 
-      it 'redirects to the gend image page' do
-        post :create,
-             gend_image: { src_image_id: src_image.id_hash }
+      context 'when the client requests html' do
+        it 'redirects to the gend image page' do
+          post(:create, gend_image: { src_image_id: src_image.id_hash })
 
-        expect(response).to redirect_to(
-          controller: :gend_image_pages,
-          action: :show,
-          id: assigns(:gend_image).id_hash)
+          expect(response).to redirect_to(
+            controller: :gend_image_pages,
+            action: :show,
+            id: assigns(:gend_image).id_hash)
+        end
       end
 
+      context 'when the client requests json' do
+        before { request.accept = 'application/json' }
+
+        it 'responds with accepted' do
+          post :create, gend_image: { src_image_id: src_image.id_hash }
+
+          expect(response).to have_http_status(202)
+        end
+
+        it 'sets the location header to the pending image url' do
+          post :create, gend_image: { src_image_id: src_image.id_hash }
+
+          expect(response.headers['Location']).to eq(
+            'http://test.host/pending_gend_images/' \
+            "#{assigns(:gend_image).id_hash}")
+        end
+      end
     end
 
     context 'when the source image is not found' do

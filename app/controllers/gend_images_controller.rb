@@ -2,6 +2,12 @@
 
 # Generated (meme) images controller.
 class GendImagesController < ApplicationController
+  wrap_parameters GendImage, include: [
+    :captions_attributes,
+    :private,
+    :src_image_id
+  ]
+
   def new
     src_image = SrcImage.without_image.find_by!(id_hash: params[:src])
     @src_image_path = url_for(
@@ -28,8 +34,10 @@ class GendImagesController < ApplicationController
     @gend_image.user = current_user
 
     if @gend_image.save
-      redirect_to controller: :gend_image_pages, action: :show,
-                  id: @gend_image.id_hash
+      respond_to do |format|
+        format.html { redirect_to_page }
+        format.json { redirect_to_pending }
+      end
     else
       render :new
     end
@@ -86,5 +94,20 @@ class GendImagesController < ApplicationController
     params.require(:gend_image).permit({ captions_attributes: [
       :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
       :height_pct] }, :private, :email)
+  end
+
+  def redirect_to_pending
+    redirect_to(
+      controller: :pending_gend_images,
+      action: :show,
+      id: @gend_image.id_hash,
+      status: :accepted)
+  end
+
+  def redirect_to_page
+    redirect_to(
+      controller: :gend_image_pages,
+      action: :show,
+      id: @gend_image.id_hash)
   end
 end
