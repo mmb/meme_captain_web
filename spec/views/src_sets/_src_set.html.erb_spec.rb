@@ -58,10 +58,6 @@ describe 'src_sets/_src_set.html', type: :view do
 
   end
 
-  context 'when the set contains only under construction images' do
-    it 'shows a default thumbnail'
-  end
-
   it 'links to the source set' do
     render partial: 'src_sets/src_set', locals: { src_set: src_set }
     expect(rendered).to match(%r{href=".+\/#{src_set.name}"})
