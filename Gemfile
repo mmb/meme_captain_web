@@ -74,6 +74,7 @@ group :test, :development do
   gem 'sqlite3'
   gem 'web-console', '~> 2.0'
   gem 'w3c_validators', '~> 1.2'
+  gem 'rails_best_practices', '~> 1.15.7'
 end
 
 group :test do
