@@ -14,22 +14,6 @@ describe User do
   it { should have_many :src_images }
   it { should have_many :src_sets }
 
-  describe '#owns?' do
-    let(:user) { stub_model(User) }
-
-    it 'should know what it owns' do
-      src_image = stub_model(SrcImage, user: user)
-
-      expect(user.owns?(src_image)).to eq true
-    end
-
-    it "should know what it doesn't own" do
-      src_image = stub_model(SrcImage)
-
-      expect(user.owns?(src_image)).to eq false
-    end
-  end
-
   describe '.auth_case_insens' do
     let(:user_password) { 'some password' }
     let(:try_email) { 'does not exist' }
