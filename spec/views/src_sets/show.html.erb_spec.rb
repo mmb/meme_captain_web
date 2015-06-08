@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe 'src_sets/show.html.erb', type: :view do
-
   let(:src_set) { stub_model(SrcSet, name: 'src set') }
 
   before do
@@ -16,5 +15,4 @@ describe 'src_sets/show.html.erb', type: :view do
 
     expect(view.content_for(:title)).to eq 'src set memes'
   end
-
 end

@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe UsersController, type: :controller do
-
   describe "GET 'new'" do
     it 'returns http success' do
       get 'new'
@@ -12,9 +11,7 @@ describe UsersController, type: :controller do
   end
 
   describe "POST 'create'" do
-
     context 'with valid attributes' do
-
       it 'saves the new user to the database' do
         expect do
           post :create, user: FactoryGirl.attributes_for(:user)
@@ -34,7 +31,6 @@ describe UsersController, type: :controller do
       end
 
       context 'when ActiveModel::SecurePassword.min_cost is false' do
-
         before do
           @prev = ActiveModel::SecurePassword.min_cost
           ActiveModel::SecurePassword.min_cost = false
@@ -50,11 +46,9 @@ describe UsersController, type: :controller do
           end.to change { User.count }.by(1)
         end
       end
-
     end
 
     context 'with invalid attributes' do
-
       it 'does not save the new user in the database' do
         expect do
           post :create, user: FactoryGirl.attributes_for(:invalid_user)
@@ -66,9 +60,6 @@ describe UsersController, type: :controller do
 
         expect(response).to render_template('new')
       end
-
     end
-
   end
-
 end

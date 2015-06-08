@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 FactoryGirl.define do
-
   factory :user do
     sequence(:email) { |n| "test#{n}@test.com" }
     password 'secret'
@@ -10,7 +9,5 @@ FactoryGirl.define do
     factory :invalid_user do
       email nil
     end
-
   end
-
 end

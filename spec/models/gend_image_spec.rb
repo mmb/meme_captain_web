@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe GendImage do
-
   it { should validate_uniqueness_of :id_hash }
 
   it { should belong_to :src_image }
@@ -22,7 +21,6 @@ describe GendImage do
   end
 
   context 'setting fields derived from the image' do
-
     context 'when the image is not animated' do
       subject(:gend_image) do
         gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image))
@@ -50,11 +48,9 @@ describe GendImage do
 
       specify { expect(gend_image.is_animated).to eq(true) }
     end
-
   end
 
   describe '#ext' do
-
     let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
 
     subject(:gend_image) do
@@ -81,14 +77,11 @@ describe GendImage do
     end
 
     context 'other' do
-
       it 'returns nil for extension' do
         subject.content_type = 'foo/bar'
         expect(subject.format).to be_nil
       end
-
     end
-
   end
 
   describe '#email' do

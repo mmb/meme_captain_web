@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe HomeController, type: :controller do
-
   describe "GET 'index'" do
-
     let(:user) { FactoryGirl.create(:user) }
 
     let(:src_image) do
@@ -27,13 +25,11 @@ describe HomeController, type: :controller do
       let(:user) { nil }
 
       context 'under construction images' do
-
         it 'does not show generated images that are under construction' do
           FactoryGirl.create(:gend_image, src_image: src_image, user: user)
           get :index
           expect(assigns(:gend_images)).to be_empty
         end
-
       end
 
       it 'shows public images' do
@@ -65,7 +61,6 @@ describe HomeController, type: :controller do
 
         expect(assigns(:gend_images).size).to eq 1
       end
-
     end
 
     it 'shows src sets sorted by reverse quality and reverse updated time' do
@@ -140,7 +135,5 @@ describe HomeController, type: :controller do
 
       expect(assigns(:src_images)).to eq [si2, si3, si1]
     end
-
   end
-
 end

@@ -5,18 +5,15 @@ require 'rails_helper'
 require 'digest/md5'
 
 describe MyController, type: :controller do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
 
   describe '#show' do
-
     before(:each) do
       session[:user_id] = user.try(:id)
     end
 
     context 'when the user is logged in' do
-
       it "loads the user's source sets" do
         FactoryGirl.create(:src_set,
                            user: user2,
@@ -74,20 +71,15 @@ describe MyController, type: :controller do
         expected = "http://www.gravatar.com/avatar/#{digest}"
         expect(assigns(:avatar_url)).to eq(expected)
       end
-
     end
 
     context 'when the user it not logged in' do
-
       let(:user) { nil }
 
       it 'redirects to the login form' do
         get :show
         expect(response).to redirect_to new_session_path
       end
-
     end
-
   end
-
 end

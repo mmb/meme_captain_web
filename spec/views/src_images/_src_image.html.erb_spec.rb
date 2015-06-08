@@ -23,7 +23,6 @@ describe 'src_images/_src_image.html', type: :view do
   end
 
   context 'the image has been processed' do
-
     it 'shows the thumbnail' do
       expect(rendered).to match(src_thumb.id.to_s)
     end
@@ -49,20 +48,17 @@ describe 'src_images/_src_image.html', type: :view do
   end
 
   context 'the image has not been processed yet' do
-
     let(:src_image) { mock_model(SrcImage, work_in_progress: true) }
 
     it 'shows as under construction' do
       expect(rendered).to match('Under Construction')
     end
-
   end
 
   context 'when the user is logged in' do
     it 'shows the checkbox' do
       expect(rendered).to have_selector '.selector'
     end
-
   end
 
   context 'when the user is not logged in' do
@@ -71,7 +67,5 @@ describe 'src_images/_src_image.html', type: :view do
     it 'hides the checkbox' do
       expect(rendered).to_not have_selector '.selector'
     end
-
   end
-
 end

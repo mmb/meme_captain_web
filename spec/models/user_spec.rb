@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe User do
-
   it { should validate_presence_of :email }
   it { should validate_uniqueness_of :email }
   it 'should validate that the email address is valid' do
@@ -29,7 +28,6 @@ describe User do
 
       expect(user.owns?(src_image)).to eq false
     end
-
   end
 
   describe '.auth_case_insens' do
@@ -44,7 +42,6 @@ describe User do
     end
 
     context 'when one email is found' do
-
       before(:each) do
         @user = FactoryGirl.create(
           :user,
@@ -69,7 +66,6 @@ describe User do
     end
 
     context 'when multiple emails are found' do
-
       let(:try_email) { @user.email }
       let(:user2_password) { 'some other password' }
 
@@ -103,21 +99,15 @@ describe User do
         it 'find the second user' do
           expect(User.auth_case_insens(try_email, try_password)).to eq @user2
         end
-
       end
-
     end
-
   end
 
   describe '.for_auth' do
-
     it 'ignores case when finding emails' do
       user = FactoryGirl.create(:user)
       FactoryGirl.create(:user, email: user.email.upcase)
       expect(User.for_auth(user.email).count).to eq 2
     end
-
   end
-
 end

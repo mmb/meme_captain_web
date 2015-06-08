@@ -42,7 +42,6 @@ describe 'gend_images/new.html.erb', type: :view do
       expect(s.first['class']).to_not be_nil
       expect(s.first['class']).to include 'form-control'
     end
-
   end
 
   it 'has a hidden negative captcha field called email' do

@@ -63,13 +63,10 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   end
 
   context 'browser' do
-
     context 'when the browser is not Android' do
-
       it 'does not have the SMS button' do
         expect(render).to_not contain 'SMS'
       end
-
     end
 
     context 'when the browser is Android' do
@@ -164,5 +161,4 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       src: gend_image_url,
       alt: 'test meme text')
   end
-
 end

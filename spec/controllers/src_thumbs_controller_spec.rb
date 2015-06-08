@@ -5,11 +5,8 @@ require 'time'
 require 'rails_helper'
 
 describe SrcThumbsController, type: :controller do
-
   describe "GET 'show'" do
-
     context 'when the id is found' do
-
       let(:src_thumb) { FactoryGirl.create(:src_thumb) }
 
       it 'shows the thumbnail' do
@@ -47,18 +44,13 @@ describe SrcThumbsController, type: :controller do
         expires_header = response.headers['Expires']
         expect(expires_header).to eq 'Mon, 15 Feb 2010 21:55:00 GMT'
       end
-
     end
 
     context 'when the id is not found' do
-
       it 'raises record not found' do
         expect { get 'show', id: 1 }.to raise_error(
           ActiveRecord::RecordNotFound)
       end
-
     end
-
   end
-
 end

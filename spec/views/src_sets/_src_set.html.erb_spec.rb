@@ -21,7 +21,6 @@ describe 'src_sets/_src_set.html', type: :view do
   end
 
   context 'when the set contains a completed source image' do
-
     it 'shows the thumbnail' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
       expect(rendered).to match(src_thumb.id.to_s)
@@ -55,12 +54,10 @@ describe 'src_sets/_src_set.html', type: :view do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
       expect(rendered).to match(/class="empty-set"/)
     end
-
   end
 
   it 'links to the source set' do
     render partial: 'src_sets/src_set', locals: { src_set: src_set }
     expect(rendered).to match(%r{href=".+\/#{src_set.name}"})
   end
-
 end

@@ -3,7 +3,6 @@
 require 'base64'
 
 FactoryGirl.define do
-
   factory :src_thumb do
     image Base64.decode64(
       'iVBORw0KGgoAAAANSUhEUgAAAcwAAAAyAgMAAACsWgPIAAAAAXNSR0IArs4c' \
@@ -14,5 +13,4 @@ FactoryGirl.define do
       '2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xM' \
       'TMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC')
   end
-
 end

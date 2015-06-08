@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe MemeCaptainWeb::Config do
-
   let(:rb_path) do
     File.expand_path('../../../config/initializers/config.rb', __FILE__)
   end

@@ -22,7 +22,6 @@ describe 'gend_images/_gend_image.html', type: :view do
   end
 
   context 'the image has been processed' do
-
     it 'shows the thumbnail' do
       render partial: 'gend_images/gend_image',
              locals: { gend_image: gend_image }
@@ -46,11 +45,9 @@ describe 'gend_images/_gend_image.html', type: :view do
              locals: { gend_image: gend_image }
       expect(rendered).to match("data-id=\"#{gend_image.id_hash}\"")
     end
-
   end
 
   context 'the image has not been processed yet' do
-
     let(:gend_image) { mock_model(GendImage, work_in_progress: true) }
 
     it 'shows as under construction' do
@@ -58,7 +55,6 @@ describe 'gend_images/_gend_image.html', type: :view do
              locals: { gend_image: gend_image }
       expect(rendered).to match('Under Construction')
     end
-
   end
 
   context 'when the toolbar is enabled' do
@@ -80,5 +76,4 @@ describe 'gend_images/_gend_image.html', type: :view do
       expect(rendered).to_not have_selector '.selector'
     end
   end
-
 end

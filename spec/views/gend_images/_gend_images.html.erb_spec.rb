@@ -18,7 +18,6 @@ describe 'gend_images/_gend_images.html', type: :view do
 
       expect(rendered).to have_selector '.btn-toolbar'
     end
-
   end
 
   context 'when the toolbar is disabled' do
@@ -29,7 +28,5 @@ describe 'gend_images/_gend_images.html', type: :view do
 
       expect(rendered).to_not have_selector '.btn-toolbar'
     end
-
   end
-
 end

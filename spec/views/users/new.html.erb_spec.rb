@@ -20,5 +20,4 @@ describe 'users/new.html.erb', type: :view do
   it 'has a password confirmation field' do
     expect(render).to have_selector('input', id: 'user_password_confirmation')
   end
-
 end

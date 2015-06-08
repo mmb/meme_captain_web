@@ -10,7 +10,6 @@ describe 'src_images/_src_images.html', type: :view do
   let(:src_images) { Kaminari.paginate_array([]).page(1) }
 
   context 'showing a set' do
-
     context 'when the user owns the set' do
       let(:src_set) { FactoryGirl.create(:src_set, user: user) }
 
@@ -21,7 +20,6 @@ describe 'src_images/_src_images.html', type: :view do
 
         expect(rendered).to contain(/Remove 0 from Set/)
       end
-
     end
 
     context "when the user doesn't own the set" do
@@ -34,7 +32,6 @@ describe 'src_images/_src_images.html', type: :view do
 
         expect(rendered).to_not contain(/Remove 0 from Set/)
       end
-
     end
 
     context 'when the user is not logged in' do
@@ -57,7 +54,5 @@ describe 'src_images/_src_images.html', type: :view do
         expect(rendered).to_not have_selector '.btn-toolbar'
       end
     end
-
   end
-
 end

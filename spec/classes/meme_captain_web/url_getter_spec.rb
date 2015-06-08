@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe MemeCaptainWeb::UrlGetter do
-
   describe '#get' do
-
     it 'fetches the URL and returns a blob' do
       stub_request(:get, 'http://example.com/').to_return(body: 'body')
 
@@ -33,5 +31,4 @@ describe MemeCaptainWeb::UrlGetter do
       expect { url_getter.get('http://example.com/') }.to raise_error
     end
   end
-
 end

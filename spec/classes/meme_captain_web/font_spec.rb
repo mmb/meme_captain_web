@@ -30,7 +30,6 @@ describe 'MemeCaptainWeb::Font' do
   end
 
   describe '#char_set' do
-
     it 'builds a list of the characters in the font' do
       expect(TTFunk::File).to receive(:open).with(path).and_return(file)
 
@@ -65,20 +64,16 @@ describe 'MemeCaptainWeb::Font' do
         expect(font.char_set).to eq Set.new([1, 2, 3])
       end
     end
-
   end
 
   describe '#path' do
-
     it 'returns the path' do
       font = MemeCaptainWeb::Font.new(path)
       expect(font.path).to eq path
     end
-
   end
 
   describe '#chars_for?' do
-
     context 'when the font has all of the characters' do
       let(:tables) do
         [
@@ -234,6 +229,5 @@ describe 'MemeCaptainWeb::Font' do
 
       2.times { MemeCaptainWeb::Font.default_fonts }
     end
-
   end
 end

@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe GendImagePagesController, type: :controller do
-
   describe 'show' do
-
     let(:src_image) { FactoryGirl.create(:src_image) }
     let(:gend_image) do
       FactoryGirl.create(
@@ -53,7 +51,6 @@ describe GendImagePagesController, type: :controller do
           get :show, id: gend_image.id_hash
           expect(assigns(:refresh_in)).to be_nil
         end
-
       end
     end
 
@@ -68,6 +65,5 @@ describe GendImagePagesController, type: :controller do
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
-
   end
 end

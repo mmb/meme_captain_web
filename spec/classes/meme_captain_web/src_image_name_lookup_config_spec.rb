@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe MemeCaptainWeb::SrcImageNameLookupConfig do
-
   describe '#configure' do
     let(:x) { double(:x) }
     # This does not work as an instance double.

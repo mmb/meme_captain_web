@@ -14,5 +14,4 @@ describe 'sessions/new.html.erb', type: :view do
     render
     expect(render).to have_selector('input', id: 'email')
   end
-
 end

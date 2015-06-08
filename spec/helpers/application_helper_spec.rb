@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe ApplicationHelper, type: :helper do
-
   let(:user) { FactoryGirl.create(:user) }
 
   context 'when the user id is found' do

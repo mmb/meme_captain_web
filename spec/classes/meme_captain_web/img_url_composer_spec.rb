@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe MemeCaptainWeb::ImgUrlComposer do
-
   describe '#load' do
     let(:img_url_composer) { MemeCaptainWeb::ImgUrlComposer.new }
 

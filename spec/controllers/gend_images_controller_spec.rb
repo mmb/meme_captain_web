@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe GendImagesController, type: :controller do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
   let(:src_image) { FactoryGirl.create(:src_image, user: user) }
@@ -14,21 +13,18 @@ describe GendImagesController, type: :controller do
   end
 
   describe "GET 'new'" do
-
     it 'returns http success' do
       get :new, src: src_image.id_hash
       expect(response).to be_success
     end
 
     context 'when the user is not logged in' do
-
       let(:user) { nil }
 
       it 'returns http success' do
         get :new, src: src_image.id_hash
         expect(response).to be_success
       end
-
     end
 
     it 'assigns the source image path' do
@@ -86,7 +82,6 @@ describe GendImagesController, type: :controller do
   end
 
   describe "GET 'index'" do
-
     it 'returns http success' do
       get :index
 
@@ -131,13 +126,10 @@ describe GendImagesController, type: :controller do
 
       expect(assigns(:gend_images).size).to eq 1
     end
-
   end
 
   describe "POST 'create'" do
-
     context 'with valid attributes' do
-
       it 'saves the new generated image to the database' do
         expect do
           post :create,
@@ -230,28 +222,23 @@ describe GendImagesController, type: :controller do
     end
 
     context 'when the source image is not found' do
-
       it 'raises record not found' do
         expect do
           post :create, gend_image: { src_image_id: 'abc' }
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the source image is owned by another user' do
-
       specify 'the gend image is owned by the current user' do
         FactoryGirl.create(:gend_image, src_image: src_image2)
 
         post :create, gend_image: { src_image_id: src_image2.id_hash }
         expect(GendImage.last.user).to eq user
       end
-
     end
 
     context 'when an email is passed in' do
-
       it 'does not save the new gend image to the database' do
         expect do
           post :create, gend_image: {
@@ -269,7 +256,6 @@ describe GendImagesController, type: :controller do
   end
 
   describe "GET 'show'" do
-
     context 'when the id is found' do
       let(:caption1) { FactoryGirl.create(:caption, text: 'caption 1') }
       let(:caption2) { FactoryGirl.create(:caption, text: 'caption 2') }
@@ -300,7 +286,6 @@ describe GendImagesController, type: :controller do
       end
 
       context 'returning the meme text in the headers' do
-
         context 'when there is more than one caption' do
           it 'returns the correct header' do
             get :show, id: gend_image.id_hash
@@ -319,7 +304,6 @@ describe GendImagesController, type: :controller do
             expect(response.headers['Meme-Text']).to eq('caption+1')
           end
         end
-
       end
 
       context 'returning the meme name in the headers' do
@@ -363,17 +347,14 @@ describe GendImagesController, type: :controller do
         expect(response.headers['Cache-Control']).to eq(
           'max-age=86400, public')
       end
-
     end
 
     context 'when the id is not found' do
-
       it 'raises record not found' do
         expect do
           get :show, id: 'does not exist'
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the image has been deleted' do
@@ -385,16 +366,13 @@ describe GendImagesController, type: :controller do
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
-
   end
 
   describe "DELETE 'destroy'" do
-
     let(:gend_image) { FactoryGirl.create(:gend_image, user: user) }
     let(:id) { gend_image.id_hash }
 
     context 'when the id is found' do
-
       it 'marks the record as deleted in the database' do
         delete :destroy, id: id
 
@@ -406,17 +384,14 @@ describe GendImagesController, type: :controller do
         delete :destroy, id: id
         expect(response).to be_success
       end
-
     end
 
     context 'when the id is not found' do
-
       let(:id) { 'abc' }
       it 'raises record not found' do
         expect { delete :destroy, id: id }.to raise_error(
           ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the image is owned by another user' do
@@ -427,7 +402,6 @@ describe GendImagesController, type: :controller do
 
         expect(response).to be_forbidden
       end
-
     end
 
     context 'when the image is not owned by any user' do
@@ -438,9 +412,6 @@ describe GendImagesController, type: :controller do
 
         expect(response).to be_forbidden
       end
-
     end
-
   end
-
 end

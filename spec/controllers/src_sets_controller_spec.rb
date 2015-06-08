@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe SrcSetsController, type: :controller do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
 
@@ -12,16 +11,13 @@ describe SrcSetsController, type: :controller do
   end
 
   describe "GET 'new'" do
-
     it 'does not match a route' do
       expect { get :new }.to raise_error ActionController::UrlGenerationError
     end
   end
 
   describe "POST 'create'" do
-
     context 'with valid attributes' do
-
       it 'saves the new src set to the database' do
         expect do
           post :create, src_set: { name: 'test' }
@@ -39,22 +35,17 @@ describe SrcSetsController, type: :controller do
 
         expect(flash[:notice]).to eq('Source set created.')
       end
-
     end
 
     context 'with invalid attributes' do
-
       it 'renders the form again' do
         post :create, src_set: {}
         expect(response).to render_template(:new)
       end
-
     end
-
   end
 
   describe "GET 'index'" do
-
     it 'returns http success' do
       get :index
       expect(response).to be_success
@@ -91,7 +82,6 @@ describe SrcSetsController, type: :controller do
     end
 
     context 'when the user is not logged in' do
-
       let(:user) { nil }
 
       it 'shows all source sets sorted by reverse updated time' do
@@ -105,19 +95,15 @@ describe SrcSetsController, type: :controller do
           src_sets[0].updated_at >= src_sets[1].updated_at &&
           src_sets[1].updated_at >= src_sets[2].updated_at).to eq(true)
       end
-
     end
-
   end
 
   describe "PUT 'update'" do
-
     let(:src_image) { FactoryGirl.create(:src_image) }
     let(:src_image2) { FactoryGirl.create(:src_image) }
     let(:src_set) { FactoryGirl.create(:src_set, user: user) }
 
     context 'adding source images' do
-
       it 'adds source images to the set' do
         expect do
           put :update,
@@ -153,11 +139,9 @@ describe SrcSetsController, type: :controller do
 
         expect(flash[:notice]).to eq 'The set was successfully updated.'
       end
-
     end
 
     context 'deleting source images' do
-
       before(:each) do
         put :update,
             id: src_set.name,
@@ -199,11 +183,9 @@ describe SrcSetsController, type: :controller do
 
         expect(flash[:notice]).to eq 'The set was successfully updated.'
       end
-
     end
 
     context 'changing the name' do
-
       it 'has the new name' do
         put :update, id: src_set.name, src_set: { name: 'newname' }
         src_set.reload
@@ -224,11 +206,9 @@ describe SrcSetsController, type: :controller do
 
         expect(flash[:notice]).to eq 'The set was successfully updated.'
       end
-
     end
 
     context 'when the source set is owned by another user' do
-
       it "doesn't allow it to be updated" do
         src_set = FactoryGirl.create(:src_set, user: user2)
 
@@ -236,31 +216,23 @@ describe SrcSetsController, type: :controller do
 
         expect(response).to be_forbidden
       end
-
     end
 
     context "when the set doesn't exist" do
-
       it 'creates the set' do
         expect do
           put :update, id: 'a new set', add_src_images: [src_image.id_hash]
         end.to change { SrcSet.count }.by(1)
       end
-
     end
 
     context 'when the set is deleted' do
-
       it 'returns not found'
-
     end
-
   end
 
   describe "GET 'show'" do
-
     context 'when the name is found' do
-
       let(:src_set) { FactoryGirl.create(:src_set) }
 
       it 'assigns the source set' do
@@ -300,21 +272,17 @@ describe SrcSetsController, type: :controller do
 
         expect(response).to be_success
       end
-
     end
 
     context 'when the name is not found' do
-
       it 'raises record not found' do
         expect do
           get 'show', id: 'abc'
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the set is deleted' do
-
       let(:src_set) { FactoryGirl.create(:src_set, is_deleted: true) }
 
       it 'returns not found' do
@@ -322,17 +290,13 @@ describe SrcSetsController, type: :controller do
           get :show, id: src_set.name
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
-
   end
 
   describe "DELETE 'destroy'" do
-
     let(:src_set) { FactoryGirl.create(:src_set, user: user) }
 
     context 'when the name is found' do
-
       it 'marks the record as deleted in the database' do
         delete :destroy, id: src_set.name
         expect(SrcSet.find(src_set.id).is_deleted?).to eq(true)
@@ -342,21 +306,17 @@ describe SrcSetsController, type: :controller do
         delete :destroy, id: src_set.name
         expect(response).to redirect_to action: :index
       end
-
     end
 
     context 'when the name is not found' do
-
       it 'raises record not found' do
         expect do
           delete :destroy, id: 'abc'
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the image is owned by another user' do
-
       let(:src_set) { FactoryGirl.create(:src_set, user: user2) }
 
       it 'returns not found' do
@@ -364,11 +324,9 @@ describe SrcSetsController, type: :controller do
           delete :destroy, id: src_set.name
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the user is not logged in' do
-
       it 'returns not found' do
         session[:user_id] = nil
 
@@ -376,11 +334,9 @@ describe SrcSetsController, type: :controller do
           delete :destroy, id: src_set.name
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the set is deleted' do
-
       let(:src_set) do
         FactoryGirl.create(:src_set, user: user, is_deleted: true)
       end
@@ -390,9 +346,6 @@ describe SrcSetsController, type: :controller do
           delete :destroy, id: src_set.name
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
-
   end
-
 end

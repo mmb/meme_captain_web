@@ -3,13 +3,10 @@
 require 'rails_helper'
 
 describe SessionsController, type: :controller do
-
   let(:user) { FactoryGirl.create(:user) }
 
   describe "POST 'create'" do
-
     context 'when login succeeds' do
-
       it 'creates a session' do
         post :create, email: user.email, password: user.password
 
@@ -45,11 +42,9 @@ describe SessionsController, type: :controller do
           expect(session[:return_to]).to be_nil
         end
       end
-
     end
 
     context 'when login fails' do
-
       it 'does not create a session' do
         post :create, email: user.email, password: 'wrongpass'
         expect(session[:user_id]).to be_nil
@@ -64,25 +59,19 @@ describe SessionsController, type: :controller do
         post :create, email: user.email, password: 'wrongpass'
         expect(flash[:error]).to eq('Login failed.')
       end
-
     end
 
     context 'when the email case does not match' do
-
       it 'allows the user to login' do
         post :create, email: user.email.upcase, password: user.password
 
         expect(session[:user_id]).to eq(user.id)
       end
-
     end
-
   end
 
   describe "DELETE 'destroy'" do
-
     context 'when the user is logged in ' do
-
       before do
         post :create, email: user.email, password: user.password
       end
@@ -101,11 +90,9 @@ describe SessionsController, type: :controller do
         delete :destroy
         expect(flash[:notice]).to eq('Logged out.')
       end
-
     end
 
     context 'when the user is logged out' do
-
       it 'clears the session' do
         delete :destroy
         expect(session[:user_id]).to be_nil
@@ -115,9 +102,6 @@ describe SessionsController, type: :controller do
         delete :destroy
         expect(response).to redirect_to root_url
       end
-
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 describe GendThumb do
-
   it { should validate_presence_of :content_type }
 
   it { should validate_presence_of :height }
@@ -15,7 +14,6 @@ describe GendThumb do
   it { should belong_to :gend_image }
 
   context 'setting fields derived from the image' do
-
     subject(:gend_thumb) do
       gend_thumb = GendThumb.new(FactoryGirl.attributes_for(:gend_thumb))
       gend_thumb.valid?
@@ -27,5 +25,4 @@ describe GendThumb do
     specify { expect(gend_thumb.width).to eq(460) }
     specify { expect(gend_thumb.size).to eq(279) }
   end
-
 end

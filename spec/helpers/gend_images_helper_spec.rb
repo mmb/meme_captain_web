@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe GendImagesHelper, type: :helper do
-
   describe '#gend_image_url_for' do
-
     let(:host) { 'cdn.com' }
     let(:gend_image) { FactoryGirl.create(:gend_image) }
 
@@ -24,7 +22,5 @@ describe GendImagesHelper, type: :helper do
 
       expect(helper.gend_image_url_for(gend_image)).to eq(expected)
     end
-
   end
-
 end

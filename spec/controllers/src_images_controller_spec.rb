@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe SrcImagesController, type: :controller do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
 
@@ -12,7 +11,6 @@ describe SrcImagesController, type: :controller do
   end
 
   describe "GET 'new'" do
-
     context 'when the user is logged in' do
       it 'returns http success' do
         get :new
@@ -30,7 +28,6 @@ describe SrcImagesController, type: :controller do
   end
 
   describe "GET 'index'" do
-
     it 'returns http success' do
       get :index
 
@@ -85,7 +82,6 @@ describe SrcImagesController, type: :controller do
     end
 
     context 'searching' do
-
       it 'filters the result by the query string' do
         FactoryGirl.create(
           :src_image, user: user, name: 'abc', work_in_progress: false)
@@ -119,17 +115,13 @@ describe SrcImagesController, type: :controller do
         get :index, q: "b \t\n\r"
         expect(assigns(:src_images)).to eq([si])
       end
-
     end
-
   end
 
   describe "POST 'create'" do
-
     let(:image) { fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
 
     context 'with valid attributes' do
-
       it 'saves the new source image to the database' do
         expect do
           post :create, src_image: { image: image }
@@ -147,11 +139,9 @@ describe SrcImagesController, type: :controller do
 
         expect(flash[:notice]).to eq('Source image created.')
       end
-
     end
 
     context 'with invalid attributes' do
-
       let(:image) { nil }
 
       it 'does not save the new source image in the database' do
@@ -165,11 +155,9 @@ describe SrcImagesController, type: :controller do
 
         expect(response).to render_template('new')
       end
-
     end
 
     context 'when the user it not logged in' do
-
       let(:user) { nil }
 
       it 'saves the new source image to the database' do
@@ -177,21 +165,17 @@ describe SrcImagesController, type: :controller do
           post :create, src_image: { image: image }
         end.to change { SrcImage.count }.by(1)
       end
-
     end
 
     context 'setting an optional name' do
-
       it 'saves the name to the database' do
         post :create, src_image: { image: image, name: 'a test name' }
         expect(SrcImage.last.name).to eq 'a test name'
       end
     end
-
   end
 
   describe "PUT 'update'" do
-
     context 'when owned by the current user' do
       let(:src_image) do
         FactoryGirl.create(:src_image, name: 'pre', user: user)
@@ -220,7 +204,6 @@ describe SrcImagesController, type: :controller do
   end
 
   describe "GET 'show'" do
-
     context 'when the id is found' do
       let(:src_image) do
         FactoryGirl.create(:src_image, work_in_progress: false)
@@ -243,25 +226,19 @@ describe SrcImagesController, type: :controller do
 
         expect(response.body).to eq(src_image.image)
       end
-
     end
 
     context 'when the id is not found' do
-
       it 'raises record not found' do
         expect do
           get 'show', id: 'does not exist'
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
-
   end
 
   describe "DELETE 'destroy'" do
-
     context 'when the id is found' do
-
       it 'marks the record as deleted in the database' do
         post :create, src_image: {
           image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
@@ -278,21 +255,17 @@ describe SrcImagesController, type: :controller do
 
         expect(response).to be_success
       end
-
     end
 
     context 'when the id is not found' do
-
       it 'raises record not found' do
         expect do
           delete :destroy, id: 'abc'
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
-
     end
 
     context 'when the image is owned by another user' do
-
       it "doesn't allow it to be deleted" do
         src_image = FactoryGirl.create(:src_image, user: user2)
 
@@ -300,9 +273,6 @@ describe SrcImagesController, type: :controller do
 
         expect(response).to be_forbidden
       end
-
     end
-
   end
-
 end

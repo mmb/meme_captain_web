@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe MemeCaptainWeb::AssetHostConfig do
-
   describe '#configure' do
-
     # This does not work as an instance double.
     let(:config) { double(Rails::Application::Configuration) }
 

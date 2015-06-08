@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe SrcImage do
-
   it { should_not validate_presence_of :content_type }
 
   it { should_not validate_presence_of :height }
@@ -33,7 +32,6 @@ describe SrcImage do
   end
 
   context 'setting fields derived from the image' do
-
     subject(:src_image) do
       src_image = SrcImage.new(FactoryGirl.attributes_for(:src_image))
       src_image.valid?
@@ -54,7 +52,6 @@ describe SrcImage do
   end
 
   context 'generating a Magick::Image from its data' do
-
     subject(:src_image) do
       SrcImage.new(FactoryGirl.attributes_for(:src_image))
     end
@@ -64,7 +61,6 @@ describe SrcImage do
   end
 
   describe '#image_if_not_url' do
-
     let(:attrs) { { image: nil, url: nil } }
 
     subject { FactoryGirl.build(:src_image, attrs) }
@@ -87,7 +83,6 @@ describe SrcImage do
       let(:attrs) { { url: 'abc' } }
       it { should be_valid }
     end
-
   end
 
   describe '#load_from_url' do

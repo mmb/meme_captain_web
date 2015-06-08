@@ -11,5 +11,4 @@ FactoryGirl.define do
       src_images { [create(:src_image)] }
     end
   end
-
 end

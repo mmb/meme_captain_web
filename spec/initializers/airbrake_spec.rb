@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe 'Airbrake initializer' do
-
   context 'when the AIRBRAKE_API_KEY is not set' do
     before do
       stub_const(
