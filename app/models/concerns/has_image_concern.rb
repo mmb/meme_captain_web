@@ -20,6 +20,7 @@ module HasImageConcern
     self.size = image.size
     self.width = img.columns
     self.is_animated = img.animated? if self.respond_to?(:is_animated=)
+    img.destroy!
     true # must return true for before_validation callback
   end
 

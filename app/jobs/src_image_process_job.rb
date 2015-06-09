@@ -22,6 +22,8 @@ class SrcImageProcessJob < ActiveJob::Base
       work_in_progress: false
     }
 
+    img.destroy!
+
     src_image.set_derived_image_fields
 
     src_image.save!
@@ -36,5 +38,6 @@ class SrcImageProcessJob < ActiveJob::Base
       Rails.root + 'app/assets/images/watermark.png')
     img.extend(MemeCaptain::ImageList::Watermark)
     img.watermark_mc(watermark_img)
+    watermark_img.destroy!
   end
 end

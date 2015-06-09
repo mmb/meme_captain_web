@@ -34,7 +34,10 @@ module MemeCaptainWeb
       img_list = Magick::ImageList.new
       img_list.push(*images)
 
-      img_list.append(false).to_blob
+      img_data = img_list.append(false).to_blob
+      images.each(&:destroy!)
+      img_list.destroy!
+      img_data
     end
 
     def equalize_height(images)
@@ -55,7 +58,10 @@ module MemeCaptainWeb
       img_list = Magick::ImageList.new
       img_list.push(*images)
 
-      img_list.append(true).to_blob
+      img_data = img_list.append(true).to_blob
+      images.each(&:destroy!)
+      img_list.destroy!
+      img_data
     end
 
     def equalize_width(images)

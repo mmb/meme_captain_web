@@ -13,6 +13,8 @@ class GendImageProcessJob < ActiveJob::Base
 
     gend_image.gend_thumb = GendThumb.new(image: thumb_img.to_blob)
 
+    thumb_img.destroy!
+
     gend_image.work_in_progress = false
 
     gend_image.save!
