@@ -19,7 +19,7 @@
               <h1><%= c.text %></h1>
           <% end %>
 
-          <% if @src_image.name.present? %>
+          <% if @src_image.name? %>
               <% content_for(:title) do %>
                   <%- "#{@src_image.name} meme" -%>
               <% end %>

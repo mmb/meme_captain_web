@@ -5,7 +5,7 @@ class SrcImageNameJob < ActiveJob::Base
   def perform(src_image)
     return unless Rails.configuration.x.src_image_name_lookup_host
     return if src_image.private?
-    return if src_image.name.present?
+    return if src_image.name?
 
     conn = create_connection
 
