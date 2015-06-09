@@ -114,7 +114,7 @@ describe SrcImageProcessJob, type: :job do
     src_image = FactoryGirl.create(:src_image)
     expect do
       SrcImageProcessJob.perform_now(src_image)
-    end.to change { src_image.size }.from(nil).to(16_759)
+    end.to change { src_image.size }
   end
 
   it "sets the src image model's width" do
