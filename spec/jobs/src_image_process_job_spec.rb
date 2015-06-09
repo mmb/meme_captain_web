@@ -96,6 +96,34 @@ describe SrcImageProcessJob, type: :job do
     SrcImageProcessJob.perform_now(src_image)
   end
 
+  it "sets the src image model's content type" do
+    src_image = FactoryGirl.create(:src_image)
+    expect do
+      SrcImageProcessJob.perform_now(src_image)
+    end.to change { src_image.content_type }.from(nil).to('image/jpeg')
+  end
+
+  it "sets the src image model's height" do
+    src_image = FactoryGirl.create(:src_image)
+    expect do
+      SrcImageProcessJob.perform_now(src_image)
+    end.to change { src_image.height }.from(nil).to(600)
+  end
+
+  it "sets the src image model's size" do
+    src_image = FactoryGirl.create(:src_image)
+    expect do
+      SrcImageProcessJob.perform_now(src_image)
+    end.to change { src_image.size }.from(nil).to(16_759)
+  end
+
+  it "sets the src image model's width" do
+    src_image = FactoryGirl.create(:src_image)
+    expect do
+      SrcImageProcessJob.perform_now(src_image)
+    end.to change { src_image.width }.from(nil).to(600)
+  end
+
   context 'when the source image fails to save' do
     it 'raises a record invalid exception' do
       src_image = FactoryGirl.create(:src_image)

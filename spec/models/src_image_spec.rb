@@ -34,6 +34,7 @@ describe SrcImage do
   context 'setting fields derived from the image' do
     subject(:src_image) do
       src_image = SrcImage.new(FactoryGirl.attributes_for(:src_image))
+      src_image.set_derived_image_fields
       src_image.valid?
       src_image
     end

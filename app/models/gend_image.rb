@@ -16,6 +16,8 @@ class GendImage < ActiveRecord::Base
   # This email field is a negative captcha. If form bots fill it in,
   # validation will fail.
   attr_accessor :email
+
+  before_validation :set_derived_image_fields
   validates :email, length: { maximum: 0 }
 
   after_commit :create_jobs

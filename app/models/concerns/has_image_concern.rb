@@ -6,8 +6,6 @@ module HasImageConcern
   extend ActiveSupport::Concern
 
   included do
-    before_validation :set_derived_image_fields
-
     scope :without_image, lambda {
       select((column_names - ['image']).map { |c| "#{table_name}.#{c}" })
     }

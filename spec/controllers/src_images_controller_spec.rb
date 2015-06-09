@@ -206,7 +206,10 @@ describe SrcImagesController, type: :controller do
   describe "GET 'show'" do
     context 'when the id is found' do
       let(:src_image) do
-        FactoryGirl.create(:src_image, work_in_progress: false)
+        src_image = FactoryGirl.create(:src_image, work_in_progress: false)
+        src_image.set_derived_image_fields
+        src_image.save!
+        src_image
       end
 
       it 'shows the source image' do

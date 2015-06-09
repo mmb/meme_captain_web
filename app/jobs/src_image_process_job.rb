@@ -16,11 +16,15 @@ class SrcImageProcessJob < ActiveJob::Base
 
     watermark(img)
 
-    src_image.update!(
+    src_image.attributes = {
       image: img.to_blob,
       src_thumb: SrcThumb.new(image: thumb_img.to_blob),
       work_in_progress: false
-    )
+    }
+
+    src_image.set_derived_image_fields
+
+    src_image.save!
 
     SrcImageNameJob.perform_later(src_image)
   end
