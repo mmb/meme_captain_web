@@ -31,8 +31,7 @@ class SrcImagesController < ApplicationController
   end
 
   def show
-    src_image = SrcImage.find_by!(
-      id_hash: params[:id], work_in_progress: false)
+    src_image = SrcImage.finished.find_by!(id_hash: params[:id])
 
     expires_in 1.hour, public: true
 
