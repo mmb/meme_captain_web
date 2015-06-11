@@ -34,6 +34,12 @@ class GendImage < ActiveRecord::Base
     GendImageProcessJob.perform_later(self) if work_in_progress
   end
 
+  def meme_text_header
+    Rails.cache.fetch("#{cache_key}/meme_text_header") do
+      captions.map { |c| Rack::Utils.escape(c.text) }.join('&')
+    end
+  end
+
   protected
 
   scope :active, -> { where is_deleted: false }

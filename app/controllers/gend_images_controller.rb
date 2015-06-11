@@ -49,9 +49,7 @@ class GendImagesController < ApplicationController
 
     expires_in 1.day, public: true
 
-    headers['Meme-Text'] = gend_image.captions.map do |c|
-      Rack::Utils.escape(c.text)
-    end.join('&')
+    headers['Meme-Text'] = gend_image.meme_text_header
     headers['Meme-Name'] = Rack::Utils.escape(
       src_image.name) if src_image.name
     headers['Meme-Source-Image'] = url_for(
