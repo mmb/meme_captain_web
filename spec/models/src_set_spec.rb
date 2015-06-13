@@ -53,4 +53,30 @@ describe SrcSet do
       FactoryGirl.create(:src_set, name: set1.name)
     end
   end
+
+  describe '.name_matches' do
+    it 'matches at the beginning' do
+      src_set1 = FactoryGirl.create(:src_set, name: 'test')
+      FactoryGirl.create(:src_set, name: 'no match')
+      expect(SrcSet.name_matches('test')).to eq([src_set1])
+    end
+
+    it 'matches in the middle' do
+      src_set1 = FactoryGirl.create(:src_set, name: 'this is a test!')
+      FactoryGirl.create(:src_set, name: 'no match')
+      expect(SrcSet.name_matches('test')).to eq([src_set1])
+    end
+
+    it 'matches at the end' do
+      src_set1 = FactoryGirl.create(:src_set, name: 'this is a test')
+      FactoryGirl.create(:src_set, name: 'no match')
+      expect(SrcSet.name_matches('test')).to eq([src_set1])
+    end
+
+    it 'matches case insensitive' do
+      src_set1 = FactoryGirl.create(:src_set, name: 'TeSt')
+      FactoryGirl.create(:src_set, name: 'no match')
+      expect(SrcSet.name_matches('test')).to eq([src_set1])
+    end
+  end
 end

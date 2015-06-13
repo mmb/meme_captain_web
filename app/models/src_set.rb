@@ -67,4 +67,8 @@ class SrcSet < ActiveRecord::Base
     joins(:src_images).where(
       'src_images.is_deleted' => false).group(:'src_sets.id')
   }
+
+  scope :name_matches, lambda { |query|
+    where('LOWER(src_sets.name) LIKE ?', "%#{query.downcase}%") if query
+  }
 end
