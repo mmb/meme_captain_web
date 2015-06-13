@@ -94,6 +94,7 @@ describe SearchController, type: :controller do
             :src_set,
             name: 'test1',
             src_images: [@src_image_1])
+          Timecop.travel(Time.now + 1)
           @src_set2 = FactoryGirl.create(
             :src_set,
             name: 'test2',
