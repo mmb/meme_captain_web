@@ -88,6 +88,40 @@ describe SearchController, type: :controller do
         expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
       end
 
+      context 'src sets' do
+        before do
+          @src_set1 = FactoryGirl.create(
+            :src_set,
+            name: 'test1',
+            src_images: [@src_image_1])
+          @src_set2 = FactoryGirl.create(
+            :src_set,
+            name: 'test2',
+            src_images: [@src_image_1])
+        end
+
+        it 'finds src sets with matching names ordered by most recent' do
+          get(:show, q: 'test')
+          expect(assigns(:src_sets)).to eq([@src_set2, @src_set1])
+        end
+
+        it 'does not find deleted src sets' do
+          FactoryGirl.create(
+            :src_set,
+            name: 'test3',
+            is_deleted: true,
+            src_images: [@src_image_1])
+          get(:show, q: 'test')
+          expect(assigns(:src_sets)).to eq([@src_set2, @src_set1])
+        end
+
+        it 'does not find empty src sets' do
+          FactoryGirl.create(:src_set, name: 'test3')
+          get(:show, q: 'test')
+          expect(assigns(:src_sets)).to eq([@src_set2, @src_set1])
+        end
+      end
+
       it 'finds gend images with matching captions ordered by most recent' do
         get :show, q: 'foo'
 

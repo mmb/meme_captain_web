@@ -6,9 +6,10 @@ class SearchController < ApplicationController
     query = params[:q].try(:strip)
 
     @src_images = find_src_images(query)
+    @src_sets = find_src_sets(query)
     @gend_images = find_gend_images(query)
 
-    return unless @src_images.empty? && @gend_images.empty?
+    return if @src_images.any? || @src_sets.any? || @gend_images.any?
     no_results
   end
 
@@ -17,6 +18,10 @@ class SearchController < ApplicationController
   def find_src_images(query)
     SrcImage.without_image.includes(:src_thumb).name_matches(
       query).publick.active.finished.most_used.page(params[:page])
+  end
+
+  def find_src_sets(query)
+    SrcSet.name_matches(query).active.not_empty.most_recent.page(params[:page])
   end
 
   def find_gend_images(query)
