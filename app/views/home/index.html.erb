@@ -12,6 +12,6 @@
     <%= render :partial => 'src_sets/src_sets' %>
 <% end %>
 
-<% if @gend_images %>
+<% unless @gend_images.empty? %>
     <%= render :partial => 'gend_images/gend_images' %>
 <% end %>
