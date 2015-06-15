@@ -15,9 +15,9 @@ WORKDIR /app
 
 RUN ["bundle", "install", "--jobs=4"]
 
-RUN ["bundle", "exec", "rake", "assets:precompile", "RAILS_ENV=production"]
+RUN ["bundle", "exec", "rake", "build_metadata[build_metadata.json]"]
 
-RUN ["bundle", "exec", "rake", "build_metdata[public/build_metadata.json]"]
+RUN ["bundle", "exec", "rake", "assets:precompile", "RAILS_ENV=production"]
 
 COPY docker/default.vcl /etc/varnish/default.vcl
 COPY docker/varnish_defaults /etc/default/varnish
