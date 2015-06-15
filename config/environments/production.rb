@@ -11,11 +11,6 @@ MemeCaptainWeb::Application.configure do
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
-  config.middleware.insert_before(Rack::Sendfile, Rack::Rewrite) do
-    r301(%r{\/([a-f0-9]+\.(?:gif|jpg|png))$}, 'http://v1.memecaptain.com/$1')
-    r301(%r{\/((?:g|i)\?.+)}, 'http://v1.memecaptain.com/$1')
-  end
-
   MemeCaptainWeb::AssetHostConfig.new.configure(config, ENV)
   MemeCaptainWeb::SrcImageNameLookupConfig.new.configure(config, ENV)
 
