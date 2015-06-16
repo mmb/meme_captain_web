@@ -138,28 +138,38 @@ describe SrcImagesController, type: :controller do
         1.times { FactoryGirl.create(:gend_image, src_image: src_image2) }
 
         get :index, format: :json
-        expect(JSON.parse(response.body)).to eq(
-          [{ 'id_hash' => src_image1.id_hash,
-             'width' => 399,
-             'height' => 399,
-             'size' => 9141,
-             'content_type' => 'image/jpeg',
-             'created_at' => src_image1.created_at.xmlschema(3),
-             'updated_at' => src_image1.updated_at.xmlschema(3),
-             'name' => 'image 1',
-             'image_url' =>
-               "http://test.host/src_images/#{src_image1.id_hash}.jpg" },
-           { 'id_hash' => src_image2.id_hash,
-             'width' => 399,
-             'height' => 399,
-             'size' => 9141,
-             'content_type' => 'image/jpeg',
-             'created_at' => src_image2.created_at.xmlschema(3),
-             'updated_at' => src_image2.updated_at.xmlschema(3),
-             'name' => 'image 1',
-             'image_url' =>
-               "http://test.host/src_images/#{src_image2.id_hash}.jpg" }]
-        )
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body[0]).to include(
+          'id_hash' => src_image1.id_hash,
+          'width' => 399,
+          'height' => 399,
+          'size' => 9141,
+          'content_type' => 'image/jpeg',
+          'created_at' => src_image1.created_at.xmlschema(3),
+          'updated_at' => src_image1.updated_at.xmlschema(3),
+          'name' => 'image 1',
+          'image_url' =>
+               "http://test.host/src_images/#{src_image1.id_hash}.jpg")
+        expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
+          src_image1.created_at.to_i)
+        expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
+          src_image1.updated_at.to_i)
+
+        expect(parsed_body[1]).to include(
+          'id_hash' => src_image2.id_hash,
+          'width' => 399,
+          'height' => 399,
+          'size' => 9141,
+          'content_type' => 'image/jpeg',
+          'created_at' => src_image2.created_at.xmlschema(3),
+          'updated_at' => src_image2.updated_at.xmlschema(3),
+          'name' => 'image 1',
+          'image_url' =>
+              "http://test.host/src_images/#{src_image2.id_hash}.jpg")
+        expect(Time.parse(parsed_body[1]['created_at']).to_i).to eq(
+          src_image2.created_at.to_i)
+        expect(Time.parse(parsed_body[1]['updated_at']).to_i).to eq(
+          src_image2.updated_at.to_i)
       end
 
       context 'when a gend image host is set in the config' do
@@ -177,20 +187,21 @@ describe SrcImagesController, type: :controller do
           src_image1.save!
 
           get :index, format: :json
-          expect(JSON.parse(response.body)).to eq(
-            [{
-              'id_hash' => src_image1.id_hash,
-              'width' => 399,
-              'height' => 399,
-              'size' => 9141,
-              'content_type' => 'image/jpeg',
-              'created_at' => src_image1.created_at.xmlschema(3),
-              'updated_at' => src_image1.updated_at.xmlschema(3),
-              'name' => 'image 1',
-              'image_url' =>
-                "http://gendimagehost.com/src_images/#{src_image1.id_hash}.jpg"
-            }]
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body[0]).to include(
+            'id_hash' => src_image1.id_hash,
+            'width' => 399,
+            'height' => 399,
+            'size' => 9141,
+            'content_type' => 'image/jpeg',
+            'name' => 'image 1',
+            'image_url' =>
+  "http://gendimagehost.com/src_images/#{src_image1.id_hash}.jpg"
           )
+          expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
+            src_image1.created_at.to_i)
+          expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
+            src_image1.updated_at.to_i)
         end
       end
     end
