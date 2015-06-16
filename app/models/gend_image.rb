@@ -22,14 +22,6 @@ class GendImage < ActiveRecord::Base
 
   after_commit :create_jobs
 
-  def format
-    mime = Mime::Type.lookup(content_type)
-
-    return unless mime.is_a?(Mime::Type)
-
-    { jpeg: :jpg }.fetch(mime.symbol, mime.symbol)
-  end
-
   def create_jobs
     GendImageProcessJob.perform_later(self) if work_in_progress
   end

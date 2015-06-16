@@ -137,4 +137,12 @@ describe SrcImage do
       end
     end
   end
+
+  describe '#format' do
+    it 'returns the file extension' do
+      src_image = FactoryGirl.create(:src_image)
+      src_image.set_derived_image_fields
+      expect(src_image.format).to eq(:jpg)
+    end
+  end
 end

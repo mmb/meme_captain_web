@@ -24,6 +24,14 @@ module HasImageConcern
     true # must return true for before_validation callback
   end
 
+  def format
+    mime = Mime::Type.lookup(content_type)
+
+    return unless mime.is_a?(Mime::Type)
+
+    { jpeg: :jpg }.fetch(mime.symbol, mime.symbol)
+  end
+
   def magick_image_list
     Magick::ImageList.new.from_blob(image)
   end
