@@ -14,6 +14,8 @@ class SrcImage < ActiveRecord::Base
 
   after_commit :create_jobs
 
+  attr_accessor :image_url
+
   def image_if_not_url
     # rubocop:disable Style/GuardClause
     if url.blank? && image.blank?
@@ -30,6 +32,21 @@ class SrcImage < ActiveRecord::Base
 
   def create_jobs
     SrcImageProcessJob.perform_later(self) if work_in_progress
+  end
+
+  def as_json(_options = nil)
+    super(only: [
+      :id_hash,
+      :width,
+      :height,
+      :size,
+      :content_type,
+      :created_at,
+      :updated_at,
+      :name
+    ], methods: [
+      :image_url
+    ])
   end
 
   protected

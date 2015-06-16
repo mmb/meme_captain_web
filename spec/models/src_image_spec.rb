@@ -145,4 +145,23 @@ describe SrcImage do
       expect(src_image.format).to eq(:jpg)
     end
   end
+
+  describe '#as_json' do
+    it 'returns the JSON representation of the model' do
+      src_image = FactoryGirl.create(:src_image, name: 'test image')
+      src_image.set_derived_image_fields
+      src_image.save!
+      src_image.image_url = 'test image url'
+      expect(src_image.as_json).to eq(
+        'id_hash' => src_image.id_hash,
+        'width' => 399,
+        'height' => 399,
+        'size' => 9141,
+        'content_type' => 'image/jpeg',
+        'created_at' => src_image.created_at,
+        'updated_at' => src_image.updated_at,
+        'name' => 'test image',
+        'image_url' => 'test image url')
+    end
+  end
 end

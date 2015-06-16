@@ -12,6 +12,10 @@ class SrcImagesController < ApplicationController
     query = params[:q].try(:strip)
     @src_images = SrcImage.without_image.includes(:src_thumb).name_matches(
       query).publick.active.finished.most_used.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render_index_json }
+    end
   end
 
   def create
@@ -95,5 +99,20 @@ class SrcImagesController < ApplicationController
     format.json do
       render json: @src_image.errors, status: :unprocessable_entity
     end
+  end
+
+  def render_index_json
+    @src_images.each { |src_image| src_image.image_url = image_url(src_image) }
+    render json: @src_images
+  end
+
+  def image_url(src_image)
+    url_for(
+      controller: :src_images,
+      action: :show,
+      id: src_image.id_hash,
+      format: src_image.format,
+      host: MemeCaptainWeb::Config::GEND_IMAGE_HOST || request.host
+    )
   end
 end

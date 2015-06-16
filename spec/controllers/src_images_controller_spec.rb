@@ -116,6 +116,84 @@ describe SrcImagesController, type: :controller do
         expect(assigns(:src_images)).to eq([si])
       end
     end
+
+    context 'when JSON is requested' do
+      it 'serves JSON' do
+        src_image1 = FactoryGirl.create(
+          :src_image,
+          name: 'image 1',
+          work_in_progress: false)
+        src_image1.set_derived_image_fields
+        src_image1.save!
+        2.times { FactoryGirl.create(:gend_image, src_image: src_image1) }
+
+        Timecop.travel(Time.now + 1)
+
+        src_image2 = FactoryGirl.create(
+          :src_image,
+          name: 'image 1',
+          work_in_progress: false)
+        src_image2.set_derived_image_fields
+        src_image2.save!
+        1.times { FactoryGirl.create(:gend_image, src_image: src_image2) }
+
+        get :index, format: :json
+        expect(JSON.parse(response.body)).to eq(
+          [{ 'id_hash' => src_image1.id_hash,
+             'width' => 399,
+             'height' => 399,
+             'size' => 9141,
+             'content_type' => 'image/jpeg',
+             'created_at' => src_image1.created_at.xmlschema(3),
+             'updated_at' => src_image1.updated_at.xmlschema(3),
+             'name' => 'image 1',
+             'image_url' =>
+               "http://test.host/src_images/#{src_image1.id_hash}.jpg" },
+           { 'id_hash' => src_image2.id_hash,
+             'width' => 399,
+             'height' => 399,
+             'size' => 9141,
+             'content_type' => 'image/jpeg',
+             'created_at' => src_image2.created_at.xmlschema(3),
+             'updated_at' => src_image2.updated_at.xmlschema(3),
+             'name' => 'image 1',
+             'image_url' =>
+               "http://test.host/src_images/#{src_image2.id_hash}.jpg" }]
+        )
+      end
+
+      context 'when a gend image host is set in the config' do
+        before do
+          stub_const('MemeCaptainWeb::Config::GEND_IMAGE_HOST',
+                     'gendimagehost.com')
+        end
+
+        it 'uses the gend image host in src image urls' do
+          src_image1 = FactoryGirl.create(
+            :src_image,
+            name: 'image 1',
+            work_in_progress: false)
+          src_image1.set_derived_image_fields
+          src_image1.save!
+
+          get :index, format: :json
+          expect(JSON.parse(response.body)).to eq(
+            [{
+              'id_hash' => src_image1.id_hash,
+              'width' => 399,
+              'height' => 399,
+              'size' => 9141,
+              'content_type' => 'image/jpeg',
+              'created_at' => src_image1.created_at.xmlschema(3),
+              'updated_at' => src_image1.updated_at.xmlschema(3),
+              'name' => 'image 1',
+              'image_url' =>
+                "http://gendimagehost.com/src_images/#{src_image1.id_hash}.jpg"
+            }]
+          )
+        end
+      end
+    end
   end
 
   describe "POST 'create'" do
