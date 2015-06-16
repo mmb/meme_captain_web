@@ -145,8 +145,6 @@ describe SrcImagesController, type: :controller do
           'height' => 399,
           'size' => 9141,
           'content_type' => 'image/jpeg',
-          'created_at' => src_image1.created_at.xmlschema(3),
-          'updated_at' => src_image1.updated_at.xmlschema(3),
           'name' => 'image 1',
           'image_url' =>
                "http://test.host/src_images/#{src_image1.id_hash}.jpg")
@@ -161,8 +159,6 @@ describe SrcImagesController, type: :controller do
           'height' => 399,
           'size' => 9141,
           'content_type' => 'image/jpeg',
-          'created_at' => src_image2.created_at.xmlschema(3),
-          'updated_at' => src_image2.updated_at.xmlschema(3),
           'name' => 'image 1',
           'image_url' =>
               "http://test.host/src_images/#{src_image2.id_hash}.jpg")
