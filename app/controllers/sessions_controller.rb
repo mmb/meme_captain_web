@@ -7,14 +7,7 @@ class SessionsController < ApplicationController
 
     if user
       session[:user_id] = user.id
-
-      if session[:return_to]
-        return_to = session[:return_to]
-        session[:return_to] = nil
-      else
-        return_to = nil
-      end
-
+      return_to = session.delete(:return_to)
       redirect_to(return_to || my_url, notice: 'Logged in.')
     else
       flash[:error] = 'Login failed.'
