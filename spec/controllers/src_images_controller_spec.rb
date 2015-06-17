@@ -340,6 +340,21 @@ describe SrcImagesController, type: :controller do
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
+
+    context 'when the source image has been deleted' do
+      let(:src_image) do
+        FactoryGirl.create(
+          src_image,
+          work_in_progress: false,
+          is_deleted: true)
+      end
+
+      it 'raises record not found' do
+        expect do
+          get 'show', id: src_image.id_hash
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 
   describe "DELETE 'destroy'" do
