@@ -344,7 +344,7 @@ describe SrcImagesController, type: :controller do
     context 'when the source image has been deleted' do
       let(:src_image) do
         FactoryGirl.create(
-          src_image,
+          :src_image,
           work_in_progress: false,
           is_deleted: true)
       end
