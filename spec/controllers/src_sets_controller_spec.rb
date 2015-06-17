@@ -227,7 +227,12 @@ describe SrcSetsController, type: :controller do
     end
 
     context 'when the set is deleted' do
-      it 'returns not found'
+      let(:src_set) { FactoryGirl.create(:src_set, is_deleted: true) }
+
+      it 'creates the set' do
+        put :update, id: src_set.name, src_set: { name: 'newname' }
+        expect(SrcSet.last.name).to eq('newname')
+      end
     end
   end
 
