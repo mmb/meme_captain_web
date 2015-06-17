@@ -213,16 +213,33 @@ describe SrcImagesController, type: :controller do
         end.to change { SrcImage.count }.by(1)
       end
 
-      it 'redirects to the index page' do
-        post :create, src_image: { image: image }
+      context 'when the user requests html' do
+        it 'redirects to the index page' do
+          post :create, src_image: { image: image }
 
-        expect(response).to redirect_to controller: :my, action: :show
+          expect(response).to redirect_to controller: :my, action: :show
+        end
+
+        it 'informs the user of success with flash' do
+          post :create, src_image: { image: image }
+
+          expect(flash[:notice]).to eq('Source image created.')
+        end
       end
 
-      it 'informs the user of success with flash' do
-        post :create, src_image: { image: image }
+      context 'when the user requests json' do
+        before { request.accept = 'application/json' }
 
-        expect(flash[:notice]).to eq('Source image created.')
+        it 'returns success' do
+          post :create, src_image: { url: 'http://test.com/image.jpg' }
+          expect(response).to be_successful
+        end
+
+        it 'returns json with id' do
+          post :create, src_image: { url: 'http://test.com/image.jpg' }
+          expect(JSON.parse(response.body)).to eq(
+            'id' => assigns(:src_image).id_hash)
+        end
       end
     end
 
