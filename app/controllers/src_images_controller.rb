@@ -2,6 +2,8 @@
 
 # Source images controller.
 class SrcImagesController < ApplicationController
+  include SrcImagesHelper
+
   def new
     return if not_logged_in 'Please login to create a source image.'
 
@@ -102,17 +104,9 @@ class SrcImagesController < ApplicationController
   end
 
   def render_index_json
-    @src_images.each { |src_image| src_image.image_url = image_url(src_image) }
+    @src_images.each do |src_image|
+      src_image.image_url = src_image_url_for(src_image)
+    end
     render json: @src_images
-  end
-
-  def image_url(src_image)
-    url_for(
-      controller: :src_images,
-      action: :show,
-      id: src_image.id_hash,
-      format: src_image.format,
-      host: MemeCaptainWeb::Config::GEND_IMAGE_HOST || request.host
-    )
   end
 end
