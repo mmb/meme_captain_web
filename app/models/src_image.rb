@@ -34,6 +34,7 @@ class SrcImage < ActiveRecord::Base
     SrcImageProcessJob.perform_later(self) if work_in_progress
   end
 
+  # rubocop:disable MethodLength
   def as_json(_options = nil)
     super(only: [
       :id_hash,
@@ -48,6 +49,7 @@ class SrcImage < ActiveRecord::Base
       :image_url
     ])
   end
+  # rubocop:enable MethodLength
 
   protected
 
