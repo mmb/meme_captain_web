@@ -24,6 +24,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :src_images, concerns: :paginatable
 
+  resources :pending_src_images, only: :show
+
   resources :src_sets, except: :new, concerns: :paginatable
 
   resources :src_thumbs
