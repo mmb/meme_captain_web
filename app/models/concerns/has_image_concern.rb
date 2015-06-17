@@ -16,9 +16,7 @@ module HasImageConcern
     img = magick_image_list
 
     self.content_type = img.content_type
-    self.height = img.rows
-    self.size = image.size
-    self.width = img.columns
+    load_image_dimension_fields(img)
     self.is_animated = img.animated? if self.respond_to?(:is_animated=)
     img.destroy!
     true # must return true for before_validation callback
@@ -34,5 +32,13 @@ module HasImageConcern
 
   def magick_image_list
     Magick::ImageList.new.from_blob(image)
+  end
+
+  private
+
+  def load_image_dimension_fields(img)
+    self.width = img.columns
+    self.height = img.rows
+    self.size = image.size
   end
 end
