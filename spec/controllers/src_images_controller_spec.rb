@@ -230,15 +230,22 @@ describe SrcImagesController, type: :controller do
       context 'when the user requests json' do
         before { request.accept = 'application/json' }
 
-        it 'returns success' do
+        it 'returns accepted' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
-          expect(response).to be_successful
+          expect(response).to have_http_status(:accepted)
         end
 
         it 'returns json with id' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
           expect(JSON.parse(response.body)).to eq(
             'id' => assigns(:src_image).id_hash)
+        end
+
+        it 'sets the Location header to the pending src image url' do
+          post :create, src_image: { url: 'http://test.com/image.jpg' }
+          expect(response.headers['Location']).to eq(
+            'http://test.host/pending_src_images/' \
+            "#{assigns(:src_image).id_hash}")
         end
       end
     end

@@ -93,7 +93,7 @@ class SrcImagesController < ApplicationController
         notice: 'Source image created.'
       )
     end
-    format.json { render json: { id: @src_image.id_hash } }
+    format.json { redirect_to_pending }
   end
 
   def create_fail(format)
@@ -108,5 +108,18 @@ class SrcImagesController < ApplicationController
       src_image.image_url = src_image_url_for(src_image)
     end
     render json: @src_images
+  end
+
+  def redirect_to_pending
+    response.headers['Location'] = pending_url
+    response.status = :accepted
+    render json: { id: @src_image.id_hash }
+  end
+
+  def pending_url
+    url_for(
+      controller: :pending_src_images,
+      action: :show,
+      id: @src_image.id_hash)
   end
 end
