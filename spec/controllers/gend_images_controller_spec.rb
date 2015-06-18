@@ -79,6 +79,16 @@ describe GendImagesController, type: :controller do
         expect(assigns(:gend_image).private).to eq(true)
       end
     end
+
+    context 'when the source image is deleted' do
+      let(:src_image) { FactoryGirl.create(:src_image, is_deleted: true) }
+
+      it 'returns not found' do
+        expect do
+          get :new, src: src_image.id_hash
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 
   describe "GET 'index'" do
