@@ -35,7 +35,7 @@ describe PendingSrcImagesController, type: :controller do
 
     context 'when the image is found' do
       context 'when the image is still being processed' do
-        it 'returns accepted status' do
+        it 'returns success' do
           get(:show, id: src_image.id_hash)
           expect(response).to be_success
         end
