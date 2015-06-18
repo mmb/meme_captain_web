@@ -218,7 +218,7 @@ describe GendImagesController, type: :controller do
         it 'responds with accepted' do
           post :create, gend_image: { src_image_id: src_image.id_hash }
 
-          expect(response).to have_http_status(202)
+          expect(response).to have_http_status(:accepted)
         end
 
         it 'sets the location header to the pending image url' do
