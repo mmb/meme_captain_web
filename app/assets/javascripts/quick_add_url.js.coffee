@@ -1,10 +1,10 @@
 $(document).ready ->
-  input = $('#quick-add-url')
-  status = $('#quick-add-url-status')
+  input_element = $('#quick-add-url')
+  status_element = $('#quick-add-url-status')
 
   quick_add_url = ->
-    status.text('Submitting URL')
-    url = input.val()
+    status_element.text('Submitting URL')
+    url = input_element.val()
 
     $.ajax '/src_images/',
       type: 'post'
@@ -12,10 +12,10 @@ $(document).ready ->
       dataType: 'json'
       data: JSON.stringify(url: url)
       success: (data) ->
-        status.text('Submitted URL')
+        status_element.text('Submitted URL')
         count = 0
         timer = setInterval ->
-          status.append('.')
+          status_element.append('.')
           $.ajax "/src_images/#{data.id}",
             type: 'head',
             success: ->
@@ -24,11 +24,11 @@ $(document).ready ->
           count += 1
           if count >= 10
             clearInterval(timer)
-            status.text('Error loading URL')
+            status_element.text('Error loading URL')
         , 1000
       error: ->
-        status.text('Error submitting URL')
+        status_element.text('Error submitting URL')
 
-  input.keypress (e) ->
+  input_element.keypress (e) ->
     if e.which == 13
       quick_add_url()
