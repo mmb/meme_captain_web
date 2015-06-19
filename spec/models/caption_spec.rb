@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rails_helper'
+
 describe Caption do
   it { should_not validate_presence_of :font }
 
@@ -55,6 +57,14 @@ describe Caption do
         caption = FactoryGirl.create(:caption, font: 'some_font.ttf')
         expect(caption.font).to eq 'some_font.ttf'
       end
+    end
+  end
+
+  context 'when the text is longer than 255 characters' do
+    it 'does not raise an exception' do
+      expect do
+        FactoryGirl.create(:caption, text: 'a' * 256)
+      end.to_not raise_error
     end
   end
 end
