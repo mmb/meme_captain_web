@@ -10,6 +10,12 @@ describe GendImagesController, type: :controller do
 
   before(:each) do
     session[:user_id] = user.try(:id)
+
+    src_image.set_derived_image_fields
+    src_image.save!
+
+    src_image2.set_derived_image_fields
+    src_image2.save!
   end
 
   describe "GET 'new'" do
