@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-# Build urls for generated images.
+# Build urls for source images.
 module SrcImagesHelper
   def src_image_url_for(src_image)
     url_for(
