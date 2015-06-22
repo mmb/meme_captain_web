@@ -5,16 +5,14 @@ require 'rails_helper'
 describe 'gend_images/_gend_images.html', type: :view do
   include Webrat::Matchers
 
-  before do
-    assign :gend_images, Kaminari.paginate_array([]).page(1)
-    assign :show_toolbar, show_toolbar
-  end
+  let(:gend_images) { Kaminari.paginate_array([]).page(1) }
 
   context 'when toolbar is enabled' do
     let(:show_toolbar) { true }
 
     it 'shows the toolbar' do
-      render partial: 'gend_images/gend_images'
+      render(partial: 'gend_images/gend_images',
+             locals: { gend_images: gend_images, show_toolbar: show_toolbar })
 
       expect(rendered).to have_selector '.btn-toolbar'
     end
@@ -24,7 +22,8 @@ describe 'gend_images/_gend_images.html', type: :view do
     let(:show_toolbar) { false }
 
     it 'does not show the toolbar' do
-      render partial: 'gend_images/gend_images'
+      render(partial: 'gend_images/gend_images',
+             locals: { gend_images: gend_images, show_toolbar: show_toolbar })
 
       expect(rendered).to_not have_selector '.btn-toolbar'
     end

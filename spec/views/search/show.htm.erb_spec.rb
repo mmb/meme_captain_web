@@ -13,6 +13,7 @@ describe 'search/show.html.erb', type: :view do
     assign(:src_images, Kaminari.paginate_array(src_images).page(1))
     assign(:src_sets, Kaminari.paginate_array(src_sets).page(1))
     assign(:gend_images, Kaminari.paginate_array(gend_images).page(1))
+    assign(:show_toolbar, true)
     allow(view).to receive(:render).and_call_original
   end
 
@@ -76,7 +77,9 @@ describe 'search/show.html.erb', type: :view do
     let(:gend_images) { [FactoryGirl.create(:gend_image)] * 2 }
 
     it 'renders the gend images' do
-      expect(view).to receive(:render).with(partial: 'gend_images/gend_images')
+      expect(view).to receive(:render).with(
+        partial: 'gend_images/gend_images',
+        locals: { gend_images: gend_images, show_toolbar: true })
       render
     end
   end

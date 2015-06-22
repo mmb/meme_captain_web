@@ -1,6 +1,6 @@
 <div class="thumb-index well">
 
-  <% if @show_toolbar %>
+  <% if show_toolbar %>
       <div class="btn-toolbar well-toolbar">
 
         <div class="btn-group">
@@ -18,10 +18,10 @@
   <% end %>
 
   <div class="row">
-    <% @gend_images.each do |gi| %>
+    <% gend_images.each do |gi| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
-            <%= render(partial: gi, locals: { show_toolbar: @show_toolbar }) %>
+            <%= render(partial: gi, locals: { show_toolbar: show_toolbar }) %>
           </div>
         </div>
     <% end %>
@@ -30,7 +30,7 @@
   <% if current_page? root_url %>
       <%= link_to 'More images', controller: :gend_images, page: 2 %>
   <% else %>
-      <%= paginate @gend_images %>
+      <%= paginate gend_images %>
   <% end %>
 
 </div>
