@@ -16,6 +16,7 @@ describe 'gend_images/new.html.erb', type: :view do
   before do
     assign(:gend_image, gend_image)
     assign(:caption_defaults, [{}, {}])
+    assign(:src_image_url_with_extension, 'src image url with extension')
   end
 
   it 'renders' do
@@ -78,6 +79,15 @@ describe 'gend_images/new.html.erb', type: :view do
         'input[checked=checked]',
         type: 'checkbox',
         name: 'gend_image[private]')
+    end
+  end
+
+  describe 'text positioner' do
+    it 'sets the data-img-url to the src image url' do
+      expect(render).to have_selector(
+        'div',
+        class: 'text-positioner',
+        'data-img-url' => 'src image url with extension')
     end
   end
 end

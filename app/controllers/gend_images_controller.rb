@@ -2,6 +2,8 @@
 
 # Generated (meme) images controller.
 class GendImagesController < ApplicationController
+  include SrcImagesHelper
+
   wrap_parameters GendImage, include: [
     :captions_attributes,
     :private,
@@ -12,6 +14,7 @@ class GendImagesController < ApplicationController
     src_image = SrcImage.without_image.active.find_by!(id_hash: params[:src])
     @src_image_path = url_for(
       controller: :src_images, action: :show, id: src_image.id_hash)
+    @src_image_url_with_extension = src_image_url_for(src_image)
 
     @gend_image = GendImage.new(
       src_image: src_image,

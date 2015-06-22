@@ -39,6 +39,12 @@ describe GendImagesController, type: :controller do
         "http://test.host/src_images/#{src_image.id_hash}")
     end
 
+    it 'assigns the source image url with extension' do
+      get :new, src: src_image.id_hash
+      expect(assigns(:src_image_url_with_extension)).to eq(
+        "http://test.host/src_images/#{src_image.id_hash}.jpg")
+    end
+
     it 'assigns a new gend image with the src_image' do
       get :new, src: src_image.id_hash
       expect(assigns(:gend_image).src_image).to eq(src_image)

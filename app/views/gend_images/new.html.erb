@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-6">
     <div class="text-positioner"
-         data-img-url="<%= url_for :controller => :src_images, :action => :show, :id => @gend_image.src_image.id_hash %>"
+         data-img-url="<%= @src_image_url_with_extension %>"
          data-img-width="<%= @gend_image.src_image.width %>"
          data-img-height="<%= @gend_image.src_image.height %>"
     />
