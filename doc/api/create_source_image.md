@@ -20,7 +20,7 @@ Example JSON body:
 
 - url - the URL of the image to load
 - name - the name of the source image (optional)
-- private - true if the source image is private (optional) 
+- private - true if the source image is private (optional)
 
 ## Polling
 
