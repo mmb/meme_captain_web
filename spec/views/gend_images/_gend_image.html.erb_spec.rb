@@ -24,25 +24,25 @@ describe 'gend_images/_gend_image.html', type: :view do
   context 'the image has been processed' do
     it 'shows the thumbnail' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
       expect(rendered).to match(gend_thumb.id.to_s)
     end
 
     it 'puts the width in the image tag' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
       expect(rendered).to match('width="19"')
     end
 
     it 'puts the height in the image tag' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
       expect(rendered).to match('height="80"')
     end
 
     it 'has the id hash as data' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
       expect(rendered).to match("data-id=\"#{gend_image.id_hash}\"")
     end
   end
@@ -52,7 +52,7 @@ describe 'gend_images/_gend_image.html', type: :view do
 
     it 'shows as under construction' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
       expect(rendered).to match('Under Construction')
     end
   end
@@ -60,7 +60,7 @@ describe 'gend_images/_gend_image.html', type: :view do
   context 'when the toolbar is enabled' do
     it 'shows the checkbox' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
 
       expect(rendered).to have_selector '.selector'
     end
@@ -71,7 +71,7 @@ describe 'gend_images/_gend_image.html', type: :view do
 
     it 'hides the checkbox' do
       render partial: 'gend_images/gend_image',
-             locals: { gend_image: gend_image }
+             locals: { gend_image: gend_image, show_toolbar: show_toolbar }
 
       expect(rendered).to_not have_selector '.selector'
     end

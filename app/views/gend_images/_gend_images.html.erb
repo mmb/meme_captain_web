@@ -21,7 +21,7 @@
     <% @gend_images.each do |gi| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
-            <%= render :partial => gi %>
+            <%= render(partial: gi, locals: { show_toolbar: @show_toolbar }) %>
           </div>
         </div>
     <% end %>
