@@ -356,11 +356,33 @@ describe GendImagesController, type: :controller do
         end
       end
 
-      it 'returns the meme src image url in the headers' do
-        get :show, id: gend_image.id_hash
+      context 'returning the meme src image url in the headers' do
+        context 'when there is no CDN' do
+          before do
+            stub_const('MemeCaptainWeb::Config::GEND_IMAGE_HOST', nil)
+          end
 
-        expected_url = "http://#{request.host}/src_images/#{src_image.id_hash}"
-        expect(response.headers['Meme-Source-Image']).to eq(expected_url)
+          it 'uses the image url on the server' do
+            get :show, id: gend_image.id_hash
+
+            expected_url = \
+              "http://#{request.host}/src_images/#{src_image.id_hash}.jpg"
+            expect(response.headers['Meme-Source-Image']).to eq(expected_url)
+          end
+        end
+
+        context 'when there is a CDN' do
+          before do
+            stub_const('MemeCaptainWeb::Config::GEND_IMAGE_HOST', 'cdn.com')
+          end
+
+          it 'uses the image url on the CDN' do
+            get :show, id: gend_image.id_hash
+
+            expected_url = "http://cdn.com/src_images/#{src_image.id_hash}.jpg"
+            expect(response.headers['Meme-Source-Image']).to eq(expected_url)
+          end
+        end
       end
 
       it 'has the correct Cache-Control headers' do

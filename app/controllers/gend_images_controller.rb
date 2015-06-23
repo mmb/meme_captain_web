@@ -112,8 +112,6 @@ class GendImagesController < ApplicationController
     headers['Meme-Text'] = gend_image.meme_text_header
     headers['Meme-Name'] = Rack::Utils.escape(
       src_image.name) if src_image.name
-    headers['Meme-Source-Image'] = url_for(
-      controller: :src_images, action: :show,
-      id: src_image.id_hash)
+    headers['Meme-Source-Image'] = src_image_url_for(src_image)
   end
 end
