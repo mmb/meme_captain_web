@@ -1,10 +1,11 @@
-$(document).ready ->
+window.quick_add_url_init = ->
   input_element = $('#quick-add-url')
   status_element = $('#quick-add-url-status')
 
   quick_add_url = ->
-    status_element.text('Submitting URL')
     url = input_element.val()
+    return if url == ''
+    status_element.text('Submitting URL')
 
     $.ajax '/src_images/',
       type: 'post'
@@ -32,3 +33,6 @@ $(document).ready ->
   input_element.keypress (e) ->
     if e.which == 13
       quick_add_url()
+
+$(document).ready ->
+  quick_add_url_init()
