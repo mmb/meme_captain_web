@@ -64,10 +64,10 @@ aws \
   "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
   "ParameterKey=onDemandMinSize,ParameterValue=0" \
   "ParameterKey=onDemandMaxSize,ParameterValue=0" \
-  "ParameterKey=spotMinSize,ParameterValue=0" \
-  "ParameterKey=spotMaxSize,ParameterValue=0"
+  "ParameterKey=spotMinSize,UsePreviousValue=true" \
+  "ParameterKey=spotMaxSize,UsePreviousValue=true"
 
-wait_for_update "$STACK_NAME" "killing ondemand and spot"
+wait_for_update "$STACK_NAME" "killing ondemand"
 
 aws \
   cloudformation \
@@ -82,9 +82,47 @@ aws \
   "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
   "ParameterKey=onDemandMinSize,ParameterValue=$NUM_ON_DEMAND" \
   "ParameterKey=onDemandMaxSize,ParameterValue=$NUM_ON_DEMAND" \
+  "ParameterKey=spotMinSize,UsePreviousValue=true" \
+  "ParameterKey=spotMaxSize,UsePreviousValue=true"
+
+wait_for_update "$STACK_NAME" "reviving ondemand"
+
+wait_for_pool_healthy ondemand
+
+aws \
+  cloudformation \
+  update-stack \
+  --stack-name $STACK_NAME \
+  --template-body file://meme_captain.json \
+  --capabilities CAPABILITY_IAM \
+  --parameters \
+  "ParameterKey=dbUser,UsePreviousValue=true" \
+  "ParameterKey=dbPassword,UsePreviousValue=true" \
+  "ParameterKey=canaryMinSize,UsePreviousValue=true" \
+  "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
+  "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
+  "ParameterKey=onDemandMaxSize,UsePreviousValue=true" \
+  "ParameterKey=spotMinSize,ParameterValue=0" \
+  "ParameterKey=spotMaxSize,ParameterValue=0"
+
+wait_for_update "$STACK_NAME" "killing spot"
+
+aws \
+  cloudformation \
+  update-stack \
+  --stack-name $STACK_NAME \
+  --template-body file://meme_captain.json \
+  --capabilities CAPABILITY_IAM \
+  --parameters \
+  "ParameterKey=dbUser,UsePreviousValue=true" \
+  "ParameterKey=dbPassword,UsePreviousValue=true" \
+  "ParameterKey=canaryMinSize,UsePreviousValue=true" \
+  "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
+  "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
+  "ParameterKey=onDemandMaxSize,UsePreviousValue=true" \
   "ParameterKey=spotMinSize,ParameterValue=1" \
   "ParameterKey=spotMaxSize,ParameterValue=$MAX_SPOT"
 
-wait_for_update "$STACK_NAME" "reviving ondemand and spot"
+wait_for_update "$STACK_NAME" "reviving spot"
 
-wait_for_pool_healthy ondemand,spot
+wait_for_pool_healthy spot
