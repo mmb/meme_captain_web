@@ -5,8 +5,12 @@ require 'rails_helper'
 describe GendImagesController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
-  let(:src_image) { FactoryGirl.create(:src_image, user: user) }
-  let(:src_image2) { FactoryGirl.create(:src_image, user: user2) }
+  let(:src_image) do
+    FactoryGirl.create(:src_image, user: user, work_in_progress: false)
+  end
+  let(:src_image2) do
+    FactoryGirl.create(:src_image, user: user2, work_in_progress: false)
+  end
 
   before(:each) do
     session[:user_id] = user.try(:id)
@@ -247,6 +251,16 @@ describe GendImagesController, type: :controller do
       it 'raises record not found' do
         expect do
           post :create, gend_image: { src_image_id: 'abc' }
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when the source image is still in progress' do
+      let(:src_image) { FactoryGirl.create(:src_image, work_in_progress: true) }
+
+      it 'raises record not found' do
+        expect do
+          post :create, gend_image: { src_image_id: src_image.id_hash }
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end

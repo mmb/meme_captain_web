@@ -48,6 +48,12 @@ Other). When it returns 303, the image is finished processing and the
 `Location` header will contain the URL of the image. Under normal
 circumstances creation of the image should only take a few seconds.
 
+## Error Responses
+
+If the src_image_id in the initial POST request references a source image
+that is not found or is not finished being created, the response code will
+be 404.
+
 ## Ruby example
 
 ```ruby

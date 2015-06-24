@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'creating a gend image using the JSON API', type: :request do
   it 'creates a new gend image in the database' do
-    src_image = FactoryGirl.create(:src_image)
+    src_image = FactoryGirl.create(:src_image, work_in_progress: false)
 
     request_body = {
       src_image_id: src_image.id_hash,
