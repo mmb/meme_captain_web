@@ -66,6 +66,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    coffeelint (1.9.1)
+      coffee-script
+      execjs
+      json
     colored (1.2)
     commonjs (0.2.6)
     crack (0.4.2)
@@ -289,6 +293,7 @@ DEPENDENCIES
   best_in_place!
   browser (~> 0.8.0)
   coffee-rails (~> 4.1.0)
+  coffeelint (~> 1.9.1)
   daemons
   dalli
   delayed-plugins-airbrake (~> 1.1.0)
