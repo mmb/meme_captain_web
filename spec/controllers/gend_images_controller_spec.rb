@@ -265,6 +265,20 @@ describe GendImagesController, type: :controller do
       end
     end
 
+    context 'when the source image is deleted' do
+      let(:src_image) do
+        FactoryGirl.create(:src_image,
+                           work_in_progress: false,
+                           is_deleted: true)
+      end
+
+      it 'raises record not found' do
+        expect do
+          post :create, gend_image: { src_image_id: src_image.id_hash }
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
     context 'when the source image is owned by another user' do
       specify 'the gend image is owned by the current user' do
         FactoryGirl.create(:gend_image, src_image: src_image2)

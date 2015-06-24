@@ -29,7 +29,7 @@ class GendImagesController < ApplicationController
   end
 
   def create
-    src_image = SrcImage.finished.find_by!(
+    src_image = SrcImage.active.finished.find_by!(
       id_hash: params[:gend_image][:src_image_id])
 
     @gend_image = GendImage.new(gend_image_params)
