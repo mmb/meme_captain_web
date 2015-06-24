@@ -32,8 +32,7 @@ class GendImagesController < ApplicationController
     src_image = SrcImage.without_image.active.finished.find_by!(
       id_hash: params[:gend_image][:src_image_id])
 
-    @gend_image = GendImage.new(gend_image_params)
-    @gend_image.src_image = src_image
+    @gend_image = src_image.gend_images.build(gend_image_params)
     @gend_image.user = current_user
 
     if @gend_image.save
