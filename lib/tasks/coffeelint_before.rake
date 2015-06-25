@@ -1,0 +1,1 @@
+task 'spec:javascript': :coffeelint
