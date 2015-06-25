@@ -32,6 +32,22 @@ Other). When it returns 303, the image is finished processing and the
 `Location` header will contain the URL of the image. Under normal
 circumstances creation of the image should only take a few seconds.
 
+## Composite Source Images
+
+Urls can be multiple image urls to combine vertically (using '|') or
+horizontally (using '[]'). These can also be chained together.
+
+For example the url `http://a.com/1.jpg|http://a.com/2.jpg[]http://a.com/3.jpg`
+will produce this image:
+
+```
++---------------+
+|     1.jpg     |
++-------+-------+
+| 2.jpg | 3.jpg |
++-------+-------+
+```
+
 ## Ruby example
 
 ```ruby
