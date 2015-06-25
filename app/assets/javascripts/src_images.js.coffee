@@ -17,7 +17,8 @@ window.load_urls_init = ->
     $.when((create_with_url url for url in urls)...).then ->
       my_url = $('#load-urls-message').attr('data-myurl')
       add_alert $('#load-urls-message'),
-        "Loaded #{urls.length} source image URLs. View them at <a href=\"#{my_url}\">your images</a>.", 'alert-info'
+        "Loaded #{urls.length} source image URLs. View them at
+        <a href=\"#{my_url}\">your images</a>.", 'alert-info'
 
       $('#load-urls').val ''
 

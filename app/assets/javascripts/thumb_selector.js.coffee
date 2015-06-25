@@ -4,12 +4,14 @@ get_thumb_index = (target) ->
 select_all = (event) ->
   target = $(event.target)
   thumb_index = get_thumb_index(target)
-  thumb_index.find('input:checkbox.selector:not(:checked)').prop('checked', true).trigger('change')
+  thumb_index.find('input:checkbox.selector:not(:checked)').prop(
+    'checked', true).trigger('change')
 
 select_none = (event) ->
   target = $(event.target)
   thumb_index = get_thumb_index(target)
-  thumb_index.find('input:checkbox.selector:checked').prop('checked', false).trigger('change')
+  thumb_index.find('input:checkbox.selector:checked').prop(
+    'checked', false).trigger('change')
 
 selected_count = (parent) ->
   parent.find('input:checkbox.selector:checked').length
@@ -20,7 +22,8 @@ add_to_set = (event) ->
   unless set_name is ''
     target = $(event.target)
     thumb_index = get_thumb_index(target)
-    ids = thumb_index.find('input:checkbox.selector:checked').map(-> this.getAttribute('data-id')).get()
+    ids = thumb_index.find('input:checkbox.selector:checked').map(
+      -> this.getAttribute('data-id')).get()
 
     $.ajax "/src_sets/#{set_name}",
       type: 'put'
@@ -49,7 +52,8 @@ remove_from_set = (event) ->
     dataType: 'json'
     data: JSON.stringify(delete_src_images: ids)
     success: ->
-      checked.prop('checked', false).trigger('change').parents('.thumbnail').remove()
+      checked.prop('checked', false).trigger('change').parents(
+        '.thumbnail').remove()
     error: (xhr, text_status)->
       if xhr.status == 403
         message = 'You do not own this set'
@@ -69,8 +73,9 @@ delete_thumb = (url) ->
         id = e.getAttribute('data-id')
         $.ajax "#{url}#{id}",
           type: 'delete'
-          success: =>
-            $(e).prop('checked', false).trigger('change').parents('.thumbnail').remove()
+          success: ->
+            $(e).prop('checked', false).trigger('change').parents(
+              '.thumbnail').remove()
           error: (xhr, text_status)->
             add_alert thumb_index, "Error deleting #{id}"
 
@@ -82,9 +87,11 @@ update_selected = (container) ->
   selected_ct = selected_count container
 
   if selected_ct > 0
-    container.find('.enable-some-selected').prop('disabled', false).removeClass('disabled')
+    container.find('.enable-some-selected').prop(
+      'disabled', false).removeClass('disabled')
   else
-    container.find('.disable-none-selected').prop('disabled', true).addClass('disabled')
+    container.find('.disable-none-selected').prop(
+      'disabled', true).addClass('disabled')
 
   container.find('.selected-count').text selected_ct
 

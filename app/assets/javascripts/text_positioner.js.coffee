@@ -98,7 +98,7 @@ class TextPositioner
   scale_height: (width_pct) ->
     @fabric_canvas.height * width_pct
 
-  object_moving: (o) =>
+  object_moving: (o) ->
     target = new Target(o)
 
     target.bound_top()
@@ -106,7 +106,7 @@ class TextPositioner
     target.bound_bottom()
     target.bound_left()
 
-  object_scaling: (o) =>
+  object_scaling: (o) ->
     target = new Target(o)
 
     target.bound_scale_x()
@@ -114,13 +114,17 @@ class TextPositioner
 
     target.fire 'object:moving'
 
-  object_modified: (o) =>
+  object_modified: (o) ->
     target = new Target(o)
 
-    $("#gend_image_captions_attributes_#{target.name()}_top_left_x_pct").val(target.left_pct())
-    $("#gend_image_captions_attributes_#{target.name()}_top_left_y_pct").val(target.top_pct())
-    $("#gend_image_captions_attributes_#{target.name()}_width_pct").val(target.width_pct())
-    $("#gend_image_captions_attributes_#{target.name()}_height_pct").val(target.height_pct())
+    $("#gend_image_captions_attributes_#{target.name()}_top_left_x_pct").val(
+      target.left_pct())
+    $("#gend_image_captions_attributes_#{target.name()}_top_left_y_pct").val(
+      target.top_pct())
+    $("#gend_image_captions_attributes_#{target.name()}_width_pct").val(
+      target.width_pct())
+    $("#gend_image_captions_attributes_#{target.name()}_height_pct").val(
+      target.height_pct())
 
 class @Target
 
@@ -147,7 +151,8 @@ class @Target
   bound_scale_x: ->
     if @right_side() > @canvas.getWidth()
       @target.setScaleX(
-        (@target.getScaleX() / @target.getWidth()) * (@canvas.getWidth() - @target.getLeft()))
+        (@target.getScaleX() / @target.getWidth()) *
+        (@canvas.getWidth() - @target.getLeft()))
     else if @target.getLeft() < 0
       @target.setScaleX(
         (@target.getScaleX() / @target.getWidth()) * @right_side())
@@ -156,7 +161,8 @@ class @Target
   bound_scale_y: ->
     if @bottom_side() > @canvas.getHeight()
       @target.setScaleY(
-        (@target.getScaleY() / @target.getHeight()) * (@canvas.getHeight() - @target.getTop()))
+        (@target.getScaleY() / @target.getHeight()) *
+        (@canvas.getHeight() - @target.getTop()))
     else if @target.getTop() < 0
       @target.setScaleY(
         (@target.getScaleY() / @target.getHeight()) * @bottom_side())

@@ -230,7 +230,8 @@ describe 'text positioner', ->
 
         expect(object.target.setScaleX).not.toHaveBeenCalled()
 
-      it 'changes the x scale if the target is outside the canvas on the right', ->
+      it 'changes the x scale if the target is outside the canvas on the
+        right', ->
         object =
           target:
             canvas:
@@ -252,7 +253,8 @@ describe 'text positioner', ->
 
         expect(object.target.setScaleX).toHaveBeenCalledWith(1)
 
-      it 'changes the x scale if the target is outside the canvas on the left', ->
+      it 'changes the x scale if the target is outside the canvas on the
+        left', ->
         object =
           target:
             canvas:
@@ -297,7 +299,8 @@ describe 'text positioner', ->
 
         expect(object.target.setScaleY).not.toHaveBeenCalled()
 
-      it 'changes the y scale if the target is outside the canvas on the bottom', ->
+      it 'changes the y scale if the target is outside the canvas on the
+        bottom', ->
         object =
           target:
             canvas:
@@ -319,7 +322,8 @@ describe 'text positioner', ->
 
         expect(object.target.setScaleY).toHaveBeenCalledWith(1)
 
-      it 'changes the y scale if the target is outside the canvas on the top', ->
+      it 'changes the y scale if the target is outside the canvas on the
+        top', ->
         object =
           target:
             canvas:
@@ -408,4 +412,5 @@ describe 'text positioner', ->
 
         t.fire 'event'
 
-        expect(object.target.canvas.fire).toHaveBeenCalledWith('event', target: object.target)
+        expect(object.target.canvas.fire).toHaveBeenCalledWith(
+          'event', target: object.target)

@@ -60,7 +60,8 @@ describe 'thumb_selector', ->
 
         $('.add-to-set').click()
 
-        expect($.attr).toHaveBeenCalledWith(jasmine.any(Object), 'location', '/src_sets/set1')
+        expect($.attr).toHaveBeenCalledWith(jasmine.any(Object), 'location',
+          '/src_sets/set1')
 
     describe 'when the response is forbidden', ->
       it 'shows the user an error message', ->
