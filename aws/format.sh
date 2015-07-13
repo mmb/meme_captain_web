@@ -2,6 +2,9 @@
 
 set -e
 
-jq --sort-keys . < meme_captain.json > meme_captain.json.new
+for JSON in *.json; do
+  echo $JSON
+  jq --sort-keys . < $JSON > $JSON.new
 
-mv meme_captain.json{.new,}
+  mv $JSON{.new,}
+done
