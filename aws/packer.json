@@ -1,0 +1,27 @@
+{
+  "builders": [
+    {
+      "ami_name": "memecaptain-{{timestamp}}",
+      "associate_public_ip_address": true,
+      "instance_type": "t2.micro",
+      "region": "us-east-1",
+      "source_ami": "ami-1ecae776",
+      "ssh_pty": true,
+      "ssh_username": "ec2-user",
+      "subnet_id": "subnet-c7219bec",
+      "type": "amazon-ebs",
+      "vpc_id": "vpc-732e0c16"
+    }
+  ],
+  "provisioners": [
+    {
+      "inline": [
+        "sudo yum update -y",
+        "sudo yum install -y docker",
+        "sudo service docker start",
+        "sudo docker pull mm62/meme-captain-web"
+      ],
+      "type": "shell"
+    }
+  ]
+}
