@@ -609,7 +609,7 @@
         "DesiredCapacity": {
           "Ref": "onDemandMinSize"
         },
-        "HealthCheckGracePeriod": 600,
+        "HealthCheckGracePeriod": 240,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "onDemandLaunchConfig"
@@ -661,7 +661,7 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-1ecae776",
+        "ImageId": "ami-694e9902",
         "InstanceType": "t2.micro",
         "KeyName": "memecaptain",
         "SecurityGroups": [
@@ -676,10 +676,6 @@
               [
                 "#!/bin/bash",
                 "set -e",
-                "yum update -y",
-                "yum install -y docker",
-                "service docker start",
-                "docker pull mm62/meme-captain-web",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env /env",
                 "mkdir /fonts",
@@ -893,7 +889,7 @@
         "DesiredCapacity": {
           "Ref": "spotMinSize"
         },
-        "HealthCheckGracePeriod": 600,
+        "HealthCheckGracePeriod": 240,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "spotLaunchConfig"
@@ -999,7 +995,7 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-1ecae776",
+        "ImageId": "ami-694e9902",
         "InstanceType": "m3.medium",
         "KeyName": "memecaptain",
         "SecurityGroups": [
@@ -1015,10 +1011,6 @@
               [
                 "#!/bin/bash",
                 "set -e",
-                "yum update -y",
-                "yum install -y docker",
-                "service docker start",
-                "docker pull mm62/meme-captain-web",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env /env",
                 "mkdir /fonts",
