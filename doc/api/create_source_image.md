@@ -30,7 +30,7 @@ The `Location` header will contain a URL to poll.
 Poll the URL returned in the `Location` header until it returns 303 (See
 Other). When it returns 303, the image is finished processing and the
 `Location` header will contain the URL of the image. Under normal
-circumstances creation of the image should only take a few seconds.
+circumstances creation of the image should only take a second.
 
 ### Polling Responses
 
