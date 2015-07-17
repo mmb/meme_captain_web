@@ -52,6 +52,7 @@ circumstances creation of the image should only take a second.
 
 * 200 - The image is still being processed. Keep polling.
 * 303 - The image is finished. Its URL is in the `Location` header.
+* 404 - Image not found.
 
 ## Error Responses
 
