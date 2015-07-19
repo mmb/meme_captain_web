@@ -26,3 +26,8 @@ check process delayed_job.<%= i %>
   start program = "/app/script/delayed_job start --pid-dir=/var/run --identifier=<%= i %>"
   stop program = "/app/script/delayed_job stop --pid-dir=/var/run --identifier=<%= i %>"
 <% end %>
+
+check process metrics
+  with pidfile /var/run/metrics.pid
+  start program = "/sbin/start-stop-daemon --pidfile /var/run/metrics.pid --start --background --make-pidfile --exec /app/docker/metrics"
+  stop program = "/sbin/start-stop-daemon --pidfile /var/run/metrics.pid --stop --remove-pidfile"

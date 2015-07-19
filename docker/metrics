@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# Send periodic metrics to statsd
+
+cleanup() {
+  exec 3<&-
+  exec 3>&-
+}
+
+statsd_send() {
+  local NAME=$1
+  local VALUE=$2
+  local TYPE=$3
+  echo "${NAME}.${SERVER_ID}:${VALUE}|${TYPE}" >&3
+}
+
+gauge() {
+  local NAME=$1
+  local VALUE=$2
+  statsd_send $NAME $VALUE g
+}
+
+send_memory_stats() {
+  local MEM_AVAILABLE=$(cat /proc/meminfo | grep MemAvailable | awk '{print $2}')
+  gauge memory.available $MEM_AVAILABLE
+}
+
+send_load_stats() {
+  read LOAD1 LOAD5 LOAD15 <<< $(cat /proc/loadavg | cut -d ' ' -f '1 2 3')
+  gauge load.1m $LOAD1
+  gauge load.5m $LOAD5
+  gauge load.15m $LOAD15
+}
+
+send_uptime_stats() {
+  local UPTIME=$(cat /proc/uptime | cut -d ' ' -f 1)
+  gauge uptime $UPTIME
+}
+
+send_storage_stats() {
+  local ROOT_PARTITION_PCT=$(df / | tail -1 | awk '{print $5}' | tr % ' ')
+  gauge storage.root.use $ROOT_PARTITION_PCT
+}
+
+send_varnish_stats() {
+  local VARNISH_STATS=$(varnishstat -1 | grep MAIN | sed 's/^MAIN\.\([^ ]\+\) \+\([0-9]\+\).*/\1 \2/' | tr _ .)
+  while IFS= read -r LINE; do
+    gauge varnish.$LINE
+  done <<< "$VARNISH_STATS"
+}
+
+send_memcached_stats() {
+  exec 4<> /dev/tcp/127.0.0.1/11211
+  echo -e "stats\r\nquit\r" >&4
+  local MEMCACHED_STATS=$(cat <&4 | tr -d '\r' | grep STAT | cut -d ' ' -f '2 3' | tr _ .)
+  while IFS= read -r LINE; do
+    gauge memcached.$LINE
+  done <<< "$MEMCACHED_STATS"
+  exec 4<&-
+  exec 4>&-
+}
+
+trap "cleanup ; exit 0" SIGINT SIGTERM
+
+STATSD_HOST=$(echo $STATSD_ADDR | cut -d : -f 1)
+STATSD_PORT=$(echo $STATSD_ADDR | cut -d : -f 2)
+
+if [ -n "$STATSD_HOST" ] && [ -n "$STATSD_PORT" ]; then
+  exec 3<> /dev/udp/${STATSD_HOST}/${STATSD_PORT}
+else
+  exec 3<> /dev/stdout
+fi
+
+SERVER_ID=$(curl --connect-timeout 3 --silent http://169.254.169.254/latest/meta-data/instance-id)
+SERVER_ID=${SERVER_ID:-unknown}
+
+while true; do
+  send_memory_stats
+  send_load_stats
+  send_uptime_stats
+  send_storage_stats
+  send_varnish_stats
+  send_memcached_stats
+
+  sleep ${METRICS_SLEEP:-30}
+done
