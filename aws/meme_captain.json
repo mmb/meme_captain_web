@@ -170,7 +170,7 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-af6fbfc4",
+        "ImageId": "ami-694e9902",
         "InstanceType": "t2.micro",
         "KeyName": "memecaptain",
         "SecurityGroups": [
@@ -661,7 +661,7 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-af6fbfc4",
+        "ImageId": "ami-694e9902",
         "InstanceType": "t2.micro",
         "KeyName": "memecaptain",
         "SecurityGroups": [
@@ -995,7 +995,7 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-af6fbfc4",
+        "ImageId": "ami-694e9902",
         "InstanceType": "m3.medium",
         "KeyName": "memecaptain",
         "SecurityGroups": [
