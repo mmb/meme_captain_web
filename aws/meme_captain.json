@@ -1064,6 +1064,12 @@
             "FromPort": "1",
             "IpProtocol": "tcp",
             "ToPort": "65535"
+          },
+          {
+            "CidrIp": "10.0.0.0/24",
+            "FromPort": "8125",
+            "IpProtocol": "udp",
+            "ToPort": "8125"
           }
         ],
         "SecurityGroupIngress": [
