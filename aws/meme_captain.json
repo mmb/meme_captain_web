@@ -118,7 +118,7 @@
         "DesiredCapacity": {
           "Ref": "canaryMinSize"
         },
-        "HealthCheckGracePeriod": 240,
+        "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "canaryLaunchConfig"
@@ -609,7 +609,7 @@
         "DesiredCapacity": {
           "Ref": "onDemandMinSize"
         },
-        "HealthCheckGracePeriod": 240,
+        "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "onDemandLaunchConfig"
@@ -889,7 +889,7 @@
         "DesiredCapacity": {
           "Ref": "spotMinSize"
         },
-        "HealthCheckGracePeriod": 240,
+        "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "spotLaunchConfig"
