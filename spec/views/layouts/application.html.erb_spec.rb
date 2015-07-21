@@ -69,4 +69,15 @@ describe 'layouts/application.html.erb', type: :view do
     expect(result.errors).to be_empty
     WebMock.disable_net_connect!
   end
+
+  describe 'footer' do
+    it 'has a link to the API documentation' do
+      render
+
+      expect(rendered).to have_selector(
+        'a',
+        href: 'https://github.com/mmb/meme_captain_web/tree/master/doc/api',
+        content: 'API documentation')
+    end
+  end
 end
