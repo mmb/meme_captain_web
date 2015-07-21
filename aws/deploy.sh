@@ -5,8 +5,12 @@ set -e
 source functions.sh
 
 STACK_NAME=memecaptain
-NUM_ON_DEMAND=1
-MAX_SPOT=10
+AMI="$1"
+
+if [ -z "$AMI" ]; then
+  echo "Usage: $0 <ami>"
+  exit 1
+fi
 
 touch env
 aws s3 cp env s3://memecaptain-secrets/env
@@ -22,32 +26,11 @@ aws \
   --parameters \
   "ParameterKey=dbUser,UsePreviousValue=true" \
   "ParameterKey=dbPassword,UsePreviousValue=true" \
-  "ParameterKey=canaryMinSize,ParameterValue=0" \
-  "ParameterKey=canaryMaxSize,ParameterValue=0" \
-  "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMaxSize,UsePreviousValue=true" \
-  "ParameterKey=spotMinSize,UsePreviousValue=true" \
-  "ParameterKey=spotMaxSize,UsePreviousValue=true"
+  "ParameterKey=canaryAmi,ParameterValue=$AMI" \
+  "ParameterKey=onDemandAmi,UsePreviousValue=true" \
+  "ParameterKey=spotAmi,UsePreviousValue=true"
 
-wait_for_update "$STACK_NAME" "killing canary"
-
-aws \
-  cloudformation \
-  update-stack \
-  --stack-name $STACK_NAME \
-  --template-body file://meme_captain.json \
-  --capabilities CAPABILITY_IAM \
-  --parameters \
-  "ParameterKey=dbUser,UsePreviousValue=true" \
-  "ParameterKey=dbPassword,UsePreviousValue=true" \
-  "ParameterKey=canaryMinSize,ParameterValue=1" \
-  "ParameterKey=canaryMaxSize,ParameterValue=1" \
-  "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMaxSize,UsePreviousValue=true" \
-  "ParameterKey=spotMinSize,UsePreviousValue=true" \
-  "ParameterKey=spotMaxSize,UsePreviousValue=true"
-
-wait_for_update "$STACK_NAME" "reviving canary"
+wait_for_update "$STACK_NAME" "updating canary AMI to $AMI"
 
 wait_for_pool_healthy canary
 
@@ -60,32 +43,11 @@ aws \
   --parameters \
   "ParameterKey=dbUser,UsePreviousValue=true" \
   "ParameterKey=dbPassword,UsePreviousValue=true" \
-  "ParameterKey=canaryMinSize,UsePreviousValue=true" \
-  "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMinSize,ParameterValue=0" \
-  "ParameterKey=onDemandMaxSize,ParameterValue=0" \
-  "ParameterKey=spotMinSize,UsePreviousValue=true" \
-  "ParameterKey=spotMaxSize,UsePreviousValue=true"
+  "ParameterKey=canaryAmi,UsePreviousValue=true" \
+  "ParameterKey=onDemandAmi,ParameterValue=$AMI" \
+  "ParameterKey=spotAmi,UsePreviousValue=true"
 
-wait_for_update "$STACK_NAME" "killing ondemand"
-
-aws \
-  cloudformation \
-  update-stack \
-  --stack-name $STACK_NAME \
-  --template-body file://meme_captain.json \
-  --capabilities CAPABILITY_IAM \
-  --parameters \
-  "ParameterKey=dbUser,UsePreviousValue=true" \
-  "ParameterKey=dbPassword,UsePreviousValue=true" \
-  "ParameterKey=canaryMinSize,UsePreviousValue=true" \
-  "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMinSize,ParameterValue=$NUM_ON_DEMAND" \
-  "ParameterKey=onDemandMaxSize,ParameterValue=$NUM_ON_DEMAND" \
-  "ParameterKey=spotMinSize,UsePreviousValue=true" \
-  "ParameterKey=spotMaxSize,UsePreviousValue=true"
-
-wait_for_update "$STACK_NAME" "reviving ondemand"
+wait_for_update "$STACK_NAME" "updating ondemand AMI to $AMI"
 
 wait_for_pool_healthy ondemand
 
@@ -98,31 +60,10 @@ aws \
   --parameters \
   "ParameterKey=dbUser,UsePreviousValue=true" \
   "ParameterKey=dbPassword,UsePreviousValue=true" \
-  "ParameterKey=canaryMinSize,UsePreviousValue=true" \
-  "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMaxSize,UsePreviousValue=true" \
-  "ParameterKey=spotMinSize,ParameterValue=0" \
-  "ParameterKey=spotMaxSize,ParameterValue=0"
+  "ParameterKey=canaryAmi,UsePreviousValue=true" \
+  "ParameterKey=onDemandAmi,UsePreviousValue=true" \
+  "ParameterKey=spotAmi,ParameterValue=$AMI"
 
-wait_for_update "$STACK_NAME" "killing spot"
-
-aws \
-  cloudformation \
-  update-stack \
-  --stack-name $STACK_NAME \
-  --template-body file://meme_captain.json \
-  --capabilities CAPABILITY_IAM \
-  --parameters \
-  "ParameterKey=dbUser,UsePreviousValue=true" \
-  "ParameterKey=dbPassword,UsePreviousValue=true" \
-  "ParameterKey=canaryMinSize,UsePreviousValue=true" \
-  "ParameterKey=canaryMaxSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMinSize,UsePreviousValue=true" \
-  "ParameterKey=onDemandMaxSize,UsePreviousValue=true" \
-  "ParameterKey=spotMinSize,ParameterValue=1" \
-  "ParameterKey=spotMaxSize,ParameterValue=$MAX_SPOT"
-
-wait_for_update "$STACK_NAME" "reviving spot"
+wait_for_update "$STACK_NAME" "updating spot AMI to $AMI"
 
 wait_for_pool_healthy spot

@@ -11,11 +11,8 @@
     }
   },
   "Parameters": {
-    "canaryMaxSize": {
-      "Type": "Number"
-    },
-    "canaryMinSize": {
-      "Type": "Number"
+    "canaryAmi": {
+      "Type": "String"
     },
     "dbPassword": {
       "NoEcho": "TRUE",
@@ -24,17 +21,11 @@
     "dbUser": {
       "Type": "String"
     },
-    "onDemandMaxSize": {
-      "Type": "Number"
+    "onDemandAmi": {
+      "Type": "String"
     },
-    "onDemandMinSize": {
-      "Type": "Number"
-    },
-    "spotMaxSize": {
-      "Type": "Number"
-    },
-    "spotMinSize": {
-      "Type": "Number"
+    "spotAmi": {
+      "Type": "String"
     }
   },
   "Resources": {
@@ -115,9 +106,7 @@
     },
     "canaryAutoScalingGroup": {
       "Properties": {
-        "DesiredCapacity": {
-          "Ref": "canaryMinSize"
-        },
+        "DesiredCapacity": 1,
         "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
@@ -128,12 +117,8 @@
             "Ref": "elb"
           }
         ],
-        "MaxSize": {
-          "Ref": "canaryMaxSize"
-        },
-        "MinSize": {
-          "Ref": "canaryMinSize"
-        },
+        "MaxSize": 1,
+        "MinSize": 1,
         "NotificationConfigurations": [
           {
             "NotificationTypes": [
@@ -170,7 +155,9 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-af6fbfc4",
+        "ImageId": {
+          "Ref": "canaryAmi"
+        },
         "InstanceType": "t2.micro",
         "KeyName": "memecaptain",
         "SecurityGroups": [
@@ -606,9 +593,7 @@
     },
     "onDemandAutoScalingGroup": {
       "Properties": {
-        "DesiredCapacity": {
-          "Ref": "onDemandMinSize"
-        },
+        "DesiredCapacity": 1,
         "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
@@ -619,12 +604,8 @@
             "Ref": "elb"
           }
         ],
-        "MaxSize": {
-          "Ref": "onDemandMaxSize"
-        },
-        "MinSize": {
-          "Ref": "onDemandMinSize"
-        },
+        "MaxSize": 1,
+        "MinSize": 1,
         "NotificationConfigurations": [
           {
             "NotificationTypes": [
@@ -661,7 +642,9 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-af6fbfc4",
+        "ImageId": {
+          "Ref": "onDemandAmi"
+        },
         "InstanceType": "t2.micro",
         "KeyName": "memecaptain",
         "SecurityGroups": [
@@ -886,9 +869,7 @@
     },
     "spotAutoScalingGroup": {
       "Properties": {
-        "DesiredCapacity": {
-          "Ref": "spotMinSize"
-        },
+        "DesiredCapacity": 1,
         "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
@@ -899,12 +880,8 @@
             "Ref": "elb"
           }
         ],
-        "MaxSize": {
-          "Ref": "spotMaxSize"
-        },
-        "MinSize": {
-          "Ref": "spotMinSize"
-        },
+        "MaxSize": 10,
+        "MinSize": 1,
         "NotificationConfigurations": [
           {
             "NotificationTypes": [
@@ -995,7 +972,9 @@
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
-        "ImageId": "ami-af6fbfc4",
+        "ImageId": {
+          "Ref": "spotAmi"
+        },
         "InstanceType": "m3.medium",
         "KeyName": "memecaptain",
         "SecurityGroups": [
