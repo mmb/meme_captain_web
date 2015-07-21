@@ -52,7 +52,13 @@ send_varnish_stats() {
 send_memcached_stats() {
   exec 4<> /dev/tcp/127.0.0.1/11211
   echo -e "stats\r\nquit\r" >&4
-  local MEMCACHED_STATS=$(cat <&4 | tr -d '\r' | grep STAT | cut -d ' ' -f '2 3' | tr _ .)
+  local MEMCACHED_STATS=$(
+    cat <&4 | \
+    tr -d '\r' | \
+    grep '^STAT .\{1,\} [0-9]\{1,\}\(\.[0-9]\{1,\}\)\{0,1\}$' | \
+    cut -d ' ' -f '2 3' | \
+    tr _ .)
+
   while IFS= read -r LINE; do
     gauge memcached.$LINE
   done <<< "$MEMCACHED_STATS"
