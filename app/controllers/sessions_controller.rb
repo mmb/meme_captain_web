@@ -6,9 +6,7 @@ class SessionsController < ApplicationController
     user = User.auth_case_insens(params[:email], params[:password])
 
     if user
-      session[:user_id] = user.id
-      return_to = session.delete(:return_to)
-      redirect_to(return_to || my_url, notice: 'Logged in.')
+      login(user)
     else
       flash[:error] = 'Login failed.'
       render :new
@@ -23,5 +21,13 @@ class SessionsController < ApplicationController
     else
       redirect_to root_url
     end
+  end
+
+  private
+
+  def login(user)
+    session[:user_id] = user.id
+    return_to = session.delete(:return_to)
+    redirect_to(return_to || my_url, notice: 'Logged in.')
   end
 end
