@@ -7,7 +7,7 @@ backend default {
 
 sub vcl_recv {
   if (req.method == "GET" &&
-      req.url ~ "^/((gend|src)_thumbs/\d+|(gend|src)_images/[\w-]{6,})$") {
+      req.url ~ "^/((gend|src)_thumbs/\d+|(gend|src)_images/[\w-]{6,}\.(bmp|gif|jpg|png))$") {
       unset req.http.Cookie;
   }
 }
