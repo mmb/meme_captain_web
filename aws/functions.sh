@@ -57,13 +57,15 @@ wait_for_pool_healthy() {
     echo `date` waiting for all instances in $POOL to be healthy
 
     instances_in_pool "$POOL" > pool
-    elb_healthy_instances > healthy
-    sort pool healthy | uniq -d > healthy_in_pool
-    set +e
-    git diff pool healthy_in_pool
-    RESULT=$?
-    set -e
-    if [ $RESULT -eq 0 ]; then break; fi
+    if [ -s pool ]; then
+      elb_healthy_instances > healthy
+      sort pool healthy | uniq -d > healthy_in_pool
+      set +e
+      git diff pool healthy_in_pool
+      RESULT=$?
+      set -e
+      if [ $RESULT -eq 0 ]; then break; fi
+    fi
     sleep 4
   done
 
