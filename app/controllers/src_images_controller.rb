@@ -82,6 +82,7 @@ class SrcImagesController < ApplicationController
     # rubocop:disable Style/GuardClause
     if submitted_params.try(:[], :image)
       submitted_params[:image] = submitted_params[:image].read
+      StatsD.increment('src_image.upload')
     end
     # rubocop:enable Style/GuardClause
   end

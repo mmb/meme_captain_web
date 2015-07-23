@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe SrcImagesController, type: :controller do
+  include StatsD::Instrument::Matchers
+
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
 
@@ -211,6 +213,20 @@ describe SrcImagesController, type: :controller do
         expect do
           post :create, src_image: { image: image }
         end.to change { SrcImage.count }.by(1)
+      end
+
+      it 'increments the src_image.upload statsd counter' do
+        expect do
+          post :create, src_image: { image: image }
+        end.to trigger_statsd_increment('src_image.upload')
+      end
+
+      context 'when the image is loaded from a url' do
+        it 'does not increment the src_image.upload statsd counter' do
+          expect do
+            post :create, src_image: { url: 'http://images.com/image.jpg' }
+          end.not_to trigger_statsd_increment('src_image.upload')
+        end
       end
 
       context 'when the user requests html' do

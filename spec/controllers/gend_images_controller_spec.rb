@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe GendImagesController, type: :controller do
+  include StatsD::Instrument::Matchers
+
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
   let(:src_image) do
@@ -217,6 +219,12 @@ describe GendImagesController, type: :controller do
         expect(created.private).to eq(true)
       end
 
+      it 'does not increment the bot.attempt statsd counter' do
+        expect do
+          post(:create, gend_image: { src_image_id: src_image.id_hash })
+        end.not_to trigger_statsd_increment('bot.attempt')
+      end
+
       context 'when the client requests html' do
         it 'redirects to the gend image page' do
           post(:create, gend_image: { src_image_id: src_image.id_hash })
@@ -301,6 +309,13 @@ describe GendImagesController, type: :controller do
           src_image_id: src_image.id_hash, email: 'not@empty.com' }
 
         expect(response).to render_template('new')
+      end
+
+      it 'increments the bot.attempt statsd counter' do
+        expect do
+          post :create, gend_image: {
+            src_image_id: src_image.id_hash, email: 'not@empty.com' }
+        end.to trigger_statsd_increment('bot.attempt')
       end
     end
   end

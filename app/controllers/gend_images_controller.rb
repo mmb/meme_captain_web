@@ -30,6 +30,7 @@ class GendImagesController < ApplicationController
 
   def create
     @gend_image = build_gend_image_for_create
+    StatsD.increment('bot.attempt') if params[:gend_image][:email].present?
 
     if @gend_image.save
       respond_to do |format|
