@@ -60,7 +60,6 @@ describe 'layouts/application.html.erb', type: :view do
   end
 
   it 'is valid markup' do
-    pending('until the validator works again')
     render
 
     WebMock.disable_net_connect!(allow: 'validator.w3.org')
