@@ -49,10 +49,14 @@ describe SrcImage do
 
     context 'when the image is animated' do
       subject(:src_image) do
+        image = File.open(
+          Rails.root + 'spec/fixtures/files/omgcat.gif', 'rb') do |f|
+          f.read
+        end
         src_image = SrcImage.new(
           FactoryGirl.attributes_for(
             :src_image,
-            image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif')))
+            image: image))
         src_image.set_derived_image_fields
         src_image.valid?
         src_image
