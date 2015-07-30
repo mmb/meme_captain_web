@@ -22,11 +22,7 @@ describe GendImage do
 
   context 'setting fields derived from the image' do
     context 'when the image is not animated' do
-      subject(:gend_image) do
-        gend_image = GendImage.new(FactoryGirl.attributes_for(:gend_image))
-        gend_image.valid?
-        gend_image
-      end
+      subject(:gend_image) { FactoryGirl.create(:gend_image) }
 
       specify { expect(gend_image.content_type).to eq('image/jpeg') }
       specify { expect(gend_image.height).to eq(399) }
@@ -36,15 +32,7 @@ describe GendImage do
     end
 
     context 'when the image is animated' do
-      subject(:gend_image) do
-        gend_image = GendImage.new(
-          FactoryGirl.attributes_for(
-            :gend_image,
-            image: File.read(
-              Rails.root + 'spec/fixtures/files/omgcat.gif')))
-        gend_image.valid?
-        gend_image
-      end
+      subject(:gend_image) { FactoryGirl.create(:animated_gend_image) }
 
       specify { expect(gend_image.is_animated).to eq(true) }
     end

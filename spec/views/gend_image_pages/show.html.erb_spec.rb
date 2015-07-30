@@ -138,10 +138,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
   context 'when the image is animated' do
     let(:gend_image) do
-      FactoryGirl.create(
-        :gend_image,
-        work_in_progress: false,
-        image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif'))
+      FactoryGirl.create(:animated_gend_image, work_in_progress: false)
     end
 
     it 'has the gfycat button' do
