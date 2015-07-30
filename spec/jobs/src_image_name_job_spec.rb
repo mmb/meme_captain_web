@@ -1,12 +1,8 @@
 require 'rails_helper'
 
 describe SrcImageNameJob, type: :job do
-  include ActiveJob::TestHelper
-
   let(:src_image) { FactoryGirl.create(:src_image, name: current_name) }
   let(:x) { double(:x) }
-  let(:lookup_host) { nil }
-  let(:current_name) { nil }
 
   before do
     allow(Rails.configuration).to receive(:x).and_return(x)
@@ -14,6 +10,9 @@ describe SrcImageNameJob, type: :job do
   end
 
   context 'when src image name lookups are turned off' do
+    let(:lookup_host) { nil }
+    let(:current_name) { nil }
+
     it 'does not change the src image name' do
       expect do
         SrcImageNameJob.perform_now(src_image)
@@ -107,10 +106,5 @@ describe SrcImageNameJob, type: :job do
         end
       end
     end
-  end
-
-  it 'creates the job in the src_image_name queue' do
-    SrcImageNameJob.perform_later(src_image)
-    expect(enqueued_jobs.first[:queue]).to eq('src_image_name')
   end
 end
