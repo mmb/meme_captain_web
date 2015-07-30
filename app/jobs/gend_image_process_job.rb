@@ -14,16 +14,20 @@ class GendImageProcessJob < ActiveJob::Base
       gend_image.src_image.image,
       gend_image.captions.map(&:text_pos)).to_blob
 
-    thumb_img = gend_image.magick_image_list
-
-    thumb_img.resize_to_fit_anim!(MemeCaptainWeb::Config::THUMB_SIDE)
-
-    gend_image.gend_thumb = GendThumb.new(image: thumb_img.to_blob)
-
-    thumb_img.destroy!
+    gend_image.gend_thumb = make_gend_thumb(gend_image)
 
     gend_image.work_in_progress = false
 
     gend_image.save!
+  end
+
+  private
+
+  def make_gend_thumb(gend_image)
+    thumb_img = gend_image.magick_image_list
+    thumb_img.resize_to_fit_anim!(MemeCaptainWeb::Config::THUMB_SIDE)
+    gend_thumb = GendThumb.new(image: thumb_img.to_blob)
+    thumb_img.destroy!
+    gend_thumb
   end
 end
