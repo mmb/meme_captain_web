@@ -6,10 +6,4 @@ FactoryGirl.define do
       image(f.read)
     end
   end
-
-  factory :animated_src_image, parent: :src_image do
-    File.open(Rails.root + 'spec/fixtures/files/omgcat.gif', 'rb') do |f|
-      image(f.read)
-    end
-  end
 end
