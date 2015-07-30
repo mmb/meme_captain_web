@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619062758) do
+ActiveRecord::Schema.define(version: 20150730035705) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -105,10 +105,12 @@ ActiveRecord::Schema.define(version: 20150619062758) do
     t.text     "name"
     t.boolean  "private",           default: false
     t.integer  "gend_images_count", default: 0,     null: false
+    t.boolean  "is_animated",       default: false
   end
 
   add_index "src_images", ["gend_images_count"], name: "index_src_images_on_gend_images_count"
   add_index "src_images", ["id_hash"], name: "index_src_images_on_id_hash", unique: true
+  add_index "src_images", ["is_animated"], name: "index_src_images_on_is_animated"
   add_index "src_images", ["is_deleted"], name: "index_src_images_on_is_deleted"
   add_index "src_images", ["name"], name: "index_src_images_on_name"
   add_index "src_images", ["private"], name: "index_src_images_on_private"

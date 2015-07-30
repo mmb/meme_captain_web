@@ -32,17 +32,34 @@ describe SrcImage do
   end
 
   context 'setting fields derived from the image' do
-    subject(:src_image) do
-      src_image = SrcImage.new(FactoryGirl.attributes_for(:src_image))
-      src_image.set_derived_image_fields
-      src_image.valid?
-      src_image
+    context 'when the image is not animated' do
+      subject(:src_image) do
+        src_image = SrcImage.new(FactoryGirl.attributes_for(:src_image))
+        src_image.set_derived_image_fields
+        src_image.valid?
+        src_image
+      end
+
+      specify { expect(src_image.content_type).to eq('image/jpeg') }
+      specify { expect(src_image.height).to eq(399) }
+      specify { expect(src_image.width).to eq(399) }
+      specify { expect(src_image.size).to eq(9141) }
+      specify { expect(src_image.is_animated).to eq(false) }
     end
 
-    specify { expect(src_image.content_type).to eq('image/jpeg') }
-    specify { expect(src_image.height).to eq(399) }
-    specify { expect(src_image.width).to eq(399) }
-    specify { expect(src_image.size).to eq(9141) }
+    context 'when the image is animated' do
+      subject(:src_image) do
+        src_image = SrcImage.new(
+          FactoryGirl.attributes_for(
+            :src_image,
+            image: File.read(Rails.root + 'spec/fixtures/files/omgcat.gif')))
+        src_image.set_derived_image_fields
+        src_image.valid?
+        src_image
+      end
+
+      specify { expect(src_image.is_animated).to eq(true) }
+    end
   end
 
   it 'should not delete child gend_images when deleted' do
