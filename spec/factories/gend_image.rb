@@ -8,4 +8,11 @@ FactoryGirl.define do
     src_image
     user
   end
+
+  factory :animated_gend_image, parent: :gend_image do
+    File.open(Rails.root + 'spec/fixtures/files/omgcat.gif', 'rb') do |f|
+      image(f.read)
+    end
+    association :src_image, factory: :animated_src_image
+  end
 end
