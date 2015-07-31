@@ -1,13 +1,6 @@
 # Job to generate meme images and create thumbnails.
 class GendImageProcessJob < ActiveJob::Base
-  queue_as do
-    gend_image = arguments.first
-    if gend_image.src_image.is_animated
-      :gend_image_process_animated
-    else
-      :gend_image_process
-    end
-  end
+  queue_as :gend_image_process
 
   def perform(gend_image)
     gend_image.image = MemeCaptain.meme(

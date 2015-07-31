@@ -34,24 +34,11 @@ describe GendImageProcessJob, type: :job do
       src_image.valid?
       FactoryGirl.create(:gend_image, src_image: src_image)
     end
-
-    it 'creates the job in the gend_image_process_animated queue' do
-      GendImageProcessJob.perform_later(gend_image)
-      expect(enqueued_jobs.first[:queue]).to eq('gend_image_process')
-    end
   end
 
-  context 'when the src image is animated' do
-    let(:gend_image) do
-      src_image = SrcImage.new(FactoryGirl.attributes_for(:animated_src_image))
-      src_image.set_derived_image_fields
-      src_image.valid?
-      FactoryGirl.create(:animated_gend_image, src_image: src_image)
-    end
-
-    it 'creates the job in the gend_image_process_animated queue' do
-      GendImageProcessJob.perform_later(gend_image)
-      expect(enqueued_jobs.first[:queue]).to eq('gend_image_process_animated')
-    end
+  it 'creates the job in the gend_image_process queue' do
+    gend_image = FactoryGirl.create(:gend_image)
+    GendImageProcessJob.perform_later(gend_image)
+    expect(enqueued_jobs.first[:queue]).to eq('gend_image_process')
   end
 end
