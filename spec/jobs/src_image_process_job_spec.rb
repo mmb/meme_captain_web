@@ -1,17 +1,26 @@
 require 'rails_helper'
 
 describe SrcImageProcessJob, type: :job do
+  include ActiveJob::TestHelper
+
   context 'when the image needs to be loaded from a url' do
-    it 'loads the image using the image url composer' do
-      url = 'http://www.example.com/image.jpg'
+    let(:url) { 'http://www.example.com/image.jpg' }
+    let(:src_image) { FactoryGirl.create(:src_image, image: nil, url: url) }
+
+    before do
       image_data = File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg')
       stub_request(:get, url).to_return(body: image_data)
-
       stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
+    end
 
-      src_image = FactoryGirl.create(:src_image, image: nil, url: url)
+    it 'loads the image using the image url composer' do
       SrcImageProcessJob.perform_now(src_image)
       expect(src_image.magick_image_list.rows).to eq(399)
+    end
+
+    it 'creates the job in the src_image_process_url queue' do
+      SrcImageProcessJob.perform_later(src_image)
+      expect(enqueued_jobs.first[:queue]).to eq('src_image_process_url')
     end
   end
 
@@ -132,5 +141,11 @@ describe SrcImageProcessJob, type: :job do
         SrcImageProcessJob.perform_now(src_image)
       end.to raise_error(ActiveRecord::RecordInvalid)
     end
+  end
+
+  it 'creates the job in the src_image_process queue' do
+    src_image = FactoryGirl.create(:src_image)
+    SrcImageProcessJob.perform_later(src_image)
+    expect(enqueued_jobs.first[:queue]).to eq('src_image_process')
   end
 end
