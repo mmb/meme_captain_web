@@ -1,7 +1,7 @@
 # Job to fetch and normalize source images and create thumbnails.
 class SrcImageProcessJob < ActiveJob::Base
   queue_as do
-    src_image = arguments.first
+    src_image = self.arguments.first
     if src_image.url?
       :src_image_process_url
     else
