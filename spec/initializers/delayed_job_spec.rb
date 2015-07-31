@@ -12,5 +12,4 @@ describe 'delayed job initializer' do
   it 'sets max_run_time to 90 seconds' do
     expect(Delayed::Worker.max_run_time).to eq(90.seconds)
   end
-
 end

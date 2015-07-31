@@ -1,7 +1,9 @@
 # Job to fetch and normalize source images and create thumbnails.
 class SrcImageProcessJob < ActiveJob::Base
   queue_as do
+    # rubocop:disable Style/RedundantSelf
     src_image = self.arguments.first
+    # rubocop:enable Style/RedundantSelf
     if src_image.url?
       :src_image_process_url
     else
