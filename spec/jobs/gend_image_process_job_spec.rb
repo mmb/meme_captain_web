@@ -38,9 +38,43 @@ describe GendImageProcessJob, type: :job do
     end
   end
 
-  it 'creates the job in the gend_image_process queue' do
-    gend_image = FactoryGirl.create(:gend_image)
-    GendImageProcessJob.perform_later(gend_image.id)
-    expect(enqueued_jobs.first[:queue]).to eq('gend_image_process')
+  context 'when the image is small' do
+    it 'puts the image in the small queue' do
+      gend_image = FactoryGirl.create(:gend_image)
+      gend_image.src_image.size = 51_200
+      gend_image.src_image.save!
+      GendImageProcessJob.perform_later(gend_image.id)
+      expect(enqueued_jobs.first[:queue]).to eq('gend_image_process_small')
+    end
+  end
+
+  context 'when the image is medium' do
+    it 'puts the image in the medium queue' do
+      gend_image = FactoryGirl.create(:gend_image)
+      gend_image.src_image.size = 575_488
+      gend_image.src_image.save!
+      GendImageProcessJob.perform_later(gend_image.id)
+      expect(enqueued_jobs.first[:queue]).to eq('gend_image_process_medium')
+    end
+  end
+
+  context 'when the image is large' do
+    it 'puts the image in the large queue' do
+      gend_image = FactoryGirl.create(:gend_image)
+      gend_image.src_image.size = 5_767_168
+      gend_image.src_image.save!
+      GendImageProcessJob.perform_later(gend_image.id)
+      expect(enqueued_jobs.first[:queue]).to eq('gend_image_process_large')
+    end
+  end
+
+  context 'when the image is very large' do
+    it 'puts the image in the shitload queue' do
+      gend_image = FactoryGirl.create(:gend_image)
+      gend_image.src_image.size = 10_485_761
+      gend_image.src_image.save!
+      GendImageProcessJob.perform_later(gend_image.id)
+      expect(enqueued_jobs.first[:queue]).to eq('gend_image_process_shitload')
+    end
   end
 end
