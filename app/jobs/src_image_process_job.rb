@@ -32,6 +32,7 @@ class SrcImageProcessJob < ActiveJob::Base
       work_in_progress: false
     }
 
+    thumb_img.destroy!
     img.destroy!
 
     src_image.set_derived_image_fields
