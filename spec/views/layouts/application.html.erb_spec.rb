@@ -59,16 +59,6 @@ describe 'layouts/application.html.erb', type: :view do
       'tabindex' => '2')
   end
 
-  it 'is valid markup' do
-    render
-
-    WebMock.disable_net_connect!(allow: 'validator.w3.org')
-    validator = W3CValidators::MarkupValidator.new
-    result = validator.validate_text(rendered)
-    expect(result.errors).to be_empty
-    WebMock.disable_net_connect!
-  end
-
   describe 'footer' do
     it 'has a link to the API documentation' do
       render
