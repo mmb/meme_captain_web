@@ -880,6 +880,14 @@
           }
         ],
         "MaxSize": 10,
+        "MetricsCollection": [
+          {
+            "Granularity": "1Minute",
+            "Metrics": [
+              "GroupInServiceInstances"
+            ]
+          }
+        ],
         "MinSize": 1,
         "NotificationConfigurations": [
           {
@@ -963,6 +971,30 @@
         "Period": "60",
         "Statistic": "Average",
         "Threshold": "5"
+      },
+      "Type": "AWS::CloudWatch::Alarm"
+    },
+    "spotEmptyAlarm": {
+      "Properties": {
+        "AlarmActions": [],
+        "AlarmDescription": "spot auto scaling group has no in service instances",
+        "AlarmName": "spotEmpty",
+        "ComparisonOperator": "LessThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "AutoScalingGroupName",
+            "Value": {
+              "Ref": "spotAutoScalingGroup"
+            }
+          }
+        ],
+        "EvaluationPeriods": "2",
+        "MetricName": "GroupInServiceInstances",
+        "Namespace": "AWS/EC2",
+        "OKActions": [],
+        "Period": "60",
+        "Statistic": "Minimum",
+        "Threshold": "1"
       },
       "Type": "AWS::CloudWatch::Alarm"
     },
