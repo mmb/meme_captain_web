@@ -31,7 +31,7 @@ class SrcImage < ActiveRecord::Base
   end
 
   def create_jobs
-    SrcImageProcessJob.perform_later(self) if work_in_progress
+    SrcImageProcessJob.perform_later(id) if work_in_progress
   end
 
   # rubocop:disable MethodLength

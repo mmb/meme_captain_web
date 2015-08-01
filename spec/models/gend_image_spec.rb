@@ -95,7 +95,8 @@ describe GendImage do
     context 'when the gend image is a work in progress' do
       it 'enqueues a gend image processing job' do
         gend_image = FactoryGirl.create(:gend_image)
-        expect(GendImageProcessJob).to receive(:perform_later).with(gend_image)
+        expect(GendImageProcessJob).to receive(:perform_later).with(
+          gend_image.id)
         gend_image.run_callbacks(:commit)
       end
     end

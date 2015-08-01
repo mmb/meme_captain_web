@@ -23,7 +23,7 @@ class GendImage < ActiveRecord::Base
   after_commit :create_jobs
 
   def create_jobs
-    GendImageProcessJob.perform_later(self) if work_in_progress
+    GendImageProcessJob.perform_later(id) if work_in_progress
   end
 
   def meme_text_header

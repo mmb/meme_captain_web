@@ -2,7 +2,7 @@
 class SrcImageProcessJob < ActiveJob::Base
   queue_as do
     # rubocop:disable Style/RedundantSelf
-    src_image = self.arguments.first
+    src_image = SrcImage.without_image.find(self.arguments.first)
     # rubocop:enable Style/RedundantSelf
     if src_image.url?
       :src_image_process_url
@@ -11,7 +11,8 @@ class SrcImageProcessJob < ActiveJob::Base
     end
   end
 
-  def perform(src_image)
+  def perform(src_image_id)
+    src_image = SrcImage.find(src_image_id)
     src_image.load_from_url
 
     img = src_image.magick_image_list
@@ -37,7 +38,7 @@ class SrcImageProcessJob < ActiveJob::Base
 
     src_image.save!
 
-    SrcImageNameJob.perform_later(src_image)
+    SrcImageNameJob.perform_later(src_image.id)
   end
 
   private

@@ -2,7 +2,9 @@
 class GendImageProcessJob < ActiveJob::Base
   queue_as :gend_image_process
 
-  def perform(gend_image)
+  def perform(gend_image_id)
+    gend_image = GendImage.find(gend_image_id)
+
     meme = MemeCaptain.meme(
       gend_image.src_image.image,
       gend_image.captions.map(&:text_pos))

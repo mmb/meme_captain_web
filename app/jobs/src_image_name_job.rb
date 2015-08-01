@@ -2,8 +2,9 @@
 class SrcImageNameJob < ActiveJob::Base
   queue_as :src_image_name
 
-  def perform(src_image)
+  def perform(src_image_id)
     return unless Rails.configuration.x.src_image_name_lookup_host
+    src_image = SrcImage.find(src_image_id)
     return if src_image.private?
     return if src_image.name?
 

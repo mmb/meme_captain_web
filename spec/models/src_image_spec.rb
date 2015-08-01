@@ -139,7 +139,7 @@ describe SrcImage do
     context 'when the src image is a work in progress' do
       it 'enqueues a src image processing job' do
         src_image = FactoryGirl.create(:src_image)
-        expect(SrcImageProcessJob).to receive(:perform_later).with(src_image)
+        expect(SrcImageProcessJob).to receive(:perform_later).with(src_image.id)
         src_image.run_callbacks(:commit)
       end
     end
