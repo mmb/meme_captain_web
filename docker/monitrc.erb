@@ -1,3 +1,10 @@
+<%
+if ENV['JOB_QUEUES'].to_s.empty?
+  queues_arg = ''
+else
+  queues_arg = " --queues=#{ENV['JOB_QUEUES']}"
+end
+%>
 set daemon 120
 set logfile /var/log/monit.log
 set idfile /var/lib/monit/id
@@ -23,7 +30,7 @@ check process varnish
 <% 0.upto((ENV['NUM_DELAYED_JOB_WORKERS'] || 1).to_i - 1) do |i| %>
 check process delayed_job.<%= i %>
   with pidfile /var/run/delayed_job.<%= i %>.pid
-  start program = "/app/script/delayed_job start --pid-dir=/var/run --identifier=<%= i %>"
+  start program = "/app/script/delayed_job start --pid-dir=/var/run --identifier=<%= i %><%= queues_arg %>"
   stop program = "/app/script/delayed_job stop --pid-dir=/var/run --identifier=<%= i %>"
 <% end %>
 

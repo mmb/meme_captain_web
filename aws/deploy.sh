@@ -12,10 +12,12 @@ if [ -z "$AMI" ]; then
   exit 1
 fi
 
-touch env
-aws s3 cp env s3://memecaptain-secrets/env
+make_env
+diff_env
+read -p 'Press enter to continue'
+aws s3 sync --delete env s3://memecaptain-secrets/env
 
-aws s3 sync fonts s3://memecaptain-secrets/fonts
+aws s3 sync --delete fonts s3://memecaptain-secrets/fonts
 
 aws \
   cloudformation \

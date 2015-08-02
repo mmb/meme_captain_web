@@ -72,3 +72,15 @@ wait_for_pool_healthy() {
   popd
   rm -rf $TEMP
 }
+
+make_env() {
+  rm -rf env/*
+  ./make_env.rb
+}
+
+diff_env() {
+  mkdir -p env.current
+  aws s3 sync --delete s3://memecaptain-secrets/env env.current
+  git diff env.current env
+  rm -rf env.current
+}
