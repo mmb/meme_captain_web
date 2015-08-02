@@ -866,6 +866,144 @@
       },
       "Type": "AWS::IAM::Role"
     },
+    "spot2ActivatePolicy": {
+      "Properties": {
+        "AdjustmentType": "ExactCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "spot2AutoScalingGroup"
+        },
+        "ScalingAdjustment": "1"
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy"
+    },
+    "spot2AutoScalingGroup": {
+      "Properties": {
+        "DesiredCapacity": 0,
+        "HealthCheckGracePeriod": 300,
+        "HealthCheckType": "ELB",
+        "LaunchConfigurationName": {
+          "Ref": "spot2LaunchConfig"
+        },
+        "LoadBalancerNames": [
+          {
+            "Ref": "elb"
+          }
+        ],
+        "MaxSize": 10,
+        "MinSize": 0,
+        "NotificationConfigurations": [
+          {
+            "NotificationTypes": [
+              "autoscaling:EC2_INSTANCE_LAUNCH",
+              "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+              "autoscaling:EC2_INSTANCE_TERMINATE",
+              "autoscaling:EC2_INSTANCE_TERMINATE_ERROR"
+            ],
+            "TopicARN": {
+              "Ref": "autoScalingTopic"
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "pool",
+            "PropagateAtLaunch": true,
+            "Value": "spot2"
+          }
+        ],
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "privateSubnet1"
+          }
+        ]
+      },
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {}
+      }
+    },
+    "spot2CpuHighAlarm": {
+      "Properties": {
+        "AlarmActions": [
+          {
+            "Ref": "spot2ScaleUpPolicy"
+          }
+        ],
+        "AlarmDescription": "Scale up if CPU > 50% for 2 minutes",
+        "AlarmName": "spot2CpuHigh",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "AutoScalingGroupName",
+            "Value": {
+              "Ref": "spot2AutoScalingGroup"
+            }
+          }
+        ],
+        "EvaluationPeriods": "2",
+        "MetricName": "CPUUtilization",
+        "Namespace": "AWS/EC2",
+        "Period": "60",
+        "Statistic": "Average",
+        "Threshold": "50"
+      },
+      "Type": "AWS::CloudWatch::Alarm"
+    },
+    "spot2DeactivatePolicy": {
+      "Properties": {
+        "AdjustmentType": "ExactCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "spot2AutoScalingGroup"
+        },
+        "ScalingAdjustment": "0"
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy"
+    },
+    "spot2LaunchConfig": {
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "secretsInstanceProfile"
+        },
+        "ImageId": {
+          "Ref": "spotAmi"
+        },
+        "InstanceType": "m3.large",
+        "KeyName": "memecaptain",
+        "SecurityGroups": [
+          {
+            "Ref": "webSecurityGroup"
+          }
+        ],
+        "SpotPrice": "0.02",
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "\n",
+              [
+                "#!/bin/bash",
+                "set -e",
+                "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
+                "aws s3 cp s3://memecaptain-secrets/env/large.env /env",
+                "mkdir /fonts",
+                "aws s3 sync s3://memecaptain-secrets/fonts /fonts",
+                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts mm62/meme-captain-web"
+              ]
+            ]
+          }
+        }
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration"
+    },
+    "spot2ScaleUpPolicy": {
+      "Properties": {
+        "AdjustmentType": "ChangeInCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "spot2AutoScalingGroup"
+        },
+        "ScalingAdjustment": "1"
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy"
+    },
     "spotAutoScalingGroup": {
       "Properties": {
         "DesiredCapacity": 1,
@@ -976,7 +1114,11 @@
     },
     "spotEmptyAlarm": {
       "Properties": {
-        "AlarmActions": [],
+        "AlarmActions": [
+          {
+            "Ref": "spot2ActivatePolicy"
+          }
+        ],
         "AlarmDescription": "spot auto scaling group has no in service instances",
         "AlarmName": "spotEmpty",
         "ComparisonOperator": "LessThanThreshold",
@@ -991,7 +1133,11 @@
         "EvaluationPeriods": "2",
         "MetricName": "GroupInServiceInstances",
         "Namespace": "AWS/EC2",
-        "OKActions": [],
+        "OKActions": [
+          {
+            "Ref": "spot2DeactivatePolicy"
+          }
+        ],
         "Period": "60",
         "Statistic": "Minimum",
         "Threshold": "1"
