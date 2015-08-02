@@ -1132,7 +1132,7 @@
         ],
         "EvaluationPeriods": "2",
         "MetricName": "GroupInServiceInstances",
-        "Namespace": "AWS/EC2",
+        "Namespace": "AWS/AutoScaling",
         "OKActions": [
           {
             "Ref": "spot2DeactivatePolicy"
