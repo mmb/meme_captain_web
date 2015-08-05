@@ -10,14 +10,14 @@ else
   private = {}
 end
 
-env.merge!(private) { |key,oldval,newval| oldval.merge(newval) }
+env.merge!(private) { |_key, oldval, newval| oldval.merge(newval) }
 
 base = env.delete('base')
 
-env.each do |name,data|
+env.each do |name, data|
   filename = "env/#{name}.env"
   File.open(filename, 'w') do |f|
-    base.merge(data).sort.each do |k,v|
+    base.merge(data).sort.each do |k, v|
       f.write("#{k.upcase}=#{v}\n")
     end
     puts "wrote #{filename}"
