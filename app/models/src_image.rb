@@ -10,6 +10,8 @@ class SrcImage < ActiveRecord::Base
   has_many :gend_images
   has_and_belongs_to_many :src_sets, join_table: :src_images_src_sets
 
+  before_validation :add_url_scheme
+
   validate :image_if_not_url
 
   after_commit :create_jobs
@@ -72,4 +74,13 @@ class SrcImage < ActiveRecord::Base
   }
 
   scope :finished, -> { where work_in_progress: false }
+
+  private
+
+  def add_url_scheme
+    return true if url.blank?
+    return true if url.start_with?('http://', 'https://')
+    self.url = "http://#{url}"
+    true
+  end
 end

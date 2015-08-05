@@ -76,6 +76,50 @@ describe SrcImage do
     specify { expect(src_image.magick_image_list.rows).to eq(399) }
   end
 
+  describe 'adding the URL scheme' do
+    let(:src_image) { FactoryGirl.create(:src_image, url: url) }
+
+    context 'when the URL is nil' do
+      let(:url) { nil }
+
+      it 'does not add a scheme' do
+        expect(src_image.url).to be(nil)
+      end
+    end
+
+    context 'when the URL is empty' do
+      let(:url) { '' }
+
+      it 'does not add a scheme' do
+        expect(src_image.url).to eq('')
+      end
+    end
+
+    context 'when the URL has a scheme of http' do
+      let(:url) { 'http://images.com/image.png' }
+
+      it 'does not add a scheme' do
+        expect(src_image.url).to eq(url)
+      end
+    end
+
+    context 'when the URL has a scheme of https' do
+      let(:url) { 'https://images.com/image.png' }
+
+      it 'does not add a scheme' do
+        expect(src_image.url).to eq(url)
+      end
+    end
+
+    context 'when the URL does not have a scheme' do
+      let(:url) { 'images.com/image.png' }
+
+      it 'defaults the scheme to http' do
+        expect(src_image.url).to eq('http://images.com/image.png')
+      end
+    end
+  end
+
   describe '#image_if_not_url' do
     let(:attrs) { { image: nil, url: nil } }
 
