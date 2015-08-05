@@ -6,6 +6,15 @@ GIT
       actionpack (>= 3.2)
       railties (>= 3.2)
 
+GIT
+  remote: https://github.com/mmb/meme_captain.git
+  revision: f3c93ce3ec79f0d576ef23560a72b5034e0f3a13
+  ref: f3c93c
+  specs:
+    meme_captain (0.3.1)
+      mime-types (~> 2.5)
+      rmagick (~> 2.14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -137,9 +146,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    meme_captain (0.3.1)
-      mime-types (~> 2.5)
-      rmagick (~> 2.14.0)
     mime-types (2.5)
     mini_portile (0.6.2)
     minitest (5.7.0)
@@ -308,7 +314,7 @@ DEPENDENCIES
   kaminari-bootstrap (~> 3.0.1)
   less-rails
   local_time (~> 1.0.0)
-  meme_captain
+  meme_captain!
   pg (~> 0.18.2)
   puma (~> 2.11.3)
   rack-cache (~> 1.2)

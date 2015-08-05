@@ -44,7 +44,7 @@ gem 'rmagick4j', platforms: :jruby, require: 'rmagick'
 gem 'delayed_job_active_record', '~> 4.0.3'
 gem 'daemons'
 
-gem 'meme_captain'
+gem 'meme_captain', git: 'https://github.com/mmb/meme_captain.git', ref: 'f3c93c'
 
 gem 'kaminari', '~> 0.16.1'
 gem 'kaminari-bootstrap', '~> 3.0.1'
