@@ -81,6 +81,8 @@ make_env() {
 diff_env() {
   mkdir -p env.current
   aws s3 sync --delete s3://memecaptain-secrets/env env.current
-  git diff env.current env
+  set +e
+  diff -r env.current env
+  set -e
   rm -rf env.current
 }
