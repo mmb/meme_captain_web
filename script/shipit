@@ -17,12 +17,15 @@ done
 
 # wait for travis to pass
 SLEPT_FOR=0
-until travis status --fail-pending --exit-code; do
+until travis status --fail-pending --no-exit-code; do
   sleep 10
   SLEPT_FOR=$((SLEPT_FOR + 10))
   if [ $SLEPT_FOR -ge 600 ]; then exit 1; fi
 done
 set -e
+
+# exit the script if the build failed
+travis status --exit-code
 
 # merge to deploy
 git checkout deploy
