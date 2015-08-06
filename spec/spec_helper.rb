@@ -78,6 +78,8 @@ RSpec.configure do |config|
     # a real object. This is generally recommended.
     mocks.verify_partial_doubles = true
   end
+
+  WebMock.disable_net_connect!(allow: 'api.travis-ci.org')
 end
 
 def create_image(width, height, color = 'white')

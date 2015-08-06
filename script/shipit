@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+
+rake spec
+
+git push
+
+# wait for travis to pass
+set +e
+SLEPT_FOR=0
+until travis status --fail-pending --exit-code; do
+  sleep 10
+  SLEPT_FOR=$((SLEPT_FOR + 10))
+  if [ $SLEPT_FOR -ge 600 ]; then break; fi
+done
+set -e
+
+# merge to deploy
+git checkout deploy
+git merge master
+git push
+git checkout master
+
+# wait for docker container build
+
+# build AMI
+# cd aws
+# packer build packer.json
+
+# deploy new AMI
+# ./deploy.sh ami
