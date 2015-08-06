@@ -28,7 +28,8 @@ describe MemeCaptainWeb::UrlGetter do
 
       url_getter = MemeCaptainWeb::UrlGetter.new
 
-      expect { url_getter.get('http://example.com/') }.to raise_error
+      expect { url_getter.get('http://example.com/') }.to raise_error(
+        Faraday::ResourceNotFound)
     end
   end
 end
