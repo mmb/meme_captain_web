@@ -48,7 +48,7 @@ gem 'meme_captain', git: 'https://github.com/mmb/meme_captain.git', ref: 'f3c93c
 
 gem 'kaminari', '~> 0.16.1'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'puma', '~> 2.11.3'
+gem 'puma', '~> 2.12.3'
 gem 'browser', '~> 0.8.0'
 gem 'gravatar-ultimate'
 gem 'faraday', '~> 0.9.1'
