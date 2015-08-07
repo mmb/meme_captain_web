@@ -4,6 +4,10 @@ set -e
 
 source functions.sh
 
+wait_for_pool_healthy canary
+wait_for_pool_healthy ondemand
+wait_for_pool_healthy spot
+
 STACK_NAME=memecaptain
 AMI="$1"
 
@@ -35,6 +39,8 @@ aws \
 wait_for_update "$STACK_NAME" "updating canary AMI to $AMI"
 
 wait_for_pool_healthy canary
+wait_for_pool_healthy ondemand
+wait_for_pool_healthy spot
 
 aws \
   cloudformation \
@@ -51,7 +57,9 @@ aws \
 
 wait_for_update "$STACK_NAME" "updating ondemand AMI to $AMI"
 
+wait_for_pool_healthy canary
 wait_for_pool_healthy ondemand
+wait_for_pool_healthy spot
 
 aws \
   cloudformation \
@@ -68,4 +76,6 @@ aws \
 
 wait_for_update "$STACK_NAME" "updating spot AMI to $AMI"
 
+wait_for_pool_healthy canary
+wait_for_pool_healthy ondemand
 wait_for_pool_healthy spot
