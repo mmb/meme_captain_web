@@ -29,7 +29,6 @@ class SrcImage < ActiveRecord::Base
   def load_from_url
     return unless url
     self.image = MemeCaptainWeb::ImgUrlComposer.new.load(url)
-    set_derived_image_fields
   end
 
   def create_jobs

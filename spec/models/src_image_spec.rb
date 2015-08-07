@@ -168,14 +168,6 @@ describe SrcImage do
         expect(src_image.magick_image_list.columns).to eq(37)
         expect(src_image.magick_image_list.rows).to eq(22)
       end
-
-      it 'sets derived image fields' do
-        src_image = FactoryGirl.create(
-          :src_image, url: 'http://example.com/image.jpg')
-        src_image.load_from_url
-        expect(src_image.width).to eq(37)
-        expect(src_image.height).to eq(22)
-      end
     end
   end
 
