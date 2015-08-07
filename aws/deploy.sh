@@ -4,10 +4,6 @@ set -e
 
 source functions.sh
 
-wait_for_pool_healthy canary
-wait_for_pool_healthy ondemand
-wait_for_pool_healthy spot
-
 STACK_NAME=memecaptain
 AMI="$1"
 
@@ -15,6 +11,10 @@ if [ -z "$AMI" ]; then
   echo "Usage: $0 <ami>"
   exit 1
 fi
+
+wait_for_pool_healthy canary
+wait_for_pool_healthy ondemand
+wait_for_pool_healthy spot
 
 make_env
 diff_env
