@@ -13,6 +13,8 @@ class SrcImageProcessJob < ActiveJob::Base
     src_image = SrcImage.find(src_image_id)
     src_image.load_from_url
 
+    check_image_size(src_image)
+
     img = src_image.magick_image_list
 
     img.auto_orient!
@@ -48,5 +50,11 @@ class SrcImageProcessJob < ActiveJob::Base
     img.extend(MemeCaptain::ImageList::Watermark)
     img.watermark_mc(watermark_img)
     watermark_img.destroy!
+  end
+
+  def check_image_size(src_image)
+    size = src_image.image.size
+    return if size <= MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE
+    fail(MemeCaptainWeb::Error::SrcImageTooBigError, "#{size} bytes")
   end
 end

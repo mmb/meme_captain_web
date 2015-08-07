@@ -69,6 +69,20 @@ describe SrcImageProcessJob, type: :job do
     end
   end
 
+  context 'when the image is too big to be processed' do
+    before do
+      stub_const('MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE', 1)
+    end
+
+    it 'raises SrcImageTooBigError' do
+      src_image = FactoryGirl.create(:src_image, image: create_image(100, 100))
+      expect do
+        SrcImageProcessJob.perform_now(src_image.id)
+      end.to raise_error(MemeCaptainWeb::Error::SrcImageTooBigError,
+                         "#{src_image.image.size} bytes")
+    end
+  end
+
   it 'watermarks the image' do
     stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
     src_image = FactoryGirl.create(:src_image, image: create_image(100, 100))
