@@ -23,6 +23,10 @@ module MemeCaptainWeb
     GEND_IMAGE_HOST =
         ENV['GEND_IMAGE_HOST'].blank? ? nil : ENV['GEND_IMAGE_HOST']
 
-    MAX_SRC_IMAGE_SIZE = Rails.application.secrets.max_src_image_size
+    if ENV['MAX_SRC_IMAGE_SIZE'].blank?
+      MAX_SRC_IMAGE_SIZE = 10_000_000
+    else
+      MAX_SRC_IMAGE_SIZE = ENV['MAX_SRC_IMAGE_SIZE'].to_i
+    end
   end
 end
