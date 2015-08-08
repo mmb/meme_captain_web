@@ -8,12 +8,12 @@ GIT
 
 GIT
   remote: https://github.com/mmb/meme_captain.git
-  revision: f3c93ce3ec79f0d576ef23560a72b5034e0f3a13
-  ref: f3c93c
+  revision: 46d0ee02d5d7d947148c23db3acf8ba6962080e9
+  ref: 46d0ee
   specs:
     meme_captain (0.3.1)
       mime-types (~> 2.5)
-      rmagick (~> 2.14.0)
+      rmagick (~> 2.15.3)
 
 GEM
   remote: https://rubygems.org/
@@ -162,7 +162,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.5)
+    mime-types (2.6.1)
     mini_portile (0.6.2)
     minitest (5.7.0)
     multi_json (1.11.0)
@@ -227,7 +227,7 @@ GEM
     rake (10.4.2)
     ref (1.0.5)
     require_all (1.3.2)
-    rmagick (2.14.0)
+    rmagick (2.15.3)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -360,8 +360,8 @@ DEPENDENCIES
   rack-rewrite
   rails (~> 4.2.1)
   rails_best_practices (~> 1.15.7)
-  rmagick
-  rmagick4j
+  rmagick (~> 2.15.3)
+  rmagick4j (~> 0.3.9)
   rspec (~> 3.3.0)
   rspec-activemodel-mocks (~> 1.0.1)
   rspec-rails (~> 3.3.3)

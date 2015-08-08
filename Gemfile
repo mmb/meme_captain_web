@@ -38,15 +38,15 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'dynamic_form'
 
-gem 'rmagick', platforms: [:ruby, :mswin], require: 'rmagick'
-gem 'rmagick4j', platforms: :jruby, require: 'rmagick'
+gem 'rmagick', '~> 2.15.3', platforms: [:ruby, :mswin], require: 'rmagick'
+gem 'rmagick4j', '~> 0.3.9', platforms: :jruby, require: 'rmagick'
 
 gem 'delayed_job_active_record', '~> 4.0.3'
 gem 'daemons'
 
 gem 'meme_captain',
     git: 'https://github.com/mmb/meme_captain.git',
-    ref: 'f3c93c'
+    ref: '46d0ee'
 
 gem 'kaminari', '~> 0.16.1'
 gem 'kaminari-bootstrap', '~> 3.0.1'
