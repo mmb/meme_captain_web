@@ -172,20 +172,10 @@ describe SrcImage do
   end
 
   describe '#create_jobs' do
-    context 'when the src image is a work in progress' do
-      it 'enqueues a src image processing job' do
-        src_image = FactoryGirl.create(:src_image)
-        expect(SrcImageProcessJob).to receive(:perform_later).with(src_image.id)
-        src_image.run_callbacks(:commit)
-      end
-    end
-
-    context 'when the src image is not a work in progress' do
-      it 'does not enqueues a src image processing job' do
-        src_image = FactoryGirl.create(:src_image, work_in_progress: false)
-        expect(SrcImageProcessJob).not_to receive(:perform_later)
-        src_image.run_callbacks(:commit)
-      end
+    it 'enqueues a src image processing job' do
+      src_image = FactoryGirl.create(:src_image)
+      expect(SrcImageProcessJob).to receive(:perform_later).with(src_image.id)
+      src_image.run_callbacks(:commit)
     end
   end
 

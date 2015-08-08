@@ -92,21 +92,11 @@ describe GendImage do
   end
 
   describe '#create_jobs' do
-    context 'when the gend image is a work in progress' do
-      it 'enqueues a gend image processing job' do
-        gend_image = FactoryGirl.create(:gend_image)
-        expect(GendImageProcessJob).to receive(:perform_later).with(
-          gend_image.id)
-        gend_image.run_callbacks(:commit)
-      end
-    end
-
-    context 'when the gend image is not a work in progress' do
-      it 'does not enqueues a gend image processing job' do
-        gend_image = FactoryGirl.create(:gend_image, work_in_progress: false)
-        expect(GendImageProcessJob).not_to receive(:perform_later)
-        gend_image.run_callbacks(:commit)
-      end
+    it 'enqueues a gend image processing job' do
+      gend_image = FactoryGirl.create(:gend_image)
+      expect(GendImageProcessJob).to receive(:perform_later).with(
+        gend_image.id)
+      gend_image.run_callbacks(:commit)
     end
   end
 

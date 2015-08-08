@@ -14,7 +14,7 @@ class SrcImage < ActiveRecord::Base
 
   validate :image_if_not_url
 
-  after_commit :create_jobs
+  after_commit :create_jobs, on: :create
 
   attr_accessor :image_url
 
@@ -32,7 +32,7 @@ class SrcImage < ActiveRecord::Base
   end
 
   def create_jobs
-    SrcImageProcessJob.perform_later(id) if work_in_progress
+    SrcImageProcessJob.perform_later(id)
   end
 
   # rubocop:disable MethodLength

@@ -20,10 +20,10 @@ class GendImage < ActiveRecord::Base
   before_validation :set_derived_image_fields
   validates :email, length: { maximum: 0 }
 
-  after_commit :create_jobs
+  after_commit :create_jobs, on: :create
 
   def create_jobs
-    GendImageProcessJob.perform_later(id) if work_in_progress
+    GendImageProcessJob.perform_later(id)
   end
 
   def meme_text_header
