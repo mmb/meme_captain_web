@@ -30,7 +30,9 @@ class GendImagesController < ApplicationController
 
   def create
     @gend_image = build_gend_image_for_create
-    StatsD.increment('bot.attempt') if params[:gend_image][:email].present?
+    if params[:gend_image][:email].present?
+      StatsD.increment('bot.attempt'.freeze)
+    end
 
     if @gend_image.save
       respond_to do |format|
@@ -114,9 +116,9 @@ class GendImagesController < ApplicationController
   def gend_image_show_headers(gend_image)
     src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
-    headers['Meme-Text'] = gend_image.meme_text_header
-    headers['Meme-Name'] = Rack::Utils.escape(
+    headers['Meme-Text'.freeze] = gend_image.meme_text_header
+    headers['Meme-Name'.freeze] = Rack::Utils.escape(
       src_image.name) if src_image.name
-    headers['Meme-Source-Image'] = src_image_url_for(src_image)
+    headers['Meme-Source-Image'.freeze] = src_image_url_for(src_image)
   end
 end

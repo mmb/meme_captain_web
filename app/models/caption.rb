@@ -23,5 +23,5 @@ class Caption < ActiveRecord::Base
 
   private
 
-  scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct') }
+  scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct'.freeze) }
 end

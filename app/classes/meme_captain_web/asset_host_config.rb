@@ -6,10 +6,10 @@ module MemeCaptainWeb
   # Asset host setup.
   class AssetHostConfig
     def configure(config, env)
-      return if env['ASSET_DOMAIN'].blank?
+      return if env['ASSET_DOMAIN'.freeze].blank?
       config.action_controller.asset_host = proc { |asset|
         "http://a#{Digest::MD5.hexdigest(asset).to_i(16) % 3}.\
-#{env['ASSET_DOMAIN']}"
+#{env['ASSET_DOMAIN'.freeze]}"
       }
     end
   end

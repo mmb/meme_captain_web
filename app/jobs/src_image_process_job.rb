@@ -46,7 +46,7 @@ class SrcImageProcessJob < ActiveJob::Base
 
   def watermark(img)
     watermark_img = Magick::ImageList.new(
-      Rails.root + 'app/assets/images/watermark.png')
+      Rails.root + 'app/assets/images/watermark.png'.freeze)
     img.extend(MemeCaptain::ImageList::Watermark)
     img.watermark_mc(watermark_img)
     watermark_img.destroy!

@@ -10,10 +10,10 @@ class SrcImageNameJob < ActiveJob::Base
 
     conn = create_connection
 
-    conn.get('/imghp?hl=en&tab=wi')
+    conn.get('/imghp?hl=en&tab=wi'.freeze)
 
     response = conn.get(
-      '/searchbyimage',
+      '/searchbyimage'.freeze,
       image_url: src_image_url(src_image))
 
     name = extract_name(response.body)
@@ -23,11 +23,11 @@ class SrcImageNameJob < ActiveJob::Base
   private
 
   def create_connection
-    Faraday.new(url: 'http://google.com') do |faraday|
+    Faraday.new(url: 'http://google.com'.freeze) do |faraday|
       faraday.use(:cookie_jar)
       faraday.use(FaradayMiddleware::FollowRedirects)
-      faraday.headers['User-Agent'] = \
-        'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0'
+      faraday.headers['User-Agent'.freeze] = \
+        'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0'.freeze
       faraday.adapter(Faraday.default_adapter)
     end
   end

@@ -13,7 +13,7 @@ class SrcSetsController < ApplicationController
     if @src_set.save
       redirect_to(
         { action: :index },
-        notice: 'Source set created.')
+        notice: 'Source set created.'.freeze)
     else
       render :new
     end
@@ -24,11 +24,9 @@ class SrcSetsController < ApplicationController
   end
 
   def update
-    # rubocop:disable Style/IfUnlessModifier
     unless current_user
-      render status: :forbidden, text: 'Forbidden' && return
+      render status: :forbidden, text: 'Forbidden'.freeze && return
     end
-    # rubocop:enable Style/IfUnlessModifier
 
     @src_set = SrcSet.active.where(
       name: params[:id]).first_or_create do |ss|
@@ -46,7 +44,7 @@ class SrcSetsController < ApplicationController
           format.html do
             redirect_to(
               { action: :show, id: @src_set.name },
-              notice: 'The set was successfully updated.')
+              notice: 'The set was successfully updated.'.freeze)
           end
           format.json { render json: {} }
         else
@@ -57,7 +55,7 @@ class SrcSetsController < ApplicationController
         end
       end
     else
-      render status: :forbidden, text: 'Forbidden'
+      render status: :forbidden, text: 'Forbidden'.freeze
     end
   end
 

@@ -25,7 +25,7 @@ module MemeCaptainWeb
     private
 
     def combine_horizontal(url)
-      images = url.split('[]').map do |u|
+      images = url.split('[]'.freeze).map do |u|
         Magick::ImageList.new.from_blob(load(u)).first
       end
 
@@ -49,7 +49,7 @@ module MemeCaptainWeb
     end
 
     def combine_vertical(url)
-      images = url.split('|').map do |u|
+      images = url.split('|'.freeze).map do |u|
         Magick::ImageList.new.from_blob(load(u)).first
       end
 

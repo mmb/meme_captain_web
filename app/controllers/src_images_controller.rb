@@ -5,7 +5,7 @@ class SrcImagesController < ApplicationController
   include SrcImagesHelper
 
   def new
-    return if not_logged_in 'Please login to create a source image.'
+    return if not_logged_in 'Please login to create a source image.'.freeze
 
     @src_image = SrcImage.new
   end
@@ -82,7 +82,7 @@ class SrcImagesController < ApplicationController
     # rubocop:disable Style/GuardClause
     if submitted_params.try(:[], :image)
       submitted_params[:image] = submitted_params[:image].read
-      StatsD.increment('src_image.upload')
+      StatsD.increment('src_image.upload'.freeze)
     end
     # rubocop:enable Style/GuardClause
   end
@@ -91,7 +91,7 @@ class SrcImagesController < ApplicationController
     format.html do
       redirect_to(
         { controller: :my, action: :show },
-        notice: 'Source image created.'
+        notice: 'Source image created.'.freeze
       )
     end
     format.json { redirect_to_pending }
@@ -112,7 +112,7 @@ class SrcImagesController < ApplicationController
   end
 
   def redirect_to_pending
-    response.headers['Location'] = pending_url
+    response.headers['Location'.freeze] = pending_url
     response.status = :accepted
     render json: { id: @src_image.id_hash }
   end

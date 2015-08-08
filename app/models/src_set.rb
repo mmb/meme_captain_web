@@ -14,8 +14,8 @@ class SrcSet < ActiveRecord::Base
     if new_record? &&
        SrcSet.active.exists?(name: name) ||
        !is_deleted && SrcSet.where(
-         'name = ? AND id != ?', name, id).active.count > 0
-      errors.add :name, 'has already been taken'
+         'name = ? AND id != ?'.freeze, name, id).active.count > 0
+      errors.add :name, 'has already been taken'.freeze
     end
     # rubocop:enable Style/GuardClause
   end
@@ -60,15 +60,15 @@ class SrcSet < ActiveRecord::Base
   }
 
   scope :front_page, lambda {
-    where('quality >= ?', MemeCaptainWeb::Config::SetFrontPageMinQuality)
+    where('quality >= ?'.freeze, MemeCaptainWeb::Config::SetFrontPageMinQuality)
   }
 
   scope :not_empty, lambda {
     joins(:src_images).where(
-      'src_images.is_deleted' => false).group(:'src_sets.id')
+      'src_images.is_deleted'.freeze => false).group(:'src_sets.id')
   }
 
   scope :name_matches, lambda { |query|
-    where('LOWER(src_sets.name) LIKE ?', "%#{query.downcase}%") if query
+    where('LOWER(src_sets.name) LIKE ?'.freeze, "%#{query.downcase}%") if query
   }
 end

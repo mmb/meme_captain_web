@@ -19,5 +19,7 @@ class User < ActiveRecord::Base
     Gravatar.new email
   end
 
-  scope :for_auth, ->(email) { where('LOWER(email) = ?', email.downcase) }
+  scope :for_auth, lambda { |email|
+    where('LOWER(email) = ?'.freeze, email.downcase)
+  }
 end

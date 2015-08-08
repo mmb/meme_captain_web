@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user
       login(user)
     else
-      flash[:error] = 'Login failed.'
+      flash[:error] = 'Login failed.'.freeze
       render :new
     end
   end
@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
     if session[:user_id]
       session.delete :user_id
 
-      redirect_to root_url, notice: 'Logged out.'
+      redirect_to root_url, notice: 'Logged out.'.freeze
     else
       redirect_to root_url
     end
@@ -28,6 +28,6 @@ class SessionsController < ApplicationController
   def login(user)
     session[:user_id] = user.id
     return_to = session.delete(:return_to)
-    redirect_to(return_to || my_url, notice: 'Logged in.')
+    redirect_to(return_to || my_url, notice: 'Logged in.'.freeze)
   end
 end

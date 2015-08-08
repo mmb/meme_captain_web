@@ -21,7 +21,7 @@ class SrcImage < ActiveRecord::Base
   def image_if_not_url
     # rubocop:disable Style/GuardClause
     if url.blank? && image.blank?
-      errors.add :image, 'is required if url is not set.'
+      errors.add :image, 'is required if url is not set.'.freeze
     end
     # rubocop:enable Style/GuardClause
   end
@@ -65,7 +65,7 @@ class SrcImage < ActiveRecord::Base
   scope :publick, -> { where private: false }
 
   scope :name_matches, lambda { |query|
-    where('LOWER(name) LIKE ?', "%#{query.downcase}%") if query
+    where('LOWER(name) LIKE ?'.freeze, "%#{query.downcase}%") if query
   }
 
   scope :most_used, lambda { |limit = 1|
@@ -78,7 +78,7 @@ class SrcImage < ActiveRecord::Base
 
   def add_url_scheme
     return true if url.blank?
-    return true if url.start_with?('http://', 'https://')
+    return true if url.start_with?('http://'.freeze, 'https://'.freeze)
     self.url = "http://#{url}"
     true
   end

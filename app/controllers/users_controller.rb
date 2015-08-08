@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to my_url, notice: 'User created.'
+      redirect_to my_url, notice: 'User created.'.freeze
     else
       render :new
     end

@@ -11,7 +11,7 @@ class GendImage < ActiveRecord::Base
   belongs_to :user
 
   accepts_nested_attributes_for :captions, reject_if:
-      proc { |attrs| attrs['text'].blank? }
+      proc { |attrs| attrs['text'.freeze].blank? }
 
   # This email field is a negative captcha. If form bots fill it in,
   # validation will fail.
@@ -28,7 +28,7 @@ class GendImage < ActiveRecord::Base
 
   def meme_text_header
     Rails.cache.fetch("#{cache_key}/meme_text_header") do
-      captions.map { |c| Rack::Utils.escape(c.text) }.join('&')
+      captions.map { |c| Rack::Utils.escape(c.text) }.join('&'.freeze)
     end
   end
 
@@ -48,6 +48,6 @@ class GendImage < ActiveRecord::Base
 
   scope :caption_matches, lambda { |query|
     joins(:captions).where(
-      'LOWER(captions.text) LIKE ?', "%#{query.downcase}%").uniq if query
+      'LOWER(captions.text) LIKE ?'.freeze, "%#{query.downcase}%").uniq if query
   }
 end
