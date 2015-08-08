@@ -8,11 +8,10 @@ describe 'src_images/_src_images.html', type: :view do
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }
   let(:src_images) { Kaminari.paginate_array([]).page(1) }
+  let(:src_set) { FactoryGirl.create(:src_set, user: user) }
 
   context 'showing a set' do
     context 'when the user owns the set' do
-      let(:src_set) { FactoryGirl.create(:src_set, user: user) }
-
       it 'shows the remove from set button' do
         assign :src_images, src_images
         assign :src_set, src_set
@@ -52,6 +51,18 @@ describe 'src_images/_src_images.html', type: :view do
         render partial: 'src_images/src_images', locals: { current_user: user }
 
         expect(rendered).to_not have_selector '.btn-toolbar'
+      end
+    end
+
+    context 'on my images pages' do
+      before { allow(view).to receive(:controller_name).and_return('my') }
+
+      it 'shows the Delete button' do
+        assign :src_images, src_images
+        assign :src_set, src_set
+        render partial: 'src_images/src_images', locals: { current_user: user }
+
+        expect(rendered).to contain(/Delete 0/)
       end
     end
   end

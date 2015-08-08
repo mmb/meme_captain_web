@@ -31,7 +31,7 @@
             </div>
         <% end %>
 
-        <% if current_page? my_url %>
+        <% if controller_name == 'my'.freeze %>
             <div class="btn-group">
               <button class="btn btn-danger delete-src disabled disable-none-selected enable-some-selected">
                 Delete <span class="selected-count badge badge-inverse">0</span>
