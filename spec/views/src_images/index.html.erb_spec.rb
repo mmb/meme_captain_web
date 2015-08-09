@@ -4,9 +4,16 @@ require 'rails_helper'
 
 describe 'src_images/index.html.erb', type: :view do
   it 'renders the src images partial' do
-    assign(:src_images, Kaminari.paginate_array([]).page(1))
+    src_images = Kaminari.paginate_array([]).page(1)
+    assign(:src_images, src_images)
     allow(view).to receive(:render).and_call_original
-    expect(view).to receive(:render).with(partial: 'src_images/src_images')
+    expect(view).to receive(:render).with(partial: 'src_images/src_images',
+                                          locals: {
+                                            user: nil,
+                                            show_remove_from_set: false,
+                                            show_delete: false,
+                                            src_images: src_images,
+                                            more_images: false })
     render
   end
 end

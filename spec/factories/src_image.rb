@@ -12,4 +12,14 @@ FactoryGirl.define do
       image(f.read)
     end
   end
+
+  factory :finished_src_image, parent: :src_image do
+    work_in_progress(false)
+
+    after(:create) do |src_image|
+      img = src_image.magick_image_list
+      img.resize_to_fill!(64, 64)
+      src_image.create_src_thumb!(image: img.to_blob)
+    end
+  end
 end

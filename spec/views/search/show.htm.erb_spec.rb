@@ -42,7 +42,13 @@ describe 'search/show.html.erb', type: :view do
     end
 
     it 'renders the src images partial' do
-      expect(view).to receive(:render).with(partial: 'src_images/src_images')
+      expect(view).to receive(:render).with(partial: 'src_images/src_images',
+                                            locals: {
+                                              user: nil,
+                                              show_remove_from_set: false,
+                                              show_delete: false,
+                                              src_images: src_images,
+                                              more_images: false })
       render
     end
   end

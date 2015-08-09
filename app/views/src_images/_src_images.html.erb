@@ -1,10 +1,10 @@
 <div class="thumb-index well">
 
-  <% if current_user %>
+  <% if user %>
       <div class="btn-toolbar well-toolbar">
 
         <div class="btn-group">
-          <%= link_to 'New', {controller: :src_images, action: :new}, class: 'btn btn-success', style: 'margin-top: 0;' %>
+          <%= link_to('New', {controller: :src_images, action: :new}, class: 'btn btn-success', style: 'margin-top: 0;') %>
         </div>
 
         <div class="btn-group">
@@ -23,7 +23,7 @@
 
         </div>
 
-        <% if @src_set.try(:user) == current_user %>
+        <% if show_remove_from_set %>
             <div class="btn-group">
               <button class="btn btn-default remove-from-set disabled disable-none-selected enable-some-selected">
                 Remove <span class="selected-count badge badge-info">0</span> from Set
@@ -31,7 +31,7 @@
             </div>
         <% end %>
 
-        <% if controller_name == 'my'.freeze %>
+        <% if show_delete %>
             <div class="btn-group">
               <button class="btn btn-danger delete-src disabled disable-none-selected enable-some-selected">
                 Delete <span class="selected-count badge badge-inverse">0</span>
@@ -43,19 +43,19 @@
   <% end %>
 
   <div class="row">
-    <% @src_images.each do |si| %>
+    <% src_images.each do |si| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
-            <%= render partial: si %>
+            <%= render(partial: si) %>
           </div>
         </div>
     <% end %>
   </div>
 
-  <% if current_page? root_url %>
-      <%= link_to 'More images', :src_images %>
+  <% if more_images %>
+      <%= link_to('More images', :src_images) %>
   <% else %>
-      <%= paginate @src_images %>
+      <%= paginate(src_images) %>
   <% end %>
 
 </div>

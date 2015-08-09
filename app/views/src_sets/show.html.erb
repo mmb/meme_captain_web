@@ -4,10 +4,14 @@
 
 <h1><%= @src_set.name %></h1>
 
-<%= render :partial => 'src_images/src_images' %>
+<%= render(partial: 'src_images/src_images', locals: {
+  user: current_user,
+  show_remove_from_set: @src_set.try(:user) == current_user,
+  show_delete: false,
+  src_images: @src_images,
+  more_images: false }) %>
 
 <% if current_user && @src_set.user == current_user %>
     <%= button_to 'Delete Set', {:action => :destroy, :id => @src_set.name},
                   :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-danger' %>
 <% end %>
-

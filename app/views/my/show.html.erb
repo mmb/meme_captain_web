@@ -1,4 +1,9 @@
-<%= render partial: 'src_images/src_images' %>
+<%= render(partial: 'src_images/src_images', locals: {
+  user: current_user,
+  show_remove_from_set: false,
+  show_delete: true,
+  src_images: @src_images,
+  more_images: false }) %>
 
 <% unless @src_sets.empty? %>
     <%= render partial: 'src_sets/src_sets' %>
