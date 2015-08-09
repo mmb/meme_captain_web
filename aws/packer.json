@@ -17,9 +17,14 @@
     {
       "inline": [
         "sudo yum update -y",
-        "sudo yum install -y docker",
+        "sudo yum install -y docker git",
         "sudo service docker start",
-        "sudo docker pull mm62/meme-captain-web"
+        "git clone https://github.com/mmb/meme_captain_web.git",
+        "pushd meme_captain_web",
+        "git checkout deploy",
+        "docker build --rm=true --tag=mm62/meme_captain .",
+        "popd",
+        "rm -rf meme_captain_web"
       ],
       "type": "shell"
     }
