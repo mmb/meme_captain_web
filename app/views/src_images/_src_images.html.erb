@@ -4,7 +4,7 @@
       <div class="btn-toolbar well-toolbar">
 
         <div class="btn-group">
-          <%= link_to 'New', {:controller => :src_images, :action => :new}, class: 'btn btn-success', style: 'margin-top: 0;' %>
+          <%= link_to 'New', {controller: :src_images, action: :new}, class: 'btn btn-success', style: 'margin-top: 0;' %>
         </div>
 
         <div class="btn-group">
@@ -46,7 +46,7 @@
     <% @src_images.each do |si| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
-            <%= render :partial => si %>
+            <%= render partial: si %>
           </div>
         </div>
     <% end %>
