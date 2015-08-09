@@ -9,9 +9,10 @@ describe 'src_images/_src_images.html', type: :view do
   let(:show_remove_from_set) { false }
   let(:show_delete) { false }
   let(:more_images) { false }
+  let(:src_image) { FactoryGirl.create(:finished_src_image) }
   let(:src_images) do
     Kaminari.paginate_array([
-      FactoryGirl.create(:finished_src_image),
+      src_image,
       FactoryGirl.create(:finished_src_image)
     ]).page(1).per(1)
   end
@@ -114,7 +115,8 @@ describe 'src_images/_src_images.html', type: :view do
              src_images: src_images,
              more_images: more_images })
 
-    expect(rendered).to have_selector('img', src: '/src_thumbs/1')
+    expect(rendered).to have_selector(
+      'img', src: "/src_thumbs/#{src_image.src_thumb.id}")
   end
 
   context 'when the more images link should be shown' do
