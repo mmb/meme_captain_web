@@ -22,7 +22,7 @@
         "git clone https://github.com/mmb/meme_captain_web.git",
         "pushd meme_captain_web",
         "git checkout deploy",
-        "docker build --rm=true --tag=mm62/meme_captain .",
+        "sudo docker build --rm=true --tag=mm62/meme_captain .",
         "popd",
         "rm -rf meme_captain_web"
       ],
