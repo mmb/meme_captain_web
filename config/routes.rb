@@ -18,7 +18,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :pending_gend_images, only: :show
 
-  resources :gend_thumbs
+  resources :gend_thumbs, only: :show
 
   resource :session
 
