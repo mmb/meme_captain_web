@@ -108,6 +108,11 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     expect(render).to have_selector 'img[height="399"]'
   end
 
+  it 'has a link to copy the image to imgur' do
+    expect(render).to have_selector(
+      'a', href: "http://imgur.com/upload?url=#{gend_image_url}")
+  end
+
   it 'has a link to create a new image' do
     selector = "a[href=\"/gend_images/new?src=#{src_image.id_hash}\"]"
 
