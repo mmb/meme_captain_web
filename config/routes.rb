@@ -30,7 +30,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :src_thumbs, only: :show
 
-  resources :users
+  resources :users, only: [:create, :new]
 
   resource :my, only: :show, controller: :my, concerns: :show_paginatable
 
