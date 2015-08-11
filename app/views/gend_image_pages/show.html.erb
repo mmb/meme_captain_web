@@ -35,10 +35,6 @@
             Reddit
         <% end %>
 
-        <%= link_to("http://imgur.com/upload?url=#{@gend_image_url}", class: 'btn btn-default') do %>
-            Imgur
-        <% end %>
-
         <% if @gend_image.is_animated %>
             <%= link_to("http://gfycat.com/fetch/#{@gend_image_url}", class: 'btn btn-default') do %>
                 Gfycat
