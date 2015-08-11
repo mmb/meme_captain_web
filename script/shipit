@@ -5,28 +5,30 @@ set -o pipefail
 
 rake spec
 
-git push
+if [ "$(git log @{u}.. | wc -l)" -eq "0" ]; then
+  git push
 
-# wait for travis build to start
-set +e
-SLEPT_FOR=0
-until travis status | grep start; do
-  sleep 5
-  SLEPT_FOR=$((SLEPT_FOR + 5))
-  if [ $SLEPT_FOR -ge 120 ]; then exit 1; fi
-done
+  echo 'Waiting for Travis build to start'
+  set +e
+  SLEPT_FOR=0
+  until travis status | grep start; do
+    sleep 5
+    SLEPT_FOR=$((SLEPT_FOR + 5))
+    if [ $SLEPT_FOR -ge 120 ]; then exit 1; fi
+  done
 
-# wait for travis to pass
-SLEPT_FOR=0
-until travis status --fail-pending --no-exit-code; do
-  sleep 10
-  SLEPT_FOR=$((SLEPT_FOR + 10))
-  if [ $SLEPT_FOR -ge 600 ]; then exit 1; fi
-done
-set -e
+  echo 'Waiting for Travis build to pass'
+  SLEPT_FOR=0
+  until travis status --fail-pending --no-exit-code; do
+    sleep 10
+    SLEPT_FOR=$((SLEPT_FOR + 10))
+    if [ $SLEPT_FOR -ge 600 ]; then exit 1; fi
+  done
+  set -e
 
-# exit the script if the build failed
-travis status --exit-code
+  # exit the script if the build failed
+  travis status --exit-code
+fi
 
 # merge to deploy
 git checkout deploy
