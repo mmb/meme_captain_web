@@ -28,7 +28,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :src_sets, except: :new, concerns: :paginatable
 
-  resources :src_thumbs
+  resources :src_thumbs, only: :show
 
   resources :users
 
