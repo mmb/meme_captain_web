@@ -28,7 +28,8 @@ class GendImage < ActiveRecord::Base
 
   def meme_text_header
     Rails.cache.fetch("#{cache_key}/meme_text_header") do
-      captions.map { |c| Rack::Utils.escape(c.text) }.join('&'.freeze)
+      trim_header(
+        captions.map { |c| Rack::Utils.escape(c.text) }.join('&'.freeze))
     end
   end
 
@@ -50,4 +51,15 @@ class GendImage < ActiveRecord::Base
     joins(:captions).where(
       'LOWER(captions.text) LIKE ?'.freeze, "%#{query.downcase}%").uniq if query
   }
+
+  private
+
+  def trim_header(header)
+    return header if header.size <= 8181
+    # varnish checks total header size (key + value) <= 8k,
+    # 8181 = 8192 - 'Meme-Text: '.size
+    result = header.slice(0, 8181)
+    result.slice!(8179..-1) if result[-2] == '%'
+    result
+  end
 end
