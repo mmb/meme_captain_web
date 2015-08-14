@@ -1092,7 +1092,7 @@
             "Ref": "spotScaleDownPolicy"
           }
         ],
-        "AlarmDescription": "Scale down if CPU < 5% for 10 minutes",
+        "AlarmDescription": "Scale down if CPU < 5% for 50 minutes",
         "AlarmName": "spotCpuLow",
         "ComparisonOperator": "LessThanThreshold",
         "Dimensions": [
@@ -1103,7 +1103,7 @@
             }
           }
         ],
-        "EvaluationPeriods": "10",
+        "EvaluationPeriods": "50",
         "MetricName": "CPUUtilization",
         "Namespace": "AWS/EC2",
         "Period": "60",
