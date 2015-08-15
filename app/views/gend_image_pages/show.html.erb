@@ -1,4 +1,4 @@
-<% content_for(:description, @meme_text) %>
+<% content_for(:description, @gend_image.meme_text) %>
 
 <% if @gend_image.work_in_progress? %>
     <p>
@@ -8,7 +8,7 @@
     <div class="row">
       <div class="col-md-6">
         <p>
-          <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}", class: 'img-responsive', alt: @meme_text), @gend_image_url %>
+          <%= link_to image_tag(@gend_image_url, size: "#{@gend_image.width}x#{@gend_image.height}", class: 'img-responsive', alt: @gend_image.meme_text), @gend_image_url %>
         </p>
       </div>
 

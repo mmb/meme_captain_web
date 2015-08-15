@@ -31,11 +31,6 @@ describe GendImagePagesController, type: :controller do
         "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
     end
 
-    it 'sets the meme_text' do
-      get :show, id: gend_image.id_hash
-      expect(assigns(:meme_text)).to eq('caption 2 caption 1')
-    end
-
     context 'when the gend image is less than 10 seconds old' do
       it 'refreshes in 2 seconds' do
         get :show, id: gend_image.id_hash

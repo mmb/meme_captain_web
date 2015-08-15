@@ -10,8 +10,6 @@ class GendImagePagesController < ApplicationController
 
     @src_image = SrcImage.without_image.find(@gend_image.src_image_id)
     @gend_image_url = gend_image_url_for(@gend_image)
-    @meme_text = @gend_image.captions.position_order.map(&:text).join(
-      ' '.freeze)
 
     set_refresh
   end

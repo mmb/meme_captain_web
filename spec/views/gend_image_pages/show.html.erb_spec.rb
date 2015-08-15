@@ -29,7 +29,6 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     assign(:gend_image, gend_image)
     assign(:src_image, src_image)
     assign(:gend_image_url, gend_image_url)
-    assign(:meme_text, 'test meme text')
 
     allow(view).to receive(:browser).with(no_args).and_return(browser)
     allow(browser).to receive(:android?).with(no_args).and_return(android)
@@ -58,7 +57,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   end
 
   it 'sets the content for the description to the meme captions' do
-    expect(view).to receive(:content_for).with(:description, 'test meme text')
+    expect(view).to receive(:content_for).with(
+      :description, 'caption 2 caption 1')
     render
   end
 
@@ -156,6 +156,6 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     expect(render).to have_selector(
       'img',
       src: gend_image_url,
-      alt: 'test meme text')
+      alt: 'caption 2 caption 1')
   end
 end
