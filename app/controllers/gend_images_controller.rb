@@ -30,9 +30,7 @@ class GendImagesController < ApplicationController
 
   def create
     @gend_image = build_gend_image_for_create
-    if params[:gend_image][:email].present?
-      StatsD.increment('bot.attempt'.freeze)
-    end
+    check_bot_attempt
 
     if @gend_image.save
       respond_to do |format|
@@ -90,6 +88,11 @@ class GendImagesController < ApplicationController
     gend_image = src_image.gend_images.build(gend_image_params)
     gend_image.user = current_user
     gend_image
+  end
+
+  def check_bot_attempt
+    return if params[:gend_image][:email].blank?
+    StatsD.increment('bot.attempt'.freeze)
   end
 
   def gend_image_params
