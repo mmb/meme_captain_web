@@ -26,6 +26,10 @@ class GendImage < ActiveRecord::Base
     GendImageProcessJob.perform_later(id)
   end
 
+  def meme_text
+    captions.position_order.map(&:text).join(' '.freeze)
+  end
+
   def meme_text_header
     Rails.cache.fetch("#{cache_key}/meme_text_header") do
       trim_header(
