@@ -22,6 +22,8 @@ Example JSON body:
 - name - the name of the source image (optional)
 - private - true if the source image is private (optional)
 
+The size limit for source images is 10MB.
+
 ## Polling
 
 If the request is accepted you will receive an HTTP 202 Accepted response.
