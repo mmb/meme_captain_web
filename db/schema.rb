@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730035705) do
+ActiveRecord::Schema.define(version: 20150818034625) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -152,6 +152,9 @@ ActiveRecord::Schema.define(version: 20150730035705) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_admin",        default: false
   end
+
+  add_index "users", ["is_admin"], name: "index_users_on_is_admin"
 
 end
