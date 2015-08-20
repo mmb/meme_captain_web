@@ -233,6 +233,7 @@ describe HomeController, type: :controller do
           private: true,
           work_in_progress: false)
         si2 = FactoryGirl.create(:src_image, work_in_progress: false)
+        FactoryGirl.create(:gend_image, src_image: si2)
 
         get :index
 
@@ -245,6 +246,7 @@ describe HomeController, type: :controller do
           is_deleted: true,
           work_in_progress: false)
         si2 = FactoryGirl.create(:src_image, work_in_progress: false)
+        FactoryGirl.create(:gend_image, src_image: si2)
 
         get :index
 
@@ -254,6 +256,7 @@ describe HomeController, type: :controller do
       it 'show source images that are under construction' do
         si = FactoryGirl.create(:src_image)
         si2 = FactoryGirl.create(:src_image, work_in_progress: false)
+        FactoryGirl.create(:gend_image, src_image: si2)
 
         get :index
 
@@ -295,7 +298,9 @@ describe HomeController, type: :controller do
           :gend_image,
           is_deleted: true,
           work_in_progress: false)
+        Timecop.travel(Time.now + 1)
         gi2 = FactoryGirl.create(:gend_image, work_in_progress: false)
+        Timecop.return
 
         get :index
 
