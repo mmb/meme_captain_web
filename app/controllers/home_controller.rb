@@ -12,8 +12,12 @@ class HomeController < ApplicationController
   private
 
   def src_images
-    SrcImage.without_image.includes(
-      :src_thumb).publick.active.finished.most_used(12)
+    if admin?
+      SrcImage.without_image.includes(:src_thumb).most_used(12)
+    else
+      SrcImage.without_image.includes(
+        :src_thumb).publick.active.finished.most_used(12)
+    end
   end
 
   def src_sets
@@ -21,7 +25,11 @@ class HomeController < ApplicationController
   end
 
   def gend_images
-    GendImage.without_image.includes(
-      :gend_thumb).publick.active.finished.most_recent(24)
+    if admin?
+      GendImage.without_image.includes(:gend_thumb).most_recent(24)
+    else
+      GendImage.without_image.includes(
+        :gend_thumb).publick.active.finished.most_recent(24)
+    end
   end
 end

@@ -4,6 +4,10 @@ require 'rails_helper'
 
 describe SearchController, type: :controller do
   describe "GET 'show'" do
+    let(:user) { nil }
+
+    before { session[:user_id] = user.try(:id) }
+
     context 'when no results are found' do
       before { get :show, q: 'test' }
 
@@ -56,7 +60,147 @@ describe SearchController, type: :controller do
                                            captions: [caption5, caption6],
                                            work_in_progress: false,
                                            src_image: @src_image_3)
-        Timecop.return
+      end
+
+      after { Timecop.return }
+
+      context 'when the user is not an admin user' do
+        let(:user) { FactoryGirl.create(:user) }
+
+        it 'does not find private source images' do
+          FactoryGirl.create(
+            :src_image, name: 'foo', work_in_progress: false, private: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
+        end
+
+        it 'does not find deleted source images' do
+          FactoryGirl.create(
+            :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
+        end
+
+        it 'does not find in progress source images' do
+          FactoryGirl.create(:src_image, name: 'foo')
+          get :show, q: 'foo'
+
+          expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
+        end
+
+        it 'does not find private gend images' do
+          caption1 = FactoryGirl.create(:caption, text: 'foo')
+          caption2 = FactoryGirl.create(:caption, text: 'bar')
+
+          FactoryGirl.create(:gend_image,
+                             captions: [caption1, caption2],
+                             work_in_progress: false,
+                             private: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
+        end
+
+        it 'does not find deleted gend images' do
+          caption1 = FactoryGirl.create(:caption, text: 'foo')
+          caption2 = FactoryGirl.create(:caption, text: 'bar')
+          FactoryGirl.create(:gend_image,
+                             captions: [caption1, caption2],
+                             work_in_progress: false, is_deleted: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
+        end
+
+        it 'does not find in progress gend images' do
+          caption1 = FactoryGirl.create(:caption, text: 'foo')
+          caption2 = FactoryGirl.create(:caption, text: 'bar')
+          FactoryGirl.create(:gend_image,
+                             captions: [caption1, caption2],
+                             work_in_progress: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
+        end
+      end
+
+      context 'when the user is an admin user' do
+        let(:user) { FactoryGirl.create(:admin_user) }
+
+        it 'finds private source images' do
+          Timecop.travel(Time.now + 1)
+          src_image_4 = FactoryGirl.create(
+            :src_image, name: 'foo', work_in_progress: false, private: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:src_images)).to eq(
+            [@src_image_3, @src_image_1, src_image_4])
+        end
+
+        it 'finds deleted source images' do
+          Timecop.travel(Time.now + 1)
+          src_image_4 = FactoryGirl.create(
+            :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:src_images)).to eq(
+            [@src_image_3, @src_image_1, src_image_4])
+        end
+
+        it 'finds in progress source images' do
+          Timecop.travel(Time.now + 1)
+          src_image_4 = FactoryGirl.create(:src_image, name: 'foo')
+          get :show, q: 'foo'
+
+          expect(assigns(:src_images)).to eq(
+            [@src_image_3, @src_image_1, src_image_4])
+        end
+
+        it 'finds private gend images' do
+          caption1 = FactoryGirl.create(:caption, text: 'foo')
+          caption2 = FactoryGirl.create(:caption, text: 'bar')
+
+          Timecop.travel(Time.now + 1)
+          gend_image_4 = FactoryGirl.create(
+            :gend_image,
+            captions: [caption1, caption2],
+            work_in_progress: false,
+            private: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:gend_images)).to eq(
+            [gend_image_4, @gend_image_3, @gend_image_1])
+        end
+
+        it 'finds deleted gend images' do
+          caption1 = FactoryGirl.create(:caption, text: 'foo')
+          caption2 = FactoryGirl.create(:caption, text: 'bar')
+          Timecop.travel(Time.now + 1)
+          gend_image_4 = FactoryGirl.create(
+            :gend_image,
+            captions: [caption1, caption2],
+            work_in_progress: false, is_deleted: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:gend_images)).to eq(
+            [gend_image_4, @gend_image_3, @gend_image_1])
+        end
+
+        it 'finds in progress gend images' do
+          caption1 = FactoryGirl.create(:caption, text: 'foo')
+          caption2 = FactoryGirl.create(:caption, text: 'bar')
+          Timecop.travel(Time.now + 1)
+          gend_image_4 = FactoryGirl.create(
+            :gend_image,
+            captions: [caption1, caption2],
+            work_in_progress: true)
+          get :show, q: 'foo'
+
+          expect(assigns(:gend_images)).to eq(
+            [gend_image_4, @gend_image_3, @gend_image_1])
+        end
       end
 
       it 'finds src images with matching names ordered by most used' do
@@ -65,27 +209,10 @@ describe SearchController, type: :controller do
         expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
       end
 
-      it 'does not find private images' do
-        FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false, private: true)
+      it 'finds gend images with matching captions ordered by most recent' do
         get :show, q: 'foo'
 
-        expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
-      end
-
-      it 'does not find deleted images' do
-        FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
-        get :show, q: 'foo'
-
-        expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
-      end
-
-      it 'does not find in progress images' do
-        FactoryGirl.create(:src_image, name: 'foo')
-        get :show, q: 'foo'
-
-        expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
+        expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
       end
 
       context 'src sets' do
@@ -121,47 +248,6 @@ describe SearchController, type: :controller do
           get(:show, q: 'test')
           expect(assigns(:src_sets)).to eq([@src_set2, @src_set1])
         end
-      end
-
-      it 'finds gend images with matching captions ordered by most recent' do
-        get :show, q: 'foo'
-
-        expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
-      end
-
-      it 'does not find private images' do
-        caption1 = FactoryGirl.create(:caption, text: 'foo')
-        caption2 = FactoryGirl.create(:caption, text: 'bar')
-
-        FactoryGirl.create(:gend_image,
-                           captions: [caption1, caption2],
-                           work_in_progress: false,
-                           private: true)
-        get :show, q: 'foo'
-
-        expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
-      end
-
-      it 'does not find deleted images' do
-        caption1 = FactoryGirl.create(:caption, text: 'foo')
-        caption2 = FactoryGirl.create(:caption, text: 'bar')
-        FactoryGirl.create(:gend_image,
-                           captions: [caption1, caption2],
-                           work_in_progress: false, is_deleted: true)
-        get :show, q: 'foo'
-
-        expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
-      end
-
-      it 'does not find in progress images' do
-        caption1 = FactoryGirl.create(:caption, text: 'foo')
-        caption2 = FactoryGirl.create(:caption, text: 'bar')
-        FactoryGirl.create(:gend_image,
-                           captions: [caption1, caption2],
-                           work_in_progress: true)
-        get :show, q: 'foo'
-
-        expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
       end
     end
   end

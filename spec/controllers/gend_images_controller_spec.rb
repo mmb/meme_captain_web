@@ -129,30 +129,62 @@ describe GendImagesController, type: :controller do
       ).to be(true)
     end
 
-    it 'does not show deleted images' do
-      FactoryGirl.create(:gend_image, user: user)
-      FactoryGirl.create(:gend_image, user: user, is_deleted: true)
+    context 'when the user is not an admin' do
+      it 'does not show deleted images' do
+        FactoryGirl.create(:gend_image, user: user)
+        FactoryGirl.create(:gend_image, user: user, is_deleted: true)
 
-      get :index
+        get :index
 
-      expect(assigns(:gend_images).size).to eq 1
+        expect(assigns(:gend_images).size).to eq(1)
+      end
+
+      it 'shows public images' do
+        3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
+
+        get :index
+
+        expect(assigns(:gend_images).size).to eq(3)
+      end
+
+      it 'does not show private images' do
+        FactoryGirl.create(:gend_image, user: user, private: false)
+        2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
+
+        get :index
+
+        expect(assigns(:gend_images).size).to eq(1)
+      end
     end
 
-    it 'shows public images' do
-      3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
+    context 'when the user is an admin' do
+      let(:user) { FactoryGirl.create(:admin_user) }
 
-      get :index
+      it 'shows deleted images' do
+        FactoryGirl.create(:gend_image, user: user)
+        FactoryGirl.create(:gend_image, user: user, is_deleted: true)
 
-      expect(assigns(:gend_images).size).to eq 3
-    end
+        get :index
 
-    it 'does not show private images' do
-      FactoryGirl.create(:gend_image, user: user, private: false)
-      2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
+        expect(assigns(:gend_images).size).to eq(2)
+      end
 
-      get :index
+      it 'shows public images' do
+        3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
 
-      expect(assigns(:gend_images).size).to eq 1
+        get :index
+
+        expect(assigns(:gend_images).size).to eq(3)
+      end
+
+      it 'shows private images' do
+        FactoryGirl.create(:gend_image, user: user, private: false)
+        2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
+
+        get :index
+
+        expect(assigns(:gend_images).size).to eq(3)
+      end
     end
   end
 

@@ -52,35 +52,69 @@ describe SrcImagesController, type: :controller do
 
       get :index
 
-      expect(assigns(:src_images)).to eq [si3, si1, si2]
+      expect(assigns(:src_images)).to eq([si3, si1, si2])
     end
 
-    it 'does not show deleted images' do
-      FactoryGirl.create(:src_image, user: user, work_in_progress: false)
-      FactoryGirl.create(
-        :src_image, user: user, is_deleted: true, work_in_progress: false)
+    context 'when the user is not an admin user' do
+      it 'does not show deleted images' do
+        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
+        FactoryGirl.create(
+          :src_image, user: user, is_deleted: true, work_in_progress: false)
 
-      get :index
+        get :index
 
-      expect(assigns(:src_images).size).to eq 1
+        expect(assigns(:src_images).size).to eq(1)
+      end
+
+      it 'does not show work in progress images' do
+        FactoryGirl.create(:src_image, user: user)
+        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
+
+        get :index
+
+        expect(assigns(:src_images).size).to eq(1)
+      end
+
+      it 'shows public images' do
+        FactoryGirl.create(:src_image, private: true, work_in_progress: false)
+        3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
+
+        get :index
+
+        expect(assigns(:src_images).size).to eq(3)
+      end
     end
 
-    it 'does not show work in progress images' do
-      FactoryGirl.create(:src_image, user: user)
-      FactoryGirl.create(:src_image, user: user, work_in_progress: false)
+    context 'when the user is an admin user' do
+      let(:user) { FactoryGirl.create(:admin_user) }
 
-      get :index
+      it 'does not show deleted images' do
+        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
+        FactoryGirl.create(
+          :src_image, user: user, is_deleted: true, work_in_progress: false)
 
-      expect(assigns(:src_images).size).to eq 1
-    end
+        get :index
 
-    it 'shows public images' do
-      FactoryGirl.create(:src_image, private: true, work_in_progress: false)
-      3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
+        expect(assigns(:src_images).size).to eq(2)
+      end
 
-      get :index
+      it 'does not show work in progress images' do
+        FactoryGirl.create(:src_image, user: user)
+        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
 
-      expect(assigns(:src_images).size).to eq 3
+        get :index
+
+        expect(assigns(:src_images).size).to eq(2)
+      end
+
+      it 'shows public images' do
+        FactoryGirl.create(:src_image, private: true, work_in_progress: false)
+        3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
+
+        get :index
+
+        expect(assigns(:src_images).size).to eq(4)
+      end
     end
 
     context 'searching' do
@@ -93,7 +127,7 @@ describe SrcImagesController, type: :controller do
           :src_image, user: user, name: 'ghi', work_in_progress: false)
 
         get :index, q: 'e'
-        expect(assigns(:src_images)).to eq [si2]
+        expect(assigns(:src_images)).to eq([si2])
       end
 
       it 'is case insensitive' do
@@ -101,7 +135,7 @@ describe SrcImagesController, type: :controller do
           :src_image, user: user, name: 'a', work_in_progress: false)
 
         get :index, q: 'A'
-        expect(assigns(:src_images)).to eq [si]
+        expect(assigns(:src_images)).to eq([si])
       end
 
       it 'ignores leading whitespace' do
@@ -295,7 +329,7 @@ describe SrcImagesController, type: :controller do
     context 'setting an optional name' do
       it 'saves the name to the database' do
         post :create, src_image: { image: image, name: 'a test name' }
-        expect(SrcImage.last.name).to eq 'a test name'
+        expect(SrcImage.last.name).to eq('a test name')
       end
     end
   end

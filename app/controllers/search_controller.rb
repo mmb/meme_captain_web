@@ -5,9 +5,15 @@ class SearchController < ApplicationController
   def show
     query = params[:q].try(:strip)
 
-    @src_images = find_src_images(query)
+    if admin?
+      @src_images = find_admin_src_images(query)
+      @gend_images = find_admin_gend_images(query)
+    else
+      @src_images = find_src_images(query)
+      @gend_images = find_gend_images(query)
+    end
+
     @src_sets = find_src_sets(query)
-    @gend_images = find_gend_images(query)
 
     return if @src_images.any? || @src_sets.any? || @gend_images.any?
     no_results
@@ -20,6 +26,11 @@ class SearchController < ApplicationController
       query).publick.active.finished.most_used.page(params[:page])
   end
 
+  def find_admin_src_images(query)
+    SrcImage.without_image.includes(:src_thumb).name_matches(
+      query).most_used.page(params[:page])
+  end
+
   def find_src_sets(query)
     SrcSet.name_matches(query).active.not_empty.most_recent.page(params[:page])
   end
@@ -28,6 +39,11 @@ class SearchController < ApplicationController
     GendImage.without_image.includes(:gend_thumb)
       .caption_matches(query).publick.active.finished.most_recent
       .page(params[:page])
+  end
+
+  def find_admin_gend_images(query)
+    GendImage.without_image.includes(:gend_thumb)
+      .caption_matches(query).most_recent.page(params[:page])
   end
 
   def no_results

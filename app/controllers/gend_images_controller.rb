@@ -23,8 +23,13 @@ class GendImagesController < ApplicationController
   end
 
   def index
-    @gend_images = GendImage.without_image.includes(
-      :gend_thumb).publick.active.most_recent.page(params[:page])
+    if admin?
+      @gend_images = GendImage.without_image.includes(
+        :gend_thumb).most_recent.page(params[:page])
+    else
+      @gend_images = GendImage.without_image.includes(
+        :gend_thumb).publick.active.most_recent.page(params[:page])
+    end
     @show_toolbar = false
   end
 
