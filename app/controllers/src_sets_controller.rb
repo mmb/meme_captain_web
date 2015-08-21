@@ -25,38 +25,18 @@ class SrcSetsController < ApplicationController
 
   def update
     unless current_user
-      render status: :forbidden, text: 'Forbidden'.freeze && return
+      render(status: :forbidden, text: 'Forbidden'.freeze) && return
     end
 
-    @src_set = SrcSet.active.where(
-      name: params[:id]).first_or_create do |ss|
-      ss.user = current_user
+    @src_set = first_or_create
+
+    unless @src_set.user == current_user
+      render(status: :forbidden, text: 'Forbidden'.freeze) && return
     end
 
-    if @src_set.user == current_user
-      add_src_images = params.delete(:add_src_images)
-      @src_set.add_src_images(add_src_images) if add_src_images
-      delete_src_images = params.delete(:delete_src_images)
-      @src_set.delete_src_images(delete_src_images) if delete_src_images
+    add_and_delete
 
-      respond_to do |format|
-        if @src_set.update_attributes(src_set_params)
-          format.html do
-            redirect_to(
-              { action: :show, id: @src_set.name },
-              notice: 'The set was successfully updated.'.freeze)
-          end
-          format.json { render json: {} }
-        else
-          format.html { render :edit }
-          format.json do
-            render json: @src_set.errors, status: :unprocessable_entity
-          end
-        end
-      end
-    else
-      render status: :forbidden, text: 'Forbidden'.freeze
-    end
+    update_src_set
   end
 
   def show
@@ -80,6 +60,49 @@ class SrcSetsController < ApplicationController
       params.require(:src_set).permit(:name)
     else
       {}
+    end
+  end
+
+  def first_or_create
+    SrcSet.active.where(
+      name: params[:id]).first_or_create do |ss|
+      ss.user = current_user
+    end
+  end
+
+  def add_and_delete
+    add_src_images = params.delete(:add_src_images)
+    @src_set.add_src_images(add_src_images) if add_src_images
+
+    delete_src_images = params.delete(:delete_src_images)
+    @src_set.delete_src_images(delete_src_images) if delete_src_images
+  end
+
+  def update_src_set
+    if @src_set.update_attributes(src_set_params)
+      update_success
+    else
+      update_fail
+    end
+  end
+
+  def update_success
+    respond_to do |format|
+      format.html do
+        redirect_to(
+          { action: :show, id: @src_set.name },
+          notice: 'The set was successfully updated.'.freeze)
+      end
+      format.json { render(json: {}) }
+    end
+  end
+
+  def update_fail
+    respond_to do |format|
+      format.html { render(:edit) }
+      format.json do
+        render(json: @src_set.errors, status: :unprocessable_entity)
+      end
     end
   end
 end
