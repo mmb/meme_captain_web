@@ -11,11 +11,9 @@ class SrcSet < ActiveRecord::Base
 
   def one_active_name
     # rubocop:disable Style/GuardClause
-    if new_record? &&
-       SrcSet.active.exists?(name: name) ||
-       !is_deleted && SrcSet.where(
-         'name = ? AND id != ?'.freeze, name, id).active.count > 0
-      errors.add :name, 'has already been taken'.freeze
+    if new_record? && name_taken? ||
+       !is_deleted && name_taken_by_other?
+      errors.add(:name, 'has already been taken'.freeze)
     end
     # rubocop:enable Style/GuardClause
   end
@@ -71,4 +69,14 @@ class SrcSet < ActiveRecord::Base
   scope :name_matches, lambda { |query|
     where('LOWER(src_sets.name) LIKE ?'.freeze, "%#{query.downcase}%") if query
   }
+
+  private
+
+  def name_taken?
+    SrcSet.active.exists?(name: name)
+  end
+
+  def name_taken_by_other?
+    SrcSet.where('name = ? AND id != ?'.freeze, name, id).active.exists?
+  end
 end

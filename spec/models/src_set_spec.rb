@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rails_helper'
+
 describe SrcSet do
   it { should validate_presence_of :name }
 
