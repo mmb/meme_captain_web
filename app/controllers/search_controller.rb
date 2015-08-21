@@ -15,8 +15,7 @@ class SearchController < ApplicationController
 
     @src_sets = find_src_sets(query)
 
-    return if @src_images.any? || @src_sets.any? || @gend_images.any?
-    no_results
+    check_no_results
   end
 
   private
@@ -46,7 +45,8 @@ class SearchController < ApplicationController
       .caption_matches(query).most_recent.page(params[:page])
   end
 
-  def no_results
+  def check_no_results
+    return if @src_images.any? || @src_sets.any? || @gend_images.any?
     @no_results = true
     @template_search = "#{params[:q]} meme template"
     google_query = {
