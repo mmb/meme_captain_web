@@ -30,12 +30,10 @@ class SrcImagesController < ApplicationController
     @src_image = SrcImage.new(submitted_params)
     @src_image.user = current_user
 
-    respond_to do |format|
-      if @src_image.save
-        create_success(format)
-      else
-        create_fail(format)
-      end
+    if @src_image.save
+      create_success
+    else
+      create_fail
     end
   end
 
@@ -90,20 +88,24 @@ class SrcImagesController < ApplicationController
     # rubocop:enable Style/GuardClause
   end
 
-  def create_success(format)
-    format.html do
-      redirect_to(
-        { controller: :my, action: :show },
-        notice: 'Source image created.'.freeze
-      )
+  def create_success
+    respond_to do |format|
+      format.html do
+        redirect_to(
+          { controller: :my, action: :show },
+          notice: 'Source image created.'.freeze
+        )
+      end
+      format.json { redirect_to_pending }
     end
-    format.json { redirect_to_pending }
   end
 
-  def create_fail(format)
-    format.html { render :new }
-    format.json do
-      render json: @src_image.errors, status: :unprocessable_entity
+  def create_fail
+    respond_to do |format|
+      format.html { render(:new) }
+      format.json do
+        render(json: @src_image.errors, status: :unprocessable_entity)
+      end
     end
   end
 
