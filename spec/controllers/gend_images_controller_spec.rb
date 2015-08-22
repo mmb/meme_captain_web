@@ -439,7 +439,7 @@ describe GendImagesController, type: :controller do
           it 'returns nil' do
             get :show, id: gend_image.id_hash
 
-            expect(response.headers['Meme-Name']).to be_nil
+            expect(response.headers['Meme-Name']).to eq('')
           end
         end
 
