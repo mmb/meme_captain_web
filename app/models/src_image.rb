@@ -32,7 +32,7 @@ class SrcImage < ActiveRecord::Base
   end
 
   def create_jobs
-    SrcImageProcessJob.perform_later(id)
+    SrcImageProcessJob.new(id).delay(queue: queue).perform
   end
 
   # rubocop:disable MethodLength
@@ -81,5 +81,9 @@ class SrcImage < ActiveRecord::Base
     return true if url.start_with?('http://'.freeze, 'https://'.freeze)
     self.url = "http://#{url}"
     true
+  end
+
+  def queue
+    url? ? :src_image_process_url : :src_image_process
   end
 end

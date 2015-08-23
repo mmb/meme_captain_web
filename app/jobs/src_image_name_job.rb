@@ -1,8 +1,12 @@
 # Job to automatically name source images using Google.
-class SrcImageNameJob < ActiveJob::Base
-  queue_as :src_image_name
+class SrcImageNameJob
+  attr_reader :src_image_id
 
-  def perform(src_image_id)
+  def initialize(src_image_id)
+    @src_image_id = src_image_id
+  end
+
+  def perform
     return unless Rails.configuration.x.src_image_name_lookup_host
     src_image = SrcImage.find(src_image_id)
     return if src_image.private? || src_image.name?

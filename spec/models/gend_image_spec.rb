@@ -92,11 +92,71 @@ describe GendImage do
   end
 
   describe '#create_jobs' do
-    it 'enqueues a gend image processing job' do
-      gend_image = FactoryGirl.create(:gend_image)
-      expect(GendImageProcessJob).to receive(:perform_later).with(
-        gend_image.id)
-      gend_image.run_callbacks(:commit)
+    let(:gend_image) { FactoryGirl.create(:gend_image) }
+    before do
+      gend_image.src_image.size = src_image_size
+      gend_image.src_image.save!
+    end
+
+    context 'when the image is small' do
+      let(:src_image_size) { 51_200 }
+
+      it 'puts the image in the small queue' do
+        gend_image_process_job = instance_double(GendImageProcessJob)
+        expect(GendImageProcessJob).to receive(:new).with(
+          gend_image.id).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:delay).with(
+          queue: :gend_image_process_small).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:perform)
+
+        gend_image.run_callbacks(:commit)
+      end
+    end
+
+    context 'when the image is medium' do
+      let(:src_image_size) { 575_488 }
+
+      it 'puts the image in the small queue' do
+        gend_image_process_job = instance_double(GendImageProcessJob)
+        expect(GendImageProcessJob).to receive(:new).with(
+          gend_image.id).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:delay).with(
+          queue: :gend_image_process_medium).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:perform)
+
+        gend_image.run_callbacks(:commit)
+      end
+    end
+
+    context 'when the image is large' do
+      let(:src_image_size) { 5_767_168 }
+
+      it 'puts the image in the small queue' do
+        gend_image_process_job = instance_double(GendImageProcessJob)
+        expect(GendImageProcessJob).to receive(:new).with(
+          gend_image.id).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:delay).with(
+          queue: :gend_image_process_large).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:perform)
+
+        gend_image.run_callbacks(:commit)
+      end
+    end
+
+    context 'when the image is very large' do
+      let(:src_image_size) { 10_485_761 }
+
+      it 'puts the image in the small queue' do
+        gend_image_process_job = instance_double(GendImageProcessJob)
+        expect(GendImageProcessJob).to receive(:new).with(
+          gend_image.id).and_return(gend_image_process_job)
+        expect(gend_image_process_job).to receive(:delay).with(
+          queue: :gend_image_process_shitload).and_return(
+            gend_image_process_job)
+        expect(gend_image_process_job).to receive(:perform)
+
+        gend_image.run_callbacks(:commit)
+      end
     end
   end
 

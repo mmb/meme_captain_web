@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-describe SrcImageNameJob, type: :job do
-  include ActiveJob::TestHelper
-
+describe SrcImageNameJob do
+  subject(:src_image_name_job) { SrcImageNameJob.new(src_image.id) }
   let(:src_image) { FactoryGirl.create(:src_image, name: current_name) }
   let(:x) { double(:x) }
   let(:lookup_host) { nil }
@@ -16,7 +15,7 @@ describe SrcImageNameJob, type: :job do
   context 'when src image name lookups are turned off' do
     it 'does not change the src image name' do
       expect do
-        SrcImageNameJob.perform_now(src_image.id)
+        src_image_name_job.perform
       end.to_not change { src_image.name }
     end
   end
@@ -31,7 +30,7 @@ describe SrcImageNameJob, type: :job do
 
       it 'does not change the src image name' do
         expect do
-          SrcImageNameJob.perform_now(src_image.id)
+          src_image_name_job.perform
         end.to_not change { src_image.name }
       end
     end
@@ -41,7 +40,7 @@ describe SrcImageNameJob, type: :job do
 
       it 'does not change the src image name' do
         expect do
-          SrcImageNameJob.perform_now(src_image.id)
+          src_image_name_job.perform
         end.to_not change { src_image.name }
       end
     end
@@ -61,7 +60,7 @@ describe SrcImageNameJob, type: :job do
 
         it 'does not change the src image name' do
           expect do
-            SrcImageNameJob.perform_now(src_image.id)
+            src_image_name_job.perform
           end.to_not change { src_image.name }
         end
       end
@@ -76,7 +75,7 @@ describe SrcImageNameJob, type: :job do
 
         it "sets the name to Google's description of the image" do
           expect do
-            SrcImageNameJob.perform_now(src_image.id)
+            src_image_name_job.perform
             src_image.reload
           end.to change { src_image.name }.to('test image')
         end
@@ -103,16 +102,11 @@ describe SrcImageNameJob, type: :job do
 
         it "sets the name to Google's description of the image" do
           expect do
-            SrcImageNameJob.perform_now(src_image.id)
+            src_image_name_job.perform
             src_image.reload
           end.to change { src_image.name }.to('test image')
         end
       end
     end
-  end
-
-  it 'creates the job in the src_image_name queue' do
-    SrcImageNameJob.perform_later(src_image.id)
-    expect(enqueued_jobs.first[:queue]).to eq('src_image_name')
   end
 end

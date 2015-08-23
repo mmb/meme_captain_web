@@ -23,7 +23,7 @@ class GendImage < ActiveRecord::Base
   after_commit :create_jobs, on: :create
 
   def create_jobs
-    GendImageProcessJob.perform_later(id)
+    GendImageProcessJob.new(id).delay(queue: queue).perform
   end
 
   def meme_text
@@ -65,5 +65,18 @@ class GendImage < ActiveRecord::Base
     result = header.slice(0, 8181)
     result.slice!(8179..-1) if result[-2] == '%'
     result
+  end
+
+  def queue
+    case src_image.size
+    when 0.kilobytes...100.kilobytes
+      :gend_image_process_small
+    when 100.kilobytes...1.megabyte
+      :gend_image_process_medium
+    when 1.megabyte...10.megabytes
+      :gend_image_process_large
+    else
+      :gend_image_process_shitload
+    end
   end
 end

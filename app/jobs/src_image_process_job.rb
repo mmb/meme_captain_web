@@ -1,15 +1,12 @@
 # Job to fetch and normalize source images and create thumbnails.
-class SrcImageProcessJob < ActiveJob::Base
-  queue_as do
-    src_image = SrcImage.without_image.find(arguments.first)
-    if src_image.url?
-      :src_image_process_url
-    else
-      :src_image_process
-    end
+class SrcImageProcessJob
+  attr_reader :src_image_id
+
+  def initialize(src_image_id)
+    @src_image_id = src_image_id
   end
 
-  def perform(src_image_id)
+  def perform
     src_image = SrcImage.find(src_image_id)
     src_image.load_from_url
 
@@ -39,7 +36,7 @@ class SrcImageProcessJob < ActiveJob::Base
 
     src_image.save!
 
-    SrcImageNameJob.perform_later(src_image.id)
+    SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
   end
 
   private

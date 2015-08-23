@@ -65,10 +65,6 @@ module MemeCaptainWeb
 
     config.active_record.raise_in_transactional_callbacks = true
 
-    unless ENV['DELAY_JOBS'] == 'false'
-      config.active_job.queue_adapter = :delayed_job
-    end
-
     config.x.src_image_name_lookup_host = nil
   end
 end

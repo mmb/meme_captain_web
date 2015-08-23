@@ -172,10 +172,35 @@ describe SrcImage do
   end
 
   describe '#create_jobs' do
-    it 'enqueues a src image processing job' do
-      src_image = FactoryGirl.create(:src_image)
-      expect(SrcImageProcessJob).to receive(:perform_later).with(src_image.id)
-      src_image.run_callbacks(:commit)
+    context 'when the url is nil' do
+      let(:src_image) { FactoryGirl.create(:src_image, url: nil) }
+
+      it 'enqueues a src image processing job in the src_image_process queue' do
+        src_image_process_job = instance_double(SrcImageProcessJob)
+        expect(SrcImageProcessJob).to receive(:new).with(
+          src_image.id).and_return(src_image_process_job)
+        expect(src_image_process_job).to receive(:delay).with(
+          queue: :src_image_process).and_return(src_image_process_job)
+        expect(src_image_process_job).to receive(:perform)
+
+        src_image.run_callbacks(:commit)
+      end
+    end
+
+    context 'when the url is not nil' do
+      let(:src_image) { FactoryGirl.create(:src_image, url: 'some url') }
+
+      it 'enqueues a src image processing job in the src_image_process_url ' \
+        'queue' do
+        src_image_process_job = instance_double(SrcImageProcessJob)
+        expect(SrcImageProcessJob).to receive(:new).with(
+          src_image.id).and_return(src_image_process_job)
+        expect(src_image_process_job).to receive(:delay).with(
+          queue: :src_image_process_url).and_return(src_image_process_job)
+        expect(src_image_process_job).to receive(:perform)
+
+        src_image.run_callbacks(:commit)
+      end
     end
   end
 
