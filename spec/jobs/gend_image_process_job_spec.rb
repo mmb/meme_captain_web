@@ -26,4 +26,54 @@ describe GendImageProcessJob do
       gend_image.reload
     end.to change { gend_image.work_in_progress }.from(true).to(false)
   end
+
+  describe '#failure' do
+    let(:delayed_job) { instance_double(Delayed::Job) }
+
+    context 'when the job last_error is nil' do
+      before { allow(delayed_job).to receive(:last_error).and_return(nil) }
+
+      it 'does not update the gend image error' do
+        expect do
+          gend_image_process_job.failure(delayed_job)
+        end.to_not change { gend_image.error }
+      end
+    end
+
+    context 'when the job last_error is empty' do
+      before { allow(delayed_job).to receive(:last_error).and_return('') }
+
+      it 'does not update the gend image error' do
+        expect do
+          gend_image_process_job.failure(delayed_job)
+        end.to_not change { gend_image.error }
+      end
+    end
+
+    context 'when the job last_error is not blank' do
+      before do
+        allow(delayed_job).to receive(:last_error).and_return(
+          "an error\na traceback")
+      end
+
+      it 'updates the error field to the first line of the error' do
+        gend_image_process_job.failure(delayed_job)
+        gend_image.reload
+        expect(gend_image.error).to eq('an error')
+      end
+    end
+
+    context 'when the job last_error has only one line' do
+      before do
+        allow(delayed_job).to receive(:last_error).and_return(
+          'another error')
+      end
+
+      it 'updates the error field to the first line of the error' do
+        gend_image_process_job.failure(delayed_job)
+        gend_image.reload
+        expect(gend_image.error).to eq('another error')
+      end
+    end
+  end
 end

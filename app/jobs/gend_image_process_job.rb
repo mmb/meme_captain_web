@@ -25,4 +25,11 @@ class GendImageProcessJob
 
     gend_image.save!
   end
+
+  def failure(job)
+    return if job.last_error.blank?
+    gend_image = GendImage.without_image.find(gend_image_id)
+    error = job.last_error.split("\n").first
+    gend_image.update_attribute(:error, error)
+  end
 end
