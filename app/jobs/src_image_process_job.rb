@@ -39,6 +39,13 @@ class SrcImageProcessJob
     SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
   end
 
+  def failure(job)
+    return if job.last_error.blank?
+    src_image = SrcImage.without_image.find(src_image_id)
+    error = job.last_error.split("\n").first
+    src_image.update_attribute(:error, error)
+  end
+
   private
 
   def watermark(img)
