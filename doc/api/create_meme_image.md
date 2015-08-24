@@ -46,7 +46,12 @@ The `Location` header will contain a URL to poll.
 Poll the URL returned in the `Location` header until it returns 303 (See
 Other). When it returns 303, the image is finished processing and the
 `Location` header will contain the URL of the image. Under normal
-circumstances creation of the image should only take a second.
+circumstances creation of the image should be instantaneous.
+
+If there was an error processing the image, the `error` field in the
+JSON response will contain an error message. If the `error` field is null,
+no error has occurred. If there is an error message, the client should stop
+polling.
 
 ### Polling Responses
 
@@ -102,6 +107,8 @@ Net::HTTP.start(create_uri.hostname, create_uri.port) do |http|
   poll_request = Net::HTTP::Get.new(poll_uri)
   10.times do
     poll_response = http.request(poll_request)
+    parsed_body = JSON.parse(poll_response.body)
+    fail(parsed_body['error']) if parsed_body['error']
     puts "poll response #{poll_response.code}"
     if poll_response.code == '303'
       puts poll_response['Location']

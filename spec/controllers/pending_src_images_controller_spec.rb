@@ -47,6 +47,19 @@ describe PendingSrcImagesController, type: :controller do
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
             src_image.created_at.to_i)
         end
+
+        context 'when there was an error processing the image' do
+          let(:src_image) do
+            FactoryGirl.create(:src_image, error: 'an error occurred')
+          end
+
+          it 'returns json with the error' do
+            get(:show, id: src_image.id_hash)
+            expect(response.content_type).to eq('application/json')
+            parsed_json = JSON.parse(response.body)
+            expect(parsed_json['error']).to eq('an error occurred')
+          end
+        end
       end
 
       context 'when the image is finished being processed' do
