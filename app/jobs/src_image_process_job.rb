@@ -59,6 +59,8 @@ class SrcImageProcessJob
   def check_image_size(src_image)
     size = src_image.image.size
     return if size <= MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE
-    fail(MemeCaptainWeb::Error::SrcImageTooBigError, "#{size} bytes")
+    fail(
+      MemeCaptainWeb::Error::SrcImageTooBigError,
+      "image is too large (#{size} bytes)")
   end
 end

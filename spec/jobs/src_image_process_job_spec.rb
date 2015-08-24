@@ -84,8 +84,9 @@ describe SrcImageProcessJob do
     it 'raises SrcImageTooBigError' do
       expect do
         src_image_process_job.perform
-      end.to raise_error(MemeCaptainWeb::Error::SrcImageTooBigError,
-                         "#{src_image.image.size} bytes")
+      end.to raise_error(
+        MemeCaptainWeb::Error::SrcImageTooBigError,
+        "image is too large (#{src_image.image.size} bytes)")
     end
   end
 
