@@ -26,6 +26,10 @@ class GendImageProcessJob
     gend_image.save!
   end
 
+  def reschedule_at(current_time, _attempts)
+    current_time + 1.second
+  end
+
   def failure(job)
     return if job.last_error.blank?
     gend_image = GendImage.without_image.find(gend_image_id)

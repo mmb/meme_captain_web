@@ -217,4 +217,10 @@ describe SrcImageProcessJob do
       end
     end
   end
+
+  describe '#reschedule_at' do
+    it 'reschedules in 1 second' do
+      expect(src_image_process_job.reschedule_at(123, 0)).to eq(124)
+    end
+  end
 end

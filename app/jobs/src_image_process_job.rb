@@ -39,6 +39,10 @@ class SrcImageProcessJob
     SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
   end
 
+  def reschedule_at(current_time, _attempts)
+    current_time + 1.second
+  end
+
   def failure(job)
     return if job.last_error.blank?
     src_image = SrcImage.without_image.find(src_image_id)
