@@ -86,13 +86,13 @@ Net::HTTP.start(create_uri.hostname, create_uri.port) do |http|
   poll_request = Net::HTTP::Get.new(poll_uri)
   10.times do
     poll_response = http.request(poll_request)
-    parsed_body = JSON.parse(poll_response.body)
-    fail(parsed_body['error']) if parsed_body['error']
     puts "poll response #{poll_response.code}"
     if poll_response.code == '303'
       puts poll_response['Location']
       break
     end
+    parsed_body = JSON.parse(poll_response.body)
+    fail(parsed_body['error']) if parsed_body['error']
     sleep 3
   end
 end
