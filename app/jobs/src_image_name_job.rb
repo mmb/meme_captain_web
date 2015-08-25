@@ -23,6 +23,10 @@ class SrcImageNameJob
     src_image.update!(name: name) if name.present?
   end
 
+  def max_attempts
+    1
+  end
+
   private
 
   def create_connection

@@ -109,4 +109,10 @@ describe SrcImageNameJob do
       end
     end
   end
+
+  describe '#max_attempts' do
+    it 'is 1' do
+      expect(src_image_name_job.max_attempts).to eq(1)
+    end
+  end
 end
