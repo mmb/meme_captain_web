@@ -30,6 +30,10 @@ class GendImageProcessJob
     current_time + 1.second
   end
 
+  def max_attempts
+    1
+  end
+
   def failure(job)
     return if job.last_error.blank?
     gend_image = GendImage.without_image.find(gend_image_id)
