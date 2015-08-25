@@ -43,6 +43,10 @@ class SrcImageProcessJob
     current_time + 1.second
   end
 
+  def max_attempts
+    3
+  end
+
   def failure(job)
     return if job.last_error.blank?
     src_image = SrcImage.without_image.find(src_image_id)

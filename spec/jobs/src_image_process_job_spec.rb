@@ -223,4 +223,10 @@ describe SrcImageProcessJob do
       expect(src_image_process_job.reschedule_at(123, 0)).to eq(124)
     end
   end
+
+  describe '#max_attempts' do
+    it 'is 3' do
+      expect(src_image_process_job.max_attempts).to eq(3)
+    end
+  end
 end
