@@ -19,7 +19,7 @@ class GendImagesController < ApplicationController
     @gend_image = GendImage.new(
       src_image: src_image,
       private: src_image.private)
-    build_captions
+    MemeCaptainWeb::CaptionBuilder.new.build(@gend_image)
   end
 
   def index
@@ -69,19 +69,6 @@ class GendImagesController < ApplicationController
   end
 
   private
-
-  def build_captions
-    @gend_image.captions.build(
-      top_left_x_pct: 0.05,
-      top_left_y_pct: 0,
-      width_pct: 0.9,
-      height_pct: 0.25)
-    @gend_image.captions.build(
-      top_left_x_pct: 0.05,
-      top_left_y_pct: 0.75,
-      width_pct: 0.9,
-      height_pct: 0.25)
-  end
 
   def admin_index_images
     GendImage.without_image.includes(
