@@ -40,4 +40,5 @@ pushd aws
 packer build packer.json | tee /tmp/packer.log
 AMI=$(tail -1 /tmp/packer.log | cut -d ' ' -f 2)
 ./deploy.sh $AMI
+./ami_cleanup.sh
 popd
