@@ -11,15 +11,7 @@ class SrcImageNameJob
     src_image = SrcImage.find(src_image_id)
     return if src_image.private? || src_image.name?
 
-    conn = create_connection
-
-    conn.get('/imghp?hl=en&tab=wi'.freeze)
-
-    response = conn.get(
-      '/searchbyimage'.freeze,
-      image_url: src_image_url(src_image))
-
-    name = extract_name(response.body)
+    name = google_image_name(src_image_url(src_image))
     src_image.update!(name: name) if name.present?
   end
 
@@ -28,6 +20,16 @@ class SrcImageNameJob
   end
 
   private
+
+  def google_image_name(image_url)
+    conn = create_connection
+
+    conn.get('/imghp?hl=en&tab=wi'.freeze)
+
+    response = conn.get('/searchbyimage'.freeze, image_url: image_url)
+
+    extract_name(response.body)
+  end
 
   def create_connection
     Faraday.new(url: 'http://google.com'.freeze) do |faraday|
