@@ -24,11 +24,9 @@ class GendImagesController < ApplicationController
 
   def index
     if admin?
-      @gend_images = GendImage.without_image.includes(
-        :gend_thumb).most_recent.page(params[:page])
+      @gend_images = admin_index_images
     else
-      @gend_images = GendImage.without_image.includes(
-        :gend_thumb).publick.active.most_recent.page(params[:page])
+      @gend_images = index_images
     end
   end
 
@@ -83,6 +81,16 @@ class GendImagesController < ApplicationController
       top_left_y_pct: 0.75,
       width_pct: 0.9,
       height_pct: 0.25)
+  end
+
+  def admin_index_images
+    GendImage.without_image.includes(
+      :gend_thumb).most_recent.page(params[:page])
+  end
+
+  def index_images
+    GendImage.without_image.includes(
+      :gend_thumb).publick.active.most_recent.page(params[:page])
   end
 
   def build_gend_image_for_create
