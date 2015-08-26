@@ -30,7 +30,6 @@ class GendImagesController < ApplicationController
       @gend_images = GendImage.without_image.includes(
         :gend_thumb).publick.active.most_recent.page(params[:page])
     end
-    @show_toolbar = false
   end
 
   def create
