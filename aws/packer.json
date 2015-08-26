@@ -17,6 +17,7 @@
     {
       "inline": [
         "sudo yum update -y",
+        "sed --in-place=.bak --expression='s/repo_upgrade: security/repo_upgrade: none/g' /etc/cloud/cloud.cfg",
         "sudo yum install -y docker git",
         "sudo service docker start",
         "git clone https://github.com/mmb/meme_captain_web.git",
