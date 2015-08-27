@@ -22,4 +22,10 @@ FactoryGirl.define do
       src_image.create_src_thumb!(image: img.to_blob)
     end
   end
+
+  factory :svg_src_image, parent: :src_image do
+    File.open(Rails.root + 'spec/fixtures/files/thumbs_up.svg', 'rb') do |f|
+      image(f.read)
+    end
+  end
 end

@@ -21,6 +21,17 @@ describe SrcImageProcessJob do
     end
   end
 
+  context 'when the image is in SVG format' do
+    let(:src_image) { FactoryGirl.create(:svg_src_image) }
+
+    it 'converts the image to PNG' do
+      expect do
+        src_image_process_job.perform
+        src_image.reload
+      end.to change { src_image.magick_image_list.format }.from('SVG').to('PNG')
+    end
+  end
+
   it 'auto orients the image'
 
   it 'strips profiles and comments from the image'

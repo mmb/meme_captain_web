@@ -14,6 +14,8 @@ class SrcImageProcessJob
 
     img = src_image.magick_image_list
 
+    MemeCaptainWeb::ImageFormatConverter.new.convert(img)
+
     img.auto_orient!
     img.strip!
 
