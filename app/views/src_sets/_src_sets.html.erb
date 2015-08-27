@@ -4,16 +4,16 @@
     <% @src_sets.each do |ss| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
-            <%= render :partial => ss %>
+            <%= render(partial: ss) %>
           </div>
         </div>
     <% end %>
   </div>
 
-  <% if current_page? root_url %>
-      <%= link_to 'More sets', :src_sets %>
+  <% if current_page?(root_url) %>
+      <%= link_to('More sets', :src_sets) %>
   <% else %>
-      <%= paginate @src_sets %>
+      <%= paginate(@src_sets) %>
   <% end %>
 
 </div>
