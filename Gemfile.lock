@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: https://github.com/mmb/meme_captain.git
-  revision: 46d0ee02d5d7d947148c23db3acf8ba6962080e9
-  ref: 46d0ee
+  revision: d80fb4b6f13bae4100ecbf95015e64f2790217ad
+  ref: d80fb4b
   specs:
     meme_captain (0.3.1)
       mime-types (~> 2.5)

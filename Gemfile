@@ -46,7 +46,7 @@ gem 'daemons'
 
 gem 'meme_captain',
     git: 'https://github.com/mmb/meme_captain.git',
-    ref: '46d0ee'
+    ref: 'd80fb4b'
 
 gem 'kaminari', '~> 0.16.1'
 gem 'kaminari-bootstrap', '~> 3.0.1'
