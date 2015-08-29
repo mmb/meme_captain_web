@@ -101,11 +101,13 @@ class GendImagesController < ApplicationController
   end
 
   def redirect_to_pending
-    redirect_to(
+    status_url = url_for(
       controller: :pending_gend_images,
       action: :show,
-      id: @gend_image.id_hash,
-      status: :accepted)
+      id: @gend_image.id_hash)
+    response.status = :accepted
+    response.location = status_url
+    render(json: { status_url: status_url })
   end
 
   def redirect_to_page
