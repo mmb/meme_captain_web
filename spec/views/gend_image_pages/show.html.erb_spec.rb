@@ -158,4 +158,19 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       src: gend_image_url,
       alt: 'caption 2 caption 1')
   end
+
+  context 'API shell script modal' do
+    it 'has an API button' do
+      expect(render).to have_selector('a', href: '#api-modal')
+    end
+
+    it 'has an API script div' do
+      expect(render).to have_selector('div', id: 'api-modal')
+    end
+
+    it 'has a script' do
+      assign(:api_script, 'the script')
+      expect(render).to contain('the script')
+    end
+  end
 end
