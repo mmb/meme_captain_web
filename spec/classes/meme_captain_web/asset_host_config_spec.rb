@@ -34,8 +34,11 @@ describe MemeCaptainWeb::AssetHostConfig do
         action_controller = double('action_controller')
         expect(config).to receive(:action_controller).and_return(
           action_controller)
+        request = instance_double('ActionController::Request')
+        allow(request).to receive(:protocol).and_return('protocol://')
         expect(action_controller).to receive(:'asset_host=') do |p|
-          expect(p.call('asset1.gif')).to eq('http://a2.myassets.com')
+          expect(p.call('asset1.gif', request)).to eq(
+            'protocol://a2.myassets.com')
         end
 
         MemeCaptainWeb::AssetHostConfig.new.configure(config, env)
