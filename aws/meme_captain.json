@@ -371,6 +371,12 @@
             "InstancePort": "80",
             "LoadBalancerPort": "80",
             "Protocol": "HTTP"
+          },
+          {
+            "InstancePort": "80",
+            "LoadBalancerPort": "443",
+            "Protocol": "HTTPS",
+            "SSLCertificateId": "arn:aws:iam::165945320610:server-certificate/memecaptain"
           }
         ],
         "LoadBalancerName": "memecaptain",
@@ -1234,6 +1240,12 @@
             "FromPort": "80",
             "IpProtocol": "tcp",
             "ToPort": "80"
+          },
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "443",
+            "IpProtocol": "tcp",
+            "ToPort": "443"
           }
         ],
         "Tags": [
