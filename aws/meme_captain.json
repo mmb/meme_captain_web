@@ -259,7 +259,11 @@
               "DomainName": "memecaptain.com",
               "Id": "memecaptain.com"
             }
-          ]
+          ],
+          "ViewerCertificate": {
+            "IamCertificateId": "ASCAIOVW54EYUMV3CHCMC",
+            "SslSupportMethod": "sni-only"
+          }
         }
       },
       "Type": "AWS::CloudFront::Distribution"
