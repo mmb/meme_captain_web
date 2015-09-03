@@ -69,4 +69,18 @@ describe 'layouts/application.html.erb', type: :view do
         content: 'API documentation')
     end
   end
+
+  context 'when the page is served using SSL' do
+    before do
+      allow(controller.request).to receive(:ssl?).and_return(true)
+    end
+
+    it 'loads the gravatar using SSL' do
+      user = FactoryGirl.create(:user)
+      allow(view).to receive(:current_user).with(no_args).and_return(user)
+      render
+      expect(rendered).to have_selector(
+        'img[src^="https://secure.gravatar.com"]')
+    end
+  end
 end
