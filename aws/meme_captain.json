@@ -86,6 +86,14 @@
             },
             "Name": "i.memecaptain.com.",
             "Type": "A"
+          },
+          {
+            "AliasTarget": {
+              "DNSName": "s3-website-us-east-1.amazonaws.com",
+              "HostedZoneId": "Z3AQBSTGFYJSTF"
+            },
+            "Name": "v1.memecaptain.com.",
+            "Type": "A"
           }
         ]
       },
@@ -1208,6 +1216,18 @@
         "ScalingAdjustment": "1"
       },
       "Type": "AWS::AutoScaling::ScalingPolicy"
+    },
+    "v1RedirectBucket": {
+      "Properties": {
+        "AccessControl": "PublicRead",
+        "BucketName": "v1.memecaptain.com",
+        "WebsiteConfiguration": {
+          "RedirectAllRequestsTo": {
+            "HostName": "memecaptain.com"
+          }
+        }
+      },
+      "Type": "AWS::S3::Bucket"
     },
     "vpc": {
       "Properties": {
