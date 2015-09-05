@@ -230,4 +230,63 @@ describe SrcImage do
         'image_url' => 'test image url')
     end
   end
+
+  describe '.without_image' do
+    it 'does not load the image data' do
+      FactoryGirl.create(:finished_src_image)
+      expect do
+        SrcImage.without_image.first.image
+      end.to raise_error(ActiveModel::MissingAttributeError)
+    end
+  end
+
+  describe '.name_matches' do
+    it 'finds images where the query is a subtring of their name' do
+      si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+      FactoryGirl.create(:src_image, name: 'not a match')
+      si3 = FactoryGirl.create(:src_image, name: 'fox brown quick then')
+      expect(SrcImage.name_matches('quick')).to contain_exactly(si1, si3)
+    end
+
+    it 'it case insensitive' do
+      si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+      expect(SrcImage.name_matches('QuIcK')).to contain_exactly(si1)
+    end
+  end
+
+  describe '.publick' do
+    it 'finds images that are not private' do
+      si1 = FactoryGirl.create(:src_image, private: false)
+      FactoryGirl.create(:src_image, private: true)
+      si3 = FactoryGirl.create(:src_image, private: false)
+      expect(SrcImage.publick).to contain_exactly(si1, si3)
+    end
+  end
+
+  describe '.active' do
+    it 'finds images that are not deleted' do
+      FactoryGirl.create(:src_image, is_deleted: true)
+      si2 = FactoryGirl.create(:src_image, is_deleted: false)
+      FactoryGirl.create(:src_image, is_deleted: true)
+      expect(SrcImage.active).to contain_exactly(si2)
+    end
+  end
+
+  describe '.finished' do
+    it 'finds images that are not in progress' do
+      FactoryGirl.create(:src_image, work_in_progress: true)
+      si2 = FactoryGirl.create(:src_image, work_in_progress: false)
+      si3 = FactoryGirl.create(:src_image, work_in_progress: false)
+      expect(SrcImage.finished).to contain_exactly(si2, si3)
+    end
+  end
+
+  describe '.most_used' do
+    it 'order the images by most used' do
+      si1 = FactoryGirl.create(:src_image, gend_images_count: 20)
+      si2 = FactoryGirl.create(:src_image, gend_images_count: 10)
+      si3 = FactoryGirl.create(:src_image, gend_images_count: 30)
+      expect(SrcImage.most_used(3)).to eq([si3, si1, si2])
+    end
+  end
 end
