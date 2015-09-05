@@ -289,4 +289,60 @@ describe SrcImage do
       expect(SrcImage.most_used(3)).to eq([si3, si1, si2])
     end
   end
+
+  describe '.for_user' do
+    let(:relation) { double(ActiveRecord::Relation) }
+    let(:result) { double(ActiveRecord::Relation) }
+
+    context 'when the user is nil' do
+      let(:user) { nil }
+
+      it 'returns images that are not private, deleted or in progress' do
+        expect(SrcImage).to receive(:without_image).and_return(relation)
+        expect(relation).to receive(:includes).with(:src_thumb).and_return(
+          relation)
+        expect(relation).to receive(:name_matches).with('query').and_return(
+          relation)
+        expect(relation).to receive(:publick).and_return(relation)
+        expect(relation).to receive(:active).and_return(relation)
+        expect(relation).to receive(:finished).and_return(relation)
+        expect(relation).to receive(:most_used).and_return(relation)
+        expect(relation).to receive(:page).with(1).and_return(result)
+        expect(SrcImage.for_user(user, 'query', 1)).to eq(result)
+      end
+    end
+
+    context 'when the user is not an admin user' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      it 'returns images that are not private, deleted or in progress' do
+        expect(SrcImage).to receive(:without_image).and_return(relation)
+        expect(relation).to receive(:includes).with(:src_thumb).and_return(
+          relation)
+        expect(relation).to receive(:name_matches).with('query').and_return(
+          relation)
+        expect(relation).to receive(:publick).and_return(relation)
+        expect(relation).to receive(:active).and_return(relation)
+        expect(relation).to receive(:finished).and_return(relation)
+        expect(relation).to receive(:most_used).and_return(relation)
+        expect(relation).to receive(:page).with(1).and_return(result)
+        expect(SrcImage.for_user(user, 'query', 1)).to eq(result)
+      end
+    end
+
+    context 'when the user is an admin user' do
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      it 'returns all images' do
+        expect(SrcImage).to receive(:without_image).and_return(relation)
+        expect(relation).to receive(:includes).with(:src_thumb).and_return(
+          relation)
+        expect(relation).to receive(:name_matches).with('query').and_return(
+          relation)
+        expect(relation).to receive(:most_used).and_return(relation)
+        expect(relation).to receive(:page).with(1).and_return(result)
+        expect(SrcImage.for_user(user, 'query', 1)).to eq(result)
+      end
+    end
+  end
 end

@@ -52,6 +52,16 @@ class SrcImage < ActiveRecord::Base
   end
   # rubocop:enable MethodLength
 
+  def self.for_user(user, query, page)
+    if user.try(:is_admin)
+      without_image.includes(:src_thumb).name_matches(query)
+        .most_used.page(page)
+    else
+      without_image.includes(:src_thumb).name_matches(query)
+        .publick.active.finished.most_used.page(page)
+    end
+  end
+
   protected
 
   scope :active, -> { where is_deleted: false }
