@@ -12,11 +12,7 @@ class SrcImagesController < ApplicationController
 
   def index
     query = params[:q].try(:strip)
-    if admin?
-      @src_images = admin_src_images(query)
-    else
-      @src_images = src_images(query)
-    end
+    @src_images = SrcImage.for_user(current_user, query, params[:page])
     respond_to do |format|
       format.html
       format.json { render_index_json }
@@ -127,15 +123,5 @@ class SrcImagesController < ApplicationController
       controller: :pending_src_images,
       action: :show,
       id: @src_image.id_hash)
-  end
-
-  def src_images(query)
-    SrcImage.without_image.includes(:src_thumb).name_matches(
-      query).publick.active.finished.most_used.page(params[:page])
-  end
-
-  def admin_src_images(query)
-    SrcImage.without_image.includes(:src_thumb).name_matches(
-      query).most_used.page(params[:page])
   end
 end

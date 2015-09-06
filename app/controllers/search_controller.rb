@@ -5,11 +5,10 @@ class SearchController < ApplicationController
   def show
     query = params[:q].try(:strip)
 
+    @src_images = SrcImage.for_user(current_user, query, params[:page])
     if admin?
-      @src_images = find_admin_src_images(query)
       @gend_images = find_admin_gend_images(query)
     else
-      @src_images = find_src_images(query)
       @gend_images = find_gend_images(query)
     end
 
@@ -19,16 +18,6 @@ class SearchController < ApplicationController
   end
 
   private
-
-  def find_src_images(query)
-    SrcImage.without_image.includes(:src_thumb).name_matches(
-      query).publick.active.finished.most_used.page(params[:page])
-  end
-
-  def find_admin_src_images(query)
-    SrcImage.without_image.includes(:src_thumb).name_matches(
-      query).most_used.page(params[:page])
-  end
 
   def find_src_sets(query)
     SrcSet.name_matches(query).active.not_empty.most_recent.page(params[:page])
