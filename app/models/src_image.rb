@@ -75,7 +75,8 @@ class SrcImage < ActiveRecord::Base
   scope :publick, -> { where private: false }
 
   scope :name_matches, lambda { |query|
-    where('LOWER(name) LIKE ?'.freeze, "%#{query.downcase}%") if query
+    prepared_query = query.try(:strip).try(:downcase)
+    where('LOWER(name) LIKE ?'.freeze, "%#{prepared_query}%") if prepared_query
   }
 
   scope :most_used, lambda { |limit = 1|

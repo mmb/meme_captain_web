@@ -11,8 +11,7 @@ class SrcImagesController < ApplicationController
   end
 
   def index
-    query = params[:q].try(:strip)
-    @src_images = SrcImage.for_user(current_user, query, params[:page])
+    @src_images = SrcImage.for_user(current_user, params[:q], params[:page])
     respond_to do |format|
       format.html
       format.json { render_index_json }

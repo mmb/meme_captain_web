@@ -252,6 +252,11 @@ describe SrcImage do
       si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
       expect(SrcImage.name_matches('QuIcK')).to contain_exactly(si1)
     end
+
+    it 'strips whitespace' do
+      si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+      expect(SrcImage.name_matches(" quick\t\r\n")).to contain_exactly(si1)
+    end
   end
 
   describe '.publick' do
