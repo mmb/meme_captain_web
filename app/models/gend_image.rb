@@ -37,6 +37,16 @@ class GendImage < ActiveRecord::Base
     end
   end
 
+  def self.for_user(user, query, page)
+    if user.try(:is_admin)
+      without_image.includes(:gend_thumb).caption_matches(query)
+        .most_recent.page(page)
+    else
+      without_image.includes(:gend_thumb).caption_matches(query)
+        .publick.active.finished.most_recent.page(page)
+    end
+  end
+
   protected
 
   scope :active, -> { where is_deleted: false }
@@ -52,8 +62,10 @@ class GendImage < ActiveRecord::Base
   scope :publick, -> { where private: false }
 
   scope :caption_matches, lambda { |query|
+    prepared_query = query.try(:strip).try(:downcase)
     joins(:captions).where(
-      'LOWER(captions.text) LIKE ?'.freeze, "%#{query.downcase}%").uniq if query
+      'LOWER(captions.text) LIKE ?'.freeze, "%#{prepared_query}%").uniq if \
+      prepared_query
   }
 
   private

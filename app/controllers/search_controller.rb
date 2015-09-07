@@ -6,12 +6,7 @@ class SearchController < ApplicationController
     query = params[:q].try(:strip)
 
     @src_images = SrcImage.for_user(current_user, query, params[:page])
-    if admin?
-      @gend_images = find_admin_gend_images(query)
-    else
-      @gend_images = find_gend_images(query)
-    end
-
+    @gend_images = GendImage.for_user(current_user, query, params[:page])
     @src_sets = find_src_sets(query)
 
     check_no_results
@@ -21,17 +16,6 @@ class SearchController < ApplicationController
 
   def find_src_sets(query)
     SrcSet.name_matches(query).active.not_empty.most_recent.page(params[:page])
-  end
-
-  def find_gend_images(query)
-    GendImage.without_image.includes(:gend_thumb)
-      .caption_matches(query).publick.active.finished.most_recent
-      .page(params[:page])
-  end
-
-  def find_admin_gend_images(query)
-    GendImage.without_image.includes(:gend_thumb)
-      .caption_matches(query).most_recent.page(params[:page])
   end
 
   def check_no_results

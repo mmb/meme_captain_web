@@ -238,4 +238,131 @@ describe GendImage do
       end
     end
   end
+
+  describe '.without_image' do
+    it 'does not load the image data' do
+      FactoryGirl.create(:gend_image)
+      expect do
+        GendImage.without_image.first.image
+      end.to raise_error(ActiveModel::MissingAttributeError)
+    end
+  end
+
+  describe '.caption_matches' do
+    it 'finds images where the query is a subtring of one of the captions' do
+      caption1 = FactoryGirl.create(:caption, text: 'the quick brown fox')
+      caption2 = FactoryGirl.create(:caption, text: 'not a match')
+      caption3 = FactoryGirl.create(:caption, text: 'fox brown quick the')
+      gi1 = FactoryGirl.create(:gend_image, captions: [caption1, caption2])
+      FactoryGirl.create(:gend_image, captions: [caption2])
+      gi3 = FactoryGirl.create(:gend_image, captions: [caption2, caption3])
+      expect(GendImage.caption_matches('quick')).to contain_exactly(gi1, gi3)
+    end
+
+    it 'it case insensitive' do
+      caption1 = FactoryGirl.create(:caption, text: 'the quick brown fox')
+      gi1 = FactoryGirl.create(:gend_image, captions: [caption1])
+      expect(GendImage.caption_matches('QuIcK')).to contain_exactly(gi1)
+    end
+
+    it 'strips whitespace' do
+      caption1 = FactoryGirl.create(:caption, text: 'the quick brown fox')
+      gi1 = FactoryGirl.create(:gend_image, captions: [caption1])
+      expect(GendImage.caption_matches(" quick\t\r\n")).to contain_exactly(gi1)
+    end
+  end
+
+  describe '.publick' do
+    it 'finds images that are not private' do
+      gi1 = FactoryGirl.create(:gend_image, private: false)
+      FactoryGirl.create(:gend_image, private: true)
+      gi3 = FactoryGirl.create(:gend_image, private: false)
+      expect(GendImage.publick).to contain_exactly(gi1, gi3)
+    end
+  end
+
+  describe '.active' do
+    it 'finds images that are not deleted' do
+      FactoryGirl.create(:gend_image, is_deleted: true)
+      gi2 = FactoryGirl.create(:gend_image, is_deleted: false)
+      FactoryGirl.create(:gend_image, is_deleted: true)
+      expect(GendImage.active).to contain_exactly(gi2)
+    end
+  end
+
+  describe '.finished' do
+    it 'finds images that are not in progress' do
+      FactoryGirl.create(:gend_image, work_in_progress: true)
+      gi2 = FactoryGirl.create(:gend_image, work_in_progress: false)
+      gi3 = FactoryGirl.create(:gend_image, work_in_progress: false)
+      expect(GendImage.finished).to contain_exactly(gi2, gi3)
+    end
+  end
+
+  describe '.most_recent' do
+    it 'order the images by most used' do
+      gi1 = FactoryGirl.create(:gend_image)
+      Timecop.travel(Time.now + 1)
+      gi2 = FactoryGirl.create(:gend_image)
+      Timecop.travel(Time.now + 1)
+      gi3 = FactoryGirl.create(:gend_image)
+      expect(GendImage.most_recent(3)).to eq([gi3, gi2, gi1])
+    end
+  end
+
+  describe '.for_user' do
+    let(:relation) { double(ActiveRecord::Relation) }
+    let(:result) { double(ActiveRecord::Relation) }
+
+    context 'when the user is nil' do
+      let(:user) { nil }
+
+      it 'returns images that are not private, deleted or in progress' do
+        expect(GendImage).to receive(:without_image).and_return(relation)
+        expect(relation).to receive(:includes).with(:gend_thumb).and_return(
+          relation)
+        expect(relation).to receive(:caption_matches).with('query').and_return(
+          relation)
+        expect(relation).to receive(:publick).and_return(relation)
+        expect(relation).to receive(:active).and_return(relation)
+        expect(relation).to receive(:finished).and_return(relation)
+        expect(relation).to receive(:most_recent).and_return(relation)
+        expect(relation).to receive(:page).with(1).and_return(result)
+        expect(GendImage.for_user(user, 'query', 1)).to eq(result)
+      end
+    end
+
+    context 'when the user is not an admin user' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      it 'returns images that are not private, deleted or in progress' do
+        expect(GendImage).to receive(:without_image).and_return(relation)
+        expect(relation).to receive(:includes).with(:gend_thumb).and_return(
+          relation)
+        expect(relation).to receive(:caption_matches).with('query').and_return(
+          relation)
+        expect(relation).to receive(:publick).and_return(relation)
+        expect(relation).to receive(:active).and_return(relation)
+        expect(relation).to receive(:finished).and_return(relation)
+        expect(relation).to receive(:most_recent).and_return(relation)
+        expect(relation).to receive(:page).with(1).and_return(result)
+        expect(GendImage.for_user(user, 'query', 1)).to eq(result)
+      end
+    end
+
+    context 'when the user is an admin user' do
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      it 'returns all images' do
+        expect(GendImage).to receive(:without_image).and_return(relation)
+        expect(relation).to receive(:includes).with(:gend_thumb).and_return(
+          relation)
+        expect(relation).to receive(:caption_matches).with('query').and_return(
+          relation)
+        expect(relation).to receive(:most_recent).and_return(relation)
+        expect(relation).to receive(:page).with(1).and_return(result)
+        expect(GendImage.for_user(user, 'query', 1)).to eq(result)
+      end
+    end
+  end
 end
