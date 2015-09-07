@@ -23,11 +23,7 @@ class GendImagesController < ApplicationController
   end
 
   def index
-    if admin?
-      @gend_images = admin_index_images
-    else
-      @gend_images = index_images
-    end
+    @gend_images = GendImage.for_user(current_user, nil, params[:page])
   end
 
   def create
@@ -69,16 +65,6 @@ class GendImagesController < ApplicationController
   end
 
   private
-
-  def admin_index_images
-    GendImage.without_image.includes(
-      :gend_thumb).most_recent.page(params[:page])
-  end
-
-  def index_images
-    GendImage.without_image.includes(
-      :gend_thumb).publick.active.most_recent.page(params[:page])
-  end
 
   def build_gend_image_for_create
     src_image = SrcImage.without_image.active.finished.find_by!(

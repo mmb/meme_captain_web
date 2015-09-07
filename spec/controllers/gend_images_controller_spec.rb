@@ -117,7 +117,9 @@ describe GendImagesController, type: :controller do
     end
 
     it 'shows the images sorted by reverse updated time' do
-      3.times { FactoryGirl.create(:gend_image, user: user) }
+      3.times do
+        FactoryGirl.create(:gend_image, user: user, work_in_progress: false)
+      end
 
       get :index
 
@@ -131,8 +133,15 @@ describe GendImagesController, type: :controller do
 
     context 'when the user is not an admin' do
       it 'does not show deleted images' do
-        FactoryGirl.create(:gend_image, user: user)
-        FactoryGirl.create(:gend_image, user: user, is_deleted: true)
+        FactoryGirl.create(
+          :gend_image,
+          user: user,
+          work_in_progress: false)
+        FactoryGirl.create(
+          :gend_image,
+          user: user,
+          work_in_progress: false,
+          is_deleted: true)
 
         get :index
 
@@ -140,7 +149,13 @@ describe GendImagesController, type: :controller do
       end
 
       it 'shows public images' do
-        3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
+        3.times do
+          FactoryGirl.create(
+            :gend_image,
+            user: user,
+            work_in_progress: false,
+            private: false)
+        end
 
         get :index
 
@@ -148,8 +163,18 @@ describe GendImagesController, type: :controller do
       end
 
       it 'does not show private images' do
-        FactoryGirl.create(:gend_image, user: user, private: false)
-        2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
+        FactoryGirl.create(
+          :gend_image,
+          user: user,
+          work_in_progress: false,
+          private: false)
+        2.times do
+          FactoryGirl.create(
+            :gend_image,
+            user: user,
+            work_in_progress: false,
+            private: true)
+        end
 
         get :index
 
