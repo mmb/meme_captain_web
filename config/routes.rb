@@ -20,7 +20,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :gend_thumbs, only: :show
 
-  resource :session
+  resource :session, only: [:create, :destroy, :new]
 
   resources :src_images, concerns: :paginatable
 
