@@ -17,13 +17,11 @@ class GendImageProcessJob
 
     meme.resize_to_fit_anim!(MemeCaptainWeb::Config::THUMB_SIDE)
 
-    gend_image.gend_thumb = GendThumb.new(image: meme.to_blob)
+    gend_image.create_gend_thumb(image: meme.to_blob)
 
     meme.destroy!
 
-    gend_image.work_in_progress = false
-
-    gend_image.save!
+    gend_image.update!(work_in_progress: false)
   end
 
   def reschedule_at(current_time, _attempts)
