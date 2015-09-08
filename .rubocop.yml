@@ -2,4 +2,3 @@ AllCops:
   Exclude:
     - db/**/*
     - vendor/**/*
-  UseCache: false
