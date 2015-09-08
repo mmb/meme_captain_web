@@ -12,31 +12,11 @@ class SrcImageProcessJob
 
     check_image_size(src_image)
 
-    img = src_image.magick_image_list
-
-    MemeCaptainWeb::ImageFormatConverter.new.convert(img)
-
-    img.auto_orient!
-    img.strip!
-
-    MemeCaptainWeb::ImgSizeConstrainer.new.constrain_size(img)
-
-    thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::THUMB_SIDE)
-
-    watermark(img)
-
-    src_image.attributes = {
-      image: img.to_blob,
-      src_thumb: SrcThumb.new(image: thumb_img.to_blob),
-      work_in_progress: false
-    }
-
-    thumb_img.destroy!
-    img.destroy!
+    process_src_image(src_image)
 
     src_image.set_derived_image_fields
 
-    src_image.save!
+    src_image.update!(work_in_progress: false)
 
     SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
   end
@@ -58,12 +38,23 @@ class SrcImageProcessJob
 
   private
 
-  def watermark(img)
-    watermark_img = Magick::ImageList.new(
-      Rails.root + 'app/assets/images/watermark.png'.freeze)
-    img.extend(MemeCaptain::ImageList::Watermark)
-    img.watermark_mc(watermark_img)
-    watermark_img.destroy!
+  def process_src_image(src_image)
+    img = src_image.magick_image_list
+
+    MemeCaptainWeb::ImageFormatConverter.new.convert(img)
+
+    img.auto_orient!
+    img.strip!
+
+    MemeCaptainWeb::ImgSizeConstrainer.new.constrain_size(img)
+
+    create_thumbnail(src_image, img)
+
+    watermark(img)
+
+    src_image.image = img.to_blob
+
+    img.destroy!
   end
 
   def check_image_size(src_image)
@@ -72,5 +63,19 @@ class SrcImageProcessJob
     fail(
       MemeCaptainWeb::Error::SrcImageTooBigError,
       "image is too large (#{size} bytes)")
+  end
+
+  def create_thumbnail(src_image, img)
+    thumb_img = img.resize_to_fill_anim(MemeCaptainWeb::Config::THUMB_SIDE)
+    src_image.create_src_thumb(image: thumb_img.to_blob)
+    thumb_img.destroy!
+  end
+
+  def watermark(img)
+    watermark_img = Magick::ImageList.new(
+      Rails.root + 'app/assets/images/watermark.png'.freeze)
+    img.extend(MemeCaptain::ImageList::Watermark)
+    img.watermark_mc(watermark_img)
+    watermark_img.destroy!
   end
 end
