@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'gend_images/new.html.erb', type: :view do
-  include Webrat::Matchers
-
   let(:src_image) do
     stub_model(SrcImage, id_hash: 'abc', name: 'src image name')
   end
@@ -26,7 +24,7 @@ describe 'gend_images/new.html.erb', type: :view do
   it 'uses the src image name as an h1' do
     render
 
-    expect(rendered).to have_selector('h1', content: 'src image name')
+    expect(rendered).to have_xpath('//h1/span[text()="src image name"]')
   end
 
   it 'has the src image name in the title' do
@@ -48,10 +46,7 @@ describe 'gend_images/new.html.erb', type: :view do
   it 'has a hidden negative captcha field called email' do
     render
 
-    expect(rendered).to have_selector(
-      '#gend_image_email') do |e|
-      expect(e.first['style']).to eq 'display: none'
-    end
+    expect(rendered).to have_selector('#gend_image_email', visible: false)
   end
 
   context 'when the gend image is not private' do
@@ -62,9 +57,7 @@ describe 'gend_images/new.html.erb', type: :view do
 
     it 'does not check the private checkbox' do
       expect(render).to_not have_selector(
-        'input[checked=checked]',
-        type: 'checkbox',
-        name: 'gend_image[private]')
+        'input[checked=checked][type="checkbox"][name="gend_image[private]"]')
     end
   end
 
@@ -76,18 +69,14 @@ describe 'gend_images/new.html.erb', type: :view do
 
     it 'checks the private checkbox' do
       expect(render).to have_selector(
-        'input[checked=checked]',
-        type: 'checkbox',
-        name: 'gend_image[private]')
+        'input[checked=checked][type="checkbox"][name="gend_image[private]"]')
     end
   end
 
   describe 'text positioner' do
     it 'sets the data-img-url to the src image url' do
       expect(render).to have_selector(
-        'div',
-        class: 'text-positioner',
-        'data-img-url' => 'src image url with extension')
+        'div.text-positioner[data-img-url="src image url with extension"]')
     end
   end
 end

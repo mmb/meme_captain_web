@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'home/index.html.erb', type: :view do
-  include Webrat::Matchers
-
   let(:src_images) { [] }
   let(:src_sets) { [] }
   let(:gend_images) { [] }
@@ -22,7 +20,7 @@ describe 'home/index.html.erb', type: :view do
       allow(view).to receive(:current_user).with(no_args).and_return(nil)
     end
     it 'shows a login link' do
-      expect(render).to have_selector('a', href: '/session/new')
+      expect(render).to have_link('Login', href: '/session/new')
     end
 
     it 'shows a login message' do

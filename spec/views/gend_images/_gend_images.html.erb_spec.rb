@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'gend_images/_gend_images.html', type: :view do
-  include Webrat::Matchers
-
   let(:gend_images) { Kaminari.paginate_array([]).page(1) }
 
   context 'when toolbar is enabled' do

@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'gend_images/_gend_image.html', type: :view do
-  include Webrat::Matchers
-
   let(:gend_thumb) { mock_model(GendThumb, width: 19, height: 80) }
 
   let(:gend_image) do

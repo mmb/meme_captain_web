@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'search/show.html.erb', type: :view do
-  include Webrat::Matchers
-
   let(:src_images) { [] }
   let(:src_sets) { [] }
   let(:gend_images) { [] }

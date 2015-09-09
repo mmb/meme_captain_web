@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'src_images/_src_image.html', type: :view do
-  include Webrat::Matchers
-
   let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
   let(:src_image) do
     mock_model(
@@ -41,9 +39,7 @@ describe 'src_images/_src_image.html', type: :view do
 
     it 'sets the image alt tag to the src image name ' do
       expect(rendered).to have_selector(
-        'img',
-        src: "/src_thumbs/#{src_thumb.id}",
-        alt: 'test src image')
+        "img[src='/src_thumbs/#{src_thumb.id}'][alt='test src image']")
     end
   end
 

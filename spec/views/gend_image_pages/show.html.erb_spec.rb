@@ -5,8 +5,6 @@ require 'rails_helper'
 require 'cgi'
 
 describe 'gend_image_pages/show.html.erb', type: :view do
-  include Webrat::Matchers
-
   let(:gend_image) do
     FactoryGirl.create(
       :gend_image,
@@ -65,7 +63,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   context 'browser' do
     context 'when the browser is not Android' do
       it 'does not have the SMS button' do
-        expect(render).to_not contain 'SMS'
+        expect(render).to_not have_link('SMS')
       end
     end
 
@@ -73,7 +71,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       let(:android) { true }
 
       it 'has the SMS button' do
-        expect(render).to contain 'SMS'
+        expect(render).to have_link('SMS')
       end
     end
 
@@ -82,9 +80,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
       it 'does not have the WhatsApp button' do
         params = { text: gend_image_url }.to_query
-        expect(render).to_not have_selector(
-          'a',
-          href: "whatsapp://send?#{params}")
+        expect(render).to_not have_link(
+          'WhatsApp', href: "whatsapp://send?#{params}")
       end
     end
 
@@ -93,9 +90,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
       it 'has the WhatsApp button' do
         params = { text: gend_image_url }.to_query
-        expect(render).to have_selector(
-          'a',
-          href: "whatsapp://send?#{params}")
+        expect(render).to have_link(
+          'WhatsApp', href: "whatsapp://send?#{params}")
       end
     end
   end
@@ -121,18 +117,18 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     end
 
     it 'has a modal body with a QR code' do
-      expect(render).to have_selector('img', src: img_src)
+      expect(render).to have_selector("img[src='#{img_src}']")
     end
 
     it 'dismisses the modal when the QR code image is clicked' do
       expect(render).to have_selector(
-        'img', src: img_src, 'data-dismiss' => 'modal')
+        "img[src='#{img_src}'][data-dismiss='modal']")
     end
   end
 
   context 'when the image is not animated' do
     it 'does not have the gfycat button' do
-      expect(render).to_not contain 'Gfycat'
+      expect(render).to_not have_link('Gfycat')
     end
   end
 
@@ -142,35 +138,32 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     end
 
     it 'has the gfycat button' do
-      expect(render).to contain 'Gfycat'
+      expect(render).to have_link('Gfycat')
     end
   end
 
   it 'includes the created time as a time element' do
-    expect(render).to have_selector(
-      'time',
-      datetime: gend_image.created_at.strftime('%Y-%m-%dT%H:%M:%SZ'))
+    created_at = gend_image.created_at.strftime('%Y-%m-%dT%H:%M:%SZ')
+    expect(render).to have_selector("time[datetime='#{created_at}']")
   end
 
   it "uses the image's meme text as alt text" do
     expect(render).to have_selector(
-      'img',
-      src: gend_image_url,
-      alt: 'caption 2 caption 1')
+      "img[src='#{gend_image_url}'][alt='caption 2 caption 1']")
   end
 
   context 'API shell script modal' do
     it 'has an API button' do
-      expect(render).to have_selector('a', href: '#api-modal')
+      expect(render).to have_link('API', href: '#api-modal')
     end
 
     it 'has an API script div' do
-      expect(render).to have_selector('div', id: 'api-modal')
+      expect(render).to have_selector('div#api-modal')
     end
 
     it 'has a script' do
       assign(:api_script, 'the script')
-      expect(render).to contain('the script')
+      expect(render).to have_text('the script')
     end
   end
 end

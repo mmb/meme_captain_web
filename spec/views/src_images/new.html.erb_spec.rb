@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'src_images/new.html.erb', type: :view do
-  include Webrat::Matchers
-
   let(:src_image) { FactoryGirl.build(:src_image, image: nil) }
 
   before do
@@ -15,7 +13,7 @@ describe 'src_images/new.html.erb', type: :view do
   it 'shows errors' do
     render
 
-    expect(rendered).to contain 'error'
+    expect(rendered).to have_text('error')
   end
 
   it 'has the my images url' do

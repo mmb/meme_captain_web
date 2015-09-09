@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'src_images/_src_images.html', type: :view do
-  include Webrat::Matchers
-
   let(:user) { nil }
   let(:show_remove_from_set) { false }
   let(:show_delete) { false }
@@ -42,7 +40,7 @@ describe 'src_images/_src_images.html', type: :view do
                  src_images: src_images,
                  more_images: more_images })
 
-        expect(rendered).to contain(/Remove 0 from Set/)
+        expect(rendered).to have_text('Remove 0 from Set')
       end
     end
 
@@ -57,7 +55,7 @@ describe 'src_images/_src_images.html', type: :view do
                  src_images: src_images,
                  more_images: more_images })
 
-        expect(rendered).to_not contain(/Remove 0 from Set/)
+        expect(rendered).to_not have_text('Remove 0 from Set')
       end
     end
 
@@ -72,7 +70,7 @@ describe 'src_images/_src_images.html', type: :view do
                  src_images: src_images,
                  more_images: more_images })
 
-        expect(rendered).to contain(/Delete 0/)
+        expect(rendered).to have_text('Delete 0')
       end
     end
 
@@ -87,7 +85,7 @@ describe 'src_images/_src_images.html', type: :view do
                  src_images: src_images,
                  more_images: more_images })
 
-        expect(rendered).to_not contain(/Delete 0/)
+        expect(rendered).to_not have_text('Delete 0')
       end
     end
   end
@@ -116,7 +114,7 @@ describe 'src_images/_src_images.html', type: :view do
              more_images: more_images })
 
     expect(rendered).to have_selector(
-      'img', src: "/src_thumbs/#{src_image.src_thumb.id}")
+      "img[src='/src_thumbs/#{src_image.src_thumb.id}']")
   end
 
   context 'when the more images link should be shown' do
@@ -130,7 +128,7 @@ describe 'src_images/_src_images.html', type: :view do
                src_images: src_images,
                more_images: more_images })
 
-      expect(rendered).to contain('More images')
+      expect(rendered).to have_text('More images')
     end
   end
 
@@ -145,7 +143,7 @@ describe 'src_images/_src_images.html', type: :view do
                src_images: src_images,
                more_images: more_images })
 
-      expect(rendered).to have_selector('ul', class: 'pagination')
+      expect(rendered).to have_selector('ul.pagination')
     end
   end
 end

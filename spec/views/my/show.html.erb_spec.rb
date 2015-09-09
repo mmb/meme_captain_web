@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'my/show.html.erb', type: :view do
-  include Webrat::Matchers
-
   before do
     assign(:gend_images, Kaminari.paginate_array([]).page(1))
     assign(:src_images, Kaminari.paginate_array([]).page(1))
