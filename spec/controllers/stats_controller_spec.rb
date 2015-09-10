@@ -40,11 +40,13 @@ describe StatsController, type: :controller do
       let(:stats_secret) { '' }
 
       before do
+        rails = double('rails')
+        stub_const('Rails', rails)
         application = double('application')
-        expect(Rails).to receive(:application).and_return(application)
+        allow(rails).to receive(:application).and_return(application)
         secrets = double('secrets')
-        expect(application).to receive(:secrets).and_return(secrets)
-        expect(secrets).to receive(:stats_secret).and_return('')
+        allow(application).to receive(:secrets).and_return(secrets)
+        allow(secrets).to receive(:stats_secret).and_return('')
       end
 
       it 'does not send a stat to statsd' do
