@@ -9,9 +9,9 @@ class StatsController < ApplicationController
   def create
     if authorized?
       StatsD.increment(params[:key])
-      head(:ok)
+      render(nothing: true)
     else
-      head(:forbidden)
+      render(nothing: true, status: :forbidden)
     end
   end
 
