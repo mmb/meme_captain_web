@@ -23,6 +23,8 @@ aws s3 sync --delete env s3://memecaptain-secrets/env
 
 aws s3 sync --delete fonts s3://memecaptain-secrets/fonts
 
+deploy_start
+
 aws \
   cloudformation \
   update-stack \
@@ -79,3 +81,5 @@ wait_for_update "$STACK_NAME" "updating spot AMI to $AMI"
 wait_for_pool_healthy canary
 wait_for_pool_healthy ondemand
 wait_for_pool_healthy spot
+
+deploy_end

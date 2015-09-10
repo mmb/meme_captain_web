@@ -87,3 +87,15 @@ diff_env() {
   set -e
   rm -rf env.current
 }
+
+deploy_start() {
+  if [ -n "$STATS_SECRET" ]; then
+    curl https://memecaptain.com/stats -d key=deploy.start -d secret="$STATS_SECRET"
+  fi
+}
+
+deploy_end() {
+  if [ -n "$STATS_SECRET" ]; then
+    curl https://memecaptain.com/stats -d key=deploy.end -d secret="$STATS_SECRET"
+  fi
+}
