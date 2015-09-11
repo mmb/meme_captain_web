@@ -90,12 +90,16 @@ diff_env() {
 
 deploy_start() {
   if [ -n "$STATS_SECRET" ]; then
-    curl https://memecaptain.com/stats -d key=deploy.start -d secret="$STATS_SECRET"
+    curl https://memecaptain.com/stats \
+      --data key=deploy.start \
+      --data-urlencode "secret=$STATS_SECRET"
   fi
 }
 
 deploy_end() {
   if [ -n "$STATS_SECRET" ]; then
-    curl https://memecaptain.com/stats -d key=deploy.end -d secret="$STATS_SECRET"
+    curl https://memecaptain.com/stats \
+      --data key=deploy.end \
+      --data-urlencode "secret=$STATS_SECRET"
   fi
 }
