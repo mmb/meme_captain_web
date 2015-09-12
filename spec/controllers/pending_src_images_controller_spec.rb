@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe PendingSrcImagesController, type: :controller do
+  include StatsD::Instrument::Matchers
+
   describe "GET 'show'" do
     let(:src_image) do
       FactoryGirl.create(:src_image)
@@ -19,6 +21,16 @@ describe PendingSrcImagesController, type: :controller do
           get(:show, id: 'does-not-exist')
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
+
+      it 'increments the statsd failure counter' do
+        expect do
+          begin
+            get(:show, id: 'does-not-exist')
+          rescue ActiveRecord::RecordNotFound => e
+            e
+          end
+        end.to trigger_statsd_increment('api.src_image.create.poll.failure')
+      end
     end
 
     context 'when the image has been deleted' do
@@ -30,6 +42,16 @@ describe PendingSrcImagesController, type: :controller do
         expect do
           get(:show, id: 'does-not-exist')
         end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'increments the statsd failure counter' do
+        expect do
+          begin
+            get(:show, id: src_image.id_hash)
+          rescue ActiveRecord::RecordNotFound => e
+            e
+          end
+        end.to trigger_statsd_increment('api.src_image.create.poll.failure')
       end
     end
 
@@ -46,6 +68,12 @@ describe PendingSrcImagesController, type: :controller do
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
             src_image.created_at.to_i)
+        end
+
+        it 'increments the statsd success counter' do
+          expect do
+            get(:show, id: src_image.id_hash)
+          end.to trigger_statsd_increment('api.src_image.create.poll.success')
         end
 
         context 'when there was an error processing the image' do
@@ -72,6 +100,12 @@ describe PendingSrcImagesController, type: :controller do
           expect(response).to have_http_status(303)
           expect(response).to redirect_to(
             "http://test.host/src_images/#{src_image.id_hash}.jpg")
+        end
+
+        it 'increments the statsd success counter' do
+          expect do
+            get(:show, id: src_image.id_hash)
+          end.to trigger_statsd_increment('api.src_image.create.poll.success')
         end
       end
     end
