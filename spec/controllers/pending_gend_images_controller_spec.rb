@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe PendingGendImagesController, type: :controller do
+  include StatsD::Instrument::Matchers
+
   describe "GET 'show'" do
     let(:gend_image) do
       FactoryGirl.create(:gend_image)
@@ -13,6 +15,16 @@ describe PendingGendImagesController, type: :controller do
         expect do
           get(:show, id: 'does-not-exist')
         end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'increments the statsd failure counter' do
+        expect do
+          begin
+            get(:show, id: 'does-not-exist')
+          rescue ActiveRecord::RecordNotFound => e
+            e
+          end
+        end.to trigger_statsd_increment('api.gend_image.create.poll.failure')
       end
     end
 
@@ -25,6 +37,16 @@ describe PendingGendImagesController, type: :controller do
         expect do
           get(:show, id: 'does-not-exist')
         end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'increments the statsd failure counter' do
+        expect do
+          begin
+            get(:show, id: gend_image.id_hash)
+          rescue ActiveRecord::RecordNotFound => e
+            e
+          end
+        end.to trigger_statsd_increment('api.gend_image.create.poll.failure')
       end
     end
 
@@ -68,6 +90,12 @@ describe PendingGendImagesController, type: :controller do
           expect(response).to redirect_to(
             "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
         end
+      end
+
+      it 'increments the statsd success counter' do
+        expect do
+          get(:show, id: gend_image.id_hash)
+        end.to trigger_statsd_increment('api.gend_image.create.poll.success')
       end
     end
   end

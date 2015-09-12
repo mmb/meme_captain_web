@@ -70,12 +70,6 @@ describe PendingSrcImagesController, type: :controller do
             src_image.created_at.to_i)
         end
 
-        it 'increments the statsd success counter' do
-          expect do
-            get(:show, id: src_image.id_hash)
-          end.to trigger_statsd_increment('api.src_image.create.poll.success')
-        end
-
         context 'when there was an error processing the image' do
           let(:src_image) do
             FactoryGirl.create(:src_image, error: 'an error occurred')
@@ -101,13 +95,13 @@ describe PendingSrcImagesController, type: :controller do
           expect(response).to redirect_to(
             "http://test.host/src_images/#{src_image.id_hash}.jpg")
         end
-
-        it 'increments the statsd success counter' do
-          expect do
-            get(:show, id: src_image.id_hash)
-          end.to trigger_statsd_increment('api.src_image.create.poll.success')
-        end
       end
+    end
+
+    it 'increments the statsd success counter' do
+      expect do
+        get(:show, id: src_image.id_hash)
+      end.to trigger_statsd_increment('api.src_image.create.poll.success')
     end
   end
 end

@@ -1,5 +1,9 @@
 # delayed jobs
 
+PendingGendImagesController.extend(StatsD::Instrument)
+PendingGendImagesController.statsd_count_success(
+  :show, 'api.gend_image.create.poll')
+
 PendingSrcImagesController.extend(StatsD::Instrument)
 PendingSrcImagesController.statsd_count_success(
   :show, 'api.src_image.create.poll')
