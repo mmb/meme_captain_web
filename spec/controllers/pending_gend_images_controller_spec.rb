@@ -35,7 +35,7 @@ describe PendingGendImagesController, type: :controller do
 
       it 'returns not found status' do
         expect do
-          get(:show, id: 'does-not-exist')
+          get(:show, id: gend_image.id_hash)
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
 
