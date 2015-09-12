@@ -6,6 +6,8 @@
       "instance_type": "t2.micro",
       "region": "us-east-1",
       "source_ami": "ami-1ecae776",
+      "spot_price": "auto",
+      "spot_price_auto_product": "Linux/UNIX (Amazon VPC)",
       "ssh_pty": true,
       "ssh_username": "ec2-user",
       "subnet_id": "subnet-c7219bec",
