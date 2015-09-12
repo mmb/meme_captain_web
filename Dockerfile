@@ -1,13 +1,11 @@
 FROM ruby:2.2
 MAINTAINER matthewm@boedicker.org
 
-RUN ["apt-get", "update"]
-RUN ["apt-get", "install", "--assume-yes", \
-  "memcached", \
-  "monit", \
-  "runit", \
-  "varnish" \
-  ]
+RUN apt-get update && apt-get install --assume-yes \
+  memcached \
+  monit \
+  runit \
+  varnish
 
 COPY . /app
 
