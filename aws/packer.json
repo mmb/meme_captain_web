@@ -3,7 +3,7 @@
     {
       "ami_name": "memecaptain-{{timestamp}}",
       "associate_public_ip_address": true,
-      "instance_type": "t2.micro",
+      "instance_type": "m4.large",
       "region": "us-east-1",
       "source_ami": "ami-1ecae776",
       "spot_price": "auto",
