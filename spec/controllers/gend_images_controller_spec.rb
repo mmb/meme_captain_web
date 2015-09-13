@@ -309,6 +309,14 @@ describe GendImagesController, type: :controller do
             'http://test.host/pending_gend_images/' \
             "#{assigns(:gend_image).id_hash}")
         end
+
+        it 'returns the status url in the response' do
+          post(:create, gend_image: { src_image_id: src_image.id_hash })
+
+          expect(JSON.parse(response.body)['status_url']).to eq(
+            'http://test.host/pending_gend_images/' \
+            "#{assigns(:gend_image).id_hash}")
+        end
       end
     end
 
