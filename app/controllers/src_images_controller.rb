@@ -112,15 +112,15 @@ class SrcImagesController < ApplicationController
   end
 
   def redirect_to_pending
-    response.headers['Location'.freeze] = pending_url
-    response.status = :accepted
-    render json: { id: @src_image.id_hash }
-  end
-
-  def pending_url
-    url_for(
+    status_url = url_for(
       controller: :pending_src_images,
       action: :show,
       id: @src_image.id_hash)
+    response.status = :accepted
+    response.location = status_url
+    render(json: {
+             id: @src_image.id_hash,
+             status_url: status_url
+           })
   end
 end

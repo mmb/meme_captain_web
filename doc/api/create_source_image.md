@@ -27,7 +27,8 @@ The size limit for source images is 10MB.
 ## Polling
 
 If the request is accepted you will receive an HTTP 202 Accepted response.
-The `Location` header will contain a URL to poll.
+The `Location` header will contain a URL to poll. The same URL will also be
+in the `status_url` field of the response body.
 
 Poll the URL returned in the `Location` header until it returns 303 (See
 Other). When it returns 303, the image is finished processing and the

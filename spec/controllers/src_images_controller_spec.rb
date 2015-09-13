@@ -287,13 +287,21 @@ describe SrcImagesController, type: :controller do
 
         it 'returns json with id' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
-          expect(JSON.parse(response.body)).to eq(
-            'id' => assigns(:src_image).id_hash)
+          expect(JSON.parse(response.body)['id']).to eq(
+            assigns(:src_image).id_hash)
         end
 
         it 'sets the Location header to the pending src image url' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
           expect(response.headers['Location']).to eq(
+            'http://test.host/pending_src_images/' \
+            "#{assigns(:src_image).id_hash}")
+        end
+
+        it 'returns the status url in the response' do
+          post(:create, src_image: { url: 'http://test.com/image.jpg' })
+
+          expect(JSON.parse(response.body)['status_url']).to eq(
             'http://test.host/pending_src_images/' \
             "#{assigns(:src_image).id_hash}")
         end
