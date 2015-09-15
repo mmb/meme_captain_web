@@ -43,7 +43,7 @@ send_storage_stats() {
 }
 
 send_varnish_stats() {
-  local VARNISH_STATS=$(varnishstat -1 | grep MAIN | sed 's/^MAIN\.\([^ ]\+\) \+\([0-9]\+\).*/\1 \2/' | tr _ .)
+  local VARNISH_STATS=$(varnishstat -1 | grep '^\(MAIN\|SMA\)' | sed 's/^\([^ ]\+\) \+\([0-9]\+\).*/\1 \2/' | tr _ .)
   while IFS= read -r LINE; do
     gauge varnish.$LINE
   done <<< "$VARNISH_STATS"
