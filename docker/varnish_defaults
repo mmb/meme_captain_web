@@ -6,5 +6,5 @@ DAEMON_OPTS="
   -T localhost:6082 \
   -f /etc/varnish/default.vcl \
   -S /etc/varnish/secret \
-  -s malloc,256m \
+  -s ${VARNISH_STORAGE:-malloc,256M} \
   -p timeout_idle=65"
