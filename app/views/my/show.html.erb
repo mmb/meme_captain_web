@@ -8,7 +8,7 @@
   more_images: false }) %>
 
 <% unless @src_sets.empty? %>
-    <%= render partial: 'src_sets/src_sets' %>
+  <%= render(partial: 'src_sets/src_sets', locals: { src_sets: @src_sets, paginate: true }) %>
 <% end %>
 
 <% unless @gend_images.empty? %>

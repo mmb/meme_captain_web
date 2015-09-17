@@ -1,7 +1,7 @@
 <div class="thumb-index well">
 
   <div class="row">
-    <% @src_sets.each do |ss| %>
+    <% src_sets.each do |ss| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
             <%= render(partial: ss) %>
@@ -10,10 +10,10 @@
     <% end %>
   </div>
 
-  <% if current_page?(root_url) %>
-      <%= link_to('More sets', :src_sets) %>
+  <% if paginate %>
+      <%= paginate(src_sets) %>
   <% else %>
-      <%= paginate(@src_sets) %>
+      <%= link_to('More sets', :src_sets) %>
   <% end %>
 
 </div>

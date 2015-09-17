@@ -76,7 +76,9 @@ describe 'home/index.html.erb', type: :view do
     let(:src_sets) { [FactoryGirl.create(:src_set)] * 2 }
 
     it 'renders the src sets partial' do
-      expect(view).to receive(:render).with(partial: 'src_sets/src_sets')
+      expect(view).to receive(:render).with(
+        partial: 'src_sets/src_sets',
+        locals: { src_sets: src_sets, paginate: false })
       render
     end
   end
