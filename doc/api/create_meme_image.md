@@ -66,6 +66,12 @@ If the src_image_id in the initial POST request references a source image
 that is not found or is not finished being created, the response code will
 be 404.
 
+## Shell script example
+
+On every meme image page, there is an `API` button that shows a shell script
+that recreates that image using the API. This script can also be used to
+determine text position parameters for an API request.
+
 ## Ruby example
 
 ```ruby
