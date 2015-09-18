@@ -1,0 +1,3 @@
+- all pull requests should have corresponding specs
+- make sure `rake spec` passes
+- after sending a pull request make sure the Travis CI build for it passes
