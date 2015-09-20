@@ -394,7 +394,10 @@ describe GendImagesController, type: :controller do
       let(:src_image) { FactoryGirl.create(:src_image, name: name) }
       let(:gend_image) do
         FactoryGirl.create(
-          :gend_image, src_image: src_image, captions: captions)
+          :gend_image,
+          src_image: src_image,
+          captions: captions,
+          work_in_progress: false)
       end
 
       it 'shows the gend image' do
@@ -538,6 +541,18 @@ describe GendImagesController, type: :controller do
       it 'raises record not found' do
         expect do
           get :show, id: gend_image.id_hash
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when the image is not finished being processed' do
+      let(:gend_image) do
+        FactoryGirl.create(:gend_image, work_in_progress: true)
+      end
+
+      it 'raises record not found' do
+        expect do
+          get(:show, id: gend_image.id_hash)
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end

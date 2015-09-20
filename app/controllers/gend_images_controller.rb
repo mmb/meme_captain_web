@@ -41,7 +41,7 @@ class GendImagesController < ApplicationController
   end
 
   def show
-    gend_image = GendImage.active.find_by!(id_hash: params[:id])
+    gend_image = GendImage.active.finished.find_by!(id_hash: params[:id])
 
     expires_in 1.day, public: true
 
