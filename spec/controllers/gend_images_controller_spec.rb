@@ -397,7 +397,7 @@ describe GendImagesController, type: :controller do
           :gend_image, src_image: src_image, captions: captions)
       end
 
-      it 'shows the source image' do
+      it 'shows the gend image' do
         get :show, id: gend_image.id_hash
 
         expect(response).to be_success
