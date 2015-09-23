@@ -32,7 +32,17 @@ describe SrcImageProcessJob do
     end
   end
 
-  it 'auto orients the image'
+  context 'when the src image has orientation exif data' do
+    let(:src_image) { FactoryGirl.create(:src_image_with_orientation) }
+
+    it 'auto orients the image' do
+      src_image_process_job.perform
+      src_image.reload
+      magick_image_list = src_image.magick_image_list
+      expect(magick_image_list.columns).to eq(50)
+      expect(magick_image_list.rows).to eq(600)
+    end
+  end
 
   context 'when the src image has a comment' do
     let(:src_image) { FactoryGirl.create(:src_image_with_comment) }
