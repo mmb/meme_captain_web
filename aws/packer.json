@@ -17,18 +17,6 @@
   "provisioners": [
     {
       "inline": [
-        "sudo mkdir /fonts",
-        "sudo chown ec2-user:ec2-user /fonts"
-      ],
-      "type": "shell"
-    },
-    {
-      "destination": "/fonts",
-      "source": "fonts/",
-      "type": "file"
-    },
-    {
-      "inline": [
         "sudo yum update -y",
         "sudo sed --in-place=.bak --expression='s/repo_upgrade: security/repo_upgrade: none/g' /etc/cloud/cloud.cfg",
         "sudo yum install -y docker git",
