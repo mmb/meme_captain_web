@@ -34,7 +34,17 @@ describe SrcImageProcessJob do
 
   it 'auto orients the image'
 
-  it 'strips profiles and comments from the image'
+  context 'when the src image has a comment' do
+    let(:src_image) { FactoryGirl.create(:src_image_with_comment) }
+
+    it 'strips profiles and comments from the image' do
+      expect do
+        src_image_process_job.perform
+        src_image.reload
+      end.to change { src_image.magick_image_list[0]['comment'] }.from(
+        'the best duck').to(nil)
+    end
+  end
 
   context 'when the image is too wide' do
     let(:src_image) do

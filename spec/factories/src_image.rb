@@ -28,4 +28,11 @@ FactoryGirl.define do
       image(f.read)
     end
   end
+
+  factory :src_image_with_comment, parent: :src_image do
+    File.open(
+      Rails.root + 'spec/fixtures/files/ti_duck_with_comment.jpg', 'rb') do |f|
+      image(f.read)
+    end
+  end
 end
