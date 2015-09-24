@@ -73,6 +73,12 @@ wait_for_pool_healthy() {
   rm -rf $TEMP
 }
 
+wait_for_all_healthy() {
+  wait_for_pool_healthy canary
+  wait_for_pool_healthy ondemand
+  wait_for_pool_healthy spot
+}
+
 make_env() {
   rm -rf env/*
   ./make_env.rb

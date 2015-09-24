@@ -12,9 +12,7 @@ if [ -z "$AMI" ]; then
   exit 1
 fi
 
-wait_for_pool_healthy canary
-wait_for_pool_healthy ondemand
-wait_for_pool_healthy spot
+wait_for_all_healthy
 
 make_env
 diff_env
@@ -40,9 +38,7 @@ aws \
 
 wait_for_update "$STACK_NAME" "updating canary AMI to $AMI"
 
-wait_for_pool_healthy canary
-wait_for_pool_healthy ondemand
-wait_for_pool_healthy spot
+wait_for_all_healthy
 
 aws \
   cloudformation \
@@ -59,9 +55,7 @@ aws \
 
 wait_for_update "$STACK_NAME" "updating ondemand AMI to $AMI"
 
-wait_for_pool_healthy canary
-wait_for_pool_healthy ondemand
-wait_for_pool_healthy spot
+wait_for_all_healthy
 
 aws \
   cloudformation \
@@ -78,8 +72,6 @@ aws \
 
 wait_for_update "$STACK_NAME" "updating spot AMI to $AMI"
 
-wait_for_pool_healthy canary
-wait_for_pool_healthy ondemand
-wait_for_pool_healthy spot
+wait_for_all_healthy
 
 deploy_end
