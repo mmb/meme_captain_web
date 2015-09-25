@@ -65,7 +65,7 @@ GEM
     bcrypt (3.1.7)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    browser (0.8.0)
+    browser (1.0.1)
     builder (3.2.2)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -340,7 +340,7 @@ DEPENDENCIES
   airbrake (~> 4.1.0)
   bcrypt (~> 3.1.7)
   best_in_place!
-  browser (~> 0.8.0)
+  browser (~> 1.0.1)
   capybara (~> 2.5.0)
   coffee-rails (~> 4.1.0)
   coffeelint (~> 1.9.1)
