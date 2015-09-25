@@ -110,10 +110,10 @@ GEM
     ethon (0.7.4)
       ffi (>= 1.3.0)
     execjs (2.5.2)
-    factory_girl (4.2.0)
+    factory_girl (4.5.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.2.1)
-      factory_girl (~> 4.2.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -349,7 +349,7 @@ DEPENDENCIES
   delayed-plugins-airbrake (~> 1.1.0)
   delayed_job_active_record (~> 4.0.3)
   dynamic_form
-  factory_girl_rails
+  factory_girl_rails (~> 4.5.0)
   faraday (~> 0.9.1)
   faraday-cookie_jar (~> 0.0.6)
   faraday_middleware (~> 0.9.1)
