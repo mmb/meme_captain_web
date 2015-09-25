@@ -132,7 +132,9 @@ GEM
       net-http-pipeline
     globalid (0.3.5)
       activesupport (>= 4.1.0)
-    gravatar-ultimate (1.0.3)
+    gravatar-ultimate (2.0.0)
+      activesupport (>= 2.3.14)
+      rack
     highline (1.7.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -351,7 +353,7 @@ DEPENDENCIES
   faraday (~> 0.9.1)
   faraday-cookie_jar (~> 0.0.6)
   faraday_middleware (~> 0.9.1)
-  gravatar-ultimate
+  gravatar-ultimate (~> 2.0.0)
   jasmine-rails (~> 0.10.8)
   jquery-rails
   kaminari (~> 0.16.3)
