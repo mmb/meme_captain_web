@@ -76,7 +76,7 @@ group :test, :development do
   gem 'sqlite3'
   gem 'web-console', '~> 2.0'
   gem 'rails_best_practices', '~> 1.15.7'
-  gem 'coffeelint', '~> 1.9.1'
+  gem 'coffeelint', '~> 1.11.0'
   gem 'travis', '~> 1.8.0'
   gem 'capybara', '~> 2.5.0'
 end
