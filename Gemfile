@@ -74,7 +74,7 @@ group :test, :development do
   gem 'shoulda', '~> 3.5.0'
   gem 'jasmine-rails', '~> 0.10.8'
   gem 'sqlite3', '~> 1.3.10'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 2.2.1'
   gem 'rails_best_practices', '~> 1.15.7'
   gem 'coffeelint', '~> 1.11.0'
   gem 'travis', '~> 1.8.0'
