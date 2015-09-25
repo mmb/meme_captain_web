@@ -82,7 +82,7 @@ group :test, :development do
 end
 
 group :test do
-  gem 'timecop'
+  gem 'timecop', '~> 0.8.0'
   gem 'webmock', '~> 1.21.0'
 end
 
