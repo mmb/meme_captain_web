@@ -50,7 +50,7 @@ gem 'meme_captain',
 
 gem 'kaminari', '~> 0.16.3'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'puma', '~> 2.12.3'
+gem 'puma', '~> 2.14.0'
 gem 'browser', '~> 0.8.0'
 gem 'gravatar-ultimate'
 gem 'faraday', '~> 0.9.1'
