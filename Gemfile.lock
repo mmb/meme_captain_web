@@ -163,7 +163,7 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.3.1)
     libv8 (3.16.14.7)
-    local_time (1.0.0)
+    local_time (1.0.3)
       coffee-rails
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -359,7 +359,7 @@ DEPENDENCIES
   kaminari (~> 0.16.3)
   kaminari-bootstrap (~> 3.0.1)
   less-rails
-  local_time (~> 1.0.0)
+  local_time (~> 1.0.3)
   meme_captain!
   pg (~> 0.18.2)
   puma (~> 2.14.0)
