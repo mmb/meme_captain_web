@@ -375,7 +375,7 @@ DEPENDENCIES
   rubocop (~> 0.34.2)
   sass-rails (~> 5.0)
   shoulda (~> 3.5.0)
-  sqlite3
+  sqlite3 (~> 1.3.10)
   statsd-instrument (~> 2.0.10)
   therubyracer
   timecop
