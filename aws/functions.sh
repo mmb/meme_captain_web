@@ -49,6 +49,7 @@ elb_healthy_instances() {
 
 wait_for_pool_healthy() {
   POOL="$1"
+  START=$SECONDS
 
   TEMP=$(mktemp -d -t pool_health)
   pushd $TEMP
@@ -68,6 +69,8 @@ wait_for_pool_healthy() {
     fi
     sleep 4
   done
+
+  echo `date` $POOL pool healthy after $((SECONDS - START)) seconds
 
   popd
   rm -rf $TEMP
