@@ -62,7 +62,7 @@ gem 'local_time', '~> 1.0.3'
 gem 'rubocop', '~> 0.34.2'
 gem 'airbrake', '~> 4.1.0'
 gem 'delayed-plugins-airbrake', '~> 1.1.0'
-gem 'statsd-instrument', '~> 2.0.8'
+gem 'statsd-instrument', '~> 2.0.10'
 
 group :test, :development do
   gem 'factory_girl_rails'
