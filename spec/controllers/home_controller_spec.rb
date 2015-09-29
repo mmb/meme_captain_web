@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe HomeController, type: :controller do
+  include StatsD::Instrument::Matchers
+
   describe "GET 'index'" do
     let(:user) { nil }
 
@@ -354,6 +356,21 @@ describe HomeController, type: :controller do
       get :index
 
       expect(assigns(:src_images)).to eq([si2, si3, si1])
+    end
+
+    it 'sends a db timer metric to statsd' do
+      expect { get(:index) }.to trigger_statsd_measure(
+        'HomeController.index.html.db_runtime')
+    end
+
+    it 'sends a view timer metric to statsd' do
+      expect { get(:index) }.to trigger_statsd_measure(
+        'HomeController.index.html.view_runtime')
+    end
+
+    it 'sends a status increment metric to statsd' do
+      expect { get(:index) }.to trigger_statsd_increment(
+        'HomeController.index.html.200')
     end
   end
 end
