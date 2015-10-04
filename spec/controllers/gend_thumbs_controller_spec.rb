@@ -23,6 +23,14 @@ describe GendThumbsController, type: :controller do
         expect(response.content_type).to eq(gend_thumb.content_type)
       end
 
+      it 'has the right Content-Length header' do
+        gend_thumb = FactoryGirl.create(:gend_thumb)
+
+        get('show', id: gend_thumb.id)
+
+        expect(response.headers['Content-Length']).to eq(279)
+      end
+
       it 'has the right content' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 

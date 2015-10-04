@@ -107,6 +107,7 @@ class GendImagesController < ApplicationController
     src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
     headers.merge!(
+      'Content-Length'.freeze => gend_image.size,
       'Meme-Name'.freeze => Rack::Utils.escape(src_image.name),
       'Meme-Source-Image'.freeze => src_image_url_for(src_image),
       'Meme-Text'.freeze => gend_image.meme_text_header)

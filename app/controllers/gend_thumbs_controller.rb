@@ -7,6 +7,8 @@ class GendThumbsController < ApplicationController
 
     cache_expires 1.week
 
+    headers['Content-Length'.freeze] = gend_thumb.size
+
     return unless stale?(gend_thumb)
     render text: gend_thumb.image, content_type: gend_thumb.content_type
   end

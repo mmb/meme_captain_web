@@ -21,6 +21,12 @@ describe SrcThumbsController, type: :controller do
         expect(response.content_type).to eq(src_thumb.content_type)
       end
 
+      it 'has the right Content-Length header' do
+        get('show', id: src_thumb.id)
+
+        expect(response.headers['Content-Length']).to eq(279)
+      end
+
       it 'has the right content' do
         get 'show', id: src_thumb.id
 

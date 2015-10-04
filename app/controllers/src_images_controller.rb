@@ -37,6 +37,8 @@ class SrcImagesController < ApplicationController
 
     expires_in 1.hour, public: true
 
+    src_image_show_headers(src_image)
+
     return unless stale?(src_image)
     render text: src_image.image, content_type: src_image.content_type
   end
@@ -122,5 +124,9 @@ class SrcImagesController < ApplicationController
              id: @src_image.id_hash,
              status_url: status_url
            })
+  end
+
+  def src_image_show_headers(src_image)
+    headers['Content-Length'.freeze] = src_image.size
   end
 end

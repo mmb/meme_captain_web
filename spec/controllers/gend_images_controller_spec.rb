@@ -412,6 +412,12 @@ describe GendImagesController, type: :controller do
         expect(response.content_type).to eq(gend_image.content_type)
       end
 
+      it 'has the right Content-Length header' do
+        get(:show, id: gend_image.id_hash)
+
+        expect(response.headers['Content-Length']).to eq(9141)
+      end
+
       it 'has the right content' do
         get :show, id: gend_image.id_hash
 
