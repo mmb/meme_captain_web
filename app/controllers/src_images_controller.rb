@@ -56,14 +56,12 @@ class SrcImagesController < ApplicationController
   def destroy
     src_image = SrcImage.find_by!(id_hash: params[:id])
 
-    if src_image.user == current_user
-      src_image.is_deleted = true
-      src_image.save!
+    head(:forbidden) && return if src_image.user != current_user
 
-      head :no_content
-    else
-      head :forbidden
-    end
+    src_image.is_deleted = true
+    src_image.save!
+
+    head(:no_content)
   end
 
   private
