@@ -11,13 +11,4 @@ module SrcImagesHelper
       host: MemeCaptainWeb::Config::GEND_IMAGE_HOST || request.host
     )
   end
-
-  def meme_create_url(src_image)
-    url_for(
-      controller: :gend_images,
-      action: :new,
-      src: src_image.id_hash,
-      host: request.host
-    )
-  end
 end

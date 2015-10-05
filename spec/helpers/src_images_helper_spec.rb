@@ -3,10 +3,9 @@
 require 'rails_helper'
 
 describe SrcImagesHelper, type: :helper do
-  let(:src_image) { FactoryGirl.create(:src_image) }
-
   describe '#src_image_url_for' do
     let(:host) { 'cdn.com' }
+    let(:src_image) { FactoryGirl.create(:src_image) }
 
     before do
       src_image.set_derived_image_fields
@@ -27,13 +26,6 @@ describe SrcImagesHelper, type: :helper do
           "#{src_image.id_hash}.#{src_image.format}"
 
       expect(helper.src_image_url_for(src_image)).to eq(expected)
-    end
-  end
-
-  describe '#meme_create_url' do
-    it 'generates a url to create a meme with this src image' do
-      expect(helper.meme_create_url(src_image)).to eq(
-        "http://test.host/gend_images/new?src=#{src_image.id_hash}")
     end
   end
 end
