@@ -125,9 +125,6 @@ class SrcImagesController < ApplicationController
   end
 
   def src_image_show_headers(src_image)
-    headers.merge!(
-      'Content-Length'.freeze => src_image.size,
-      'Meme-Create-Url'.freeze => meme_create_url(src_image)
-    )
+    headers['Content-Length'.freeze] = src_image.size
   end
 end

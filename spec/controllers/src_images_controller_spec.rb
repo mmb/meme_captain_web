@@ -397,13 +397,6 @@ describe SrcImagesController, type: :controller do
         expect(response.headers['Content-Length']).to eq(9141)
       end
 
-      it 'has a Meme-Create-Url header to create a new meme from this image' do
-        get('show', id: src_image.id_hash)
-
-        expect(response.headers['Meme-Create-Url']).to eq(
-          "http://test.host/gend_images/new?src=#{src_image.id_hash}")
-      end
-
       it 'has the right content' do
         get 'show', id: src_image.id_hash
 
