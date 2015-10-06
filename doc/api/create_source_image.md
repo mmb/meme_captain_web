@@ -18,7 +18,7 @@ Example JSON body:
 
 ## Parameters
 
-- url - the URL of the image to load
+- url - the URL of the image to load (can be a URL or a data URI)
 - name - the name of the source image (optional)
 - private - true if the source image is private (optional)
 
@@ -98,7 +98,3 @@ Net::HTTP.start(create_uri.hostname, create_uri.port) do |http|
   end
 end
 ```
-
-# Creating a Source Image from an Uploaded File
-
-Coming soon.
