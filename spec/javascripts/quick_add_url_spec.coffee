@@ -48,8 +48,7 @@ describe 'quick_add_url', ->
 
         it 'informs the user that url was successfully submitted', ->
           spyOn($, 'ajax').and.callFake (url, params) ->
-            params.success
-              status_url: 'pending src image url'
+            params.success()
           submit_url()
           expect($('#quick-add-url-status').text()).toBe('Submitted URL')
 
@@ -62,9 +61,8 @@ describe 'quick_add_url', ->
                 when '/src_images/'
                   params.success
                     id: 'src_image_id'
-                    status_url: 'pending src image url'
-                when 'pending src image url'
-                  params.success {}, null, fake_xhr
+                when '/src_images/src_image_id'
+                  params.success()
 
           it "redirects to the new image's meme creation page", ->
             spyOn(fake_location, 'replace')
@@ -72,23 +70,6 @@ describe 'quick_add_url', ->
             jasmine.clock().tick(1000)
             expect(fake_location.replace).toHaveBeenCalledWith(
               '/gend_images/new?src=src_image_id')
-
-        describe 'when the polling returns an error', ->
-          beforeEach ->
-            spyOn($, 'ajax').and.callFake (url, params) ->
-              switch url
-                when '/src_images/'
-                  params.success
-                    id: 'src_image_id'
-                    status_url: 'pending src image url'
-                when 'pending src image url'
-                  params.success error: 'error'
-
-          it 'informs the user that there was an error loading the url', ->
-            spyOn(fake_location, 'replace')
-            submit_url()
-            jasmine.clock().tick(1000)
-            expect($('#quick-add-url-status').text()).toBe('Error loading URL')
 
         describe 'when the image does not finish within the polling window', ->
           beforeEach ->
@@ -99,13 +80,10 @@ describe 'quick_add_url', ->
                 when '/src_images/'
                   params.success
                     id: 'src_image_id'
-                    status_url: 'pending src image url'
-                when 'pending src image url'
-                  params.success {}, null, fake_xhr
 
           it 'informs the user that there was an error loading the url', ->
             submit_url()
-            jasmine.clock().tick(30000)
+            jasmine.clock().tick(10000)
             expect($('#quick-add-url-status').text()).toBe('Error loading URL')
 
       describe 'when the API returns failure', ->

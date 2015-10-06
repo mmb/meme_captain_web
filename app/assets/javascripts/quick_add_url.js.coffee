@@ -14,22 +14,16 @@ window.quick_add_url_init = (win) ->
       data: JSON.stringify(url: url)
       success: (data) ->
         status_element.text('Submitted URL')
-        poll_url = data.status_url
         count = 0
         timer = setInterval ->
           status_element.append('.')
-          $.ajax poll_url,
-            success: (poll_data, status, xhr) ->
-              if poll_data.error
-                clearInterval(timer)
-                status_element.text('Error loading URL')
-              # if redirected to an image, the image is finished
-              else if xhr.getResponseHeader(
-                "Content-Type").indexOf("image/") == 0
-                clearInterval(timer)
-                win.location.replace("/gend_images/new?src=#{data.id}")
+          $.ajax "/src_images/#{data.id}",
+            type: 'head',
+            success: ->
+              clearInterval(timer)
+              win.location.replace("/gend_images/new?src=#{data.id}")
           count += 1
-          if count >= 30
+          if count >= 10
             clearInterval(timer)
             status_element.text('Error loading URL')
         , 1000
