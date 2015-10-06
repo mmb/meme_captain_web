@@ -89,7 +89,8 @@ class SrcImage < ActiveRecord::Base
 
   def add_url_scheme
     return true if url.blank?
-    return true if url.start_with?('http://'.freeze, 'https://'.freeze)
+    return true if url.start_with?(
+      'http://'.freeze, 'https://'.freeze, 'data:'.freeze)
     self.url = "http://#{url}"
     true
   end

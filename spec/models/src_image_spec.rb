@@ -111,6 +111,17 @@ describe SrcImage do
       end
     end
 
+    context 'when the URL is a data URI' do
+      let(:url) do
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAA' \
+        'AAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
+      end
+
+      it 'does not add a scheme' do
+        expect(src_image.url).to eq(url)
+      end
+    end
+
     context 'when the URL does not have a scheme' do
       let(:url) { 'images.com/image.png' }
 
