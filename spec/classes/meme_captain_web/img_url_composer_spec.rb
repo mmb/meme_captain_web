@@ -13,6 +13,14 @@ describe MemeCaptainWeb::ImgUrlComposer do
       end
     end
 
+    context 'when the url is a data URI' do
+      it 'decodes the data uri and returns the image data' do
+        img_data = create_image(100, 50)
+        data_uri = "data:image/png;base64,#{Base64.encode64(img_data)}"
+        expect(img_url_composer.load(data_uri)).to eq(img_data)
+      end
+    end
+
     context 'when the url is a horizontal join' do
       it 'fetches the urls and joins the images horizontally' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(

@@ -93,6 +93,7 @@ GEM
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     dalli (2.7.4)
+    data_uri (0.1.0)
     debug_inspector (0.0.2)
     delayed-plugins-airbrake (1.1.0)
       airbrake
@@ -346,6 +347,7 @@ DEPENDENCIES
   coffeelint (~> 1.11.0)
   daemons
   dalli (~> 2.7.4)
+  data_uri (~> 0.1.0)
   delayed-plugins-airbrake (~> 1.1.0)
   delayed_job_active_record (~> 4.0.3)
   dynamic_form

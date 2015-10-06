@@ -17,6 +17,8 @@ module MemeCaptainWeb
         combine_vertical(url)
       when /\[\]/
         combine_horizontal(url)
+      when /^data:/
+        URI::Data.new(url).data
       else
         @url_getter.get(url)
       end
