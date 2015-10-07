@@ -43,6 +43,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :stats, only: :create
 
+  resources :errors, only: :index
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

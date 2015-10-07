@@ -1,0 +1,31 @@
+<h1>Src images</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Last Updated</th>
+    <th>Error</th>
+    <th>URL</th>
+  </tr>
+<% @errored_src_images.each do |src_image| %>
+  <tr>
+    <td><%= src_image.updated_at %></td>
+    <td><%= src_image.error %></td>
+    <td><%= src_image.url %></td>
+  </tr>
+<% end %>
+</table>
+
+<h1>Gend Images</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Last Updated</th>
+    <th>Error</th>
+  </tr>
+<% @errored_gend_images.each do |gend_image| %>
+  <tr>
+    <td><%= gend_image.updated_at %></td>
+    <td><%= gend_image.error %></td>
+  </tr>
+<% end %>
+</table>
