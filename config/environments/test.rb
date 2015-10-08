@@ -38,4 +38,9 @@ MemeCaptainWeb::Application.configure do
   Delayed::Worker.delay_jobs = false
 
   config.eager_load = false
+
+  config.middleware.insert_before(
+    ActionDispatch::Static,
+    Rack::Deflater,
+    if: ->(_, _, headers, _) { headers['Content-Type'][0..5] != 'image/' })
 end
