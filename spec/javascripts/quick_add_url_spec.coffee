@@ -86,6 +86,14 @@ describe 'quick_add_url', ->
             jasmine.clock().tick(10000)
             expect($('#quick-add-url-status').text()).toBe('Error loading URL')
 
+          it 'print a dot for each time it checks if the image is finished', ->
+            count = 0
+            spyOn($.fn, 'append').and.callFake (text) ->
+              count++ if text == '.'
+            submit_url()
+            jasmine.clock().tick(10000)
+            expect(count).toEqual(10)
+
       describe 'when the API returns failure', ->
         it 'informs the user that there was an error loading the url', ->
           spyOn($, 'ajax').and.callFake (url, params) ->
