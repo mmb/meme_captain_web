@@ -7,3 +7,20 @@ img.header {
   margin-top: 16px;
   margin-bottom: 32px;
 }
+
+.terminal {
+  color: #fff;
+  background-color: #000;
+}
+
+.terminal-date {
+  color: #808080;
+}
+
+.terminal-info {
+  color: #fff;
+}
+
+.terminal-error {
+  color: #f00;
+}

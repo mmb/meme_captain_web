@@ -47,7 +47,6 @@
 
       <div class="navbar-form">
         <input type="text" id="quick-add-url" placeholder="Load URL" tabindex="2"/>
-        <span id="quick-add-url-status"></span>
       </div>
     </div>
   </div>
@@ -92,6 +91,19 @@
 <%= javascript_include_tag "application" %>
 
 <%= render 'application/google_analytics' %>
+
+<div id="quick-add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-body">
+       <pre id="quick-add-url-status" class="terminal"></pre>
+     </div>
+     <div class="modal-footer">
+       <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+     </div>
+   </div>
+ </div>
+</div>
 
 </body>
 </html>

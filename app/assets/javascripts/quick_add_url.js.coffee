@@ -1,4 +1,4 @@
-quick_add_url = (url, callbacks) ->
+@quick_add_url = (url, callbacks) ->
   return if url == ''
   callbacks.before_submit()
 
@@ -29,20 +29,23 @@ window.quick_add_url_init = (win) ->
 
   input_element.keypress (e) ->
     if e.which == 13
-      status_element = $('#quick-add-url-status')
-      quick_add_url input_element.val(),
+      terminal_log = new TerminalLog $('#quick-add-url-status')
+      url = input_element.val()
+      quick_add_url url,
         before_submit: ->
-          status_element.text('Submitting URL')
+          $('#quick-add-modal').modal()
+          terminal_log.info("Submitting URL #{url}")
         submit_success: ->
-          status_element.text('Submitted URL')
+          terminal_log.info('URL successfully submitted')
+          input_element.val('')
         tick: ->
-          status_element.append('.')
+          terminal_log.info('Waiting for image to be loaded')
         success: (src_image_id) ->
           win.location.replace("/gend_images/new?src=#{src_image_id}")
         timed_out: ->
-          status_element.text('Error loading URL')
+          terminal_log.error('Error loading URL')
         submit_error: ->
-          status_element.text('Error submitting URL')
+          terminal_log.error('Error submitting URL')
 
 $(document).ready ->
   quick_add_url_init(window)

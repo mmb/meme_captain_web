@@ -37,7 +37,8 @@ describe 'quick_add_url', ->
         ajax_spy = spyOn($, 'ajax')
 
         submit_url()
-        expect($('#quick-add-url-status').text()).toBe('Submitting URL')
+        expect($('#quick-add-url-status').text()).toMatch(
+          'Submitting URL http://images.com/image.jpg')
 
       describe 'when the API returns success', ->
         beforeEach ->
@@ -50,7 +51,8 @@ describe 'quick_add_url', ->
           spyOn($, 'ajax').and.callFake (url, params) ->
             params.success()
           submit_url()
-          expect($('#quick-add-url-status').text()).toBe('Submitted URL')
+          expect($('#quick-add-url-status').text()).toMatch(
+            'URL successfully submitted')
 
         describe 'when the image is finished within the polling window', ->
           beforeEach ->
@@ -84,19 +86,19 @@ describe 'quick_add_url', ->
           it 'informs the user that there was an error loading the url', ->
             submit_url()
             jasmine.clock().tick(10000)
-            expect($('#quick-add-url-status').text()).toBe('Error loading URL')
+            expect($('#quick-add-url-status').text()).toMatch(
+              'Error loading URL')
 
-          it 'print a dot for each time it checks if the image is finished', ->
-            count = 0
-            spyOn($.fn, 'append').and.callFake (text) ->
-              count++ if text == '.'
+          it 'logs a message each time it checks if the image is finished', ->
             submit_url()
             jasmine.clock().tick(10000)
-            expect(count).toEqual(10)
+            expect($('#quick-add-url-status').text().match(
+              /Waiting for image to be loaded/g).length).toEqual(10)
 
       describe 'when the API returns failure', ->
         it 'informs the user that there was an error loading the url', ->
           spyOn($, 'ajax').and.callFake (url, params) ->
             params.error()
           submit_url()
-          expect($('#quick-add-url-status').text()).toBe('Error submitting URL')
+          expect($('#quick-add-url-status').text()).toMatch(
+            'Error submitting URL')
