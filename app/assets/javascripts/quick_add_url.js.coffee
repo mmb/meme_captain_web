@@ -48,4 +48,5 @@ window.quick_add_url_init = (win) ->
           terminal_log.error('Error submitting URL')
 
 $(document).ready ->
+  $('#quick-add-url').tooltip()
   quick_add_url_init(window)
