@@ -3,6 +3,7 @@ MAINTAINER matthewm@boedicker.org
 
 RUN apt-get update && apt-get install --assume-yes \
   apt-transport-https \
+  inkscape \
   memcached \
   monit \
   runit
