@@ -15,7 +15,7 @@ set eventqueue
 
 check process puma
   with pidfile /var/run/puma.pid
-  start program = "/usr/local/bundle/bin/puma --config /app/docker/puma_config.rb"
+  start program = "/usr/local/bin/puma --config /app/docker/puma_config.rb"
   stop program = "/usr/bin/pkill --pidfile /var/run/puma.pid"
 
 check process memcache

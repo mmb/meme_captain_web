@@ -19,4 +19,4 @@ erb /app/docker/monitrc.erb > /app/docker/monitrc
 
 chmod 0700 /app/docker/monitrc
 
-exec /usr/bin/monit -I -c /app/docker/monitrc
+exec /usr/local/bin/monit -I -c /app/docker/monitrc
