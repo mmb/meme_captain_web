@@ -52,4 +52,11 @@ describe '#content_type' do
       expect(image_list.content_type).to eq('image/bmp')
     end
   end
+
+  context 'when the image format is WEBP' do
+    let(:format) { 'WEBP' }
+    it 'return image/webp for the content type' do
+      expect(image_list.content_type).to eq('image/webp')
+    end
+  end
 end
