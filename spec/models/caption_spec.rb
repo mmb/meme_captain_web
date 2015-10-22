@@ -18,7 +18,7 @@ describe Caption do
   it { should belong_to :gend_image }
 
   context 'converting to a MemeCaptain::TextPos' do
-    let(:caption) { FactoryGirl.create(:caption) }
+    let(:caption) { FactoryGirl.create(:caption, text: 'TEST') }
 
     subject(:text_pos) { caption.text_pos }
 
@@ -31,14 +31,30 @@ describe Caption do
     it 'has the correct font' do
       expect(subject.draw_options[:font]).to include caption.font
     end
+
+    context 'when the text has lowercase letters' do
+      let(:caption) { FactoryGirl.create(:caption, text: 'AbCdEfG') }
+
+      it 'converts all characters to uppercase' do
+        expect(text_pos.text).to eq('ABCDEFG')
+      end
+    end
+
+    context 'when the text has lowercase non-ascii letters' do
+      let(:caption) { FactoryGirl.create(:caption, text: 'àbçdêfG') }
+
+      it 'converts all characters to uppercase' do
+        expect(text_pos.text).to eq('ÀBÇDÊFG')
+      end
+    end
   end
 
   describe '#default_values' do
     context 'when the font is nil' do
       it 'uses the default font' do
         allow(MemeCaptainWeb::Font).to receive(:for).with(
-          'MyString').and_return('font.ttf')
-        caption = FactoryGirl.create(:caption, font: nil)
+          'TEST').and_return('font.ttf')
+        caption = FactoryGirl.create(:caption, text: 'TEST', font: nil)
         expect(caption.font).to eq 'font.ttf'
       end
     end
@@ -46,8 +62,8 @@ describe Caption do
     context 'when the font is empty' do
       it 'uses the default font' do
         allow(MemeCaptainWeb::Font).to receive(:for).with(
-          'MyString').and_return('font.ttf')
-        caption = FactoryGirl.create(:caption, font: '')
+          'TEST').and_return('font.ttf')
+        caption = FactoryGirl.create(:caption, text: 'TEST', font: '')
         expect(caption.font).to eq 'font.ttf'
       end
     end

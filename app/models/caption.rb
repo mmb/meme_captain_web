@@ -17,11 +17,16 @@ class Caption < ActiveRecord::Base
   end
 
   def text_pos
-    MemeCaptain::TextPos.new(text, top_left_x_pct, top_left_y_pct, width_pct,
-                             height_pct, font: font_path)
+    MemeCaptain::TextPos.new(
+      text_upcase, top_left_x_pct, top_left_y_pct, width_pct, height_pct,
+      font: font_path)
   end
 
   private
+
+  def text_upcase
+    text.mb_chars.upcase
+  end
 
   scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct'.freeze) }
 end
