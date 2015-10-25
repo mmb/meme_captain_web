@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025062928) do
+ActiveRecord::Schema.define(version: 20151025063144) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -159,8 +159,10 @@ ActiveRecord::Schema.define(version: 20151025062928) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin",        default: false
+    t.text     "api_token"
   end
 
+  add_index "users", ["api_token"], name: "index_users_on_api_token"
   add_index "users", ["is_admin"], name: "index_users_on_is_admin"
 
 end
