@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025063144) do
+ActiveRecord::Schema.define(version: 20151025064342) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -158,11 +158,14 @@ ActiveRecord::Schema.define(version: 20151025063144) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_admin",        default: false
+    t.boolean  "is_admin",                  default: false
     t.text     "api_token"
+    t.text     "password_reset_token"
+    t.datetime "password_reset_expires_at"
   end
 
   add_index "users", ["api_token"], name: "index_users_on_api_token"
   add_index "users", ["is_admin"], name: "index_users_on_is_admin"
+  add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token"
 
 end
