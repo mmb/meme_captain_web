@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818044048) do
+ActiveRecord::Schema.define(version: 20151025062324) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20150818044048) do
     t.boolean  "private",          default: false
     t.boolean  "is_animated",      default: false
     t.text     "error"
+    t.datetime "expires_at"
   end
 
   add_index "gend_images", ["error"], name: "index_gend_images_on_error"
