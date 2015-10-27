@@ -58,19 +58,6 @@ describe MyController, type: :controller do
         get :show
         expect(assigns(:gend_images)).to eq [gi2, gi1]
       end
-
-      it "sets the user's name" do
-        get :show
-        expect(assigns(:name)).to eq user.email
-      end
-
-      it "sets the user's avatar url" do
-        get :show
-
-        digest = Digest::MD5.hexdigest(user.email)
-        expected = "http://www.gravatar.com/avatar/#{digest}"
-        expect(assigns(:avatar_url)).to eq(expected)
-      end
     end
 
     context 'when the user it not logged in' do
