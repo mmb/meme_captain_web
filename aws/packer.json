@@ -35,7 +35,7 @@
         "sudo service docker start",
         "git clone --branch deploy --depth 1 https://github.com/mmb/meme_captain_web.git",
         "pushd meme_captain_web",
-        "sudo docker build --rm=true --tag=mm62/meme_captain .",
+        "sudo docker build --rm=true --tag=meme_captain .",
         "popd",
         "rm -rf meme_captain_web"
       ],
