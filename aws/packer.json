@@ -28,6 +28,11 @@
       "type": "file"
     },
     {
+      "destination": "/startup",
+      "source": "startup",
+      "type": "file"
+    },
+    {
       "inline": [
         "sudo yum update -y",
         "sudo sed --in-place=.bak --expression='s/repo_upgrade: security/repo_upgrade: none/g' /etc/cloud/cloud.cfg",

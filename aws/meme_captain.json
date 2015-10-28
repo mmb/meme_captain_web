@@ -182,7 +182,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/small.env /env",
-                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts meme_captain"
+                ". /startup"
               ]
             ]
           }
@@ -676,7 +676,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/small.env /env",
-                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts meme_captain"
+                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts mm62/meme-captain-web"
               ]
             ]
           }
@@ -998,7 +998,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/large.env /env",
-                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts meme_captain"
+                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts mm62/meme-captain-web"
               ]
             ]
           }
@@ -1181,7 +1181,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/large.env /env",
-                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts meme_captain"
+                "docker run --name meme_captain --env-file=/env --privileged=true -d -p 80:6081 -v /database.yml:/app/config/database.yml -v /fonts:/app/fonts mm62/meme-captain-web"
               ]
             ]
           }
