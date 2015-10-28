@@ -38,7 +38,7 @@
         "sudo docker build --rm=true --tag=meme_captain .",
         "popd",
         "rm -rf meme_captain_web",
-        "sudo cat << EOF > /startup",
+        "cat << EOF > startup",
         "docker run \\",
         "  --name meme_captain \\",
         "  --env-file=/env \\",
@@ -48,7 +48,8 @@
         "  -v /database.yml:/app/config/database.yml \\",
         "  -v /fonts:/app/fonts \\",
         "  meme_captain",
-        "EOF"
+        "EOF",
+        "sudo mv startup /startup"
       ],
       "type": "shell"
     }
