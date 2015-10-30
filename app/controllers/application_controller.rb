@@ -12,5 +12,9 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def admin?
+    current_user.try(:is_admin)
+  end
+
   include ApplicationHelper
 end
