@@ -6,7 +6,7 @@
       "instance_type": "m4.large",
       "region": "us-east-1",
       "source_ami": "ami-1ecae776",
-      "spot_price": "0.03",
+      "spot_price": "0.05",
       "ssh_pty": true,
       "ssh_username": "ec2-user",
       "subnet_id": "subnet-c7219bec",
