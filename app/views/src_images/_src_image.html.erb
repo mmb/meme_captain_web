@@ -7,6 +7,6 @@
                 action: :new,
                 src: src_image.id_hash %>
 <% end %>
-<% if current_user %>
+<% if user %>
     <input type="checkbox" class="selector" data-id="<%= src_image.id_hash %>"/>
 <% end %>

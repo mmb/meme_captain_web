@@ -46,7 +46,7 @@
     <% src_images.each do |si| %>
         <div class="col-xs-6 col-sm-3 col-md-2">
           <div class="thumbnail">
-            <%= render(partial: si) %>
+            <%= render(partial: si, locals: {user: user}) %>
           </div>
         </div>
     <% end %>

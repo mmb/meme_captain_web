@@ -14,10 +14,8 @@ describe 'src_images/_src_image.html', type: :view do
   let(:user) { FactoryGirl.create(:user) }
 
   before do
-    allow(view).to receive(:current_user).with(no_args).and_return(user)
-
     render partial: 'src_images/src_image',
-           locals: { src_image: src_image }
+           locals: { src_image: src_image, user: user }
   end
 
   context 'the image has been processed' do
