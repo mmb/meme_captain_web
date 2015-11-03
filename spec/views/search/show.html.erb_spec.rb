@@ -13,6 +13,9 @@ describe 'search/show.html.erb', type: :view do
     assign(:gend_images, Kaminari.paginate_array(gend_images).page(1))
     assign(:show_toolbar, true)
     allow(view).to receive(:render).and_call_original
+    def view.current_user
+      nil
+    end
   end
 
   context 'when there are no src images' do

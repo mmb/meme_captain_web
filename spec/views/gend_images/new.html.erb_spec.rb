@@ -15,6 +15,9 @@ describe 'gend_images/new.html.erb', type: :view do
     assign(:gend_image, gend_image)
     assign(:caption_defaults, [{}, {}])
     assign(:src_image_url_with_extension, 'src image url with extension')
+    def view.current_user
+      nil
+    end
   end
 
   it 'renders' do

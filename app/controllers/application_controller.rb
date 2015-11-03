@@ -4,6 +4,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  def current_user
+    return token_user if token_user
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  helper_method :current_user
+
   def not_logged_in(notice = nil)
     return if current_user
 
@@ -22,5 +29,11 @@ class ApplicationController < ActionController::Base
     expires_in 1.week, public: true
   end
 
-  include ApplicationHelper
+  private
+
+  def token_user
+    authenticate_with_http_token do |token|
+      return User.find_by(api_token: token)
+    end
+  end
 end

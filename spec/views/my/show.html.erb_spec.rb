@@ -10,6 +10,9 @@ describe 'my/show.html.erb', type: :view do
     assign(:src_images, Kaminari.paginate_array([]).page(1))
     assign(:src_sets, Kaminari.paginate_array(src_sets).page(1))
     assign(:show_toolbar, true)
+    def view.current_user
+      nil
+    end
   end
 
   it 'sets the content for the title' do

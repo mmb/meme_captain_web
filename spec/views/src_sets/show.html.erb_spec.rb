@@ -8,6 +8,9 @@ describe 'src_sets/show.html.erb', type: :view do
   before do
     assign(:src_set, src_set)
     assign(:src_images, Kaminari.paginate_array([]).page(1))
+    def view.current_user
+      nil
+    end
   end
 
   it 'has the src set name in the title' do

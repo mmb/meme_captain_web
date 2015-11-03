@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 describe 'layouts/application.html.erb', type: :view do
+  before do
+    def view.current_user
+      nil
+    end
+  end
+
   it 'has the right title' do
     render
 
@@ -65,8 +71,12 @@ describe 'layouts/application.html.erb', type: :view do
     end
 
     it 'loads the gravatar using SSL' do
-      user = FactoryGirl.create(:user)
-      allow(view).to receive(:current_user).with(no_args).and_return(user)
+      view.instance_variable_set(:@current_user, FactoryGirl.create(:user))
+      # rubocop:disable Style/TrivialAccessors
+      def view.current_user
+        @current_user
+      end
+      # rubocop:enable Style/TrivialAccessors
       render
       expect(rendered).to have_selector(
         'img[src^="https://secure.gravatar.com"]')

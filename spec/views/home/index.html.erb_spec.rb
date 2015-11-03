@@ -13,12 +13,12 @@ describe 'home/index.html.erb', type: :view do
     assign(:gend_images, Kaminari.paginate_array(gend_images).page(1))
     assign(:show_toolbar, true)
     allow(view).to receive(:render).and_call_original
+    def view.current_user
+      nil
+    end
   end
 
   context 'when the user is not logged in' do
-    before do
-      allow(view).to receive(:current_user).with(no_args).and_return(nil)
-    end
     it 'shows a login link' do
       expect(render).to have_link('Login', href: '/session/new')
     end
