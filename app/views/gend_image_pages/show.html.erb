@@ -31,30 +31,32 @@
             <p><span class="label label-warning">Private</span></p>
         <% end %>
 
-        <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+        <% unless @gend_image.private %>
+          <%= link_to("http://www.reddit.com/submit?url=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
             Reddit
-        <% end %>
+          <% end %>
 
-        <% if @gend_image.is_animated %>
-            <%= link_to("http://gfycat.com/fetch/#{@gend_image_url}", class: 'btn btn-default') do %>
-                Gfycat
-            <% end %>
-        <% end %>
+          <% if @gend_image.is_animated %>
+              <%= link_to("http://gfycat.com/fetch/#{@gend_image_url}", class: 'btn btn-default') do %>
+                  Gfycat
+              <% end %>
+          <% end %>
 
-        <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn btn-default') do %>
-            Tweet
-        <% end %>
+          <%= link_to("https://twitter.com/intent/tweet?url=#{u(@gend_image_url)}&hashtags=memecaptain", class: 'btn btn-default') do %>
+              Tweet
+          <% end %>
 
-        <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
-            Pinterest
-        <% end %>
+          <%= link_to("http://pinterest.com/pin/create/button/?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}&media=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+              Pinterest
+          <% end %>
 
-        <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
-            Facebook
-        <% end %>
+          <%= link_to("http://facebook.com/sharer.php?u=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
+              Facebook
+          <% end %>
 
-        <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn btn-default') do %>
-            Google+
+          <%= link_to("https://plus.google.com/share?url=#{u(gend_image_page_url(:id => @gend_image.id_hash))}", class: 'btn btn-default') do %>
+              Google+
+          <% end %>
         <% end %>
 
         <% if browser.android? %>

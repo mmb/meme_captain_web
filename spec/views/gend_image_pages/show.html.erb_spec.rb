@@ -134,11 +134,24 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
   context 'when the image is animated' do
     let(:gend_image) do
-      FactoryGirl.create(:animated_gend_image, work_in_progress: false)
+      FactoryGirl.create(
+        :animated_gend_image, work_in_progress: false, private: privat)
     end
 
-    it 'has the gfycat button' do
-      expect(render).to have_link('Gfycat')
+    context 'when the image is private' do
+      let(:privat) { true }
+
+      it 'does not have the gfycat button' do
+        expect(render).to_not have_link('Gfycat')
+      end
+    end
+
+    context 'when the image is not private' do
+      let(:privat) { false }
+
+      it 'has the gfycat button' do
+        expect(render).to have_link('Gfycat')
+      end
     end
   end
 
@@ -164,6 +177,58 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     it 'has a script' do
       assign(:api_script, 'the script')
       expect(render).to have_text('the script')
+    end
+  end
+
+  context 'when the image is not private' do
+    let(:gend_image) do
+      FactoryGirl.create(:gend_image, private: false, work_in_progress: false)
+    end
+
+    it 'shows the Reddit button' do
+      expect(render).to have_link('Reddit')
+    end
+
+    it 'shows the Tweet button' do
+      expect(render).to have_link('Tweet')
+    end
+
+    it 'shows the Pinterest button' do
+      expect(render).to have_link('Pinterest')
+    end
+
+    it 'shows the Facebook button' do
+      expect(render).to have_link('Facebook')
+    end
+
+    it 'shows the Google+ button' do
+      expect(render).to have_link('Google+')
+    end
+  end
+
+  context 'when the image is private' do
+    let(:gend_image) do
+      FactoryGirl.create(:gend_image, private: true, work_in_progress: false)
+    end
+
+    it 'does not show the Reddit button' do
+      expect(render).to_not have_link('Reddit')
+    end
+
+    it 'does not show the Tweet button' do
+      expect(render).to_not have_link('Tweet')
+    end
+
+    it 'does not show the Pinterest button' do
+      expect(render).to_not have_link('Pinterest')
+    end
+
+    it 'does not show the Facebook button' do
+      expect(render).to_not have_link('Facebook')
+    end
+
+    it 'does not show the Google+ button' do
+      expect(render).to_not have_link('Google+')
     end
   end
 end
