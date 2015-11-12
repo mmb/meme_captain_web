@@ -15,7 +15,8 @@ module MemeCaptainWeb
     # first one will be used.
 
     def self.for(text)
-      best_font = default_fonts.find { |f| f.chars_for?(text) } ||
+      stripped_text = text.gsub(/\s+/, ' ').strip
+      best_font = default_fonts.find { |f| f.chars_for?(stripped_text) } ||
                   default_fonts.first
       File.basename(best_font.path)
     end

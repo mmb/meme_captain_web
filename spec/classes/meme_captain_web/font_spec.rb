@@ -168,6 +168,30 @@ describe 'MemeCaptainWeb::Font' do
 
         expect(MemeCaptainWeb::Font.for('abc')).to eq 'b.ttf'
       end
+
+      context 'when the text contains whitespace that will be filtered out' do
+        let(:b_tables) do
+          [
+            double(TTFunk::Table::Cmap::Subtable,
+                   unicode?: true,
+                   code_map: {
+                     32 => nil,
+                     97 => nil,
+                     98 => nil,
+                     99 => nil
+                   })
+          ]
+        end
+
+        it 'does not require the font to contains the whitespace characters' do
+          expect(TTFunk::File).to receive(:open).with(
+            '/tmp/fonts/a.ttf').and_return(a_file)
+          expect(TTFunk::File).to receive(:open).with(
+            '/tmp/fonts/b.ttf').and_return(b_file)
+
+          expect(MemeCaptainWeb::Font.for("abc\f\n\r\tabc")).to eq 'b.ttf'
+        end
+      end
     end
 
     context 'when no fonts have all the characters' do
