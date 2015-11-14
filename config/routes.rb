@@ -47,6 +47,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resource :api_token, only: :create
 
+  resource :dashboard, only: :show, controller: :dashboard
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
