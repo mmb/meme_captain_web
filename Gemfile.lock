@@ -189,7 +189,7 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    puma (2.14.0)
+    puma (2.15.3)
     pusher-client (0.6.2)
       json
       websocket (~> 1.0)
@@ -364,7 +364,7 @@ DEPENDENCIES
   local_time (~> 1.0.3)
   meme_captain!
   pg (~> 0.18.3)
-  puma (~> 2.14.0)
+  puma (~> 2.15, >= 2.15.3)
   rack-cache (~> 1.2)
   rack-rewrite (~> 1.5.1)
   rails (~> 4.2, >= 4.2.5)
