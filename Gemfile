@@ -9,7 +9,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'therubyracer'
+gem 'therubyracer', '~> 0.12.2'
 gem 'less-rails'
 
 gem 'bcrypt', '~> 3.1.7'
