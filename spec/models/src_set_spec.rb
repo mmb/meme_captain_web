@@ -30,6 +30,8 @@ describe SrcSet do
       set1.src_images << si3
 
       expect(set1.thumbnail).to eq si1.src_thumb
+      expect(set1.thumb_width).to eq(si1.src_thumb.width)
+      expect(set1.thumb_height).to eq(si1.src_thumb.height)
     end
 
     context 'when the set is empty' do

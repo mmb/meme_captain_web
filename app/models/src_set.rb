@@ -42,13 +42,11 @@ class SrcSet < ActiveRecord::Base
   end
 
   def thumb_width
-    thumb = thumbnail
-    thumb.width if thumb
+    thumbnail.try(:width)
   end
 
   def thumb_height
-    thumb = thumbnail
-    thumb.height if thumb
+    thumbnail.try(:height)
   end
 
   scope :active, -> { where is_deleted: false }
