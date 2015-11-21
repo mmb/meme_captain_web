@@ -16,7 +16,11 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'dynamic_form'
 
-gem 'rmagick', '~> 2.15.3', platforms: [:ruby, :mswin], require: 'rmagick'
+gem 'rmagick',
+    '~> 2.15',
+    '>= 2.15.4',
+    platforms: [:ruby, :mswin],
+    require: 'rmagick'
 gem 'rmagick4j', '~> 0.3.9', platforms: :jruby, require: 'rmagick'
 
 gem 'delayed_job_active_record', '~> 4.0.3'
