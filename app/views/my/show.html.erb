@@ -1,5 +1,7 @@
 <% content_for(:title) do %>Meme Captain My Images<% end %>
 
+<%= render(partial: 'api_token', locals: { current_token: @api_token }) %>
+
 <%= render(partial: 'src_images/src_images', locals: {
   user: current_user,
   show_remove_from_set: false,

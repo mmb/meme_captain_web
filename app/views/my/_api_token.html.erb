@@ -1,0 +1,8 @@
+<p>
+  API token: <span class="api-token"><%= current_token %></span>
+  <% if current_token %>
+    <button class="btn btn-default api-token-button">Regenerate</button>
+  <% else %>
+    <button class="btn btn-default api-token-button">Generate</button>
+  <% end %>
+</p>

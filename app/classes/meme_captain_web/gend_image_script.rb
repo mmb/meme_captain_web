@@ -6,6 +6,7 @@ module MemeCaptainWeb
     # rubocop:disable Metrics/LineLength
     Template = <<-ERB.freeze
 # shell script to recreate this image using the API
+# add -H 'Authorization: Token token="<your API token>"' to use an API token
 STATUS_URL=$(cat << EOS | curl -d @- -H 'Content-Type: application/json' -H 'Accept: application/json' -s <%= endpoint %> | jq -r .status_url
 <%= json %>
 EOS)

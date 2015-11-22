@@ -1,5 +1,6 @@
 # Meme Captain API
 
+* [Authentication](authentication.md)
 * [Create a meme image](create_meme_image.md)
 * [Create a source image](create_source_image.md)
 * [Search source images](search_source_images.md)

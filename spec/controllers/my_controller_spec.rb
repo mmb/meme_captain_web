@@ -5,7 +5,7 @@ require 'rails_helper'
 require 'digest/md5'
 
 describe MyController, type: :controller do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, api_token: 'secret') }
   let(:user2) { FactoryGirl.create(:user) }
 
   describe '#show' do
@@ -58,6 +58,11 @@ describe MyController, type: :controller do
         get :show
         expect(assigns(:gend_images)).to eq [gi2, gi1]
       end
+
+      it "sets the API token to the user's API token" do
+        get(:show)
+        expect(assigns(:api_token)).to eq('secret')
+      end
     end
 
     context 'when the user it not logged in' do
@@ -66,6 +71,11 @@ describe MyController, type: :controller do
       it 'redirects to the login form' do
         get :show
         expect(response).to redirect_to new_session_path
+      end
+
+      it 'sets the API token to nil' do
+        get(:show)
+        expect(assigns(:api_token)).to be_nil
       end
     end
   end

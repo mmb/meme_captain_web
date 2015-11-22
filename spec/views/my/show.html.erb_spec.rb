@@ -33,4 +33,13 @@ describe 'my/show.html.erb', type: :view do
       render
     end
   end
+
+  it 'renders the API token partial' do
+    assign(:api_token, 'secret')
+    allow(view).to receive(:render).and_call_original
+    expect(view).to receive(:render).with(
+      partial: 'api_token',
+      locals: { current_token: 'secret' })
+    render
+  end
 end

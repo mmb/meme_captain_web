@@ -9,6 +9,7 @@ class MyController < ApplicationController
     @src_images = src_images
     @gend_images = gend_images
     @show_toolbar = true
+    @api_token = api_token
   end
 
   private
@@ -25,5 +26,9 @@ class MyController < ApplicationController
   def gend_images
     GendImage.without_image.includes(:gend_thumb).owned_by(
       current_user).active.most_recent.page(params[:page])
+  end
+
+  def api_token
+    current_user.try(:api_token)
   end
 end

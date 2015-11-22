@@ -43,6 +43,7 @@ describe 'MemeCaptainWeb::GendImageScript' do
         # rubocop:disable Metrics/LineLength
         expected_output = <<-EXPECTED
 # shell script to recreate this image using the API
+# add -H 'Authorization: Token token="<your API token>"' to use an API token
 STATUS_URL=$(cat << EOS | curl -d @- -H 'Content-Type: application/json' -H 'Accept: application/json' -s http://testhost.com/gend_images | jq -r .status_url
 {
   "private": false,
@@ -94,6 +95,7 @@ EXPECTED
         # rubocop:disable Metrics/LineLength
         expected_output = <<-EXPECTED
 # shell script to recreate this image using the API
+# add -H 'Authorization: Token token="<your API token>"' to use an API token
 STATUS_URL=$(cat << EOS | curl -d @- -H 'Content-Type: application/json' -H 'Accept: application/json' -s http://testhost.com/gend_images | jq -r .status_url
 {
   "private": true,
