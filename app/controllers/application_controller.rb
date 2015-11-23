@@ -3,11 +3,9 @@
 # Application controller.
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :authenticate
 
-  def current_user
-    return token_user if token_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
-  end
+  attr_reader :current_user
 
   helper_method :current_user
 
@@ -31,9 +29,13 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def token_user
+  def authenticate
     authenticate_with_http_token do |token|
-      return User.find_by(api_token: token)
+      @current_user = User.find_by(api_token: token)
+      head(:unauthorized) unless @current_user
+      return
     end
+
+    @current_user = User.find_by(id: session[:user_id]) if session[:user_id]
   end
 end
