@@ -162,7 +162,7 @@
       "Properties": {
         "BlockDeviceMappings": [
           {
-            "DeviceName": "/dev/xvda1",
+            "DeviceName": "/dev/xvda",
             "Ebs": {
               "VolumeSize": "16"
             }
@@ -664,7 +664,7 @@
       "Properties": {
         "BlockDeviceMappings": [
           {
-            "DeviceName": "/dev/xvda1",
+            "DeviceName": "/dev/xvda",
             "Ebs": {
               "VolumeSize": "16"
             }
@@ -993,7 +993,7 @@
       "Properties": {
         "BlockDeviceMappings": [
           {
-            "DeviceName": "/dev/xvda1",
+            "DeviceName": "/dev/xvda",
             "Ebs": {
               "VolumeSize": "16"
             }
