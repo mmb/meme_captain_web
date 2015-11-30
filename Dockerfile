@@ -30,7 +30,7 @@ RUN apt-get install --assume-yes \
     zlib1g-dev \
   && curl http://www.imagemagick.org/download/releases/ImageMagick-6.9.2-7.tar.bz2 \
     | tar jx \
-  && cd ImageMagick-6.9.2-6 \
+  && cd ImageMagick-6.9.2-7 \
   && ./configure \
   && make \
   && make install \
