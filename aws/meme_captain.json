@@ -1182,6 +1182,14 @@
     },
     "spotLaunchConfig": {
       "Properties": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvda",
+            "Ebs": {
+              "VolumeSize": "16"
+            }
+          }
+        ],
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
