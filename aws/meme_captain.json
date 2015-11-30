@@ -160,6 +160,14 @@
     },
     "canaryLaunchConfig": {
       "Properties": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvda1",
+            "Ebs": {
+              "VolumeSize": "16"
+            }
+          }
+        ],
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
@@ -654,6 +662,14 @@
     },
     "onDemandLaunchConfig": {
       "Properties": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvda1",
+            "Ebs": {
+              "VolumeSize": "16"
+            }
+          }
+        ],
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
@@ -975,6 +991,14 @@
     },
     "spot2LaunchConfig": {
       "Properties": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvda1",
+            "Ebs": {
+              "VolumeSize": "16"
+            }
+          }
+        ],
         "IamInstanceProfile": {
           "Ref": "secretsInstanceProfile"
         },
