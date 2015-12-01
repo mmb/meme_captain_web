@@ -11,10 +11,15 @@ describe 'dashboard/show.html.erb', type: :view do
     end
   end
 
-  it 'show the gend images created' do
+  it 'shows the gend images created' do
     render
 
     expect(rendered).to have_text('7 gend images created')
+  end
+
+  it 'shows the src images created' do
+    render
+
     expect(rendered).to have_text('8 src images created')
   end
 end
