@@ -1,0 +1,1 @@
+alias cont='sudo docker exec -it meme_captain bash'

@@ -52,6 +52,17 @@
         "sudo mv startup /startup"
       ],
       "type": "shell"
+    },
+    {
+      "destination": "/home/ec2-user/.bashrc-packer",
+      "source": "bashrc",
+      "type": "file"
+    },
+    {
+      "inline": [
+        "echo '[ -f ~/.bashrc-packer ] && . ~/.bashrc-packer' >> /home/ec2-user/.bashrc"
+      ],
+      "type": "shell"
     }
   ]
 }
