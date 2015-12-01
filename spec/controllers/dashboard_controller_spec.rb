@@ -43,6 +43,16 @@ describe DashboardController, type: :controller do
 
         expect(assigns(:src_images_last_24h)).to eq(2)
       end
+
+      it 'counts the users created in the last 24 hours' do
+        FactoryGirl.create(:user, created_at: Time.now - 25.hours)
+        FactoryGirl.create(:user, created_at: Time.now - 23.hours)
+        # another user is created in let
+
+        get(:show)
+
+        expect(assigns(:new_users_last_24h)).to eq(2)
+      end
     end
   end
 end
