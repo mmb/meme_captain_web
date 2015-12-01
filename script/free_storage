@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# this script is run from monit when the root partition is low on space
+
+set -e
+
+cd /app
+
+rake tmp:cache:clear

@@ -38,3 +38,7 @@ check process metrics
   with pidfile /var/run/metrics.pid
   start program = "/sbin/start-stop-daemon --pidfile /var/run/metrics.pid --start --background --make-pidfile --exec /app/docker/metrics"
   stop program = "/sbin/start-stop-daemon --pidfile /var/run/metrics.pid --stop --remove-pidfile"
+
+check filesystem rootfs
+  with path /
+  if space usage > 80% then exec /app/script/free_storage
