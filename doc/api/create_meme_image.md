@@ -29,6 +29,15 @@ Example JSON body:
 }
 ```
 
+## Required Fields
+
+* src_image_id
+* text
+* top_left_x_pct
+* top_left_y_pct
+* width_pct
+* height_pct
+
 ## Caption Coordinates
 
 The top left corner of the image has the coordinates (0, 0).

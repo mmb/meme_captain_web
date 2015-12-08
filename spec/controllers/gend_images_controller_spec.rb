@@ -320,6 +320,142 @@ describe GendImagesController, type: :controller do
       end
     end
 
+    context 'when the height_pct is missing' do
+      let(:body) do
+        {
+          gend_image: {
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                top_left_x_pct: 0.05,
+                top_left_y_pct: 0.0,
+                width_pct: 0.9
+              }
+            ]
+          }
+        }
+      end
+
+      context 'when the client requests json' do
+        before { request.accept = 'application/json' }
+
+        it 'returns unprocessable entity status' do
+          post(:create, body)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.height_pct' => ["can't be blank"])
+        end
+      end
+    end
+
+    context 'when the top_left_x_pct is missing' do
+      let(:body) do
+        {
+          gend_image: {
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                height_pct: 0.25,
+                top_left_y_pct: 0.0,
+                width_pct: 0.9
+              }
+            ]
+          }
+        }
+      end
+
+      context 'when the client requests json' do
+        before { request.accept = 'application/json' }
+
+        it 'returns unprocessable entity status' do
+          post(:create, body)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.top_left_x_pct' => ["can't be blank"])
+        end
+      end
+    end
+
+    context 'when the top_left_y_pct is missing' do
+      let(:body) do
+        {
+          gend_image: {
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                height_pct: 0.25,
+                top_left_x_pct: 0.05,
+                width_pct: 0.9
+              }
+            ]
+          }
+        }
+      end
+
+      context 'when the client requests json' do
+        before { request.accept = 'application/json' }
+
+        it 'returns unprocessable entity status' do
+          post(:create, body)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.top_left_y_pct' => ["can't be blank"])
+        end
+      end
+    end
+
+    context 'when the width_pct is missing' do
+      let(:body) do
+        {
+          gend_image: {
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                height_pct: 0.25,
+                top_left_x_pct: 0.05,
+                top_left_y_pct: 0.0
+              }
+            ]
+          }
+        }
+      end
+
+      context 'when the client requests json' do
+        before { request.accept = 'application/json' }
+
+        it 'returns unprocessable entity status' do
+          post(:create, body)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.width_pct' => ["can't be blank"])
+        end
+      end
+    end
+
     context 'when the source image is not found' do
       it 'raises record not found' do
         expect do

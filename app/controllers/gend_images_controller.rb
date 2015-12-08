@@ -31,12 +31,9 @@ class GendImagesController < ApplicationController
     check_bot_attempt
 
     if @gend_image.save
-      respond_to do |format|
-        format.html { redirect_to_page }
-        format.json { redirect_to_pending }
-      end
+      create_success
     else
-      render :new
+      create_fail
     end
   end
 
@@ -78,6 +75,22 @@ class GendImagesController < ApplicationController
   def check_bot_attempt
     return if params[:gend_image][:email].blank?
     StatsD.increment('bot.attempt'.freeze)
+  end
+
+  def create_success
+    respond_to do |format|
+      format.html { redirect_to_page }
+      format.json { redirect_to_pending }
+    end
+  end
+
+  def create_fail
+    respond_to do |format|
+      format.html { render :new }
+      format.json do
+        render(json: @gend_image.errors, status: :unprocessable_entity)
+      end
+    end
   end
 
   def gend_image_params
