@@ -75,6 +75,8 @@ If the src_image_id in the initial POST request references a source image
 that is not found or is not finished being created, the response code will
 be 404.
 
+If there are validation errors the response code will be 422 Unprocessable Entity. The body will contain JSON with the errors.
+
 ## Shell script example
 
 On every meme image page, there is an `API` button that shows a shell script
