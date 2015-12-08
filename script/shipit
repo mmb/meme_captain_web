@@ -5,7 +5,7 @@ set -o pipefail
 
 rake spec
 
-if [ "$(git log @{u}.. | wc -l)" != "0" ]; then
+if [ "$(git log @{u}.. | wc -l)" -ne "0" ]; then
   git push
 
   echo 'Waiting for Travis build to start'
