@@ -2,8 +2,8 @@
 
 # User model.
 class User < ActiveRecord::Base
-  validates_presence_of :email
-  validates_uniqueness_of :email
+  validates :email, presence: true
+  validates :email, uniqueness: true
 
   has_secure_password
 
