@@ -5,6 +5,7 @@ FactoryGirl.define do
     File.open(Rails.root + 'spec/fixtures/files/ti_duck.jpg', 'rb') do |f|
       image(f.read)
     end
+    name('src image name')
   end
 
   factory :animated_src_image, parent: :src_image do
