@@ -200,11 +200,15 @@ describe GendImage do
     it 'returns the captions joined in position order' do
       gend_image = FactoryGirl.create(:gend_image)
       gend_image.captions.create(
-        text: 'test 1', top_left_x_pct: 9, top_left_y_pct: 20)
+        text: 'test 1', top_left_x_pct: 9, top_left_y_pct: 20,
+        width_pct: 0.9, height_pct: 0.25)
       gend_image.captions.create(
-        text: 'test 2', top_left_x_pct: 10, top_left_y_pct: 20)
+        text: 'test 2', top_left_x_pct: 10, top_left_y_pct: 20,
+        width_pct: 0.9, height_pct: 0.25)
       gend_image.captions.create(
-        text: 'test 3', top_left_x_pct: 7, top_left_y_pct: 7)
+        text: 'test 3', top_left_x_pct: 7, top_left_y_pct: 7,
+        width_pct: 0.9, height_pct: 0.25)
+      gend_image.save!
       expect(gend_image.meme_text).to eq('test 3 test 1 test 2')
     end
   end
