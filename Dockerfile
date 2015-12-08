@@ -28,9 +28,9 @@ RUN apt-get install --assume-yes \
     libxml2-dev \
     pkg-config \
     zlib1g-dev \
-  && curl http://www.imagemagick.org/download/releases/ImageMagick-6.9.2-7.tar.bz2 \
+  && curl http://www.imagemagick.org/download/ImageMagick.tar.bz2 \
     | tar jx \
-  && cd ImageMagick-6.9.2-7 \
+  && cd $(ls -d ImageMagick-* | head -n 1) \
   && ./configure \
   && make \
   && make install \
