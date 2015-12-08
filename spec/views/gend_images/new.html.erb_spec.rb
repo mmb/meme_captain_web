@@ -3,13 +3,8 @@
 require 'rails_helper'
 
 describe 'gend_images/new.html.erb', type: :view do
-  let(:src_image) do
-    stub_model(SrcImage, id_hash: 'abc', name: 'src image name')
-  end
-  let(:caption1) { stub_model(Caption, text: 'text 1') }
-  let(:gend_image) do
-    stub_model(GendImage, src_image: src_image, captions: [caption1])
-  end
+  let(:caption1) { FactoryGirl.create(:caption) }
+  let(:gend_image) { FactoryGirl.create(:gend_image, captions: [caption1]) }
 
   before do
     assign(:gend_image, gend_image)
@@ -53,10 +48,7 @@ describe 'gend_images/new.html.erb', type: :view do
   end
 
   context 'when the gend image is not private' do
-    let(:gend_image) do
-      stub_model(
-        GendImage, src_image: src_image, captions: [caption1], private: false)
-    end
+    let(:gend_image) { FactoryGirl.create(:gend_image, private: false) }
 
     it 'does not check the private checkbox' do
       expect(render).to_not have_selector(
@@ -65,10 +57,7 @@ describe 'gend_images/new.html.erb', type: :view do
   end
 
   context 'when the gend image is private' do
-    let(:gend_image) do
-      stub_model(
-        GendImage, src_image: src_image, captions: [caption1], private: true)
-    end
+    let(:gend_image) { FactoryGirl.create(:gend_image, private: true) }
 
     it 'checks the private checkbox' do
       expect(render).to have_selector(
