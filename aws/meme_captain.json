@@ -292,7 +292,7 @@
     "db": {
       "DeletionPolicy": "Snapshot",
       "Properties": {
-        "AllocatedStorage": "50",
+        "AllocatedStorage": "100",
         "AvailabilityZone": "us-east-1d",
         "DBInstanceClass": "db.t2.small",
         "DBName": "memecaptain",
