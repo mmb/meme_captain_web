@@ -49,6 +49,8 @@ MemeCaptainWeb::Application.routes.draw do
 
   resource :dashboard, only: :show, controller: :dashboard
 
+  resources :gend_image_scripts, only: :show
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
