@@ -10,8 +10,6 @@ class GendImagePagesController < ApplicationController
 
     @src_image = SrcImage.without_image.find(@gend_image.src_image_id)
     @gend_image_url = gend_image_url_for(@gend_image)
-    @api_script = MemeCaptainWeb::GendImageScript.new(
-      @gend_image, gend_images_url).script
 
     set_refresh
   end

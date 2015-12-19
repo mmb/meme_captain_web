@@ -31,14 +31,6 @@ describe GendImagePagesController, type: :controller do
         "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
     end
 
-    it 'sets the api script' do
-      get(:show, id: gend_image.id_hash)
-      expect(assigns(:api_script)).to include(src_image.id_hash)
-      expect(assigns(:api_script)).to include('http://test.host/gend_images')
-      expect(assigns(:api_script)).to include('caption 1')
-      expect(assigns(:api_script)).to include('caption 2')
-    end
-
     context 'when the gend image is less than 10 seconds old' do
       it 'refreshes in 2 seconds' do
         get :show, id: gend_image.id_hash
