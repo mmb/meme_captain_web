@@ -32,23 +32,7 @@ ERB
     private
 
     def json
-      JSON.pretty_generate(
-        private: @gend_image.private,
-        src_image_id: @gend_image.src_image.id_hash,
-        captions_attributes: captions
-      )
-    end
-
-    def captions
-      @gend_image.captions.map do |caption|
-        {
-          text: caption.text,
-          top_left_x_pct: caption.top_left_x_pct,
-          top_left_y_pct: caption.top_left_y_pct,
-          width_pct: caption.width_pct,
-          height_pct: caption.height_pct
-        }
-      end
+      GendImageApiRequestJson.new(@gend_image).json
     end
   end
 end
