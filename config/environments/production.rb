@@ -46,8 +46,8 @@ MemeCaptainWeb::Application.configure do
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
 
-  # Use a different logger for distributed setups
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  syslog_logger = MemeCaptainWeb::Syslog.new.logger(ENV, 'rails'.freeze)
+  config.logger = syslog_logger if syslog_logger
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

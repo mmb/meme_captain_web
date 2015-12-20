@@ -46,6 +46,7 @@ gem 'airbrake', '~> 4.1.0'
 gem 'delayed-plugins-airbrake', '~> 1.1.0'
 gem 'statsd-instrument', '~> 2.0.10'
 gem 'data_uri', '~> 0.1.0'
+gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
 
 group :test, :development do
   gem 'factory_girl_rails', '~> 4.5.0'
