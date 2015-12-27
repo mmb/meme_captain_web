@@ -333,7 +333,13 @@
         ],
         "SecurityGroupIngress": [
           {
-            "CidrIp": "0.0.0.0/0",
+            "CidrIp": "10.0.2.0/24",
+            "FromPort": "5432",
+            "IpProtocol": "tcp",
+            "ToPort": "5432"
+          },
+          {
+            "CidrIp": "10.0.3.0/24",
             "FromPort": "5432",
             "IpProtocol": "tcp",
             "ToPort": "5432"
