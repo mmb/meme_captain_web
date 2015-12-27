@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227053339) do
+ActiveRecord::Schema.define(version: 20151227060507) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -60,10 +60,14 @@ ActiveRecord::Schema.define(version: 20151227053339) do
     t.boolean  "is_animated",      default: false
     t.text     "error"
     t.datetime "expires_at"
+    t.text     "image_hash"
+    t.text     "average_color"
   end
 
+  add_index "gend_images", ["average_color"], name: "index_gend_images_on_average_color"
   add_index "gend_images", ["error"], name: "index_gend_images_on_error"
   add_index "gend_images", ["id_hash"], name: "index_gend_images_on_id_hash", unique: true
+  add_index "gend_images", ["image_hash"], name: "index_gend_images_on_image_hash"
   add_index "gend_images", ["is_animated"], name: "index_gend_images_on_is_animated"
   add_index "gend_images", ["is_deleted"], name: "index_gend_images_on_is_deleted"
   add_index "gend_images", ["private"], name: "index_gend_images_on_private"
@@ -78,9 +82,13 @@ ActiveRecord::Schema.define(version: 20151227053339) do
     t.integer  "width"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "image_hash"
+    t.text     "average_color"
   end
 
+  add_index "gend_thumbs", ["average_color"], name: "index_gend_thumbs_on_average_color"
   add_index "gend_thumbs", ["gend_image_id"], name: "index_gend_thumbs_on_gend_image_id"
+  add_index "gend_thumbs", ["image_hash"], name: "index_gend_thumbs_on_image_hash"
 
   create_table "no_result_searches", force: :cascade do |t|
     t.text     "query"
@@ -117,11 +125,15 @@ ActiveRecord::Schema.define(version: 20151227053339) do
     t.boolean  "is_animated",       default: false
     t.text     "error"
     t.datetime "expires_at"
+    t.text     "image_hash"
+    t.text     "average_color"
   end
 
+  add_index "src_images", ["average_color"], name: "index_src_images_on_average_color"
   add_index "src_images", ["error"], name: "index_src_images_on_error"
   add_index "src_images", ["gend_images_count"], name: "index_src_images_on_gend_images_count"
   add_index "src_images", ["id_hash"], name: "index_src_images_on_id_hash", unique: true
+  add_index "src_images", ["image_hash"], name: "index_src_images_on_image_hash"
   add_index "src_images", ["is_animated"], name: "index_src_images_on_is_animated"
   add_index "src_images", ["is_deleted"], name: "index_src_images_on_is_deleted"
   add_index "src_images", ["name"], name: "index_src_images_on_name"
@@ -157,7 +169,12 @@ ActiveRecord::Schema.define(version: 20151227053339) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content_type"
+    t.text     "image_hash"
+    t.text     "average_color"
   end
+
+  add_index "src_thumbs", ["average_color"], name: "index_src_thumbs_on_average_color"
+  add_index "src_thumbs", ["image_hash"], name: "index_src_thumbs_on_image_hash"
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
