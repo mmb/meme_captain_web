@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025064342) do
+ActiveRecord::Schema.define(version: 20151227053339) do
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
@@ -81,6 +81,12 @@ ActiveRecord::Schema.define(version: 20151025064342) do
   end
 
   add_index "gend_thumbs", ["gend_image_id"], name: "index_gend_thumbs_on_gend_image_id"
+
+  create_table "no_result_searches", force: :cascade do |t|
+    t.text     "query"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
