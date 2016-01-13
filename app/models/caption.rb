@@ -22,14 +22,16 @@ class Caption < ActiveRecord::Base
 
   def text_pos
     MemeCaptain::TextPos.new(
-      text_upcase, top_left_x_pct, top_left_y_pct, width_pct, height_pct,
+      text_processed, top_left_x_pct, top_left_y_pct, width_pct, height_pct,
       font: font_path)
   end
 
   private
 
-  def text_upcase
-    text.mb_chars.upcase
+  def text_processed
+    bidi = TwitterCldr::Shared::Bidi.from_string(text.mb_chars.upcase)
+    bidi.reorder_visually!
+    bidi.to_s
   end
 
   scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct'.freeze) }
