@@ -32,7 +32,8 @@ describe ErrorsController, type: :controller do
         expect(relation).to receive(:not).with(error: nil).and_return(relation)
         expect(relation).to receive(:order).with(:updated_at).and_return(
           relation)
-        expect(relation).to receive(:reverse_order).and_return(result)
+        expect(relation).to receive(:reverse_order).and_return(relation)
+        expect(relation).to receive(:limit).with(99).and_return(result)
 
         get(:index)
 
@@ -45,7 +46,8 @@ describe ErrorsController, type: :controller do
         expect(relation).to receive(:not).with(error: nil).and_return(relation)
         expect(relation).to receive(:order).with(:updated_at).and_return(
           relation)
-        expect(relation).to receive(:reverse_order).and_return(result)
+        expect(relation).to receive(:reverse_order).and_return(relation)
+        expect(relation).to receive(:limit).with(99).and_return(result)
 
         get(:index)
 
