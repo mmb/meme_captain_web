@@ -28,5 +28,12 @@ module MemeCaptainWeb
     else
       MAX_SRC_IMAGE_SIZE = ENV['MAX_SRC_IMAGE_SIZE'].to_i
     end
+
+    # Maximum size animated gif to attempt shrinking.
+    if ENV['MAX_GIF_SHRINK_SIZE'].blank?
+      MAX_GIF_SHRINK_SIZE = 0
+    else
+      MAX_GIF_SHRINK_SIZE = ENV['MAX_GIF_SHRINK_SIZE'].to_i
+    end
   end
 end

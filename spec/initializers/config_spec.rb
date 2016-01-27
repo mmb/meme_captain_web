@@ -53,4 +53,24 @@ describe MemeCaptainWeb::Config do
       expect(MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE).to eq(78)
     end
   end
+
+  context 'when the MAX_GIF_SHRINK_SIZE env var is not set' do
+    it 'uses the default' do
+      Kernel.silence_warnings { load(rb_path) }
+      expect(MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE).to eq(0)
+    end
+  end
+
+  context 'when the MAX_GIF_SHRINK_SIZE env var is set' do
+    before do
+      stub_const(
+        'ENV',
+        ENV.to_hash.merge('MAX_GIF_SHRINK_SIZE' => '78'))
+    end
+
+    it 'uses the environment variable' do
+      Kernel.silence_warnings { load(rb_path) }
+      expect(MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE).to eq(78)
+    end
+  end
 end
