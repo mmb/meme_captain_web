@@ -21,6 +21,67 @@ describe SrcImageProcessJob do
     end
   end
 
+  context 'when the image is an animated gif that is not too big' do
+    let(:src_image) { FactoryGirl.create(:animated_src_image) }
+    before do
+      stub_const('MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE', 2_000_000)
+      stub_const('MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE', 4_000_000)
+    end
+
+    it 'does not shrink the image' do
+      expect do
+        src_image_process_job.perform
+        src_image.reload
+      end.to_not change { src_image.magick_image_list.size }
+    end
+  end
+
+  context 'when the image is an animated gif that is too big' do
+    let(:src_image) { FactoryGirl.create(:animated_src_image) }
+    before do
+      stub_const('MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE', 1_000_000)
+      stub_const('MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE', 2_000_000)
+    end
+
+    it 'shrinks the image' do
+      expect do
+        src_image_process_job.perform
+        src_image.reload
+      end.to change { src_image.magick_image_list.size }.from(49).to(25)
+    end
+  end
+
+  context 'when the image is an animated gif that is too big but gif ' \
+    'shrinking is disabled' do
+    let(:src_image) { FactoryGirl.create(:animated_src_image) }
+    before do
+      stub_const('MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE', 1_000_000)
+      stub_const('MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE', 0)
+    end
+
+    it 'raises src image too big error' do
+      expect do
+        src_image_process_job.perform
+        src_image.reload
+      end.to raise_error(MemeCaptainWeb::Error::SrcImageTooBigError)
+    end
+  end
+
+  context 'when the image is an animated gif that is too big to shrink' do
+    let(:src_image) { FactoryGirl.create(:animated_src_image) }
+    before do
+      stub_const('MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE', 100_000)
+      stub_const('MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE', 200_000)
+    end
+
+    it 'raises src image too big error' do
+      expect do
+        src_image_process_job.perform
+        src_image.reload
+      end.to raise_error(MemeCaptainWeb::Error::SrcImageTooBigError)
+    end
+  end
+
   context 'when the image is in SVG format' do
     let(:src_image) { FactoryGirl.create(:svg_src_image) }
 

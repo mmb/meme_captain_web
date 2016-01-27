@@ -10,6 +10,8 @@ class SrcImageProcessJob
     src_image = SrcImage.find(src_image_id)
     src_image.load_from_url
 
+    shrink_large_animated(src_image)
+
     check_image_size(src_image)
 
     process_src_image(src_image)
@@ -37,6 +39,25 @@ class SrcImageProcessJob
   end
 
   private
+
+  def shrink_large_animated(src_image)
+    return unless shrink_animated?(src_image)
+
+    coalescer = MemeCaptainWeb::AnimatedGifCoalescer.new
+    trimmer = MemeCaptainWeb::AnimatedGifTrimmer.new
+    shrinker = MemeCaptainWeb::AnimatedGifShrinker.new(coalescer, trimmer)
+    shrinker.shrink(
+      src_image.image,
+      MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE) do |data|
+        src_image.image = data
+      end
+  end
+
+  def shrink_animated?(src_image)
+    src_image.image.start_with?('GIF') &&
+      src_image.image.size > MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE &&
+      src_image.image.size <= MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE
+  end
 
   def process_src_image(src_image)
     img = src_image.magick_image_list
