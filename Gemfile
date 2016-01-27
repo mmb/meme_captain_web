@@ -58,7 +58,7 @@ group :test, :development do
   gem 'rspec-activemodel-mocks', '~> 1.0.1'
   gem 'shoulda', '~> 3.5.0'
   gem 'jasmine-rails', '~> 0.10.8'
-  gem 'sqlite3', '~> 1.3.10'
+  gem 'sqlite3', '~> 1.3', '>= 1.3.11'
   gem 'web-console', '~> 2.2.1'
   gem 'rails_best_practices', '~> 1.15.7'
   gem 'coffeelint', '~> 1.11.0'
