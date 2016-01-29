@@ -47,6 +47,15 @@ describe Caption do
         expect(text_pos.text).to eq('ÀBÇDÊFG')
       end
     end
+
+    context 'when the text has emoji modifiers' do
+      let(:caption) { FactoryGirl.create(:caption, text: '🏼') }
+
+      it 'does not blow up twitter cldr' do
+        pending('twitter cldr supports emoji modifiers')
+        expect(text_pos.text).to eq('🏼')
+      end
+    end
   end
 
   describe '#default_values' do
