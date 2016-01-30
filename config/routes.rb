@@ -101,7 +101,7 @@ MemeCaptainWeb::Application.routes.draw do
 
   namespace :api do
     namespace :v3 do
-      resources :pending_src_images
+      resources :pending_src_images, only: :show
     end
   end
 
