@@ -89,8 +89,6 @@ describe 'quick_add_url', ->
 
         describe 'when the image does not finish within the polling window', ->
           beforeEach ->
-            fake_xhr =
-              getResponseHeader: -> 'application/json'
             spyOn($, 'ajax').and.callFake (url, params) ->
               switch url
                 when '/src_images/'
