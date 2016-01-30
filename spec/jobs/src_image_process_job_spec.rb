@@ -317,8 +317,8 @@ describe SrcImageProcessJob do
   end
 
   describe '#max_attempts' do
-    it 'is 3' do
-      expect(src_image_process_job.max_attempts).to eq(3)
+    it 'is 1' do
+      expect(src_image_process_job.max_attempts).to eq(1)
     end
   end
 end

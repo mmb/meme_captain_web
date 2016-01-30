@@ -28,7 +28,7 @@ class SrcImageProcessJob
   end
 
   def max_attempts
-    3
+    1
   end
 
   def failure(job)
