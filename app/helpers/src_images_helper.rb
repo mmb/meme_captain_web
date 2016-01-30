@@ -4,7 +4,7 @@
 module SrcImagesHelper
   def src_image_url_for(src_image)
     url_for(
-      controller: :src_images,
+      controller: '/src_images',
       action: :show,
       id: src_image.id_hash,
       format: src_image.format,
