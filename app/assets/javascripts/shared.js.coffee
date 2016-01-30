@@ -27,6 +27,9 @@ window.add_alert = (container, message, klass = 'alert-danger') ->
         terminal_log.error('Error loading image data')
       submit_error: ->
         terminal_log.error('Error submitting image data')
+      error_resp: (error) ->
+        terminal_log.error(error)
+
   reader.readAsDataURL(image_file)
 
 window.addEventListener 'paste', (event) ->

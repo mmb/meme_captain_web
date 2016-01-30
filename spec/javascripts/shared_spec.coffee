@@ -65,23 +65,39 @@ describe 'shared', ->
 
           describe 'when the image is finished within the polling window', ->
             beforeEach ->
-              fake_xhr =
-                getResponseHeader: -> 'image/jpeg'
               spyOn($, 'ajax').and.callFake (url, params) ->
-                switch url
-                  when '/src_images/'
-                    params.success
-                      id: 'src_image_id'
-                  when '/src_images/src_image_id'
-                    params.success()
+                params.success(id: 'src_image_id')
 
-            it "redirects to the new image's meme creation page", ->
-              spyOn(fake_location, 'replace')
-              paste_handler(
-                fake_window, fake_event, fake_clipboard, fake_reader)
-              jasmine.clock().tick(1000)
-              expect(fake_location.replace).toHaveBeenCalledWith(
-                '/gend_images/new?src=src_image_id')
+            describe 'when no error is returned', ->
+              beforeEach ->
+                spyOn($, 'get').and.callFake (url, success) ->
+                  success(in_progress: false)
+
+              it "redirects to the new image's meme creation page", ->
+                spyOn(fake_location, 'replace')
+                paste_handler(
+                  fake_window, fake_event, fake_clipboard, fake_reader)
+                jasmine.clock().tick(1000)
+                expect(fake_location.replace).toHaveBeenCalledWith(
+                  '/gend_images/new?src=src_image_id')
+
+            describe 'when an error is returned', ->
+              beforeEach ->
+                spyOn($, 'get').and.callFake (url, success) ->
+                  success(error: 'an error', in_progress: false)
+
+              it 'shows the error to the user', ->
+                paste_handler(
+                  fake_window, fake_event, fake_clipboard, fake_reader)
+                jasmine.clock().tick(1000)
+                expect($('#quick-add-url-status').text()).toMatch('an error')
+
+              it "does not redirect to the new image's meme creation page", ->
+                spyOn(fake_location, 'replace')
+                paste_handler(
+                  fake_window, fake_event, fake_clipboard, fake_reader)
+                jasmine.clock().tick(1000)
+                expect(fake_location.replace).not.toHaveBeenCalled()
 
           describe 'when the image does not finish within the polling ' +
           'window', ->

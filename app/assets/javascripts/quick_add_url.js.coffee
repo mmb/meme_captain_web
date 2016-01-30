@@ -12,11 +12,13 @@
       count = 0
       timer = setInterval ->
         callbacks.tick()
-        $.ajax "/src_images/#{data.id}",
-          type: 'head',
-          success: ->
+        $.get "/api/v3/pending_src_images/#{data.id}", (pending_data) ->
+          unless pending_data.in_progress
             clearInterval(timer)
-            callbacks.success(data.id)
+            if pending_data.error
+              callbacks.error_resp(pending_data.error)
+            else
+              callbacks.success(data.id)
         count += 1
         if count >= 10
           clearInterval(timer)
@@ -46,6 +48,8 @@ window.quick_add_url_init = (win) ->
           terminal_log.error('Error loading URL')
         submit_error: ->
           terminal_log.error('Error submitting URL')
+        error_resp: (error) ->
+          terminal_log.error(error)
 
 $(document).ready ->
   $('#quick-add-url').tooltip()
