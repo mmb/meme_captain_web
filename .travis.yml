@@ -3,8 +3,9 @@ language: ruby
 rvm:
 - 1.9.3
 - 2.0.0
-- 2.1.6
-- 2.2.3
+- 2.1.8
+- 2.2.4
+- 2.3.0
 - rbx-2
 matrix:
   allow_failures:
@@ -14,7 +15,9 @@ matrix:
       env: DB=database.yml.postgresql
     - rvm: 2.0.0
       env: DB=database.yml.postgresql
-    - rvm: 2.1.6
+    - rvm: 2.1.8
+      env: DB=database.yml.postgresql
+    - rvm: 2.2.4
       env: DB=database.yml.postgresql
     - rvm: rbx-2
       env: DB=database.yml.postgresql
@@ -22,7 +25,9 @@ matrix:
       env: DB=database.yml.mysql
     - rvm: 2.0.0
       env: DB=database.yml.mysql
-    - rvm: 2.1.6
+    - rvm: 2.1.8
+      env: DB=database.yml.mysql
+    - rvm: 2.2.4
       env: DB=database.yml.mysql
     - rvm: rbx-2
       env: DB=database.yml.mysql
