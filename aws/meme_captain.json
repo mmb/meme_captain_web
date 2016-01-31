@@ -1316,7 +1316,9 @@
     },
     "wwwCname": {
       "Properties": {
-        "HostedZoneId": "Z3AQBSTGFYJSTF",
+        "HostedZoneId": {
+          "Ref": "memecaptainHostedZone"
+        },
         "Name": "www.memecaptain.com",
         "ResourceRecords": [
           {
@@ -1326,6 +1328,7 @@
             ]
           }
         ],
+        "TTL": "300",
         "Type": "CNAME"
       },
       "Type": "AWS::Route53::RecordSet"
