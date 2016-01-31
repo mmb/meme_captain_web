@@ -1313,6 +1313,22 @@
         }
       },
       "Type": "AWS::EC2::SecurityGroup"
+    },
+    "wwwCname": {
+      "Properties": {
+        "HostedZoneId": "Z3AQBSTGFYJSTF",
+        "Name": "www.memecaptain.com",
+        "ResourceRecords": [
+          {
+            "Fn::GetAtt": [
+              "elb",
+              "CanonicalHostedZoneName"
+            ]
+          }
+        ],
+        "Type": "CNAME"
+      },
+      "Type": "AWS::Route53::RecordSet"
     }
   }
 }
