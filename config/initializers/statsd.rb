@@ -12,6 +12,10 @@ Api::V3::PendingSrcImagesController.extend(StatsD::Instrument)
 Api::V3::PendingSrcImagesController.statsd_count_success(
   :show, 'api.v3.src_image.create.poll')
 
+Api::V3::PendingGendImagesController.extend(StatsD::Instrument)
+Api::V3::PendingGendImagesController.statsd_count_success(
+  :show, 'api.v3.gend_image.create.poll')
+
 GendImageProcessJob.extend(StatsD::Instrument)
 GendImageProcessJob.statsd_count_success(:perform, 'job.gend_image.process')
 GendImageProcessJob.statsd_measure(:perform, 'job.gend_image.process.time')
