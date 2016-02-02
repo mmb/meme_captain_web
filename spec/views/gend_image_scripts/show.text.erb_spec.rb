@@ -13,7 +13,6 @@ describe 'gend_image_scripts/show.text.erb', type: :view do
   end
 
   it 'generates a script that can recreate the gend image using the API' do
-    # rubocop:disable Metrics/LineLength
     expected_script = <<-EXPECTED
 #!/bin/bash
 
@@ -48,7 +47,6 @@ while true; do
   i=$(( $i + 1 ))
 done
 EXPECTED
-    # rubocop:enable Metrics/LineLength
 
     expect(render).to eq(expected_script)
   end

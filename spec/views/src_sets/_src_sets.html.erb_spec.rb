@@ -8,10 +8,10 @@ describe 'src_sets/_src_sets.html', type: :view do
 
   let(:src_sets) do
     Kaminari.paginate_array([
-      src_set1,
-      src_set2,
-      FactoryGirl.create(:src_set)
-    ]).page(1).per(2)
+                              src_set1,
+                              src_set2,
+                              FactoryGirl.create(:src_set)
+                            ]).page(1).per(2)
   end
 
   before do

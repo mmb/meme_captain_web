@@ -21,19 +21,19 @@ module MemeCaptainWeb
     SetFrontPageMinQuality = (ENV['MC_SET_FRONT_PAGE_MIN_QUALITY'] || 0).to_i
 
     GEND_IMAGE_HOST =
-        ENV['GEND_IMAGE_HOST'].blank? ? nil : ENV['GEND_IMAGE_HOST']
+      ENV['GEND_IMAGE_HOST'].blank? ? nil : ENV['GEND_IMAGE_HOST']
 
-    if ENV['MAX_SRC_IMAGE_SIZE'].blank?
-      MAX_SRC_IMAGE_SIZE = 10_000_000
-    else
-      MAX_SRC_IMAGE_SIZE = ENV['MAX_SRC_IMAGE_SIZE'].to_i
-    end
+    MAX_SRC_IMAGE_SIZE = if ENV['MAX_SRC_IMAGE_SIZE'].blank?
+                           10_000_000
+                         else
+                           ENV['MAX_SRC_IMAGE_SIZE'].to_i
+                         end
 
     # Maximum size animated gif to attempt shrinking.
-    if ENV['MAX_GIF_SHRINK_SIZE'].blank?
-      MAX_GIF_SHRINK_SIZE = 0
-    else
-      MAX_GIF_SHRINK_SIZE = ENV['MAX_GIF_SHRINK_SIZE'].to_i
-    end
+    MAX_GIF_SHRINK_SIZE = if ENV['MAX_GIF_SHRINK_SIZE'].blank?
+                            0
+                          else
+                            ENV['MAX_GIF_SHRINK_SIZE'].to_i
+                          end
   end
 end

@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # Generated (meme) image model.
 class GendImage < ActiveRecord::Base
@@ -40,14 +41,12 @@ class GendImage < ActiveRecord::Base
   def self.for_user(user, query, page)
     if user.try(:is_admin)
       without_image.includes(:gend_thumb).caption_matches(query)
-        .most_recent.page(page)
+                   .most_recent.page(page)
     else
       without_image.includes(:gend_thumb).caption_matches(query)
-        .publick.active.finished.most_recent.page(page)
+                   .publick.active.finished.most_recent.page(page)
     end
   end
-
-  protected
 
   scope :active, -> { where is_deleted: false }
 

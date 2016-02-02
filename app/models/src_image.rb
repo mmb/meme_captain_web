@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # Source image model.
 class SrcImage < ActiveRecord::Base
@@ -19,11 +20,9 @@ class SrcImage < ActiveRecord::Base
   attr_accessor :image_url
 
   def image_if_not_url
-    # rubocop:disable Style/GuardClause
     if url.blank? && image.blank?
       errors.add :image, 'is required if url is not set.'.freeze
     end
-    # rubocop:enable Style/GuardClause
   end
 
   def load_from_url
@@ -55,14 +54,12 @@ class SrcImage < ActiveRecord::Base
   def self.for_user(user, query, page)
     if user.try(:is_admin)
       without_image.includes(:src_thumb).name_matches(query)
-        .most_used.page(page)
+                   .most_used.page(page)
     else
       without_image.includes(:src_thumb).name_matches(query)
-        .publick.active.finished.most_used.page(page)
+                   .publick.active.finished.most_used.page(page)
     end
   end
-
-  protected
 
   scope :active, -> { where is_deleted: false }
 

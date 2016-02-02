@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MemeCaptainWeb
   # Configuration of remote syslog from environment variable.
   class Syslog

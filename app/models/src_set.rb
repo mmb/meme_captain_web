@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # Source image set model.
 class SrcSet < ActiveRecord::Base
@@ -10,12 +11,10 @@ class SrcSet < ActiveRecord::Base
   belongs_to :user
 
   def one_active_name
-    # rubocop:disable Style/GuardClause
     if new_record? && name_taken? ||
        !is_deleted && name_taken_by_other?
       errors.add(:name, 'has already been taken'.freeze)
     end
-    # rubocop:enable Style/GuardClause
   end
 
   def add_src_images(add_id_hashes)

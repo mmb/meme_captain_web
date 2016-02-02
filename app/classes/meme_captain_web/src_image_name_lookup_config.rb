@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 module MemeCaptainWeb
   # Src image name lookup setup.

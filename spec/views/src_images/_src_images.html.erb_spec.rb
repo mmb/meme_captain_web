@@ -10,9 +10,9 @@ describe 'src_images/_src_images.html', type: :view do
   let(:src_image) { FactoryGirl.create(:finished_src_image) }
   let(:src_images) do
     Kaminari.paginate_array([
-      src_image,
-      FactoryGirl.create(:finished_src_image)
-    ]).page(1).per(1)
+                              src_image,
+                              FactoryGirl.create(:finished_src_image)
+                            ]).page(1).per(1)
   end
 
   context 'when the user is logged in' do

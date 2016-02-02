@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ActiveSupport::Notifications.subscribe(
   'process_action.action_controller') do |_, _, _, _, payload|
   prefix = "#{payload[:controller]}.#{payload[:action]}.#{payload[:format]}"

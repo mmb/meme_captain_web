@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 MemeCaptainWeb::Application.configure do
   # Settings specified here will take precedence over those in

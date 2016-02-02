@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # Generated (meme) images controller.
 class GendImagesController < ApplicationController
@@ -94,9 +95,10 @@ class GendImagesController < ApplicationController
   end
 
   def gend_image_params
-    params.require(:gend_image).permit({ captions_attributes: [
-      :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
-      :height_pct] }, :private, :email)
+    params.require(:gend_image).permit(
+      { captions_attributes: [
+        :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
+        :height_pct] }, :private, :email)
   end
 
   def redirect_to_pending

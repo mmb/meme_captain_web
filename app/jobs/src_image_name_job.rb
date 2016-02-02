@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Job to automatically name source images using Google.
 class SrcImageNameJob
   attr_reader :src_image_id

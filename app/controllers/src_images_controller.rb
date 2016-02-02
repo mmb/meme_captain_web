@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # Source images controller.
 class SrcImagesController < ApplicationController
@@ -75,12 +76,10 @@ class SrcImagesController < ApplicationController
   end
 
   def read_image_data(submitted_params)
-    # rubocop:disable Style/GuardClause
     if submitted_params.try(:[], :image)
       submitted_params[:image] = submitted_params[:image].read
       StatsD.increment('src_image.upload'.freeze)
     end
-    # rubocop:enable Style/GuardClause
   end
 
   def create_success

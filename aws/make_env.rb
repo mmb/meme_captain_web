@@ -4,11 +4,11 @@ require 'yaml'
 
 env = YAML.load_file('env.yml')
 
-if File.exist?('env_private.yml')
-  private = YAML.load_file('env_private.yml')
-else
-  private = {}
-end
+private = if File.exist?('env_private.yml')
+            YAML.load_file('env_private.yml')
+          else
+            {}
+          end
 
 env.merge!(private) { |_key, oldval, newval| oldval.merge(newval) }
 

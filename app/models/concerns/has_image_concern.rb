@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # ActiveRecord::Model mixin for models that store an image in a binary
 # column.
@@ -17,7 +18,7 @@ module HasImageConcern
 
     self.content_type = img.content_type
     load_image_dimension_fields(img)
-    self.is_animated = img.animated? if self.respond_to?(:is_animated=)
+    self.is_animated = img.animated? if respond_to?(:is_animated=)
     img.destroy!
     true # must return true for before_validation callback
   end
