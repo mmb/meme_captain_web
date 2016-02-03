@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131055617) do
+ActiveRecord::Schema.define(version: 20160203060839) do
+
+  create_table "blocked_ips", force: :cascade do |t|
+    t.text     "ip",         null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "captions", force: :cascade do |t|
     t.text     "text"
