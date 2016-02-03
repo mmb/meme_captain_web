@@ -20,6 +20,12 @@ GendImageProcessJob.extend(StatsD::Instrument)
 GendImageProcessJob.statsd_count_success(:perform, 'job.gend_image.process')
 GendImageProcessJob.statsd_measure(:perform, 'job.gend_image.process.time')
 
+MemeCaptainWeb::AnimatedGifShrinker.extend(StatsD::Instrument)
+MemeCaptainWeb::AnimatedGifShrinker.statsd_count_success(
+  :shrink, 'animated_gif_shrinker.shrink')
+MemeCaptainWeb::AnimatedGifShrinker.statsd_measure(
+  :shrink, 'animated_gif_shrinker.shrink.runtime')
+
 SrcImageNameJob.extend(StatsD::Instrument)
 SrcImageNameJob.statsd_measure(:perform, 'job.src_image.name.time')
 
