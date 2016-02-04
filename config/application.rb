@@ -66,5 +66,7 @@ module MemeCaptainWeb
     config.active_record.raise_in_transactional_callbacks = true
 
     config.x.src_image_name_lookup_host = nil
+
+    config.middleware.use(Rack::Attack)
   end
 end

@@ -195,6 +195,8 @@ GEM
       json
       websocket (~> 1.0)
     rack (1.6.4)
+    rack-attack (4.3.1)
+      rack
     rack-cache (1.2)
       rack (>= 0.4)
     rack-rewrite (1.5.1)
@@ -373,6 +375,7 @@ DEPENDENCIES
   meme_captain!
   pg (~> 0.18.3)
   puma (~> 2.15, >= 2.15.3)
+  rack-attack (~> 4.3, >= 4.3.1)
   rack-cache (~> 1.2)
   rack-rewrite (~> 1.5.1)
   rails (~> 4.2, >= 4.2.5)
