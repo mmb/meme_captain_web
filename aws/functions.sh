@@ -78,7 +78,7 @@ wait_for_pool_healthy() {
 
 wait_for_all_healthy() {
   wait_for_pool_healthy canary
-  wait_for_pool_healthy ondemand
+  # wait_for_pool_healthy ondemand
   wait_for_pool_healthy spot
 }
 
