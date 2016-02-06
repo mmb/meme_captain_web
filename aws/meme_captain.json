@@ -1011,7 +1011,7 @@
         "ImageId": {
           "Ref": "spotAmi"
         },
-        "InstanceType": "m1.large",
+        "InstanceType": "c3.large",
         "KeyName": "memecaptain",
         "SecurityGroups": [
           {
