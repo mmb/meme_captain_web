@@ -39,7 +39,7 @@ describe 'layouts/application.html.erb', type: :view do
     render
 
     expect(rendered).to have_selector(
-      'link[rel="apple-touch-icon"][href="/assets/apple-touch-icon.png"]',
+      'link[rel="apple-touch-icon"][href^="/assets/apple-touch-icon-"]',
       visible: false)
   end
 
