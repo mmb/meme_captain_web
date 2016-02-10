@@ -10,7 +10,7 @@ end
 
 gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 gem 'therubyracer', '~> 0.12.2'
-gem 'less-rails'
+gem 'less-rails', '~> 2.7', '>= 2.7.1'
 
 gem 'bcrypt', '~> 3.1.7'
 
