@@ -32,7 +32,7 @@ gem 'meme_captain',
 
 gem 'kaminari', '~> 0.16.3'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'puma', '~> 2.15', '>= 2.15.3'
+gem 'puma', '~> 2.16'
 gem 'browser', '~> 1.0.1'
 gem 'gravatar-ultimate', '~> 2.0.0'
 gem 'faraday', '~> 0.9.1'
