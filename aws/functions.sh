@@ -36,6 +36,18 @@ instances_in_pool() {
   sort
 }
 
+pool_desired_capacity() {
+  POOL="$1"
+  aws autoscaling describe-auto-scaling-groups \
+  | \
+  jq \
+    --raw-output \
+    ".AutoScalingGroups[] | \
+      select(.Tags[] | \
+        select(.Key == \"pool\" and .Value == \"$POOL\")) | \
+      .DesiredCapacity"
+}
+
 elb_healthy_instances() {
   aws elb describe-instance-health \
     --load-balancer-name memecaptain \
@@ -56,6 +68,9 @@ wait_for_pool_healthy() {
 
   while true; do
     echo `date` waiting for all instances in $POOL to be healthy
+    DESIRED_CAPACITY=$(pool_desired_capacity "$POOL")
+    echo "`date` $POOL pool desired capacity = $DESIRED_CAPACITY"
+    if [ "$DESIRED_CAPACITY" -eq 0 ]; then break; fi
 
     instances_in_pool "$POOL" > pool
     if [ -s pool ]; then
@@ -78,7 +93,7 @@ wait_for_pool_healthy() {
 
 wait_for_all_healthy() {
   wait_for_pool_healthy canary
-  # wait_for_pool_healthy ondemand
+  wait_for_pool_healthy ondemand
   wait_for_pool_healthy spot
 }
 
