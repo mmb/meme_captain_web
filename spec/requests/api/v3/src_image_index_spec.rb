@@ -5,6 +5,7 @@ describe 'list src images using the JSON API', type: :request do
     src_image = FactoryGirl.create(:src_image, work_in_progress: false)
     src_image.set_derived_image_fields
     src_image.save!
+    src_image.reload
 
     get(
       '/api/v3/src_images',
