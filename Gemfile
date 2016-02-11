@@ -64,7 +64,7 @@ group :test, :development do
   gem 'rails_best_practices', '~> 1.15.7'
   gem 'coffeelint', '~> 1.14'
   gem 'travis', '~> 1.8.0'
-  gem 'capybara', '~> 2.5.0'
+  gem 'capybara', '~> 2.6', '>= 2.6.2'
 end
 
 group :test do
