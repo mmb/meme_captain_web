@@ -88,7 +88,7 @@ describe SrcImagesController, type: :controller do
     context 'when the user is an admin user' do
       let(:user) { FactoryGirl.create(:admin_user) }
 
-      it 'does not show deleted images' do
+      it 'shows deleted images' do
         FactoryGirl.create(:src_image, user: user, work_in_progress: false)
         FactoryGirl.create(
           :src_image, user: user, is_deleted: true, work_in_progress: false)
@@ -98,7 +98,7 @@ describe SrcImagesController, type: :controller do
         expect(assigns(:src_images).size).to eq(2)
       end
 
-      it 'does not show work in progress images' do
+      it 'shows work in progress images' do
         FactoryGirl.create(:src_image, user: user)
         FactoryGirl.create(:src_image, user: user, work_in_progress: false)
 
