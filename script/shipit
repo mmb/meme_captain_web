@@ -3,7 +3,7 @@
 set -e
 set -o pipefail
 
-rake spec
+rake spec:all
 
 if [ "$(git log @{u}.. | wc -l)" -ne "0" ]; then
   git push
