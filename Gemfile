@@ -63,7 +63,7 @@ group :test, :development do
   gem 'web-console', '~> 2.2.1'
   gem 'rails_best_practices', '~> 1.15.7'
   gem 'coffeelint', '~> 1.14'
-  gem 'travis', '~> 1.8.0'
+  gem 'travis', '~> 1.8', '>= 1.8.2'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
 end
 
