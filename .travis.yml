@@ -76,7 +76,7 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 - ./ci/add_mysql_gem.sh
 before_script:
-- '[ -n "$DB"] && cp config/database.yml.$DB config/database.yml'
+- 'if [ -n "$DB"]; then cp config/database.yml.$DB config/database.yml; fi'
 - bundle exec rake db:create db:migrate
 sudo: false
 addons:
