@@ -74,9 +74,9 @@ env:
     - TASK=spec:javascript
 before_install:
 - sh -e /etc/init.d/xvfb start
-- ./ci/add_mysql_gem.sh
 before_script:
 - 'if [ -n "$DB"]; then cp config/database.yml.$DB config/database.yml; fi'
+- if [ "$DB" == 'mysql' ]; then echo "gem 'mysql2', '~> 0.3.13'" >> Gemfile; fi
 - bundle exec rake db:create db:migrate
 sudo: false
 addons:
