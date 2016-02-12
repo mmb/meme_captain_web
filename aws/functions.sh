@@ -61,6 +61,11 @@ elb_healthy_instances() {
 
 wait_for_pool_healthy() {
   POOL="$1"
+
+  DESIRED_CAPACITY=$(pool_desired_capacity "$POOL")
+  echo "`date` $POOL pool desired capacity = $DESIRED_CAPACITY"
+  if [ "$DESIRED_CAPACITY" -eq 0 ]; then return; fi
+
   START=$SECONDS
 
   TEMP=$(mktemp -d -t pool_health)
@@ -68,9 +73,6 @@ wait_for_pool_healthy() {
 
   while true; do
     echo `date` waiting for all instances in $POOL to be healthy
-    DESIRED_CAPACITY=$(pool_desired_capacity "$POOL")
-    echo "`date` $POOL pool desired capacity = $DESIRED_CAPACITY"
-    if [ "$DESIRED_CAPACITY" -eq 0 ]; then break; fi
 
     instances_in_pool "$POOL" > pool
     if [ -s pool ]; then
