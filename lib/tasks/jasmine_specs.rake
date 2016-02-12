@@ -1,1 +1,0 @@
-task spec: :'spec:javascript'

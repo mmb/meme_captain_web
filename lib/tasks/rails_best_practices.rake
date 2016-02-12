@@ -7,5 +7,3 @@ task :rails_best_practices do
   # error_count = analyzer.runner.errors.size
   # fail("#{error_count} rails best practices errors") if error_count > 0
 end
-
-task spec: :rails_best_practices
