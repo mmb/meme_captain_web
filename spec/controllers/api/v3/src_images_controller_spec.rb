@@ -63,39 +63,6 @@ describe Api::V3::SrcImagesController, type: :controller do
         expect(Time.parse(parsed_body[1]['updated_at']).to_i).to eq(
           src_image2.updated_at.to_i)
       end
-
-      context 'when a gend image host is set in the config' do
-        before do
-          stub_const('MemeCaptainWeb::Config::GEND_IMAGE_HOST',
-                     'gendimagehost.com')
-        end
-
-        it 'uses the gend image host in src image urls' do
-          src_image1 = FactoryGirl.create(
-            :src_image,
-            name: 'image 1',
-            work_in_progress: false)
-          src_image1.set_derived_image_fields
-          src_image1.save!
-
-          get :index, format: :json
-          parsed_body = JSON.parse(response.body)
-          expect(parsed_body[0]).to include(
-            'id_hash' => src_image1.id_hash,
-            'width' => 399,
-            'height' => 399,
-            'size' => 9141,
-            'content_type' => 'image/jpeg',
-            'name' => 'image 1',
-            'image_url' =>
-  "http://gendimagehost.com/src_images/#{src_image1.id_hash}.jpg"
-          )
-          expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
-            src_image1.created_at.to_i)
-          expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
-            src_image1.updated_at.to_i)
-        end
-      end
     end
   end
 
