@@ -43,19 +43,12 @@ module Api
 
       def create_success
         respond_to do |format|
-          format.html do
-            redirect_to(
-              { controller: :my, action: :show },
-              notice: 'Source image created.'.freeze
-            )
-          end
           format.json { redirect_to_pending }
         end
       end
 
       def create_fail
         respond_to do |format|
-          format.html { render(:new) }
           format.json do
             render(json: @src_image.errors, status: :unprocessable_entity)
           end
