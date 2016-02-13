@@ -13,56 +13,98 @@ describe Api::V3::SrcImagesController, type: :controller do
   end
 
   describe "GET 'index'" do
-    context 'when JSON is requested' do
-      it 'serves JSON' do
-        src_image1 = FactoryGirl.create(
-          :src_image,
-          name: 'image 1',
-          work_in_progress: false)
-        src_image1.set_derived_image_fields
-        src_image1.save!
-        2.times { FactoryGirl.create(:gend_image, src_image: src_image1) }
+    let(:src_image1) do
+      FactoryGirl.create(:finished_src_image, name: 'src image 1')
+    end
 
-        Timecop.travel(Time.now + 1)
+    let(:src_image2) do
+      FactoryGirl.create(:finished_src_image, name: 'src image 2')
+    end
 
-        src_image2 = FactoryGirl.create(
-          :src_image,
-          name: 'image 1',
-          work_in_progress: false)
-        src_image2.set_derived_image_fields
-        src_image2.save!
-        1.times { FactoryGirl.create(:gend_image, src_image: src_image2) }
+    let(:src_image3) do
+      FactoryGirl.create(:finished_src_image, name: 'src image 3')
+    end
 
-        get :index, format: :json
-        parsed_body = JSON.parse(response.body)
-        expect(parsed_body[0]).to include(
-          'id_hash' => src_image1.id_hash,
-          'width' => 399,
-          'height' => 399,
-          'size' => 9141,
-          'content_type' => 'image/jpeg',
-          'name' => 'image 1',
-          'image_url' =>
-               "http://test.host/src_images/#{src_image1.id_hash}.jpg")
-        expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
-          src_image1.created_at.to_i)
-        expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
-          src_image1.updated_at.to_i)
+    let(:src_images) { [src_image1, src_image2, src_image3] }
 
-        expect(parsed_body[1]).to include(
-          'id_hash' => src_image2.id_hash,
-          'width' => 399,
-          'height' => 399,
-          'size' => 9141,
-          'content_type' => 'image/jpeg',
-          'name' => 'image 1',
-          'image_url' =>
-              "http://test.host/src_images/#{src_image2.id_hash}.jpg")
-        expect(Time.parse(parsed_body[1]['created_at']).to_i).to eq(
-          src_image2.created_at.to_i)
-        expect(Time.parse(parsed_body[1]['updated_at']).to_i).to eq(
-          src_image2.updated_at.to_i)
+    before do
+      src_images.each do |src_image|
+        src_image.set_derived_image_fields
+        src_image.save!
       end
+    end
+
+    it 'gets the src images for the user, query and page' do
+      expect(SrcImage).to receive(:for_user).with(user, 'test query', '7')
+        .and_return(src_images)
+      get(:index, q: 'test query', page: '7', format: :json)
+    end
+
+    it 'sets the image url on each src image' do
+      allow(SrcImage).to receive(:for_user).with(user, nil, nil).and_return(
+        src_images)
+      expect(src_image1).to receive(:image_url=).with(
+        "http://test.host/src_images/#{src_image1.id_hash}.jpg")
+      expect(src_image2).to receive(:image_url=).with(
+        "http://test.host/src_images/#{src_image2.id_hash}.jpg")
+      expect(src_image3).to receive(:image_url=).with(
+        "http://test.host/src_images/#{src_image3.id_hash}.jpg")
+      get(:index, format: :json)
+    end
+
+    it 'returns the src images as JSON' do
+      allow(SrcImage).to receive(:for_user).with(user, nil, nil).and_return(
+        src_images)
+      get(:index, format: :json)
+      json_body = JSON.parse(response.body)
+      expect(json_body).to eq(
+        [
+          {
+            'id_hash' => src_image1.id_hash,
+            'width' => 399,
+            'height' => 399,
+            'size' => 9141,
+            'content_type' => 'image/jpeg',
+            'created_at' => src_image1.created_at.strftime(
+              '%Y-%m-%dT%H:%M:%S.%LZ'),
+            'updated_at' => src_image1.updated_at.strftime(
+              '%Y-%m-%dT%H:%M:%S.%LZ'),
+            'name' => 'src image 1',
+            'image_url' =>
+        "http://test.host/src_images/#{src_image1.id_hash}.jpg"
+          }, {
+            'id_hash' => src_image2.id_hash,
+            'width' => 399,
+            'height' => 399,
+            'size' => 9141,
+            'content_type' => 'image/jpeg',
+            'created_at' => src_image2.created_at.strftime(
+              '%Y-%m-%dT%H:%M:%S.%LZ'),
+            'updated_at' => src_image2.updated_at.strftime(
+              '%Y-%m-%dT%H:%M:%S.%LZ'),
+            'name' => 'src image 2',
+            'image_url' =>
+        "http://test.host/src_images/#{src_image2.id_hash}.jpg"
+          }, {
+            'id_hash' => src_image3.id_hash,
+            'width' => 399,
+            'height' => 399,
+            'size' => 9141,
+            'content_type' => 'image/jpeg',
+            'created_at' => src_image3.created_at.strftime(
+              '%Y-%m-%dT%H:%M:%S.%LZ'),
+            'updated_at' => src_image3.updated_at.strftime(
+              '%Y-%m-%dT%H:%M:%S.%LZ'),
+            'name' => 'src image 3',
+            'image_url' =>
+        "http://test.host/src_images/#{src_image3.id_hash}.jpg"
+          }
+        ])
+    end
+
+    it 'sets the content type to application/json' do
+      get(:index, format: :json)
+      expect(response.content_type).to eq('application/json')
     end
   end
 
