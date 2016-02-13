@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe SrcImagesController, type: :controller do
+describe Api::V3::SrcImagesController, type: :controller do
   include StatsD::Instrument::Matchers
 
   let(:user) { FactoryGirl.create(:user) }
@@ -13,13 +13,6 @@ describe SrcImagesController, type: :controller do
   end
 
   describe "GET 'new'" do
-    context 'when the user is logged in' do
-      it 'returns http success' do
-        get :new
-        expect(response).to be_success
-      end
-    end
-
     context 'when the user it not logged in' do
       let(:user) { nil }
       it 'redirects to the login form' do
@@ -30,129 +23,6 @@ describe SrcImagesController, type: :controller do
   end
 
   describe "GET 'index'" do
-    it 'returns http success' do
-      get :index
-
-      expect(response).to be_success
-    end
-
-    it 'shows the images sorted by reverse gend image count' do
-      si1 = FactoryGirl.create(:src_image,
-                               user: user,
-                               gend_images_count: 20,
-                               work_in_progress: false)
-      si2 = FactoryGirl.create(:src_image,
-                               user: user,
-                               gend_images_count: 10,
-                               work_in_progress: false)
-      si3 = FactoryGirl.create(:src_image,
-                               user: user,
-                               gend_images_count: 30,
-                               work_in_progress: false)
-
-      get :index
-
-      expect(assigns(:src_images)).to eq([si3, si1, si2])
-    end
-
-    context 'when the user is not an admin user' do
-      it 'does not show deleted images' do
-        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
-        FactoryGirl.create(
-          :src_image, user: user, is_deleted: true, work_in_progress: false)
-
-        get :index
-
-        expect(assigns(:src_images).size).to eq(1)
-      end
-
-      it 'does not show work in progress images' do
-        FactoryGirl.create(:src_image, user: user)
-        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
-
-        get :index
-
-        expect(assigns(:src_images).size).to eq(1)
-      end
-
-      it 'shows public images' do
-        FactoryGirl.create(:src_image, private: true, work_in_progress: false)
-        3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
-
-        get :index
-
-        expect(assigns(:src_images).size).to eq(3)
-      end
-    end
-
-    context 'when the user is an admin user' do
-      let(:user) { FactoryGirl.create(:admin_user) }
-
-      it 'shows deleted images' do
-        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
-        FactoryGirl.create(
-          :src_image, user: user, is_deleted: true, work_in_progress: false)
-
-        get :index
-
-        expect(assigns(:src_images).size).to eq(2)
-      end
-
-      it 'shows work in progress images' do
-        FactoryGirl.create(:src_image, user: user)
-        FactoryGirl.create(:src_image, user: user, work_in_progress: false)
-
-        get :index
-
-        expect(assigns(:src_images).size).to eq(2)
-      end
-
-      it 'shows public images' do
-        FactoryGirl.create(:src_image, private: true, work_in_progress: false)
-        3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
-
-        get :index
-
-        expect(assigns(:src_images).size).to eq(4)
-      end
-    end
-
-    context 'searching' do
-      it 'filters the result by the query string' do
-        FactoryGirl.create(
-          :src_image, user: user, name: 'abc', work_in_progress: false)
-        si2 = FactoryGirl.create(
-          :src_image, user: user, name: 'def', work_in_progress: false)
-        FactoryGirl.create(
-          :src_image, user: user, name: 'ghi', work_in_progress: false)
-
-        get :index, q: 'e'
-        expect(assigns(:src_images)).to eq([si2])
-      end
-
-      it 'is case insensitive' do
-        si = FactoryGirl.create(
-          :src_image, user: user, name: 'a', work_in_progress: false)
-
-        get :index, q: 'A'
-        expect(assigns(:src_images)).to eq([si])
-      end
-
-      it 'ignores leading whitespace' do
-        si = FactoryGirl.create(
-          :src_image, user: user, name: 'abc', work_in_progress: false)
-        get :index, q: " \t\r\nb"
-        expect(assigns(:src_images)).to eq([si])
-      end
-
-      it 'ignores trailing whitespace' do
-        si = FactoryGirl.create(
-          :src_image, user: user, name: 'abc', work_in_progress: false)
-        get :index, q: "b \t\n\r"
-        expect(assigns(:src_images)).to eq([si])
-      end
-    end
-
     context 'when JSON is requested' do
       it 'serves JSON' do
         src_image1 = FactoryGirl.create(
@@ -243,40 +113,6 @@ describe SrcImagesController, type: :controller do
     let(:image) { fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
 
     context 'with valid attributes' do
-      it 'saves the new source image to the database' do
-        expect do
-          post :create, src_image: { image: image }
-        end.to change { SrcImage.count }.by(1)
-      end
-
-      it 'increments the src_image.upload statsd counter' do
-        expect do
-          post :create, src_image: { image: image }
-        end.to trigger_statsd_increment('src_image.upload')
-      end
-
-      context 'when the image is loaded from a url' do
-        it 'does not increment the src_image.upload statsd counter' do
-          expect do
-            post :create, src_image: { url: 'http://images.com/image.jpg' }
-          end.not_to trigger_statsd_increment('src_image.upload')
-        end
-      end
-
-      context 'when the user requests html' do
-        it 'redirects to the index page' do
-          post :create, src_image: { image: image }
-
-          expect(response).to redirect_to controller: :my, action: :show
-        end
-
-        it 'informs the user of success with flash' do
-          post :create, src_image: { image: image }
-
-          expect(flash[:notice]).to eq('Source image created.')
-        end
-      end
-
       context 'when the user requests json' do
         before { request.accept = 'application/json' }
 
@@ -294,7 +130,7 @@ describe SrcImagesController, type: :controller do
         it 'sets the Location header to the pending src image url' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
           expect(response.headers['Location']).to eq(
-            'http://test.host/pending_src_images/' \
+            'http://test.host/api/v3/pending_src_images/' \
             "#{assigns(:src_image).id_hash}")
         end
 
@@ -302,42 +138,9 @@ describe SrcImagesController, type: :controller do
           post(:create, src_image: { url: 'http://test.com/image.jpg' })
 
           expect(JSON.parse(response.body)['status_url']).to eq(
-            'http://test.host/pending_src_images/' \
+            'http://test.host/api/v3/pending_src_images/' \
             "#{assigns(:src_image).id_hash}")
         end
-      end
-    end
-
-    context 'with invalid attributes' do
-      let(:image) { nil }
-
-      it 'does not save the new source image in the database' do
-        expect do
-          post :create, src_image: { image: image }
-        end.to_not change { SrcImage.count }
-      end
-
-      it 're-renders the new template' do
-        post :create, src_image: { image: image }
-
-        expect(response).to render_template('new')
-      end
-    end
-
-    context 'when the user it not logged in' do
-      let(:user) { nil }
-
-      it 'saves the new source image to the database' do
-        expect do
-          post :create, src_image: { image: image }
-        end.to change { SrcImage.count }.by(1)
-      end
-    end
-
-    context 'setting an optional name' do
-      it 'saves the name to the database' do
-        post :create, src_image: { image: image, name: 'a test name' }
-        expect(SrcImage.last.name).to eq('a test name')
       end
     end
   end
@@ -429,25 +232,6 @@ describe SrcImagesController, type: :controller do
   end
 
   describe "DELETE 'destroy'" do
-    context 'when the id is found' do
-      it 'marks the record as deleted in the database' do
-        post :create, src_image: {
-          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
-        delete :destroy, id: assigns(:src_image).id_hash
-
-        expect(SrcImage.find_by(
-          id_hash: assigns(:src_image).id_hash).is_deleted?).to eq(true)
-      end
-
-      it 'returns success' do
-        post :create, src_image: {
-          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
-        delete :destroy, id: assigns(:src_image).id_hash
-
-        expect(response).to be_success
-      end
-    end
-
     context 'when the id is not found' do
       it 'raises record not found' do
         expect do
