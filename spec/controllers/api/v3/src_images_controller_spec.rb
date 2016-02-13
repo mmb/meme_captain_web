@@ -134,32 +134,4 @@ describe Api::V3::SrcImagesController, type: :controller do
       end
     end
   end
-
-  describe "PUT 'update'" do
-    context 'when owned by the current user' do
-      let(:src_image) do
-        FactoryGirl.create(:src_image, name: 'pre', user: user)
-      end
-
-      it 'updates the name' do
-        request.accept = 'application/json'
-        put :update, id: src_image.id_hash, src_image: { name: 'test' }
-
-        expect(SrcImage.find_by(id_hash: src_image.id_hash).name).to eq('test')
-      end
-    end
-
-    context 'when not owned by the current user' do
-      let(:src_image) do
-        FactoryGirl.create(:src_image, name: 'pre', user: user2)
-      end
-
-      it 'does not change the name' do
-        request.accept = 'application/json'
-        put :update, id: src_image.id_hash, src_image: { name: 'test' }
-
-        expect(SrcImage.find_by(id_hash: src_image.id_hash).name).to eq('pre')
-      end
-    end
-  end
 end

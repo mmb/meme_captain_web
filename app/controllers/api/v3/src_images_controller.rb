@@ -28,24 +28,10 @@ module Api
         end
       end
 
-      def update
-        @src_image = SrcImage.find_by!(id_hash: params[:id])
-
-        if @src_image.user == current_user
-          @src_image.update_attributes(src_image_edit_params)
-        end
-
-        respond_to { |format| format.json { respond_with_bip(@src_image) } }
-      end
-
       private
 
       def src_image_params
         params.require(:src_image).permit(:image, :private, :url, :name)
-      end
-
-      def src_image_edit_params
-        params.require(:src_image).permit(:name)
       end
 
       def read_image_data(submitted_params)
