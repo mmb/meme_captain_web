@@ -12,16 +12,6 @@ describe Api::V3::SrcImagesController, type: :controller do
     session[:user_id] = user.try(:id)
   end
 
-  describe "GET 'new'" do
-    context 'when the user it not logged in' do
-      let(:user) { nil }
-      it 'redirects to the login form' do
-        get :new
-        expect(response).to redirect_to new_session_path
-      end
-    end
-  end
-
   describe "GET 'index'" do
     context 'when JSON is requested' do
       it 'serves JSON' do

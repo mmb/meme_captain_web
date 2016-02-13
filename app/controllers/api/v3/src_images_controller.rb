@@ -7,12 +7,6 @@ module Api
     class SrcImagesController < ApplicationController
       include SrcImagesHelper
 
-      def new
-        return if not_logged_in 'Please login to create a source image.'.freeze
-
-        @src_image = SrcImage.new
-      end
-
       def index
         @src_images = SrcImage.for_user(current_user, params[:q], params[:page])
         respond_to do |format|
