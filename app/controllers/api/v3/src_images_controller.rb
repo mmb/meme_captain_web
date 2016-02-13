@@ -8,9 +8,16 @@ module Api
       include SrcImagesHelper
 
       def index
-        @src_images = SrcImage.for_user(current_user, params[:q], params[:page])
+        src_images = SrcImage.for_user(current_user, params[:q], params[:page])
+
+        src_images.each do |src_image|
+          src_image.image_url = src_image_url_for(src_image)
+        end
+
         respond_to do |format|
-          format.json { render_index_json }
+          format.json do
+            render(json: src_images)
+          end
         end
       end
 
@@ -53,13 +60,6 @@ module Api
             render(json: @src_image.errors, status: :unprocessable_entity)
           end
         end
-      end
-
-      def render_index_json
-        @src_images.each do |src_image|
-          src_image.image_url = src_image_url_for(src_image)
-        end
-        render json: @src_images
       end
 
       def redirect_to_pending
