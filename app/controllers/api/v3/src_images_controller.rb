@@ -10,7 +10,6 @@ module Api
       def index
         @src_images = SrcImage.for_user(current_user, params[:q], params[:page])
         respond_to do |format|
-          format.html
           format.json { render_index_json }
         end
       end
