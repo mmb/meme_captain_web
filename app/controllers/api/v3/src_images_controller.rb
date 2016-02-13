@@ -56,17 +56,6 @@ module Api
         respond_to { |format| format.json { respond_with_bip(@src_image) } }
       end
 
-      def destroy
-        src_image = SrcImage.find_by!(id_hash: params[:id])
-
-        head(:forbidden) && return if src_image.user != current_user
-
-        src_image.is_deleted = true
-        src_image.save!
-
-        head(:no_content)
-      end
-
       private
 
       def src_image_params

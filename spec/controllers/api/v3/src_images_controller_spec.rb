@@ -230,24 +230,4 @@ describe Api::V3::SrcImagesController, type: :controller do
       end
     end
   end
-
-  describe "DELETE 'destroy'" do
-    context 'when the id is not found' do
-      it 'raises record not found' do
-        expect do
-          delete :destroy, id: 'abc'
-        end.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-
-    context 'when the image is owned by another user' do
-      it "doesn't allow it to be deleted" do
-        src_image = FactoryGirl.create(:src_image, user: user2)
-
-        delete :destroy, id: src_image.id_hash
-
-        expect(response).to be_forbidden
-      end
-    end
-  end
 end
