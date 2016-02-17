@@ -161,6 +161,7 @@ describe SrcImagesController, type: :controller do
           work_in_progress: false)
         src_image1.set_derived_image_fields
         src_image1.save!
+        2.times { FactoryGirl.create(:gend_image, src_image: src_image1) }
 
         Timecop.travel(Time.now + 1)
 
@@ -170,6 +171,7 @@ describe SrcImagesController, type: :controller do
           work_in_progress: false)
         src_image2.set_derived_image_fields
         src_image2.save!
+        1.times { FactoryGirl.create(:gend_image, src_image: src_image2) }
 
         get :index, format: :json
         parsed_body = JSON.parse(response.body)
