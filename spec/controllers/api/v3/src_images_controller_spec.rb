@@ -109,37 +109,101 @@ describe Api::V3::SrcImagesController, type: :controller do
   end
 
   describe "POST 'create'" do
-    let(:image) { fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+    before { request.accept = 'application/json' }
 
     context 'with valid attributes' do
-      context 'when the user requests json' do
-        before { request.accept = 'application/json' }
+      context 'when uploading image data' do
+        it 'creates a src image with the image data' do
+          post(:create, src_image: {
+                 image: fixture_file_upload(
+                   '/files/ti_duck.jpg', 'image/jpeg') }
+              )
+          expect(response).to have_http_status(:ok)
+          expected_image_data = File.open(
+            Rails.root + 'spec/fixtures/files/ti_duck.jpg', 'rb', &:read)
 
-        it 'returns accepted' do
-          post :create, src_image: { url: 'http://test.com/image.jpg' }
-          expect(response).to have_http_status(:accepted)
+          expect(SrcImage.last.image).to eq(expected_image_data)
         end
 
-        it 'returns json with id' do
-          post :create, src_image: { url: 'http://test.com/image.jpg' }
-          expect(JSON.parse(response.body)['id']).to eq(
-            assigns(:src_image).id_hash)
+        it 'increments the src image upload statsd counter' do
+          expect do
+            post(:create, src_image: {
+                   image: fixture_file_upload(
+                     '/files/ti_duck.jpg', 'image/jpeg') }
+                )
+            expect(response).to have_http_status(:ok)
+          end.to trigger_statsd_increment('src_image.upload')
         end
+      end
 
-        it 'sets the Location header to the pending src image url' do
-          post :create, src_image: { url: 'http://test.com/image.jpg' }
-          expect(response.headers['Location']).to eq(
-            'http://test.host/api/v3/pending_src_images/' \
-            "#{assigns(:src_image).id_hash}")
-        end
-
-        it 'returns the status url in the response' do
+      context 'when loading an image url' do
+        it 'creates a src image with the url' do
           post(:create, src_image: { url: 'http://test.com/image.jpg' })
-
-          expect(JSON.parse(response.body)['status_url']).to eq(
-            'http://test.host/api/v3/pending_src_images/' \
-            "#{assigns(:src_image).id_hash}")
+          expect(response).to have_http_status(:ok)
+          expect(SrcImage.last.url).to eq('http://test.com/image.jpg')
         end
+
+        it 'does not increment the src image upload statsd counter' do
+          expect do
+            post(:create, src_image: { url: 'http://test.com/image.jpg' })
+            expect(response).to have_http_status(:ok)
+          end.to_not trigger_statsd_increment('src_image.upload')
+        end
+      end
+
+      it 'creates the src image with the private flag' do
+        post(:create, src_image: {
+               url: 'http://test.com/image.jpg',
+               private: true })
+        expect(response).to have_http_status(:ok)
+        expect(SrcImage.last.private).to eq(true)
+      end
+
+      it 'creates the src image with the name' do
+        post(:create, src_image: {
+               url: 'http://test.com/image.jpg',
+               name: 'test name' })
+        expect(response).to have_http_status(:ok)
+        expect(SrcImage.last.name).to eq('test name')
+      end
+
+      it 'returns ok' do
+        post(:create, src_image: {
+               url: 'http://test.com/image.jpg' })
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns json with the src image id' do
+        post(:create, src_image: {
+               url: 'http://test.com/image.jpg' })
+        expect(response).to have_http_status(:ok)
+        created_src_image = SrcImage.last
+        expect(JSON.parse(response.body)).to include(
+          'id' => created_src_image.id_hash)
+      end
+
+      it 'returns json with the status url' do
+        post(:create, src_image: {
+               url: 'http://test.com/image.jpg' })
+        expect(response).to have_http_status(:ok)
+        created_src_image = SrcImage.last
+        expect(JSON.parse(response.body)).to include(
+          'status_url' =>
+            'http://test.host/api/v3/pending_src_images/' \
+            "#{created_src_image.id_hash}")
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'returns unprocessable entity' do
+        post(:create, src_image: { name: 'test name' })
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns json with the errors' do
+        post(:create, src_image: { name: 'test name' })
+        expect(JSON.parse(response.body)).to eq(
+          'image' => ['is required if url is not set.'])
       end
     end
   end

@@ -44,13 +44,13 @@ module Api
       def read_image_data(submitted_params)
         if submitted_params.try(:[], :image)
           submitted_params[:image] = submitted_params[:image].read
-          StatsD.increment('src_image.upload'.freeze)
         end
       end
 
       def create_success
+        StatsD.increment('src_image.upload'.freeze) if @src_image.image
         respond_to do |format|
-          format.json { redirect_to_pending }
+          format.json { ok_response }
         end
       end
 
@@ -62,13 +62,11 @@ module Api
         end
       end
 
-      def redirect_to_pending
+      def ok_response
         status_url = url_for(
           controller: :pending_src_images,
           action: :show,
           id: @src_image.id_hash)
-        response.status = :accepted
-        response.location = status_url
         render(json: {
                  id: @src_image.id_hash,
                  status_url: status_url
