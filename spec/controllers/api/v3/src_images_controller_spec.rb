@@ -6,7 +6,6 @@ describe Api::V3::SrcImagesController, type: :controller do
   include StatsD::Instrument::Matchers
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:user2) { FactoryGirl.create(:user, email: 'user2@user2.com') }
 
   before(:each) do
     session[:user_id] = user.try(:id)
