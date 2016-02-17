@@ -161,6 +161,8 @@ describe SrcImagesController, type: :controller do
           work_in_progress: false)
         src_image1.set_derived_image_fields
         src_image1.save!
+        # src images are sorted by most used, create gend images so
+        # there is a well-defined sort order for the spec
         2.times { FactoryGirl.create(:gend_image, src_image: src_image1) }
 
         Timecop.travel(Time.now + 1)
