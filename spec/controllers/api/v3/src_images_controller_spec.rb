@@ -166,6 +166,13 @@ describe Api::V3::SrcImagesController, type: :controller do
         expect(SrcImage.last.name).to eq('test name')
       end
 
+      it 'creates the src image owned by the current user' do
+        post(:create, src_image: {
+               url: 'http://test.com/image.jpg' })
+        expect(response).to have_http_status(:ok)
+        expect(SrcImage.last.user).to eq(user)
+      end
+
       it 'returns ok' do
         post(:create, src_image: {
                url: 'http://test.com/image.jpg' })
