@@ -53,6 +53,18 @@ describe DashboardController, type: :controller do
 
         expect(assigns(:new_users_last_24h)).to eq(2)
       end
+
+      it 'sets the last 10 searches with no results' do
+        searches = []
+        11.times do |i|
+          searches << NoResultSearch.create(query: "q#{i + 1}")
+        end
+
+        get(:show)
+
+        expect(assigns(:no_result_searches)).to eq(
+          searches.slice(1, 10).reverse)
+      end
     end
   end
 end

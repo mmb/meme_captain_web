@@ -3,3 +3,11 @@
 <%= @gend_images_last_24h %> gend images created,
 <%= @src_images_last_24h %> src images created,
 <%= @new_users_last_24h %> users created
+
+<h1>No Result Searches</h1>
+
+<ul>
+<% @no_result_searches.each do |s| %>
+<li><%= s.query %></li>
+<% end %>
+</ul>
