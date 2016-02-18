@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203060839) do
+ActiveRecord::Schema.define(version: 20160218045925) do
 
   create_table "blocked_ips", force: :cascade do |t|
     t.text     "ip",         null: false
@@ -101,16 +101,6 @@ ActiveRecord::Schema.define(version: 20160203060839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "searches", force: :cascade do |t|
-    t.text     "query",        null: false
-    t.integer  "result_count", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "searches", ["created_at"], name: "index_searches_on_created_at"
-  add_index "searches", ["result_count"], name: "index_searches_on_result_count"
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
