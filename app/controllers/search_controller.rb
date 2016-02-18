@@ -29,5 +29,10 @@ class SearchController < ApplicationController
     }
     @google_search_url =
       "https://www.google.com/search?#{google_query.to_query}"
+    record_no_results
+  end
+
+  def record_no_results
+    NoResultSearch.create(query: params[:q])
   end
 end

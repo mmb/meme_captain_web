@@ -29,6 +29,13 @@ describe SearchController, type: :controller do
         expect(assigns(:google_search_url)).to eq(
           'https://www.google.com/search?q=%3Chi%26%3E+meme+template&tbm=isch')
       end
+
+      it 'creates a no result search record' do
+        expect do
+          get(:show, q: 'test')
+        end.to change { NoResultSearch.count }.by(1)
+        expect(NoResultSearch.last.query).to eq('test')
+      end
     end
 
     context 'when some results are found' do
