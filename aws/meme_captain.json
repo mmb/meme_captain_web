@@ -509,47 +509,159 @@
       },
       "Type": "AWS::Route53::HostedZone"
     },
-    "natInstance": {
+    "natAutoScalingGroup": {
       "DependsOn": "internetGatewayAttachment",
       "Properties": {
-        "ImageId": "ami-184dc970",
-        "InstanceType": "t2.micro",
-        "KeyName": "memecaptain",
-        "NetworkInterfaces": [
+        "DesiredCapacity": 1,
+        "LaunchConfigurationName": {
+          "Ref": "natLaunchConfig"
+        },
+        "MaxSize": 2,
+        "MinSize": 1,
+        "NotificationConfigurations": [
           {
-            "AssociatePublicIpAddress": "true",
-            "DeviceIndex": "0",
-            "GroupSet": [
-              {
-                "Ref": "natSecurityGroup"
-              }
+            "NotificationTypes": [
+              "autoscaling:EC2_INSTANCE_LAUNCH",
+              "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+              "autoscaling:EC2_INSTANCE_TERMINATE",
+              "autoscaling:EC2_INSTANCE_TERMINATE_ERROR"
             ],
-            "SubnetId": {
-              "Ref": "publicSubnet1"
+            "TopicARN": {
+              "Ref": "autoScalingTopic"
             }
           }
         ],
-        "SourceDestCheck": "false",
         "Tags": [
           {
-            "Key": "Name",
+            "Key": "pool",
+            "PropagateAtLaunch": true,
             "Value": "nat"
+          }
+        ],
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "publicSubnet1"
           }
         ]
       },
-      "Type": "AWS::EC2::Instance"
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {
+          "MinInstancesInService": 1,
+          "PauseTime": "PT3M"
+        }
+      }
     },
-    "natRoute": {
+    "natInstanceProfile": {
       "Properties": {
-        "DestinationCidrBlock": "0.0.0.0/0",
-        "InstanceId": {
-          "Ref": "natInstance"
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "natRole"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::InstanceProfile"
+    },
+    "natLaunchConfig": {
+      "Properties": {
+        "AssociatePublicIpAddress": true,
+        "IamInstanceProfile": {
+          "Ref": "natInstanceProfile"
         },
-        "RouteTableId": {
-          "Ref": "natRouteTable"
+        "ImageId": "ami-a7f5dfcd",
+        "InstanceType": "t2.micro",
+        "KeyName": "memecaptain",
+        "SecurityGroups": [
+          {
+            "Ref": "natSecurityGroup"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "\n",
+              [
+                "#!/bin/bash",
+                "set -eux",
+                "set -o pipefail",
+                "REGION=$(curl http://169.254.169.254/latest/dynamic/instance-identity/document | ruby -r json -e 'puts JSON.parse($stdin.read)[\"region\"]')",
+                "INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)",
+                "aws ec2 modify-instance-attribute --region $REGION --instance-id $INSTANCE_ID --no-source-dest-check",
+                "set +e",
+                {
+                  "Fn::Join": [
+                    " ",
+                    [
+                      "aws ec2 replace-route --region $REGION --destination-cidr-block 0.0.0.0/0 --instance-id $INSTANCE_ID",
+                      "--route-table-id",
+                      {
+                        "Ref": "natRouteTable"
+                      }
+                    ]
+                  ]
+                },
+                "set -e",
+                {
+                  "Fn::Join": [
+                    " ",
+                    [
+                      "aws ec2 create-route --region $REGION --destination-cidr-block 0.0.0.0/0 --instance-id $INSTANCE_ID",
+                      "--route-table-id",
+                      {
+                        "Ref": "natRouteTable"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
         }
       },
-      "Type": "AWS::EC2::Route"
+      "Type": "AWS::AutoScaling::LaunchConfiguration"
+    },
+    "natRole": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "sts:AssumeRole"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "ec2:CreateRoute",
+                    "ec2:DeleteRoute",
+                    "ec2:ModifyInstanceAttribute",
+                    "ec2:ReplaceRoute"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ],
+              "Version": "2012-10-17"
+            },
+            "PolicyName": "natPolicy"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::Role"
     },
     "natRouteTable": {
       "Properties": {
