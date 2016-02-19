@@ -11,6 +11,6 @@ class DashboardController < ApplicationController
 
     @new_users_last_24h = User.where(created_at: last_day).count
 
-    @no_result_searches = NoResultSearch.last(10).reverse
+    @no_result_searches = NoResultSearch.last(20).reverse
   end
 end
