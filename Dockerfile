@@ -3,6 +3,8 @@ MAINTAINER matthewm@boedicker.org
 
 WORKDIR /tmp
 
+COPY docker/sources.list /etc/apt/sources.list
+
 # packages
 RUN apt-get update && \
   apt-get install --assume-yes \
