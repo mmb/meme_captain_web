@@ -6,10 +6,13 @@ describe SrcImageNameJob do
   let(:x) { double(:x) }
   let(:lookup_host) { nil }
   let(:current_name) { nil }
+  let(:google_image_namer) { instance_double(MemeCaptainWeb::GoogleImageNamer) }
 
   before do
     allow(Rails.configuration).to receive(:x).and_return(x)
     allow(x).to receive(:src_image_name_lookup_host).and_return(lookup_host)
+    allow(MemeCaptainWeb::GoogleImageNamer).to receive(:new).and_return(
+      google_image_namer)
   end
 
   context 'when src image name lookups are turned off' do
@@ -48,15 +51,11 @@ describe SrcImageNameJob do
     context 'when the src image name is nil' do
       let(:current_name) { nil }
 
-      before do
-        stub_request(:get, 'http://google.com/imghp?hl=en&tab=wi')
-        search_url = 'http://google.com/searchbyimage?' \
-          "image_url=http://test.com/src_images/#{src_image.id_hash}"
-        stub_request(:get, search_url).to_return(body: body)
-      end
-
-      context 'when Google cannot identify the image' do
-        let(:body) { 'no guess' }
+      context 'when the Google image namer returns nil' do
+        before do
+          allow(google_image_namer).to receive(:name).with(
+            "http://test.com/src_images/#{src_image.id_hash}").and_return(nil)
+        end
 
         it 'does not change the src image name' do
           expect do
@@ -66,11 +65,10 @@ describe SrcImageNameJob do
       end
 
       context 'when Google can identify the image' do
-        let(:body) do
-          '<div class="_hUb">Best guess for this image:&nbsp;' \
-          '<a class="_gUb" href="/search?q=test+image&amp;sa=X' \
-          '&amp;ei=fVVhVZjvOYuQsAXS3YHYBg&amp;ved=0CB0QvQ4oAw" ' \
-          'style="font-style:italic">test image</a></div>'
+        before do
+          allow(google_image_namer).to receive(:name).with(
+            "http://test.com/src_images/#{src_image.id_hash}")
+            .and_return('test image')
         end
 
         it "sets the name to Google's description of the image" do
@@ -85,19 +83,11 @@ describe SrcImageNameJob do
     context 'when the src image name is empty' do
       let(:current_name) { '' }
 
-      before do
-        stub_request(:get, 'http://google.com/imghp?hl=en&tab=wi')
-        search_url = 'http://google.com/searchbyimage?' \
-          "image_url=http://test.com/src_images/#{src_image.id_hash}"
-        stub_request(:get, search_url).to_return(body: body)
-      end
-
       context 'when Google can identify the image' do
-        let(:body) do
-          '<div class="_hUb">Best guess for this image:&nbsp;' \
-          '<a class="_gUb" href="/search?q=test+image&amp;sa=X' \
-          '&amp;ei=fVVhVZjvOYuQsAXS3YHYBg&amp;ved=0CB0QvQ4oAw" ' \
-          'style="font-style:italic">test image</a></div>'
+        before do
+          allow(google_image_namer).to receive(:name).with(
+            "http://test.com/src_images/#{src_image.id_hash}")
+            .and_return('test image')
         end
 
         it "sets the name to Google's description of the image" do

@@ -79,7 +79,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  WebMock.disable_net_connect!(allow: 'api.travis-ci.org')
+  WebMock.disable_net_connect!(allow: /api\.travis-ci\.org|google\.com/)
 end
 
 def create_image(width, height, color = 'white')
