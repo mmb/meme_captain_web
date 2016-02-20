@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 require 'set'
 require 'ttfunk'
@@ -15,7 +16,7 @@ module MemeCaptainWeb
     # first one will be used.
 
     def self.for(text)
-      stripped_text = text.gsub(/\s+/, ' ').strip
+      stripped_text = text.gsub(/\s+/, ' '.freeze).strip
       best_font = default_fonts.find { |f| f.chars_for?(stripped_text) } ||
                   default_fonts.first
       File.basename(best_font.path)

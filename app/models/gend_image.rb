@@ -74,7 +74,7 @@ class GendImage < ActiveRecord::Base
     # varnish checks total header size (key + value) <= 8k,
     # 8181 = 8192 - 'Meme-Text: '.size
     result = header.slice(0, 8181)
-    result.slice!(8179..-1) if result[-2] == '%'
+    result.slice!(8179..-1) if result[-2] == '%'.freeze
     result
   end
 

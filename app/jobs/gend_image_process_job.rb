@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Job to generate meme images and create thumbnails.
 class GendImageProcessJob
   attr_reader :gend_image_id
@@ -35,7 +36,7 @@ class GendImageProcessJob
   def failure(job)
     return if job.last_error.blank?
     gend_image = GendImage.without_image.find(gend_image_id)
-    error = job.last_error.split("\n").first
+    error = job.last_error.split("\n".freeze).first
     gend_image.update_attribute(:error, error)
   end
 end

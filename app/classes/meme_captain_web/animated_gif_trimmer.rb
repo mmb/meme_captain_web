@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MemeCaptainWeb
   # Remove every other frame from an animated gif to reduce its size.
   class AnimatedGifTrimmer
@@ -72,17 +73,17 @@ module MemeCaptainWeb
 
     def read_logical_screen_descriptor
       read(4, and_write: true)
-      field = read(1, and_write: true).unpack('C').first
+      field = read(1, and_write: true).unpack('C'.freeze).first
       read(2, and_write: true)
       color_table_bytes(field)
     end
 
     def read_delay_time
       read(2, and_write: @writing_now)
-      delay_time = read(2).unpack('v').first
+      delay_time = read(2).unpack('v'.freeze).first
       if @writing_now
         new_delay_time = delay_time + @removed_delay_times.reduce(0, :+)
-        write([new_delay_time].pack('v'))
+        write([new_delay_time].pack('v'.freeze))
       else
         @removed_delay_times << delay_time
       end
@@ -90,7 +91,7 @@ module MemeCaptainWeb
 
     def read_image_descriptor
       read(9, and_write: @writing_now)
-      field = read(1, and_write: @writing_now).unpack('C').first
+      field = read(1, and_write: @writing_now).unpack('C'.freeze).first
       color_table_bytes(field)
     end
 
@@ -101,7 +102,7 @@ module MemeCaptainWeb
 
     def read_blocks(options = {})
       loop do
-        block_size = read(1, options).unpack('C').first
+        block_size = read(1, options).unpack('C'.freeze).first
         break if block_size == 0
         read(block_size, options)
       end
