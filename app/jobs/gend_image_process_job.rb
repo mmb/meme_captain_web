@@ -23,6 +23,8 @@ class GendImageProcessJob
     meme.destroy!
 
     gend_image.update!(work_in_progress: false)
+
+    enqueue_jobs(gend_image)
   end
 
   def reschedule_at(current_time, _attempts)
@@ -38,5 +40,9 @@ class GendImageProcessJob
     gend_image = GendImage.without_image.find(gend_image_id)
     error = job.last_error.split("\n".freeze).first
     gend_image.update_attribute(:error, error)
+  end
+
+  def enqueue_jobs(gend_image)
+    GendImageCalcHashJob.new(gend_image.id).delay(queue: :calc_hash).perform
   end
 end

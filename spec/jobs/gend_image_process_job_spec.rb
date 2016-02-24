@@ -27,6 +27,17 @@ describe GendImageProcessJob do
     end.to change { gend_image.work_in_progress }.from(true).to(false)
   end
 
+  it "enqueues a job to set the gend image's image hash" do
+    gend_image_calc_hash_job = instance_double(GendImageCalcHashJob)
+    expect(GendImageCalcHashJob).to receive(:new).with(
+      gend_image.id).and_return(gend_image_calc_hash_job)
+    expect(gend_image_calc_hash_job).to receive(:delay).with(
+      queue: :calc_hash).and_return(gend_image_calc_hash_job)
+    expect(gend_image_calc_hash_job).to receive(:perform)
+
+    gend_image_process_job.perform
+  end
+
   describe '#failure' do
     let(:delayed_job) { instance_double(Delayed::Job) }
 
