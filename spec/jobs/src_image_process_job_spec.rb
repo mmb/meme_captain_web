@@ -232,6 +232,17 @@ describe SrcImageProcessJob do
     src_image_process_job.perform
   end
 
+  it "enqueues a job to set the src image's image hash" do
+    src_image_calc_hash_job = instance_double(SrcImageCalcHashJob)
+    expect(SrcImageCalcHashJob).to receive(:new).with(src_image.id).and_return(
+      src_image_calc_hash_job)
+    expect(src_image_calc_hash_job).to receive(:delay).with(
+      queue: :calc_hash).and_return(src_image_calc_hash_job)
+    expect(src_image_calc_hash_job).to receive(:perform)
+
+    src_image_process_job.perform
+  end
+
   it "sets the src image model's content type" do
     expect do
       src_image_process_job.perform

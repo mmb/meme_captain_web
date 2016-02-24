@@ -21,7 +21,7 @@ class SrcImageProcessJob
 
     src_image.update!(work_in_progress: false)
 
-    SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
+    enqueue_jobs(src_image)
   end
 
   def reschedule_at(current_time, _attempts)
@@ -97,5 +97,10 @@ class SrcImageProcessJob
     img.extend(MemeCaptain::ImageList::Watermark)
     img.watermark_mc(watermark_img)
     watermark_img.destroy!
+  end
+
+  def enqueue_jobs(src_image)
+    SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
+    SrcImageCalcHashJob.new(src_image.id).delay(queue: :calc_hash).perform
   end
 end
