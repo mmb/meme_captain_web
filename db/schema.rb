@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218045925) do
+ActiveRecord::Schema.define(version: 20160224033002) do
 
   create_table "blocked_ips", force: :cascade do |t|
     t.text     "ip",         null: false
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20160218045925) do
     t.datetime "expires_at"
     t.text     "image_hash"
     t.text     "average_color"
+    t.text     "creator_ip"
   end
 
   add_index "gend_images", ["average_color"], name: "index_gend_images_on_average_color"
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160218045925) do
     t.datetime "expires_at"
     t.text     "image_hash"
     t.text     "average_color"
+    t.text     "creator_ip"
   end
 
   add_index "src_images", ["average_color"], name: "index_src_images_on_average_color"
