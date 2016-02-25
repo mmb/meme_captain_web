@@ -3,16 +3,7 @@
 require 'rails_helper'
 
 describe 'gend_images/_gend_image.html', type: :view do
-  let(:gend_thumb) { mock_model(GendThumb, width: 19, height: 80) }
-
-  let(:gend_image) do
-    mock_model(
-      GendImage,
-      work_in_progress: false,
-      gend_thumb: gend_thumb,
-      id_hash: 'id_hash')
-  end
-
+  let(:gend_image) { FactoryGirl.create(:finished_gend_image) }
   let(:show_toolbar) { true }
 
   before do
@@ -23,19 +14,19 @@ describe 'gend_images/_gend_image.html', type: :view do
     it 'shows the thumbnail' do
       render partial: 'gend_images/gend_image',
              locals: { gend_image: gend_image, show_toolbar: show_toolbar }
-      expect(rendered).to match(gend_thumb.id.to_s)
+      expect(rendered).to match(gend_image.gend_thumb.id.to_s)
     end
 
     it 'puts the width in the image tag' do
       render partial: 'gend_images/gend_image',
              locals: { gend_image: gend_image, show_toolbar: show_toolbar }
-      expect(rendered).to match('width="19"')
+      expect(rendered).to match('width="64"')
     end
 
     it 'puts the height in the image tag' do
       render partial: 'gend_images/gend_image',
              locals: { gend_image: gend_image, show_toolbar: show_toolbar }
-      expect(rendered).to match('height="80"')
+      expect(rendered).to match('height="64"')
     end
 
     it 'has the id hash as data' do
@@ -46,7 +37,7 @@ describe 'gend_images/_gend_image.html', type: :view do
   end
 
   context 'the image has not been processed yet' do
-    let(:gend_image) { mock_model(GendImage, work_in_progress: true) }
+    let(:gend_image) { FactoryGirl.create(:gend_image) }
 
     it 'shows as under construction' do
       render partial: 'gend_images/gend_image',

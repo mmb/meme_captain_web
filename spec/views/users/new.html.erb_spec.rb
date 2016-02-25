@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'users/new.html.erb', type: :view do
   before(:each) do
-    assign(:user, [stub_model(User)])
+    assign(:user, FactoryGirl.create(:user))
   end
 
   it 'has an email field' do

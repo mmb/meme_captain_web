@@ -3,13 +3,8 @@
 require 'rails_helper'
 
 describe 'src_images/_src_image.html', type: :view do
-  let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
   let(:src_image) do
-    mock_model(
-      SrcImage,
-      work_in_progress: false,
-      src_thumb: src_thumb,
-      name: 'test src image')
+    FactoryGirl.create(:finished_src_image, name: 'test src image')
   end
   let(:user) { FactoryGirl.create(:user) }
 
@@ -20,15 +15,15 @@ describe 'src_images/_src_image.html', type: :view do
 
   context 'the image has been processed' do
     it 'shows the thumbnail' do
-      expect(rendered).to match(src_thumb.id.to_s)
+      expect(rendered).to match(src_image.src_thumb.id.to_s)
     end
 
     it 'puts the width in the image tag' do
-      expect(rendered).to match('width="19"')
+      expect(rendered).to match('width="64"')
     end
 
     it 'puts the height in the image tag' do
-      expect(rendered).to match('height="78"')
+      expect(rendered).to match('height="64"')
     end
 
     it 'has the id hash as data' do
@@ -37,12 +32,13 @@ describe 'src_images/_src_image.html', type: :view do
 
     it 'sets the image alt tag to the src image name ' do
       expect(rendered).to have_selector(
-        "img[src='/src_thumbs/#{src_thumb.id}'][alt='test src image']")
+        "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
+	"'][alt='test src image']")
     end
   end
 
   context 'the image has not been processed yet' do
-    let(:src_image) { mock_model(SrcImage, work_in_progress: true) }
+    let(:src_image) { FactoryGirl.create(:src_image) }
 
     it 'shows as under construction' do
       expect(rendered).to match('Under Construction')

@@ -3,48 +3,35 @@
 require 'rails_helper'
 
 describe 'src_sets/_src_set.html', type: :view do
-  let(:src_thumb) { mock_model(SrcThumb, width: 19, height: 78) }
-
-  let(:src_image) do
-    mock_model(SrcImage, work_in_progress: false, src_thumb: src_thumb)
-  end
-
-  let(:src_set) do
-    mock_model(SrcSet,
-               name: 'set1',
-               src_images: [src_image],
-               thumbnail: src_thumb,
-               thumb_width: src_thumb.width,
-               thumb_height: src_thumb.height)
-  end
+  let(:src_image) { FactoryGirl.create(:finished_src_image) }
+  let(:src_set) { FactoryGirl.create(:src_set, src_images: [src_image]) }
 
   context 'when the set contains a completed source image' do
     it 'shows the thumbnail' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
-      expect(rendered).to match(src_thumb.id.to_s)
+      expect(rendered).to match(src_image.src_thumb.id.to_s)
     end
 
     it 'puts the width in the image tag' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
-      expect(rendered).to match('width="19"')
+      expect(rendered).to match('width="64"')
     end
 
     it 'puts the height in the image tag' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
-      expect(rendered).to match('height="78"')
+      expect(rendered).to match('height="64"')
     end
 
     it 'sets the image alt tag to the src image name ' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
       expect(rendered).to have_selector(
-        "img[src='/src_thumbs/#{src_thumb.id}'][alt='set1']")
+        "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
+        "'][alt='#{src_set.name}']")
     end
   end
 
   context 'when the set is empty' do
-    let(:src_set) do
-      mock_model(SrcSet, name: 'set1', thumbnail: nil, src_images: [])
-    end
+    let(:src_set) { FactoryGirl.create(:src_set) }
 
     it 'shows the empty set' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
