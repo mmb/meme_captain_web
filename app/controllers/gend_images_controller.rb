@@ -53,8 +53,7 @@ class GendImagesController < ApplicationController
     gend_image = GendImage.find_by!(id_hash: params[:id])
 
     if gend_image.user && gend_image.user == current_user
-      gend_image.is_deleted = true
-      gend_image.save!
+      gend_image.update!(is_deleted: true)
 
       head :no_content
     else
@@ -69,7 +68,9 @@ class GendImagesController < ApplicationController
       id_hash: params[:gend_image][:src_image_id])
 
     gend_image = src_image.gend_images.build(gend_image_params)
-    gend_image.user = current_user
+    gend_image.assign_attributes(
+      user: current_user,
+      creator_ip: request.remote_ip)
     gend_image
   end
 
@@ -113,9 +114,7 @@ class GendImagesController < ApplicationController
 
   def redirect_to_page
     redirect_to(
-      controller: :gend_image_pages,
-      action: :show,
-      id: @gend_image.id_hash)
+      controller: :gend_image_pages, action: :show, id: @gend_image.id_hash)
   end
 
   def gend_image_show_headers(gend_image)

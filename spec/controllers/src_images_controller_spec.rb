@@ -257,6 +257,11 @@ describe SrcImagesController, type: :controller do
         end.to trigger_statsd_increment('src_image.upload')
       end
 
+      it 'sets the creator_ip to the remote ip address' do
+        post :create, src_image: { image: image }
+        expect(SrcImage.last.creator_ip).to eq('0.0.0.0')
+      end
+
       context 'when the image is loaded from a url' do
         it 'does not increment the src_image.upload statsd counter' do
           expect do

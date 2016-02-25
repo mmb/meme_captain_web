@@ -282,6 +282,11 @@ describe GendImagesController, type: :controller do
         end.not_to trigger_statsd_increment('bot.attempt')
       end
 
+      it 'sets the creator_ip to the remote ip address' do
+        post(:create, gend_image: { src_image_id: src_image.id_hash })
+        expect(GendImage.last.creator_ip).to eq('0.0.0.0')
+      end
+
       context 'when the client requests html' do
         it 'redirects to the gend image page' do
           post(:create, gend_image: { src_image_id: src_image.id_hash })
