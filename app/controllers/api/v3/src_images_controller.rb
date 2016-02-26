@@ -27,6 +27,7 @@ module Api
 
         @src_image = SrcImage.new(submitted_params)
         @src_image.user = current_user
+        @src_image.creator_ip = remote_ip
 
         if @src_image.save
           create_success

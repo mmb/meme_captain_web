@@ -133,6 +133,26 @@ describe Api::V3::SrcImagesController, type: :controller do
             expect(response).to have_http_status(:ok)
           end.to trigger_statsd_increment('src_image.upload')
         end
+
+        it 'sets the creator_ip to the remote ip address' do
+          post(:create, src_image: {
+                 image: fixture_file_upload(
+                   '/files/ti_duck.jpg', 'image/jpeg') }
+              )
+          expect(SrcImage.last.creator_ip).to eq('0.0.0.0')
+        end
+
+        context 'when the request has a CloudFlare IP header' do
+          before { request.headers['CF-Connecting-IP'] = '6.6.2.2' }
+
+          it 'sets the creator_ip to the value of CF-Connecting-IP' do
+            post(:create, src_image: {
+                   image: fixture_file_upload(
+                     '/files/ti_duck.jpg', 'image/jpeg') }
+                )
+            expect(SrcImage.last.creator_ip).to eq('6.6.2.2')
+          end
+        end
       end
 
       context 'when loading an image url' do
