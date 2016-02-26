@@ -42,7 +42,7 @@ describe ApplicationController, type: :controller do
 
       context 'when the API token is invalid' do
         let(:request_token) { 'invalid' }
-        it 'set the current user to bil' do
+        it 'set the current user to nil' do
           get(:index)
           expect(controller.current_user).to be_nil
         end
