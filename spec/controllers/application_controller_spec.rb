@@ -81,7 +81,7 @@ describe ApplicationController, type: :controller do
       let(:user) { nil }
       it 'is false' do
         get(:index)
-        expect(controller.admin?).to be_falsey
+        expect(controller.admin?).to eq(false)
       end
     end
 
@@ -89,7 +89,7 @@ describe ApplicationController, type: :controller do
       let(:user) { FactoryGirl.create(:user) }
       it 'is false' do
         get(:index)
-        expect(controller.admin?).to be_falsey
+        expect(controller.admin?).to eq(false)
       end
     end
 

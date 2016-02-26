@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_user.try(:is_admin)
+    current_user.try(:is_admin) ? true : false
   end
 
   def cache_expires(length_of_time)
