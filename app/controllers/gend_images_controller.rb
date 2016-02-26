@@ -70,7 +70,7 @@ class GendImagesController < ApplicationController
     gend_image = src_image.gend_images.build(gend_image_params)
     gend_image.assign_attributes(
       user: current_user,
-      creator_ip: request.remote_ip)
+      creator_ip: remote_ip)
     gend_image
   end
 

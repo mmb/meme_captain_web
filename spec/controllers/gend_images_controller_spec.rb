@@ -287,6 +287,15 @@ describe GendImagesController, type: :controller do
         expect(GendImage.last.creator_ip).to eq('0.0.0.0')
       end
 
+      context 'when the request has a CloudFlare IP header' do
+        before { request.headers['CF-Connecting-IP'] = '6.6.2.2' }
+
+        it 'sets the creator_ip to the value of CF-Connecting-IP' do
+          post(:create, gend_image: { src_image_id: src_image.id_hash })
+          expect(GendImage.last.creator_ip).to eq('6.6.2.2')
+        end
+      end
+
       context 'when the client requests html' do
         it 'redirects to the gend image page' do
           post(:create, gend_image: { src_image_id: src_image.id_hash })

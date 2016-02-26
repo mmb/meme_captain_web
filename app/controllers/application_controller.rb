@@ -28,6 +28,10 @@ class ApplicationController < ActionController::Base
     expires_in 1.week, public: true
   end
 
+  def remote_ip
+    request.headers['CF-Connecting-IP'] || request.remote_ip
+  end
+
   private
 
   def authenticate

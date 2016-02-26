@@ -262,6 +262,15 @@ describe SrcImagesController, type: :controller do
         expect(SrcImage.last.creator_ip).to eq('0.0.0.0')
       end
 
+      context 'when the request has a CloudFlare IP header' do
+        before { request.headers['CF-Connecting-IP'] = '6.6.2.2' }
+
+        it 'sets the creator_ip to the value of CF-Connecting-IP' do
+          post(:create, src_image: { image: image })
+          expect(SrcImage.last.creator_ip).to eq('6.6.2.2')
+        end
+      end
+
       context 'when the image is loaded from a url' do
         it 'does not increment the src_image.upload statsd counter' do
           expect do
