@@ -89,6 +89,10 @@
           API
         <% end %>
 
+	<% if @show_creator_ip %>
+          <p class="meme-meta">Creator IP: <%= @gend_image.creator_ip %></p>
+        <% end %>
+
         <div id="qr-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">

@@ -14,6 +14,9 @@ describe GendImagePagesController, type: :controller do
           FactoryGirl.create(:caption, text: 'caption 2', top_left_y_pct: 0.2)
         ])
     end
+    let(:user) { nil }
+
+    before(:each) { session[:user_id] = user.try(:id) }
 
     it 'sets the gend image' do
       get :show, id: gend_image.id_hash
@@ -58,6 +61,24 @@ describe GendImagePagesController, type: :controller do
         expect do
           get :show, id: gend_image.id_hash
         end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when the user is not an admin' do
+      let(:user) { nil }
+
+      it 'sets show_creator_ip to false' do
+        get(:show, id: gend_image.id_hash)
+        expect(assigns(:show_creator_ip)).to eq(false)
+      end
+    end
+
+    context 'when the user is an admin' do
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      it 'sets show_creator_ip to true' do
+        get(:show, id: gend_image.id_hash)
+        expect(assigns(:show_creator_ip)).to eq(true)
       end
     end
   end

@@ -12,7 +12,9 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       captions: [
         FactoryGirl.create(:caption, text: 'caption 1', top_left_y_pct: 0.8),
         FactoryGirl.create(:caption, text: 'caption 2', top_left_y_pct: 0.2)
-      ])
+      ],
+      creator_ip: '8.7.6.5'
+    )
   end
 
   let(:src_image) { FactoryGirl.create(:src_image) }
@@ -221,6 +223,22 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
     it 'does not show the Google+ button' do
       expect(render).to_not have_link('Google+')
+    end
+  end
+
+  context 'when show_creator_ip is true' do
+    before { assign(:show_creator_ip, true) }
+
+    it 'show the creator ip' do
+      expect(render).to have_text('8.7.6.5')
+    end
+  end
+
+  context 'when show_creator_ip is false' do
+    before { assign(:show_creator_ip, false) }
+
+    it 'show the creator ip' do
+      expect(render).to_not have_text('8.7.6.5')
     end
   end
 end
