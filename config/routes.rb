@@ -104,6 +104,7 @@ MemeCaptainWeb::Application.routes.draw do
       resources :pending_gend_images, only: :show
       resources :pending_src_images, only: :show
       resources :src_images, concerns: :paginatable
+      resources :gend_images, concerns: :paginatable
     end
   end
 
