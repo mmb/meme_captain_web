@@ -5,7 +5,7 @@
       "associate_public_ip_address": true,
       "instance_type": "m4.large",
       "region": "us-east-1",
-      "source_ami": "ami-60b6c60a",
+      "source_ami": "ami-8fcee4e5",
       "spot_price": "0.05",
       "ssh_pty": true,
       "ssh_username": "ec2-user",
