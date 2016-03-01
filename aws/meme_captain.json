@@ -115,7 +115,7 @@
     "canaryAutoScalingGroup": {
       "Properties": {
         "DesiredCapacity": 1,
-        "HealthCheckGracePeriod": 300,
+        "HealthCheckGracePeriod": 140,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "canaryLaunchConfig"
@@ -735,7 +735,7 @@
     "onDemandAutoScalingGroup": {
       "Properties": {
         "DesiredCapacity": 0,
-        "HealthCheckGracePeriod": 300,
+        "HealthCheckGracePeriod": 140,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "onDemandLaunchConfig"
@@ -1027,7 +1027,7 @@
     "spot2AutoScalingGroup": {
       "Properties": {
         "DesiredCapacity": 0,
-        "HealthCheckGracePeriod": 300,
+        "HealthCheckGracePeriod": 140,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "spot2LaunchConfig"
@@ -1161,7 +1161,7 @@
     "spotAutoScalingGroup": {
       "Properties": {
         "DesiredCapacity": 1,
-        "HealthCheckGracePeriod": 300,
+        "HealthCheckGracePeriod": 140,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
           "Ref": "spotLaunchConfig"
