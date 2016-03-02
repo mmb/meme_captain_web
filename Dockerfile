@@ -70,9 +70,9 @@ COPY docker/varnish_defaults /etc/default/varnish
 # monit
 RUN apt-get install --assume-yes \
     libpam-dev \
-  && curl https://mmonit.com/monit/dist/monit-5.14.tar.gz \
+  && curl https://mmonit.com/monit/dist/monit-5.16.tar.gz \
     | tar xz \
-  && cd monit-5.14 \
+  && cd monit-5.16 \
   && ./configure \
   && make \
   && make install \
