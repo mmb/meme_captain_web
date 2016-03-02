@@ -63,6 +63,7 @@ RUN apt-get install --assume-yes \
     >> /etc/apt/sources.list.d/varnish-cache.list \
   && apt-get update \
   && apt-get install --assume-yes varnish
+RUN varnishd -C -f docker/default.vcl
 COPY docker/default.vcl /etc/varnish/default.vcl
 COPY docker/varnish_defaults /etc/default/varnish
 
