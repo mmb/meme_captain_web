@@ -1,12 +1,18 @@
 {
   "builders": [
     {
+      "ami_block_device_mappings": [
+        {
+          "device_name": "/dev/xvda",
+          "volume_type": "gp2"
+        }
+      ],
       "ami_name": "memecaptain-{{timestamp}}",
       "associate_public_ip_address": true,
-      "instance_type": "m4.large",
+      "instance_type": "c4.xlarge",
       "region": "us-east-1",
       "source_ami": "ami-8fcee4e5",
-      "spot_price": "0.05",
+      "spot_price": "0.10",
       "ssh_pty": true,
       "ssh_username": "ec2-user",
       "subnet_id": "subnet-c7219bec",
