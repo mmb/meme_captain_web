@@ -42,7 +42,7 @@ describe GendImageScriptsController, type: :controller do
 
       it 'assigns the endpoint' do
         get(:show, id: gend_image.id_hash, format: :text)
-        expect(assigns(:endpoint)).to eq('http://test.host/gend_images')
+        expect(assigns(:endpoint)).to eq('http://test.host/api/v3/gend_images')
       end
 
       it 'assigns the json' do

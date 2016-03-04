@@ -31,20 +31,32 @@ CREATE_RESPONSE=$(
     --data @- \\
     --header 'Content-Type: application/json' \\
     --header 'Accept: application/json' \\
+    --fail \\
     test_endpoint
 )
 
-STATUS_URL=$(echo $CREATE_RESPONSE | jq --raw-output .status_url)
+STATUS_URL=$(echo "$CREATE_RESPONSE" | jq --raw-output '.status_url')
 
 i=0
 while true; do
-  if [ "$i" -ge 10 ]; then exit 1; fi
-  case $(curl --head --output /dev/null --write-out '%{http_code}' $STATUS_URL) in
-    303) curl --location --remote-name --verbose $STATUS_URL; break;;
-    200) sleep 3;;
-    *) exit 1
-  esac
+  RESPONSE=$(curl --fail $STATUS_URL)
+  IN_PROGRESS=$(echo "$RESPONSE" | jq --raw-output '.in_progress')
+  if [ "$IN_PROGRESS" = "false" ]; then
+    ERROR=$(echo "$RESPONSE" | jq --raw-output '.error')
+    if [ "$ERROR" = "null" ]; then
+      echo "$RESPONSE" | jq --raw-output '.url'
+      exit 0
+    else
+      echo "$ERROR"
+      exit 1
+    fi
+  fi
   i=$(( $i + 1 ))
+  if [ "$i" -ge 10 ]; then
+    echo "$RESPONSE" | jq .
+    exit 1
+  fi
+  sleep 3
 done
 EXPECTED
 

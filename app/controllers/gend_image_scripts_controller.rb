@@ -3,7 +3,7 @@ class GendImageScriptsController < ApplicationController
   def show
     gend_image = GendImage.active.finished.find_by!(id_hash: params[:id])
 
-    @endpoint = gend_images_url
+    @endpoint = api_v3_gend_images_url
 
     @json = MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json
   end
