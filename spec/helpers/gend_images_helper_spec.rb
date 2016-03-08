@@ -23,4 +23,15 @@ describe GendImagesHelper, type: :helper do
       expect(helper.gend_image_url_for(gend_image)).to eq(expected)
     end
   end
+
+  describe '#gend_thumb_url_for' do
+    let(:gend_image) { FactoryGirl.create(:finished_gend_image) }
+
+    it 'generates the gend thumb url' do
+      expected = "/gend_thumbs/#{gend_image.gend_thumb.id}" \
+        ".#{gend_image.gend_thumb.format}"
+
+      expect(helper.gend_thumb_url_for(gend_image)).to eq(expected)
+    end
+  end
 end
