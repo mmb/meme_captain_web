@@ -14,9 +14,9 @@ describe 'gend_images/_gend_image.html', type: :view do
     it 'shows the thumbnail' do
       render partial: 'gend_images/gend_image',
              locals: { gend_image: gend_image, show_toolbar: show_toolbar }
-      expect(rendered).to match(
-        "src=\"/gend_thumbs/#{gend_image.gend_thumb.id}" \
-        ".#{gend_image.gend_thumb.format}\"")
+      expect(rendered).to have_selector(
+        "img[src='/gend_thumbs/#{gend_image.gend_thumb.id}" \
+        ".#{gend_image.gend_thumb.format}']")
     end
 
     it 'puts the width in the image tag' do
