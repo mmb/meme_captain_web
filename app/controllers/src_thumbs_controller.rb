@@ -4,14 +4,19 @@
 # Source image thumbnails controller.
 class SrcThumbsController < ApplicationController
   def show
-    src_thumb = SrcThumb.find(params[:id])
+    src_thumb = SrcThumb.select(:image).find(params[:id])
 
     cache_expires 1.week
 
-    headers['Content-Length'.freeze] = src_thumb.size
-
     return unless stale?(src_thumb)
-    headers['Content-Type'.freeze] = src_thumb.content_type
+    make_headers(src_thumb)
     render(text: src_thumb.image)
+  end
+
+  private
+
+  def make_headers(src_thumb)
+    headers.update('Content-Length'.freeze => src_thumb.size,
+                   'Content-Type'.freeze => src_thumb.content_type)
   end
 end
