@@ -114,7 +114,8 @@ describe 'src_images/_src_images.html', type: :view do
              more_images: more_images })
 
     expect(rendered).to have_selector(
-      "img[src='/src_thumbs/#{src_image.src_thumb.id}']")
+      "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
+      ".#{src_image.src_thumb.format}']")
   end
 
   context 'when the more images link should be shown' do

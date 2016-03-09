@@ -28,4 +28,15 @@ describe SrcImagesHelper, type: :helper do
       expect(helper.src_image_url_for(src_image)).to eq(expected)
     end
   end
+
+  describe '#src_thumb_url_for' do
+    let(:src_image) { FactoryGirl.create(:finished_src_image) }
+
+    it 'generates the src thumb url' do
+      expected = "/src_thumbs/#{src_image.src_thumb.id}" \
+        ".#{src_image.src_thumb.format}"
+
+      expect(helper.src_thumb_url_for(src_image)).to eq(expected)
+    end
+  end
 end

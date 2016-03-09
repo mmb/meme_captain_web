@@ -15,7 +15,9 @@ describe 'src_images/_src_image.html', type: :view do
 
   context 'the image has been processed' do
     it 'shows the thumbnail' do
-      expect(rendered).to match(src_image.src_thumb.id.to_s)
+      expect(rendered).to have_selector(
+        "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
+        ".#{src_image.src_thumb.format}']")
     end
 
     it 'puts the width in the image tag' do
@@ -33,7 +35,7 @@ describe 'src_images/_src_image.html', type: :view do
     it 'sets the image alt tag to the src image name ' do
       expect(rendered).to have_selector(
         "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
-	"'][alt='test src image']")
+	".#{src_image.src_thumb.format}'][alt='test src image']")
     end
   end
 
