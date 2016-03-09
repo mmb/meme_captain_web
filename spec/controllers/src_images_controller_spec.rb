@@ -404,7 +404,7 @@ describe SrcImagesController, type: :controller do
       it 'has the right content type' do
         get 'show', id: src_image.id_hash
 
-        expect(response.content_type).to eq(src_image.content_type)
+        expect(response.headers['Content-Type']).to eq(src_image.content_type)
       end
 
       it 'has the right Content-Length header' do

@@ -46,7 +46,8 @@ class GendImagesController < ApplicationController
     gend_image_show_headers(gend_image)
 
     return unless stale?(gend_image)
-    render text: gend_image.image, content_type: gend_image.content_type
+    headers['Content-Type'.freeze] = gend_image.content_type
+    render(text: gend_image.image)
   end
 
   def destroy

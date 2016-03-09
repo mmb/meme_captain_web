@@ -42,7 +42,8 @@ class SrcImagesController < ApplicationController
     src_image_show_headers(src_image)
 
     return unless stale?(src_image)
-    render text: src_image.image, content_type: src_image.content_type
+    headers['Content-Type'.freeze] = src_image.content_type
+    render(text: src_image.image)
   end
 
   def update

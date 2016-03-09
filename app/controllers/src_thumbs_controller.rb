@@ -11,6 +11,7 @@ class SrcThumbsController < ApplicationController
     headers['Content-Length'.freeze] = src_thumb.size
 
     return unless stale?(src_thumb)
-    render text: src_thumb.image, content_type: src_thumb.content_type
+    headers['Content-Type'.freeze] = src_thumb.content_type
+    render(text: src_thumb.image)
   end
 end

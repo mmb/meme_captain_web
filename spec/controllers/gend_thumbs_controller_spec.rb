@@ -20,7 +20,7 @@ describe GendThumbsController, type: :controller do
 
         get :show, id: gend_thumb.id
 
-        expect(response.content_type).to eq(gend_thumb.content_type)
+        expect(response.headers['Content-Type']).to eq(gend_thumb.content_type)
       end
 
       it 'has the right Content-Length header' do
