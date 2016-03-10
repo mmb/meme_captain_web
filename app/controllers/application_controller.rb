@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   def cache_expires(length_of_time)
     # Sets both Expires and Cache-Control headers.
     headers['Expires'.freeze] = (Time.now + length_of_time).httpdate
-    expires_in 1.week, public: true
+    expires_in(length_of_time, public: true)
   end
 
   def remote_ip

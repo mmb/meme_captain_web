@@ -101,4 +101,26 @@ describe ApplicationController, type: :controller do
       end
     end
   end
+
+  describe '#cache_expires' do
+    controller do
+      def index
+        cache_expires(62.minutes)
+        render(text: 'ok')
+      end
+    end
+
+    it 'sets the Expires header' do
+      Timecop.freeze do
+        get(:index)
+        expect(response.headers['Expires']).to eq(
+          (Time.now + 62.minutes).httpdate)
+      end
+    end
+
+    it 'sets the Cache-Control header' do
+      get(:index)
+      expect(response.headers['Cache-Control']).to eq('max-age=3720, public')
+    end
+  end
 end
