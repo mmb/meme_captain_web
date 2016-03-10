@@ -37,7 +37,7 @@ class SrcImagesController < ApplicationController
   def show
     src_image = SrcImage.active.finished.find_by!(id_hash: params[:id])
 
-    expires_in 1.hour, public: true
+    cache_expires(1.hour)
 
     src_image_show_headers(src_image)
 
