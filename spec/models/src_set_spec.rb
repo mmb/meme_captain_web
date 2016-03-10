@@ -41,6 +41,16 @@ describe SrcSet do
       specify { expect(src_set.thumb_width).to eq(nil) }
       specify { expect(src_set.thumb_height).to eq(nil) }
     end
+
+    context 'when all images in the set are deleted' do
+      it 'returns nil' do
+        src_set = FactoryGirl.create(:src_set)
+        src_set.src_images << FactoryGirl.create(:src_image, is_deleted: true)
+        src_set.src_images << FactoryGirl.create(:src_image, is_deleted: true)
+
+        expect(src_set.thumbnail).to be_nil
+      end
+    end
   end
 
   context 'creating a new src set with the same name as an active src set' do
