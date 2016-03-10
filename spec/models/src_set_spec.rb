@@ -12,18 +12,9 @@ describe SrcSet do
 
   context "determining the set's thumbnail" do
     it 'uses the most used image as the thumbnail for the set' do
-      si1 = FactoryGirl.create(
-        :src_image,
-        src_thumb: FactoryGirl.create(:src_thumb),
-        gend_images_count: 3)
-      si2 = FactoryGirl.create(
-        :src_image,
-        src_thumb: FactoryGirl.create(:src_thumb),
-        gend_images_count: 2)
-      si3 = FactoryGirl.create(
-        :src_image,
-        src_thumb: FactoryGirl.create(:src_thumb),
-        gend_images_count: 1)
+      si1 = FactoryGirl.create(:finished_src_image, gend_images_count: 3)
+      si2 = FactoryGirl.create(:finished_src_image, gend_images_count: 2)
+      si3 = FactoryGirl.create(:finished_src_image, gend_images_count: 1)
 
       set1.src_images << si1
       set1.src_images << si2
@@ -49,6 +40,18 @@ describe SrcSet do
         src_set.src_images << FactoryGirl.create(:src_image, is_deleted: true)
 
         expect(src_set.thumbnail).to be_nil
+      end
+    end
+
+    context 'when some images in the set are in progress' do
+      it 'ignores the in progress images' do
+        src_set = FactoryGirl.create(:src_set)
+        src_set.src_images << FactoryGirl.create(
+          :src_image, work_in_progress: true)
+        si = FactoryGirl.create(:finished_src_image)
+        src_set.src_images << si
+
+        expect(src_set.thumbnail).to eq(si.src_thumb)
       end
     end
   end
