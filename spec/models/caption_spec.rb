@@ -49,7 +49,7 @@ describe Caption do
     end
 
     context 'when the text has emoji modifiers' do
-      let(:caption) { FactoryGirl.create(:caption, text: '🏼') }
+      let(:caption) { FactoryGirl.build(:caption, text: '🏼') }
 
       it 'skips reordering' do
         expect(text_pos.text).to eq('🏼')
@@ -57,7 +57,7 @@ describe Caption do
     end
 
     context 'when the text contains emoji that break bidirectional text' do
-      let(:caption) { FactoryGirl.create(:caption, text: '🌮') }
+      let(:caption) { FactoryGirl.build(:caption, text: '🌮') }
 
       it 'skips reordering' do
         expect(text_pos.text).to eq('🌮')
