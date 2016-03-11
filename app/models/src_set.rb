@@ -40,14 +40,6 @@ class SrcSet < ActiveRecord::Base
     end
   end
 
-  def thumb_width
-    thumbnail.try(:width)
-  end
-
-  def thumb_height
-    thumbnail.try(:height)
-  end
-
   scope :active, -> { where is_deleted: false }
 
   scope :owned_by, ->(user) { where user_id: user.id }
