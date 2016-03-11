@@ -51,9 +51,16 @@ describe Caption do
     context 'when the text has emoji modifiers' do
       let(:caption) { FactoryGirl.create(:caption, text: '🏼') }
 
-      it 'does not blow up twitter cldr' do
-        pending('twitter cldr supports emoji modifiers')
+      it 'skips reordering' do
         expect(text_pos.text).to eq('🏼')
+      end
+    end
+
+    context 'when the text contains emoji that break bidirectional text' do
+      let(:caption) { FactoryGirl.create(:caption, text: '🌮') }
+
+      it 'skips reordering' do
+        expect(text_pos.text).to eq('🌮')
       end
     end
   end
