@@ -1,7 +1,7 @@
 <%= link_to :controller => :src_sets, :action => :show, :id => src_set.name do %>
 
-    <% if src_set.thumbnail %>
-        <%= image_tag(url_for(src_set.thumbnail), size: src_set.thumbnail.dimensions, alt: src_set.name) %>
+    <% if src_set.thumbnail_image %>
+        <%= image_tag(src_thumb_url_for(src_set.thumbnail_image), size: src_set.thumbnail_image.src_thumb.dimensions, alt: src_set.name) %>
     <% else %>
         <div class="empty-set">&#x2205;</div>
     <% end %>

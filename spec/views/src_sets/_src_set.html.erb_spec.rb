@@ -9,7 +9,9 @@ describe 'src_sets/_src_set.html', type: :view do
   context 'when the set contains a completed source image' do
     it 'shows the thumbnail' do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
-      expect(rendered).to match(src_image.src_thumb.id.to_s)
+      expect(rendered).to have_selector(
+        "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
+	".#{src_image.src_thumb.format}']")
     end
 
     it 'puts the width in the image tag' do
@@ -26,7 +28,7 @@ describe 'src_sets/_src_set.html', type: :view do
       render partial: 'src_sets/src_set', locals: { src_set: src_set }
       expect(rendered).to have_selector(
         "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
-        "'][alt='#{src_set.name}']")
+	".#{src_image.src_thumb.format}'][alt='#{src_set.name}']")
     end
   end
 

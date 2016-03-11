@@ -33,10 +33,9 @@ class SrcSet < ActiveRecord::Base
     touch
   end
 
-  def thumbnail
-    Rails.cache.fetch("#{cache_key}/thumbnail") do
-      recent = src_images.without_image.active.finished.most_used
-      recent.first.src_thumb unless recent.empty?
+  def thumbnail_image
+    Rails.cache.fetch("#{cache_key}/thumbnail_image") do
+      src_images.without_image.active.finished.most_used.first
     end
   end
 

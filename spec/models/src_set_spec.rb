@@ -20,13 +20,13 @@ describe SrcSet do
       set1.src_images << si2
       set1.src_images << si3
 
-      expect(set1.thumbnail).to eq si1.src_thumb
+      expect(set1.thumbnail_image).to eq(si1)
     end
 
     context 'when the set is empty' do
       subject(:src_set) { FactoryGirl.create(:src_set) }
 
-      specify { expect(src_set.thumbnail).to eq(nil) }
+      specify { expect(src_set.thumbnail_image).to be_nil }
     end
 
     context 'when all images in the set are deleted' do
@@ -35,7 +35,7 @@ describe SrcSet do
         src_set.src_images << FactoryGirl.create(:src_image, is_deleted: true)
         src_set.src_images << FactoryGirl.create(:src_image, is_deleted: true)
 
-        expect(src_set.thumbnail).to be_nil
+        expect(src_set.thumbnail_image).to be_nil
       end
     end
 
@@ -47,7 +47,7 @@ describe SrcSet do
         si = FactoryGirl.create(:finished_src_image)
         src_set.src_images << si
 
-        expect(src_set.thumbnail).to eq(si.src_thumb)
+        expect(src_set.thumbnail_image).to eq(si)
       end
     end
   end
