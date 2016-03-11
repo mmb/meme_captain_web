@@ -369,4 +369,12 @@ describe GendImage do
       end
     end
   end
+
+  describe '#dimensions' do
+    it 'returns widthxheight' do
+      gend_image = FactoryGirl.create(:gend_image)
+      gend_image.set_derived_image_fields
+      expect(gend_image.dimensions).to eq('399x399')
+    end
+  end
 end

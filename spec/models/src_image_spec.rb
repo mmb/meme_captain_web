@@ -361,4 +361,12 @@ describe SrcImage do
       end
     end
   end
+
+  describe '#dimensions' do
+    it 'returns widthxheight' do
+      src_image = FactoryGirl.create(:src_image)
+      src_image.set_derived_image_fields
+      expect(src_image.dimensions).to eq('399x399')
+    end
+  end
 end

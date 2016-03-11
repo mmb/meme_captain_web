@@ -35,6 +35,10 @@ module HasImageConcern
     Magick::ImageList.new.from_blob(image)
   end
 
+  def dimensions
+    "#{width}x#{height}"
+  end
+
   private
 
   def load_image_dimension_fields(img)
