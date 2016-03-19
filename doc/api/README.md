@@ -1,9 +1,18 @@
 # Meme Captain API
 
-* [Authentication](authentication.md)
-* [Create a meme image](create_meme_image.md)
-* [Create a source image](create_source_image.md)
-* [Search source images](search_source_images.md)
+## v3
+
+* [Authentication](v3/authentication.md)
+* [Create a meme image](v3/create_meme_image.md)
+* [Create a source image](v3/create_source_image.md)
+* [Search source images](v3/search_source_images.md)
+
+## v2
+
+* [Authentication](v2/authentication.md)
+* [Create a meme image](v2/create_meme_image.md)
+* [Create a source image](v2/create_source_image.md)
+* [Search source images](v2/search_source_images.md)
 
 # Applications using the API
 
