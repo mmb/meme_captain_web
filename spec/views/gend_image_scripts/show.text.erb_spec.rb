@@ -30,7 +30,6 @@ CREATE_RESPONSE=$(
   curl \\
     --data @- \\
     --header 'Content-Type: application/json' \\
-    --header 'Accept: application/json' \\
     --fail \\
     test_endpoint
 )
