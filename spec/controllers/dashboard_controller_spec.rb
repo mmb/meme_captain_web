@@ -24,14 +24,48 @@ describe DashboardController, type: :controller do
     context 'when the user is an admin user' do
       let(:user) { FactoryGirl.create(:admin_user) }
 
-      it 'counts the gend images created in the last 24 hours' do
+      it 'counts the gend image creation successes in the last 24 hours' do
         FactoryGirl.create(:gend_image, created_at: Time.now - 25.hours)
         FactoryGirl.create(:gend_image, created_at: Time.now - 23.hours)
+        FactoryGirl.create(:gend_image)
+        FactoryGirl.create(:gend_image, error: 'failed')
+
+        get(:show)
+
+        expect(assigns(:gend_image_successes_last_24h)).to eq(2)
+      end
+
+      it 'counts the gend image creation errors in the last 24 hours' do
+        FactoryGirl.create(
+          :gend_image, created_at: Time.now - 25.hours, error: 'failed')
+        FactoryGirl.create(
+          :gend_image, created_at: Time.now - 23.hours, error: 'failed')
+        FactoryGirl.create(:gend_image, error: 'failed')
         FactoryGirl.create(:gend_image)
 
         get(:show)
 
-        expect(assigns(:gend_images_last_24h)).to eq(2)
+        expect(assigns(:gend_image_errors_last_24h)).to eq(2)
+      end
+
+      it 'calculates the gend image creation success rate in the last 24 ' \
+        'hours' do
+        FactoryGirl.create(:gend_image, created_at: Time.now - 25.hours)
+        FactoryGirl.create(:gend_image, created_at: Time.now - 23.hours)
+        FactoryGirl.create(:gend_image)
+        FactoryGirl.create(:gend_image, error: 'failed')
+
+        get(:show)
+
+        expect(assigns(:gend_image_success_rate_last_24h)).to eq(66.67)
+      end
+
+      context 'when there have been no gend images in the last 24 hours' do
+        it 'reports 100.00% success rate' do
+          get(:show)
+
+          expect(assigns(:gend_image_success_rate_last_24h)).to eq(100.00)
+        end
       end
 
       it 'counts the src images created in the last 24 hours' do
