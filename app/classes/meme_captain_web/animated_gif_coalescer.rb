@@ -12,7 +12,7 @@ module MemeCaptainWeb
         i.write(data)
         i.close_write
         out_data = o.read
-        fail(e.read) unless t.value.success?
+        raise(e.read) unless t.value.success?
         out_data
       end
     end

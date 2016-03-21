@@ -66,7 +66,7 @@ module MemeCaptainWeb
       if @writing_now
         @writing_now = false
         @removed_delay_times = []
-      elsif @removed_delay_times.size > 0
+      elsif !@removed_delay_times.empty?
         @writing_now = true
       end
     end
