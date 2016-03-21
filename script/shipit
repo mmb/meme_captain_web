@@ -3,6 +3,12 @@
 set -e
 set -o pipefail
 
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+if [ "$CURRENT_BRANCH" != "master" ]; then
+  echo 'The current branch must be master'
+  exit 1
+fi
+
 rake spec:all
 
 if [ "$(git log @{u}.. | wc -l)" -ne "0" ]; then
