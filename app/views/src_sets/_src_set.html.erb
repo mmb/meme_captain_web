@@ -1,4 +1,4 @@
-<%= link_to :controller => :src_sets, :action => :show, :id => src_set.name do %>
+<%= link_to(controller: :src_sets, action: :show, id: src_set.name) do %>
 
     <% if src_set.thumbnail_image %>
         <%= image_tag(src_thumb_url_for(src_set.thumbnail_image), size: src_set.thumbnail_image.src_thumb.dimensions, alt: src_set.name) %>

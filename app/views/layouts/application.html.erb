@@ -3,7 +3,7 @@
 <head>
   <title><%= content_for?(:title) ? content_for(:title) : 'Meme Captain meme generator' %></title>
   <meta name="description" content="<%= content_for(:description) %>" />
-  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag('application', media: 'all') %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag %>
   <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
@@ -36,7 +36,7 @@
                   My images
               <% end %>
             </li>
-            <li><%= link_to "Logout #{current_user.email}", session_path, :method => :delete %></li>
+            <li><%= link_to("Logout #{current_user.email}", session_path, method: :delete) %></li>
         <% else %>
             <li><%= link_to "Login", new_session_path %></li>
         <% end %>

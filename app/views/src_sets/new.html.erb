@@ -1,12 +1,12 @@
 <h1>New Source Set</h1>
 
-<%= form_for @src_set, :url => {:action => 'create'} do |f| %>
+<%= form_for(@src_set, url: { action: 'create' }) do |f| %>
     <%= f.error_messages %>
 
     <%= f.label :name %>
     <%= f.text_field :name %>
 
     <p>
-      <%= f.submit 'Create', :class => 'btn btn-default' %>
+      <%= f.submit('Create', class: 'btn btn-default') %>
     </p>
 <% end %>

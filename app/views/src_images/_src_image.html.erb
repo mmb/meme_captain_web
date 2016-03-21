@@ -1,5 +1,5 @@
 <% if src_image.work_in_progress %>
-    <%= render :partial => 'application/under_construction' %>
+    <%= render(partial: 'application/under_construction') %>
 <% else %>
     <%= link_to image_tag(src_thumb_url_for(src_image),
                           size: src_image.src_thumb.dimensions, alt: src_image.name),

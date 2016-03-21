@@ -24,10 +24,10 @@
       <% end %>
   <% end %>
 
-  <%= form_for @gend_image, :url => { :action => 'create' } do |f| %>
+  <%= form_for(@gend_image, url: { action: 'create' }) do |f| %>
       <%= f.error_messages %>
 
-      <%= f.hidden_field :src_image_id, :value => @gend_image.src_image.id_hash %>
+      <%= f.hidden_field(:src_image_id, value: @gend_image.src_image.id_hash) %>
 
       <% @gend_image.captions.each.with_index do |caption, index| %>
         <div class="form-group">
@@ -44,7 +44,7 @@
         </div>
       <% end %>
 
-      <%= button_tag 'Add another caption', :class => "btn btn-default text-add", :type => :button %>
+      <%= button_tag('Add another caption', class: 'btn btn-default text-add', type: :button) %>
 
       <%= f.label :private do %>
           Private?
@@ -52,7 +52,7 @@
       <% end %>
 
       <p>
-        <%= f.submit 'Create', :class => 'btn btn-primary' %>
+        <%= f.submit('Create', class: 'btn btn-primary') %>
       </p>
 
       <%= f.text_field :email, style: 'display: none' %>
