@@ -353,7 +353,7 @@ DEPENDENCIES
   data_uri (~> 0.1.0)
   delayed-plugins-airbrake (~> 1.1.0)
   delayed_job_active_record (~> 4.0.3)
-  dynamic_form
+  dynamic_form (~> 1.1, >= 1.1.4)
   factory_girl_rails (~> 4.5.0)
   faraday (~> 0.9.1)
   faraday-cookie_jar (~> 0.0.6)

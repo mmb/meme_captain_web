@@ -14,7 +14,7 @@ gem 'less-rails', '~> 2.7', '>= 2.7.1'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 
-gem 'dynamic_form'
+gem 'dynamic_form', '~> 1.1', '>= 1.1.4'
 
 gem 'rmagick',
     '~> 2.15',
