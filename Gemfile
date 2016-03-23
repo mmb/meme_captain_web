@@ -51,7 +51,7 @@ gem 'twitter_cldr', '~> 3.2', '>= 3.2.1'
 gem 'rack-attack', '~> 4.4', '>= 4.4.1'
 
 group :test, :development do
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'factory_girl_rails', '~> 4.6'
   # Should not be needed. Workaround described in:
   #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
   gem 'rspec', '~> 3.4'
