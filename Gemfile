@@ -12,7 +12,7 @@ gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
 gem 'therubyracer', '~> 0.12.2'
 gem 'less-rails', '~> 2.7', '>= 2.7.1'
 
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 
 gem 'dynamic_form'
 
