@@ -48,7 +48,7 @@ gem 'statsd-instrument', '~> 2.0', '>= 2.0.11'
 gem 'data_uri', '~> 0.1.0'
 gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
 gem 'twitter_cldr', '~> 3.2', '>= 3.2.1'
-gem 'rack-attack', '~> 4.3', '>= 4.3.1'
+gem 'rack-attack', '~> 4.4', '>= 4.4.1'
 
 group :test, :development do
   gem 'factory_girl_rails', '~> 4.5.0'
