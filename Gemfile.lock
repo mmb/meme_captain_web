@@ -192,7 +192,7 @@ GEM
     rack (1.6.4)
     rack-attack (4.4.1)
       rack
-    rack-cache (1.2)
+    rack-cache (1.6.1)
       rack (>= 0.4)
     rack-rewrite (1.5.1)
     rack-test (0.6.3)
@@ -361,7 +361,7 @@ DEPENDENCIES
   pg (~> 0.18.4)
   puma (~> 3.2)
   rack-attack (~> 4.4, >= 4.4.1)
-  rack-cache (~> 1.2)
+  rack-cache (~> 1.6, >= 1.6.1)
   rack-rewrite (~> 1.5.1)
   rails (~> 4.2, >= 4.2.6)
   rails_best_practices (~> 1.16)
