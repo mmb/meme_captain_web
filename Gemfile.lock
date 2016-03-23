@@ -61,8 +61,6 @@ GEM
     ast (2.2.0)
     backports (3.6.6)
     bcrypt (3.1.11)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
     browser (2.0.2)
     builder (3.2.2)
     camertron-eprun (1.1.0)
@@ -95,7 +93,6 @@ GEM
     daemons (1.2.3)
     dalli (2.7.4)
     data_uri (0.1.0)
-    debug_inspector (0.0.2)
     delayed-plugins-airbrake (1.1.0)
       airbrake
       delayed_job
@@ -325,11 +322,6 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     unicode-display_width (1.0.2)
-    web-console (2.2.1)
-      activemodel (>= 4.0)
-      binding_of_caller (>= 0.7.2)
-      railties (>= 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
     webmock (1.21.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -389,7 +381,6 @@ DEPENDENCIES
   ttfunk (~> 1.4.0)
   twitter_cldr (~> 3.2, >= 3.2.1)
   uglifier (~> 3.0)
-  web-console (~> 2.2.1)
   webmock (~> 1.21.0)
 
 BUNDLED WITH
