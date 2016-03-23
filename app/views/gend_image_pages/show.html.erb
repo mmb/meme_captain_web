@@ -59,13 +59,13 @@
           <% end %>
         <% end %>
 
-        <% if browser.android? %>
+        <% if browser.platform.android? %>
             <%= link_to("sms:?body=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
                 SMS
             <% end %>
         <% end %>
 
-        <% if browser.mobile? %>
+        <% if browser.device.mobile? %>
             <%= link_to("whatsapp://send?text=#{u(@gend_image_url)}", class: 'btn btn-default') do %>
                 WhatsApp
             <% end %>

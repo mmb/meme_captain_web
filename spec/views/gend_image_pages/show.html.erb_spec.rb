@@ -23,7 +23,11 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   end
   let(:android) { false }
   let(:mobile) { false }
-  let(:browser) { instance_double('Browser') }
+  let(:browser) do
+    instance_double('Browser::Base', device: device, platform: platform)
+  end
+  let(:device) { instance_double('Browser::Device') }
+  let(:platform) { instance_double('Browser::Platform') }
 
   before do
     assign(:gend_image, gend_image)
@@ -31,8 +35,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     assign(:gend_image_url, gend_image_url)
 
     allow(view).to receive(:browser).with(no_args).and_return(browser)
-    allow(browser).to receive(:android?).with(no_args).and_return(android)
-    allow(browser).to receive(:mobile?).with(no_args).and_return(mobile)
+    allow(platform).to receive(:android?).with(no_args).and_return(android)
+    allow(device).to receive(:mobile?).with(no_args).and_return(mobile)
     allow(view).to receive(:content_for)
   end
 
