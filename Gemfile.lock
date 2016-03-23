@@ -182,7 +182,7 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     parser (2.3.0.6)
       ast (~> 2.2)
-    pg (0.18.3)
+    pg (0.18.4)
     phantomjs (1.9.8.0)
     powerpack (0.1.1)
     puma (3.2.0)
@@ -358,7 +358,7 @@ DEPENDENCIES
   less-rails (~> 2.7, >= 2.7.1)
   local_time (~> 1.0.3)
   meme_captain!
-  pg (~> 0.18.3)
+  pg (~> 0.18.4)
   puma (~> 3.2)
   rack-attack (~> 4.4, >= 4.4.1)
   rack-cache (~> 1.2)
