@@ -90,7 +90,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     daemons (1.2.3)
-    dalli (2.7.4)
+    dalli (2.7.6)
     data_uri (0.1.0)
     delayed-plugins-airbrake (1.1.0)
       airbrake
@@ -341,7 +341,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1, >= 4.1.1)
   coffeelint (~> 1.14)
   daemons (~> 1.2, >= 1.2.3)
-  dalli (~> 2.7.4)
+  dalli (~> 2.7, >= 2.7.6)
   data_uri (~> 0.1.0)
   delayed-plugins-airbrake (~> 1.1.0)
   delayed_job_active_record (~> 4.1)
