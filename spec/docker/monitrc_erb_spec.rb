@@ -37,7 +37,7 @@ describe 'monitrc.erb' do
 
       it 'does not pass the --queues argument to delayed job start' do
         expect(output).to include(
-          "/app/script/delayed_job start --pid-dir=/var/run --identifier=0\"\n")
+          "/app/script/delayed_job start --pid-dir=/run --identifier=0\"\n")
       end
     end
 
@@ -46,7 +46,7 @@ describe 'monitrc.erb' do
 
       it 'does not pass the --queues argument to delayed job start' do
         expect(output).to include(
-          "/app/script/delayed_job start --pid-dir=/var/run --identifier=0\"\n")
+          "/app/script/delayed_job start --pid-dir=/run --identifier=0\"\n")
       end
     end
 
@@ -55,7 +55,7 @@ describe 'monitrc.erb' do
 
       it 'passes the --queues argument to delayed job start' do
         expect(output).to include(
-          '/app/script/delayed_job start --pid-dir=/var/run --identifier=0 ' \
+          '/app/script/delayed_job start --pid-dir=/run --identifier=0 ' \
           "--queues=q1,q2,q3\"\n")
       end
     end
