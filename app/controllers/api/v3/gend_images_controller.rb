@@ -13,7 +13,6 @@ module Api
 
       def create
         @gend_image = build_gend_image_for_create
-        check_bot_attempt
 
         if @gend_image.save
           create_success
@@ -33,11 +32,6 @@ module Api
           user: current_user,
           creator_ip: remote_ip)
         gend_image
-      end
-
-      def check_bot_attempt
-        return if params[:gend_image][:email].blank?
-        StatsD.increment('bot.attempt'.freeze)
       end
 
       def create_success

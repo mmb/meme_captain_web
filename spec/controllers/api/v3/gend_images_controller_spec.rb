@@ -113,23 +113,6 @@ describe Api::V3::GendImagesController, type: :controller do
       end
     end
 
-    context 'when the email is not blank' do
-      let(:body) do
-        {
-          gend_image: {
-            src_image_id: src_image.id_hash,
-            email: 'bot1'
-          }
-        }
-      end
-
-      it 'logs a bot attempt' do
-        expect do
-          post(:create, body)
-        end.to trigger_statsd_increment('bot.attempt')
-      end
-    end
-
     it 'saves the image to the database' do
       expect do
         post(:create, gend_image: { src_image_id: src_image.id_hash })
