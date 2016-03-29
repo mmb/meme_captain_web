@@ -406,7 +406,7 @@
         "LoadBalancerName": "memecaptain",
         "SecurityGroups": [
           {
-            "Ref": "webSecurityGroup"
+            "Ref": "elbSecurityGroup"
           }
         ],
         "Subnets": [
@@ -461,6 +461,43 @@
         }
       },
       "Type": "AWS::S3::BucketPolicy"
+    },
+    "elbSecurityGroup": {
+      "Properties": {
+        "GroupDescription": "elb security group",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "1",
+            "IpProtocol": "tcp",
+            "ToPort": "65535"
+          }
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "80",
+            "IpProtocol": "tcp",
+            "ToPort": "80"
+          },
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "443",
+            "IpProtocol": "tcp",
+            "ToPort": "443"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "elb"
+          }
+        ],
+        "VpcId": {
+          "Ref": "vpc"
+        }
+      },
+      "Type": "AWS::EC2::SecurityGroup"
     },
     "internetGateway": {
       "Type": "AWS::EC2::InternetGateway"
@@ -1493,12 +1530,6 @@
             "FromPort": "80",
             "IpProtocol": "tcp",
             "ToPort": "80"
-          },
-          {
-            "CidrIp": "0.0.0.0/0",
-            "FromPort": "443",
-            "IpProtocol": "tcp",
-            "ToPort": "443"
           }
         ],
         "Tags": [
