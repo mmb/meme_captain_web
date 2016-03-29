@@ -77,8 +77,7 @@ else
   exec 3<> /dev/stdout
 fi
 
-SERVER_ID=$(curl --connect-timeout 3 --silent http://169.254.169.254/latest/meta-data/instance-id)
-SERVER_ID=${SERVER_ID:-unknown}
+SERVER_ID=${INSTANCE_ID:-unknown}
 
 while true; do
   send_memory_stats
