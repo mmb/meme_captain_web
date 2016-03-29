@@ -24,7 +24,7 @@ check process memcache
   stop program = "/etc/init.d/memcached stop"
 
 check process varnish
-  with pidfile /var/run/varnishd.pid
+  with pidfile /run/.pid
   start program = "/etc/init.d/varnish start"
   stop program = "/etc/init.d/varnish stop"
 <% 0.upto((ENV['NUM_DELAYED_JOB_WORKERS'] || 1).to_i - 1) do |i| %>
