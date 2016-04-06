@@ -304,4 +304,12 @@ describe Api::V3::GendImagesController, type: :controller do
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  context 'when the gend_image parameter is missing' do
+    it 'raises record not found' do
+      expect do
+        post(:create, {})
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

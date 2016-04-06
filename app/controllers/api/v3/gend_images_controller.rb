@@ -24,8 +24,9 @@ module Api
       private
 
       def build_gend_image_for_create
+        src_image_id = params.fetch(:gend_image, {})[:src_image_id]
         src_image = SrcImage.without_image.active.finished.find_by!(
-          id_hash: params[:gend_image][:src_image_id])
+          id_hash: src_image_id)
 
         gend_image = src_image.gend_images.build(gend_image_params)
         gend_image.assign_attributes(

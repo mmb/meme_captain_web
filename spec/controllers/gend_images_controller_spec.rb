@@ -502,6 +502,14 @@ describe GendImagesController, type: :controller do
       end
     end
 
+    context 'when the gend_image parameter is missing' do
+      it 'raises record not found' do
+        expect do
+          post(:create, {})
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
     context 'when the source image is owned by another user' do
       specify 'the gend image is owned by the current user' do
         FactoryGirl.create(:gend_image, src_image: src_image2)
