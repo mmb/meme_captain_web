@@ -126,7 +126,7 @@ class SrcImagesController < ApplicationController
   end
 
   def src_image_show_headers(src_image)
-    headers.merge!(
+    headers.update(
       'Content-Length'.freeze => src_image.size,
       'Content-Type'.freeze => src_image.content_type)
   end

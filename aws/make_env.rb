@@ -10,7 +10,7 @@ private = if File.exist?('env_private.yml')
             {}
           end
 
-env.merge!(private) { |_key, oldval, newval| oldval.merge(newval) }
+env.update(private) { |_key, oldval, newval| oldval.merge(newval) }
 
 base = env.delete('base')
 

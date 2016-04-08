@@ -122,7 +122,7 @@ class GendImagesController < ApplicationController
   def gend_image_show_headers(gend_image)
     src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
-    headers.merge!(
+    headers.update(
       'Content-Length'.freeze => gend_image.size,
       'Content-Type'.freeze => gend_image.content_type,
       'Meme-Name'.freeze => Rack::Utils.escape(src_image.name),
