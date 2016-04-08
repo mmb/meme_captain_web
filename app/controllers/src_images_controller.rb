@@ -39,10 +39,10 @@ class SrcImagesController < ApplicationController
 
     cache_expires(1.hour)
 
+    return unless stale?(src_image)
+
     src_image_show_headers(src_image)
 
-    return unless stale?(src_image)
-    headers['Content-Type'.freeze] = src_image.content_type
     render(text: src_image.image)
   end
 
@@ -126,6 +126,8 @@ class SrcImagesController < ApplicationController
   end
 
   def src_image_show_headers(src_image)
-    headers['Content-Length'.freeze] = src_image.size
+    headers.merge!(
+      'Content-Length'.freeze => src_image.size,
+      'Content-Type'.freeze => src_image.content_type)
   end
 end

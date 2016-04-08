@@ -43,10 +43,10 @@ class GendImagesController < ApplicationController
 
     cache_expires(1.day)
 
+    return unless stale?(gend_image)
+
     gend_image_show_headers(gend_image)
 
-    return unless stale?(gend_image)
-    headers['Content-Type'.freeze] = gend_image.content_type
     render(text: gend_image.image)
   end
 
@@ -118,13 +118,16 @@ class GendImagesController < ApplicationController
       controller: :gend_image_pages, action: :show, id: @gend_image.id_hash)
   end
 
+  # rubocop:disable Metrics/AbcSize
   def gend_image_show_headers(gend_image)
     src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
     headers.merge!(
       'Content-Length'.freeze => gend_image.size,
+      'Content-Type'.freeze => gend_image.content_type,
       'Meme-Name'.freeze => Rack::Utils.escape(src_image.name),
       'Meme-Source-Image'.freeze => src_image_url_for(src_image),
       'Meme-Text'.freeze => gend_image.meme_text_header)
   end
+  # rubocop:enable Metrics/AbcSize
 end
