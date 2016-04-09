@@ -1,6 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+require 'digest/md5'
+
 # User model.
 class User < ActiveRecord::Base
   validates :email, presence: true
@@ -16,8 +18,9 @@ class User < ActiveRecord::Base
     for_auth(email).find { |u| u.authenticate(password) }
   end
 
-  def avatar
-    Gravatar.new email
+  def avatar_url(size)
+    hash = Digest::MD5.hexdigest(email.strip.downcase)
+    "https://secure.gravatar.com/avatar/#{hash}?s=#{size.to_i}"
   end
 
   scope :for_auth, lambda { |email|

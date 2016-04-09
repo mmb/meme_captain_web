@@ -32,7 +32,7 @@
         <% if current_user %>
             <li>
               <%= link_to(my_url) do %>
-                  <%= image_tag(current_user.avatar.image_url(size: 20, ssl: request.ssl?)) %>
+                  <%= image_tag(current_user.avatar_url(20)) %>
                   My images
               <% end %>
             </li>

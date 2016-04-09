@@ -94,4 +94,24 @@ describe User do
       expect(User.for_auth(user.email).count).to eq 2
     end
   end
+
+  describe '#avatar_url' do
+    it 'returns the avatar image url' do
+      user = FactoryGirl.create(:user, email: 'test@test.com')
+      expect(user.avatar_url(21)).to eq(
+        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21')
+    end
+
+    it 'hashes the email without leading and trailing whitespace' do
+      user = FactoryGirl.create(:user, email: ' test@test.com	')
+      expect(user.avatar_url(21)).to eq(
+        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21')
+    end
+
+    it 'hashes the email lowercase' do
+      user = FactoryGirl.create(:user, email: 'TEST@test.com')
+      expect(user.avatar_url(21)).to eq(
+        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21')
+    end
+  end
 end
