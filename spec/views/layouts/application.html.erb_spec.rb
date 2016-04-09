@@ -67,6 +67,24 @@ describe 'layouts/application.html.erb', type: :view do
         expect(rendered).to have_selector('img.header[height]')
       end
     end
+
+    describe 'avatar' do
+      before do
+        def view.current_user
+          FactoryGirl.create(:user)
+        end
+      end
+
+      it 'has a width attribute' do
+        render
+        expect(rendered).to have_selector('img.avatar[width]')
+      end
+
+      it 'has a height attribute' do
+        render
+        expect(rendered).to have_selector('img.avatar[height]')
+      end
+    end
   end
 
   describe 'footer' do
