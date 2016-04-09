@@ -55,6 +55,20 @@ describe 'layouts/application.html.erb', type: :view do
     expect(rendered).to have_selector('input#quick-add-url[tabindex="2"]')
   end
 
+  describe 'header' do
+    describe 'logo' do
+      it 'has a width attribute' do
+        render
+        expect(rendered).to have_selector('img.header[width]')
+      end
+
+      it 'has a height attribute' do
+        render
+        expect(rendered).to have_selector('img.header[height]')
+      end
+    end
+  end
+
   describe 'footer' do
     it 'has a link to the API documentation' do
       render
