@@ -118,16 +118,12 @@ class GendImagesController < ApplicationController
       controller: :gend_image_pages, action: :show, id: @gend_image.id_hash)
   end
 
-  # rubocop:disable Metrics/AbcSize
   def gend_image_show_headers(gend_image)
     src_image = SrcImage.without_image.find(gend_image.src_image_id)
 
+    headers.update(gend_image.headers)
     headers.update(
-      'Content-Length'.freeze => gend_image.size,
-      'Content-Type'.freeze => gend_image.content_type,
       'Meme-Name'.freeze => Rack::Utils.escape(src_image.name),
-      'Meme-Source-Image'.freeze => src_image_url_for(src_image),
-      'Meme-Text'.freeze => gend_image.meme_text_header)
+      'Meme-Source-Image'.freeze => src_image_url_for(src_image))
   end
-  # rubocop:enable Metrics/AbcSize
 end

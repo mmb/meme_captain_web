@@ -377,4 +377,23 @@ describe GendImage do
       expect(gend_image.dimensions).to eq('399x399')
     end
   end
+
+  describe '#headers' do
+    subject(:gend_image) { FactoryGirl.create(:finished_gend_image) }
+
+    it 'has the content length' do
+      expect(gend_image.headers).to include('Content-Length' => 9141)
+    end
+
+    it 'has the content type' do
+      expect(gend_image.headers).to include('Content-Type' => 'image/jpeg')
+    end
+
+    it 'has the meme text' do
+      gend_image.captions.create(
+        text: 'test 1', top_left_x_pct: 0.05, top_left_y_pct: 0.0,
+        width_pct: 0.9, height_pct: 0.25)
+      expect(gend_image.headers).to include('Meme-Text' => 'test+1')
+    end
+  end
 end

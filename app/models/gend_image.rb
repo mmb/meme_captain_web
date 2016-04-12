@@ -38,6 +38,14 @@ class GendImage < ActiveRecord::Base
     end
   end
 
+  def headers
+    {
+      'Content-Length'.freeze => size,
+      'Content-Type'.freeze => content_type,
+      'Meme-Text'.freeze => meme_text_header
+    }
+  end
+
   def self.for_user(user, query, page)
     if user.try(:is_admin)
       without_image.includes(:gend_thumb).caption_matches(query)
