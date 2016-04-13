@@ -320,6 +320,33 @@
       },
       "Type": "AWS::RDS::DBInstance"
     },
+    "dbFreeStorageLowAlarm": {
+      "Properties": {
+        "AlarmActions": [
+          {
+            "Ref": "dbTopic"
+          }
+        ],
+        "AlarmDescription": "notify if database free storage is < 20G",
+        "AlarmName": "dbFreeStorageLow",
+        "ComparisonOperator": "LessThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "DBInstanceIdentifier",
+            "Value": {
+              "Ref": "db"
+            }
+          }
+        ],
+        "EvaluationPeriods": "1",
+        "MetricName": "FreeStorageSpace",
+        "Namespace": "AWS/RDS",
+        "Period": "60",
+        "Statistic": "Minimum",
+        "Threshold": "20000000000"
+      },
+      "Type": "AWS::CloudWatch::Alarm"
+    },
     "dbSecurityGroup": {
       "Properties": {
         "GroupDescription": "db security group",
@@ -370,6 +397,19 @@
         ]
       },
       "Type": "AWS::RDS::DBSubnetGroup"
+    },
+    "dbTopic": {
+      "Properties": {
+        "DisplayName": "db",
+        "Subscription": [
+          {
+            "Endpoint": "matthewm@boedicker.org",
+            "Protocol": "email"
+          }
+        ],
+        "TopicName": "db"
+      },
+      "Type": "AWS::SNS::Topic"
     },
     "elb": {
       "DependsOn": "internetGatewayAttachment",
