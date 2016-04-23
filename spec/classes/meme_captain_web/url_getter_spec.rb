@@ -31,5 +31,15 @@ describe MemeCaptainWeb::UrlGetter do
       expect { url_getter.get('http://example.com/') }.to raise_error(
         Faraday::ResourceNotFound)
     end
+
+    context 'when the URL is not ASCII' do
+      it 'fetches the URL and returns a blob' do
+        stub_request(:get, 'http://exámple.com/').to_return(body: 'body')
+
+        url_getter = MemeCaptainWeb::UrlGetter.new
+
+        expect(url_getter.get('http://exámple.com/')).to eq('body')
+      end
+    end
   end
 end
