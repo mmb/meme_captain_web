@@ -37,7 +37,7 @@ class SrcImagesController < ApplicationController
   def show
     src_image = SrcImage.active.finished.find_by!(id_hash: params[:id])
 
-    cache_expires(1.hour)
+    cache_expires(1.year)
 
     return unless stale?(src_image)
 

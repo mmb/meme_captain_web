@@ -6,7 +6,7 @@ class GendThumbsController < ApplicationController
   def show
     gend_thumb = GendThumb.select(:image).find(params[:id])
 
-    cache_expires 1.week
+    cache_expires(1.year)
 
     return unless stale?(gend_thumb)
     make_headers(gend_thumb)

@@ -41,7 +41,7 @@ class GendImagesController < ApplicationController
   def show
     gend_image = GendImage.active.finished.find_by!(id_hash: params[:id])
 
-    cache_expires(1.day)
+    cache_expires(1.year)
 
     return unless stale?(gend_image)
 

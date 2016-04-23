@@ -37,18 +37,16 @@ describe SrcThumbsController, type: :controller do
         get 'show', id: src_thumb.id
 
         cache_control = response.headers['Cache-Control']
-        expect(cache_control).to eq('max-age=604800, public')
+        expect(cache_control).to eq('max-age=31557600, public')
       end
 
       it 'has the correct Expires header' do
-        get 'show', id: src_thumb.id
-
         Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
           get 'show', id: src_thumb.id
         end
 
         expires_header = response.headers['Expires']
-        expect(expires_header).to eq 'Mon, 15 Feb 2010 21:55:00 GMT'
+        expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')
       end
     end
 

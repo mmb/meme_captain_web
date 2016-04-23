@@ -6,7 +6,7 @@ class SrcThumbsController < ApplicationController
   def show
     src_thumb = SrcThumb.select(:image).find(params[:id])
 
-    cache_expires 1.week
+    cache_expires(1.year)
 
     return unless stale?(src_thumb)
     make_headers(src_thumb)
