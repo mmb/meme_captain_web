@@ -10,6 +10,7 @@ module MemeCaptainWeb
   class ImgUrlComposer
     def initialize
       @url_getter = MemeCaptainWeb::UrlGetter.new
+      @img_blob_loader = MemeCaptainWeb::ImgBlobLoader.new
     end
 
     def load(url)
@@ -28,9 +29,7 @@ module MemeCaptainWeb
     private
 
     def combine_horizontal(url)
-      images = url.split('[]'.freeze).map do |u|
-        Magick::ImageList.new.from_blob(load(u)).first
-      end
+      images = url.split('[]'.freeze).map(&method(:url_to_magick_image))
 
       equalize_height(images)
 
@@ -52,9 +51,7 @@ module MemeCaptainWeb
     end
 
     def combine_vertical(url)
-      images = url.split('|'.freeze).map do |u|
-        Magick::ImageList.new.from_blob(load(u)).first
-      end
+      images = url.split('|'.freeze).map(&method(:url_to_magick_image))
 
       equalize_width(images)
 
@@ -73,6 +70,10 @@ module MemeCaptainWeb
       images.select { |i| i.columns > min_width }.each do |i|
         i.resize_to_fit!(min_width)
       end
+    end
+
+    def url_to_magick_image(url)
+      @img_blob_loader.load_blob(load(url)).first
     end
   end
 end

@@ -32,7 +32,8 @@ module HasImageConcern
   end
 
   def magick_image_list
-    Magick::ImageList.new.from_blob(image)
+    img_blob_loader = MemeCaptainWeb::ImgBlobLoader.new
+    img_blob_loader.load_blob(image)
   end
 
   def dimensions
