@@ -86,7 +86,7 @@ WORKDIR /app
 RUN apt-get install --assume-yes \
     libpq-dev \
     libsqlite3-dev \
-  && export LDFLAGS=-lMagickWand-6.Q16 \
+  && export LDFLAGS=-lMagickWand-7.Q16 \
   && bundle install --jobs=4 \
   && bundle exec rake \
     build_metadata[build_metadata.json] \
