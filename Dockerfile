@@ -30,8 +30,8 @@ RUN apt-get install --assume-yes \
     libxml2-dev \
     pkg-config \
     zlib1g-dev \
-  && curl http://www.imagemagick.org/download/ImageMagick.tar.gz \
-    | tar xz \
+  && curl https://www.imagemagick.org/download/ImageMagick-6.9.3-10.tar.xz \
+    | tar xJ \
   && cd $(ls -d ImageMagick-* | head -n 1) \
   && ./configure \
   && make \
