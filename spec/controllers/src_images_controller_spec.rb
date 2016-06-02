@@ -120,35 +120,53 @@ describe SrcImagesController, type: :controller do
     context 'searching' do
       it 'filters the result by the query string' do
         FactoryGirl.create(
-          :src_image, user: user, name: 'abc', work_in_progress: false)
+          :src_image,
+          user: user,
+          name: 'the quick brown fox',
+          work_in_progress: false)
         si2 = FactoryGirl.create(
-          :src_image, user: user, name: 'def', work_in_progress: false)
+          :src_image,
+          user: user,
+          name: 'the quick red fox',
+          work_in_progress: false)
         FactoryGirl.create(
-          :src_image, user: user, name: 'ghi', work_in_progress: false)
+          :src_image,
+          user: user,
+          name: 'the quick black fox',
+          work_in_progress: false)
 
-        get :index, q: 'e'
+        get :index, q: 'red'
         expect(assigns(:src_images)).to eq([si2])
       end
 
       it 'is case insensitive' do
         si = FactoryGirl.create(
-          :src_image, user: user, name: 'a', work_in_progress: false)
+          :src_image,
+          user: user,
+          name: 'the quick brown fox',
+          work_in_progress: false)
 
-        get :index, q: 'A'
+        get :index, q: 'QuIcK'
         expect(assigns(:src_images)).to eq([si])
       end
 
       it 'ignores leading whitespace' do
         si = FactoryGirl.create(
-          :src_image, user: user, name: 'abc', work_in_progress: false)
-        get :index, q: " \t\r\nb"
+          :src_image,
+          user: user,
+          name: 'the quick brown fox',
+          work_in_progress: false)
+        get :index, q: " \t\r\nquick"
         expect(assigns(:src_images)).to eq([si])
       end
 
       it 'ignores trailing whitespace' do
         si = FactoryGirl.create(
-          :src_image, user: user, name: 'abc', work_in_progress: false)
-        get :index, q: "b \t\n\r"
+          :src_image,
+          user: user,
+          name: 'the quick brown fox',
+          work_in_progress: false)
+        get :index, q: "quick \t\n\r"
         expect(assigns(:src_images)).to eq([si])
       end
     end

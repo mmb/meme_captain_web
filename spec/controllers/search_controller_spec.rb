@@ -45,7 +45,7 @@ describe SearchController, type: :controller do
         @src_image_2 = FactoryGirl.create(
           :src_image, name: 'not a match', work_in_progress: false)
         @src_image_3 = FactoryGirl.create(
-          :src_image, name: 'foo2', work_in_progress: false)
+          :src_image, name: 'another foo', work_in_progress: false)
 
         caption1 = FactoryGirl.create(:caption, text: 'foo')
         caption2 = FactoryGirl.create(:caption, text: 'bar')
