@@ -19,7 +19,7 @@ matrix:
     - rvm: 2.0.0
       env: TASK=spec DB=mysql
     - rvm: 2.0.0
-      env: TASK=spec DB=postgresql
+      env: TASK="spec spec:postgres" DB=postgresql
     - rvm: 2.0.0
       env: TASK=spec:javascript
 
@@ -32,7 +32,7 @@ matrix:
     - rvm: 2.1.8
       env: TASK=spec DB=mysql
     - rvm: 2.1.8
-      env: TASK=spec DB=postgresql
+      env: TASK="spec spec:postgres" DB=postgresql
     - rvm: 2.1.8
       env: TASK=spec:javascript
 
@@ -45,7 +45,7 @@ matrix:
     - rvm: 2.2.4
       env: TASK=spec DB=mysql
     - rvm: 2.2.4
-      env: TASK=spec DB=postgresql
+      env: TASK="spec spec:postgres" DB=postgresql
     - rvm: 2.2.4
       env: TASK=spec:javascript
 
@@ -58,7 +58,7 @@ matrix:
     - rvm: rbx-2
       env: TASK=spec DB=mysql
     - rvm: rbx-2
-      env: TASK=spec DB=postgresql
+      env: TASK="spec spec:postgres" DB=postgresql
     - rvm: rbx-2
       env: TASK=spec:javascript
 env:
@@ -70,7 +70,7 @@ env:
     - TASK=rubocop
     - TASK=spec
     - TASK=spec DB=mysql
-    - TASK=spec DB=postgresql
+    - TASK="spec spec:postgres" DB=postgresql
     - TASK=spec:javascript
 before_install:
 - sh -e /etc/init.d/xvfb start

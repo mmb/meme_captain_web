@@ -71,10 +71,7 @@ class SrcImage < ActiveRecord::Base
 
   scope :publick, -> { where private: false }
 
-  scope :name_matches, lambda { |query|
-    prepared_query = query.try(:strip).try(:downcase)
-    where('LOWER(name) LIKE ?'.freeze, "%#{prepared_query}%") if prepared_query
-  }
+  scope :name_matches, MemeCaptainWeb::TextMatchLambda.new(self, :name).lambder
 
   scope :most_used, lambda { |limit = 1|
     order(:gend_images_count).reverse_order.limit(limit)

@@ -80,6 +80,8 @@ RSpec.configure do |config|
   end
 
   WebMock.disable_net_connect!(allow: /api\.travis-ci\.org|google\.com/)
+
+  config.filter_run_excluding(postgres: true)
 end
 
 def create_image(width, height, color = 'white')

@@ -252,7 +252,7 @@ describe SrcImage do
   end
 
   describe '.name_matches' do
-    it 'finds images where the query is a subtring of their name' do
+    it 'finds images where the query is a substring of their name' do
       si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
       FactoryGirl.create(:src_image, name: 'not a match')
       si3 = FactoryGirl.create(:src_image, name: 'fox brown quick then')
@@ -267,6 +267,40 @@ describe SrcImage do
     it 'strips whitespace' do
       si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
       expect(SrcImage.name_matches(" quick\t\r\n")).to contain_exactly(si1)
+    end
+
+    context 'when the database is Postgres', postgres: true do
+      it 'finds images where the query is a substring of their name' do
+        si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+        FactoryGirl.create(:src_image, name: 'not a match')
+        si3 = FactoryGirl.create(:src_image, name: 'fox brown quick then')
+        expect(SrcImage.name_matches('quick')).to contain_exactly(si1, si3)
+      end
+
+      it 'it case insensitive' do
+        si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+        expect(SrcImage.name_matches('QuIcK')).to contain_exactly(si1)
+      end
+
+      it 'strips whitespace' do
+        si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+        expect(SrcImage.name_matches(" quick\t\r\n")).to contain_exactly(si1)
+      end
+
+      it 'does stemming' do
+        si1 = FactoryGirl.create(:src_image, name: 'stemming for the win')
+        expect(SrcImage.name_matches('winning')).to contain_exactly(si1)
+      end
+
+      it 'ignores the order' do
+        si1 = FactoryGirl.create(:src_image, name: 'query languages')
+        expect(SrcImage.name_matches('languages query')).to contain_exactly(si1)
+      end
+
+      it 'understands a query language' do
+        si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+        expect(SrcImage.name_matches('quick and fox')).to contain_exactly(si1)
+      end
     end
   end
 
