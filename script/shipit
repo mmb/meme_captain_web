@@ -3,6 +3,12 @@
 set -e
 set -o pipefail
 
+# fail fast if ImageMagick download URL goes away
+curl \
+  --fail \
+  --head \
+  https://www.imagemagick.org/download/ImageMagick-6.9.4-7.tar.xz
+
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 if [ "$CURRENT_BRANCH" != "master" ]; then
   echo 'The current branch must be master'
