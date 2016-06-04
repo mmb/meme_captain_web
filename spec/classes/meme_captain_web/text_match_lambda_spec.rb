@@ -18,8 +18,7 @@ describe MemeCaptainWeb::TextMatchLambda do
       let(:adapter_name) { 'PostgreSQL' }
 
       it 'uses Postgres full text search' do
-        expect(o).to receive(:where).with(
-          'column1 @@ PLAINTO_TSQUERY(?)', 'query1').and_return(where)
+        expect(o).to receive(:basic_search).with('query1').and_return(where)
         expect(text_match_lambda.lambder.call('query1')).to eq(where)
       end
     end

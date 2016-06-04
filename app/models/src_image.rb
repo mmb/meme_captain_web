@@ -73,6 +73,10 @@ class SrcImage < ActiveRecord::Base
 
   scope :name_matches, MemeCaptainWeb::TextMatchLambda.new(self, :name).lambder
 
+  def self.searchable_columns
+    [:name]
+  end
+
   scope :most_used, lambda { |limit = 1|
     order(:gend_images_count).reverse_order.limit(limit)
   }

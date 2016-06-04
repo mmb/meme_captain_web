@@ -403,4 +403,10 @@ describe SrcImage do
       expect(src_image.dimensions).to eq('399x399')
     end
   end
+
+  describe '.searchable_columns' do
+    it 'is the name' do
+      expect(SrcImage.searchable_columns).to eq([:name])
+    end
+  end
 end

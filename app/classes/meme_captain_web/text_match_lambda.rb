@@ -21,8 +21,7 @@ module MemeCaptainWeb
     def postgres_lambda
       lambda do |query|
         prepared_query = query.try(:strip)
-        @o.where("#{@column} @@ PLAINTO_TSQUERY(?)".freeze,
-                 prepared_query) if prepared_query
+        @o.basic_search(prepared_query) if prepared_query
       end
     end
 
