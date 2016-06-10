@@ -43,7 +43,7 @@ RUN apt-get install --assume-yes \
     git \
     libreadline-dev \
     libssl-dev \
-  && curl http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.bz2 \
+  && curl http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.bz2 \
     | tar jx \
   && cd ruby-2.3.0 \
   && ./configure \
