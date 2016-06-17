@@ -647,7 +647,7 @@
           "Ref": "natInstanceProfile"
         },
         "ImageId": "ami-a7f5dfcd",
-        "InstanceType": "t2.micro",
+        "InstanceType": "t2.nano",
         "KeyName": "memecaptain",
         "SecurityGroups": [
           {
