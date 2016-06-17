@@ -7,7 +7,7 @@ set -o pipefail
 curl \
   --fail \
   --head \
-  https://www.imagemagick.org/download/ImageMagick-6.9.4-7.tar.xz
+  https://www.imagemagick.org/download/ImageMagick-6.9.4-9.tar.xz
 
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 if [ "$CURRENT_BRANCH" != "master" ]; then
