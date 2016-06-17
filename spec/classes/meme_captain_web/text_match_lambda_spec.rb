@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe MemeCaptainWeb::TextMatchLambda do
-  describe '#lambda' do
+  describe '#lambder' do
     subject(:text_match_lambda) do
       MemeCaptainWeb::TextMatchLambda.new(o, 'column1')
     end
