@@ -57,7 +57,7 @@ group :test, :development do
   gem 'rspec', '~> 3.5'
   gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
   gem 'shoulda', '~> 3.5.0'
-  gem 'jasmine-rails', '~> 0.12.4'
+  gem 'jasmine-rails', '~> 0.12.5'
   gem 'sqlite3', '~> 1.3', '>= 1.3.11'
   gem 'rails_best_practices', '~> 1.16', platforms: [:jruby, :mri, :mswin]
   gem 'coffeelint', '~> 1.14'
