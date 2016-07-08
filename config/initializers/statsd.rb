@@ -16,9 +16,6 @@ Api::V3::PendingGendImagesController.extend(StatsD::Instrument)
 Api::V3::PendingGendImagesController.statsd_count_success(
   :show, 'api.v3.gend_image.create.poll')
 
-BlockedIp.singleton_class.extend(StatsD::Instrument)
-BlockedIp.singleton_class.statsd_count_if(:blocked?, 'ip.blocked')
-
 GendImageProcessJob.extend(StatsD::Instrument)
 GendImageProcessJob.statsd_count_success(:perform, 'job.gend_image.process')
 GendImageProcessJob.statsd_measure(:perform, 'job.gend_image.process.time')
