@@ -23,7 +23,7 @@ gem 'rmagick',
     require: 'rmagick'
 gem 'rmagick4j', '~> 0.3.9', platforms: :jruby, require: 'rmagick'
 
-gem 'delayed_job_active_record', '~> 4.1'
+gem 'delayed_job_active_record', '~> 4.1', '>= 4.1.1'
 gem 'daemons', '~> 1.2', '>= 1.2.3'
 
 gem 'meme_captain',
