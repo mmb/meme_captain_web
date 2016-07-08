@@ -51,7 +51,7 @@ gem 'addressable', '~> 2.4'
 gem 'textacular', '~> 4.0'
 
 group :test, :development do
-  gem 'factory_girl_rails', '~> 4.6'
+  gem 'factory_girl_rails', '~> 4.7'
   # Should not be needed. Workaround described in:
   #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
   gem 'rspec', '~> 3.5'
