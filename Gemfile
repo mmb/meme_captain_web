@@ -62,7 +62,7 @@ group :test, :development do
   gem 'rails_best_practices', '~> 1.16', platforms: [:jruby, :mri, :mswin]
   gem 'coffeelint', '~> 1.14'
   gem 'travis', '~> 1.8', '>= 1.8.2'
-  gem 'capybara', '~> 2.6', '>= 2.6.2'
+  gem 'capybara', '~> 2.7', '>= 2.7.1'
 end
 
 group :test do
