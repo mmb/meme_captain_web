@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2', '>= 4.2.6'
 
 group :assets do
-  gem 'sass-rails', '~> 5.0', '>= 5.0.4'
+  gem 'sass-rails', '~> 5.0', '>= 5.0.5'
   gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
   gem 'uglifier', '~> 3.0'
 end
