@@ -54,8 +54,8 @@ group :test, :development do
   gem 'factory_girl_rails', '~> 4.6'
   # Should not be needed. Workaround described in:
   #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
-  gem 'rspec', '~> 3.4'
-  gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
+  gem 'rspec', '~> 3.5'
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
   gem 'shoulda', '~> 3.5.0'
   gem 'jasmine-rails', '~> 0.12.4'
   gem 'sqlite3', '~> 1.3', '>= 1.3.11'
