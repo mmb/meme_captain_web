@@ -184,7 +184,7 @@ GEM
     phantomjs (2.1.1.0)
     pkg-config (1.1.7)
     powerpack (0.1.1)
-    puma (3.2.0)
+    puma (3.4.0)
     pusher-client (0.6.2)
       json
       websocket (~> 1.0)
@@ -358,7 +358,7 @@ DEPENDENCIES
   local_time (~> 1.0.3)
   meme_captain!
   pg (~> 0.18.4)
-  puma (~> 3.2)
+  puma (~> 3.4)
   rack-cache (~> 1.6, >= 1.6.1)
   rack-rewrite (~> 1.5.1)
   rails (~> 4.2, >= 4.2.6)
