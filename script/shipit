@@ -7,6 +7,7 @@ set -o pipefail
 curl \
   --fail \
   --head \
+  --verbose \
   https://www.imagemagick.org/download/ImageMagick-6.9.5-0.tar.xz
 
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
