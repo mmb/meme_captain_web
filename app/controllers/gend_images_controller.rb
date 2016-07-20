@@ -4,6 +4,7 @@
 # Generated (meme) images controller.
 class GendImagesController < ApplicationController
   include SrcImagesHelper
+  include PendingGendImagesHelper
 
   wrap_parameters GendImage, include: [
     :captions_attributes,
@@ -110,11 +111,7 @@ class GendImagesController < ApplicationController
   end
 
   def redirect_to_pending
-    status_url = url_for(
-      controller: :pending_gend_images,
-      action: :show,
-      id: @gend_image.id_hash
-    )
+    status_url = pending_gend_image_url_for(@gend_image)
     response.status = :accepted
     response.location = status_url
     render(json: { status_url: status_url })
