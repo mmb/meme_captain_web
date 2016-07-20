@@ -59,7 +59,8 @@ describe SrcImagesController, type: :controller do
       it 'does not show deleted images' do
         FactoryGirl.create(:src_image, user: user, work_in_progress: false)
         FactoryGirl.create(
-          :src_image, user: user, is_deleted: true, work_in_progress: false)
+          :src_image, user: user, is_deleted: true, work_in_progress: false
+        )
 
         get :index
 
@@ -91,7 +92,8 @@ describe SrcImagesController, type: :controller do
       it 'shows deleted images' do
         FactoryGirl.create(:src_image, user: user, work_in_progress: false)
         FactoryGirl.create(
-          :src_image, user: user, is_deleted: true, work_in_progress: false)
+          :src_image, user: user, is_deleted: true, work_in_progress: false
+        )
 
         get :index
 
@@ -123,17 +125,20 @@ describe SrcImagesController, type: :controller do
           :src_image,
           user: user,
           name: 'the quick brown fox',
-          work_in_progress: false)
+          work_in_progress: false
+        )
         si2 = FactoryGirl.create(
           :src_image,
           user: user,
           name: 'the quick red fox',
-          work_in_progress: false)
+          work_in_progress: false
+        )
         FactoryGirl.create(
           :src_image,
           user: user,
           name: 'the quick black fox',
-          work_in_progress: false)
+          work_in_progress: false
+        )
 
         get :index, q: 'red'
         expect(assigns(:src_images)).to eq([si2])
@@ -144,7 +149,8 @@ describe SrcImagesController, type: :controller do
           :src_image,
           user: user,
           name: 'the quick brown fox',
-          work_in_progress: false)
+          work_in_progress: false
+        )
 
         get :index, q: 'QuIcK'
         expect(assigns(:src_images)).to eq([si])
@@ -155,7 +161,8 @@ describe SrcImagesController, type: :controller do
           :src_image,
           user: user,
           name: 'the quick brown fox',
-          work_in_progress: false)
+          work_in_progress: false
+        )
         get :index, q: " \t\r\nquick"
         expect(assigns(:src_images)).to eq([si])
       end
@@ -165,7 +172,8 @@ describe SrcImagesController, type: :controller do
           :src_image,
           user: user,
           name: 'the quick brown fox',
-          work_in_progress: false)
+          work_in_progress: false
+        )
         get :index, q: "quick \t\n\r"
         expect(assigns(:src_images)).to eq([si])
       end
@@ -176,7 +184,8 @@ describe SrcImagesController, type: :controller do
         src_image1 = FactoryGirl.create(
           :src_image,
           name: 'image 1',
-          work_in_progress: false)
+          work_in_progress: false
+        )
         src_image1.set_derived_image_fields
         src_image1.save!
         # src images are sorted by most used, create gend images so
@@ -188,7 +197,8 @@ describe SrcImagesController, type: :controller do
         src_image2 = FactoryGirl.create(
           :src_image,
           name: 'image 1',
-          work_in_progress: false)
+          work_in_progress: false
+        )
         src_image2.set_derived_image_fields
         src_image2.save!
         1.times { FactoryGirl.create(:gend_image, src_image: src_image2) }
@@ -203,11 +213,14 @@ describe SrcImagesController, type: :controller do
           'content_type' => 'image/jpeg',
           'name' => 'image 1',
           'image_url' =>
-               "http://test.host/src_images/#{src_image1.id_hash}.jpg")
+               "http://test.host/src_images/#{src_image1.id_hash}.jpg"
+        )
         expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
-          src_image1.created_at.to_i)
+          src_image1.created_at.to_i
+        )
         expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
-          src_image1.updated_at.to_i)
+          src_image1.updated_at.to_i
+        )
 
         expect(parsed_body[1]).to include(
           'id_hash' => src_image2.id_hash,
@@ -217,11 +230,14 @@ describe SrcImagesController, type: :controller do
           'content_type' => 'image/jpeg',
           'name' => 'image 1',
           'image_url' =>
-              "http://test.host/src_images/#{src_image2.id_hash}.jpg")
+              "http://test.host/src_images/#{src_image2.id_hash}.jpg"
+        )
         expect(Time.parse(parsed_body[1]['created_at']).to_i).to eq(
-          src_image2.created_at.to_i)
+          src_image2.created_at.to_i
+        )
         expect(Time.parse(parsed_body[1]['updated_at']).to_i).to eq(
-          src_image2.updated_at.to_i)
+          src_image2.updated_at.to_i
+        )
       end
 
       context 'when a gend image host is set in the config' do
@@ -234,7 +250,8 @@ describe SrcImagesController, type: :controller do
           src_image1 = FactoryGirl.create(
             :src_image,
             name: 'image 1',
-            work_in_progress: false)
+            work_in_progress: false
+          )
           src_image1.set_derived_image_fields
           src_image1.save!
 
@@ -251,9 +268,11 @@ describe SrcImagesController, type: :controller do
   "http://gendimagehost.com/src_images/#{src_image1.id_hash}.jpg"
           )
           expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
-            src_image1.created_at.to_i)
+            src_image1.created_at.to_i
+          )
           expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
-            src_image1.updated_at.to_i)
+            src_image1.updated_at.to_i
+          )
         end
       end
     end
@@ -322,14 +341,16 @@ describe SrcImagesController, type: :controller do
         it 'returns json with id' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
           expect(JSON.parse(response.body)['id']).to eq(
-            assigns(:src_image).id_hash)
+            assigns(:src_image).id_hash
+          )
         end
 
         it 'sets the Location header to the pending src image url' do
           post :create, src_image: { url: 'http://test.com/image.jpg' }
           expect(response.headers['Location']).to eq(
             'http://test.host/pending_src_images/' \
-            "#{assigns(:src_image).id_hash}")
+            "#{assigns(:src_image).id_hash}"
+          )
         end
 
         it 'returns the status url in the response' do
@@ -337,7 +358,8 @@ describe SrcImagesController, type: :controller do
 
           expect(JSON.parse(response.body)['status_url']).to eq(
             'http://test.host/pending_src_images/' \
-            "#{assigns(:src_image).id_hash}")
+            "#{assigns(:src_image).id_hash}"
+          )
         end
       end
     end
@@ -441,7 +463,8 @@ describe SrcImagesController, type: :controller do
         get(:show, id: src_image.id_hash)
 
         expect(response.headers['Cache-Control']).to eq(
-          'max-age=31557600, public')
+          'max-age=31557600, public'
+        )
       end
 
       it 'has the correct Expires header' do
@@ -467,7 +490,8 @@ describe SrcImagesController, type: :controller do
         FactoryGirl.create(
           :src_image,
           work_in_progress: false,
-          is_deleted: true)
+          is_deleted: true
+        )
       end
 
       it 'raises record not found' do
@@ -482,16 +506,19 @@ describe SrcImagesController, type: :controller do
     context 'when the id is found' do
       it 'marks the record as deleted in the database' do
         post :create, src_image: {
-          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')
+        }
         delete :destroy, id: assigns(:src_image).id_hash
 
         expect(SrcImage.find_by(
-          id_hash: assigns(:src_image).id_hash).is_deleted?).to eq(true)
+          id_hash: assigns(:src_image).id_hash
+        ).is_deleted?).to eq(true)
       end
 
       it 'returns success' do
         post :create, src_image: {
-          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg') }
+          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')
+        }
         delete :destroy, id: assigns(:src_image).id_hash
 
         expect(response).to be_success

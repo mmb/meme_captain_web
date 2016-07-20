@@ -64,7 +64,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect do
             get(:show, id: src_image.id_hash)
           end.to trigger_statsd_increment(
-            'api.v3.src_image.create.poll.success')
+            'api.v3.src_image.create.poll.success'
+          )
         end
 
         it 'returns json with the created time' do
@@ -72,7 +73,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            src_image.created_at.to_i)
+            src_image.created_at.to_i
+          )
         end
 
         it 'returns json with the error field set to null' do
@@ -111,7 +113,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect do
             get(:show, id: src_image.id_hash)
           end.to trigger_statsd_increment(
-            'api.v3.src_image.create.poll.success')
+            'api.v3.src_image.create.poll.success'
+          )
         end
 
         it 'returns json with the created time' do
@@ -119,7 +122,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            src_image.created_at.to_i)
+            src_image.created_at.to_i
+          )
         end
 
         it 'returns json with the error' do
@@ -158,7 +162,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect do
             get(:show, id: src_image.id_hash)
           end.to trigger_statsd_increment(
-            'api.v3.src_image.create.poll.success')
+            'api.v3.src_image.create.poll.success'
+          )
         end
 
         it 'returns json with the created time' do
@@ -166,7 +171,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            src_image.created_at.to_i)
+            src_image.created_at.to_i
+          )
         end
 
         it 'returns json with the error field set to null' do
@@ -188,7 +194,8 @@ describe Api::V3::PendingSrcImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(parsed_json['url']).to eq(
-            "http://test.host/src_images/#{src_image.id_hash}.jpg")
+            "http://test.host/src_images/#{src_image.id_hash}.jpg"
+          )
         end
       end
     end

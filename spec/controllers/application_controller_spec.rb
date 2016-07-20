@@ -114,7 +114,8 @@ describe ApplicationController, type: :controller do
       Timecop.freeze do
         get(:index)
         expect(response.headers['Expires']).to eq(
-          (Time.now + 62.minutes).httpdate)
+          (Time.now + 62.minutes).httpdate
+        )
       end
     end
 

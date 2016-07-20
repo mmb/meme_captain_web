@@ -116,18 +116,17 @@ class SrcImagesController < ApplicationController
     status_url = url_for(
       controller: :pending_src_images,
       action: :show,
-      id: @src_image.id_hash)
+      id: @src_image.id_hash
+    )
     response.status = :accepted
     response.location = status_url
-    render(json: {
-             id: @src_image.id_hash,
-             status_url: status_url
-           })
+    render(json: { id: @src_image.id_hash, status_url: status_url })
   end
 
   def src_image_show_headers(src_image)
     headers.update(
       'Content-Length'.freeze => src_image.size,
-      'Content-Type'.freeze => src_image.content_type)
+      'Content-Type'.freeze => src_image.content_type
+    )
   end
 end

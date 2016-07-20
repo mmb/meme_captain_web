@@ -37,9 +37,11 @@ describe DashboardController, type: :controller do
 
       it 'counts the gend image creation errors in the last 24 hours' do
         FactoryGirl.create(
-          :gend_image, created_at: Time.now - 25.hours, error: 'failed')
+          :gend_image, created_at: Time.now - 25.hours, error: 'failed'
+        )
         FactoryGirl.create(
-          :gend_image, created_at: Time.now - 23.hours, error: 'failed')
+          :gend_image, created_at: Time.now - 23.hours, error: 'failed'
+        )
         FactoryGirl.create(:gend_image, error: 'failed')
         FactoryGirl.create(:gend_image)
 
@@ -97,7 +99,8 @@ describe DashboardController, type: :controller do
         get(:show)
 
         expect(assigns(:no_result_searches)).to eq(
-          searches.slice(1, 20).reverse)
+          searches.slice(1, 20).reverse
+        )
       end
     end
   end

@@ -32,14 +32,16 @@ FactoryGirl.define do
 
   factory :src_image_with_comment, parent: :src_image do
     File.open(
-      Rails.root + 'spec/fixtures/files/ti_duck_with_comment.jpg', 'rb') do |f|
+      Rails.root + 'spec/fixtures/files/ti_duck_with_comment.jpg', 'rb'
+    ) do |f|
       image(f.read)
     end
   end
 
   factory :src_image_with_orientation, parent: :src_image do
     File.open(
-      Rails.root + 'spec/fixtures/files/rectangle.jpg', 'rb') do |f|
+      Rails.root + 'spec/fixtures/files/rectangle.jpg', 'rb'
+    ) do |f|
       image(f.read)
     end
   end

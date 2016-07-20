@@ -12,7 +12,8 @@ describe 'delayed job initializer' do
   context 'delay_jobs' do
     let(:rb_path) do
       File.expand_path(
-        '../../../config/initializers/delayed_job.rb', __FILE__)
+        '../../../config/initializers/delayed_job.rb', __FILE__
+      )
     end
 
     context 'when the DELAY_JOBS environment variable is not set to false' do

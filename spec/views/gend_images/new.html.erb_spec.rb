@@ -35,7 +35,8 @@ describe 'gend_images/new.html.erb', type: :view do
     render
 
     expect(rendered).to have_selector(
-      '#gend_image_captions_attributes_0_text') do |s|
+      '#gend_image_captions_attributes_0_text'
+    ) do |s|
       expect(s.first['class']).to_not be_nil
       expect(s.first['class']).to include 'form-control'
     end
@@ -52,7 +53,8 @@ describe 'gend_images/new.html.erb', type: :view do
 
     it 'does not check the private checkbox' do
       expect(render).to_not have_selector(
-        'input[checked=checked][type="checkbox"][name="gend_image[private]"]')
+        'input[checked=checked][type="checkbox"][name="gend_image[private]"]'
+      )
     end
   end
 
@@ -61,14 +63,16 @@ describe 'gend_images/new.html.erb', type: :view do
 
     it 'checks the private checkbox' do
       expect(render).to have_selector(
-        'input[checked=checked][type="checkbox"][name="gend_image[private]"]')
+        'input[checked=checked][type="checkbox"][name="gend_image[private]"]'
+      )
     end
   end
 
   describe 'text positioner' do
     it 'sets the data-img-url to the src image url' do
       expect(render).to have_selector(
-        'div.text-positioner[data-img-url="src image url with extension"]')
+        'div.text-positioner[data-img-url="src image url with extension"]'
+      )
     end
   end
 end

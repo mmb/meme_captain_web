@@ -135,7 +135,8 @@ describe Api::V3::GendImagesController, type: :controller do
       post(:create, gend_image: { src_image_id: src_image.id_hash })
 
       expect(JSON.parse(response.body)['id']).to eq(
-        assigns(:gend_image).id_hash)
+        assigns(:gend_image).id_hash
+      )
     end
 
     it 'returns a json body with the gend image id' do
@@ -143,7 +144,8 @@ describe Api::V3::GendImagesController, type: :controller do
 
       expect(JSON.parse(response.body)['status_url']).to eq(
         'http://test.host/api/v3/pending_gend_images/' \
-        "#{assigns(:gend_image).id_hash}")
+        "#{assigns(:gend_image).id_hash}"
+      )
     end
   end
 
@@ -175,7 +177,8 @@ describe Api::V3::GendImagesController, type: :controller do
         post(:create, body)
 
         expect(JSON.parse(response.body)).to eq(
-          'captions.height_pct' => ["can't be blank"])
+          'captions.height_pct' => ["can't be blank"]
+        )
       end
     end
 
@@ -206,7 +209,8 @@ describe Api::V3::GendImagesController, type: :controller do
         post(:create, body)
 
         expect(JSON.parse(response.body)).to eq(
-          'captions.top_left_x_pct' => ["can't be blank"])
+          'captions.top_left_x_pct' => ["can't be blank"]
+        )
       end
     end
 
@@ -237,7 +241,8 @@ describe Api::V3::GendImagesController, type: :controller do
         post(:create, body)
 
         expect(JSON.parse(response.body)).to eq(
-          'captions.top_left_y_pct' => ["can't be blank"])
+          'captions.top_left_y_pct' => ["can't be blank"]
+        )
       end
     end
 
@@ -268,7 +273,8 @@ describe Api::V3::GendImagesController, type: :controller do
         post(:create, body)
 
         expect(JSON.parse(response.body)).to eq(
-          'captions.width_pct' => ["can't be blank"])
+          'captions.width_pct' => ["can't be blank"]
+        )
       end
     end
   end

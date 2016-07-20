@@ -16,7 +16,8 @@ describe 'gend_images/_gend_image.html', type: :view do
              locals: { gend_image: gend_image, show_toolbar: show_toolbar }
       expect(rendered).to have_selector(
         "img[src='/gend_thumbs/#{gend_image.gend_thumb.id}" \
-        ".#{gend_image.gend_thumb.format}']")
+        ".#{gend_image.gend_thumb.format}']"
+      )
     end
 
     it 'puts the width in the image tag' do

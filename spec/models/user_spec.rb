@@ -30,7 +30,8 @@ describe User do
         @user = FactoryGirl.create(
           :user,
           password: user_password,
-          password_confirmation: user_password)
+          password_confirmation: user_password
+        )
       end
 
       let(:try_email) { @user.email }
@@ -57,12 +58,14 @@ describe User do
         @user = FactoryGirl.create(
           :user,
           password: user_password,
-          password_confirmation: user_password)
+          password_confirmation: user_password
+        )
         @user2 = FactoryGirl.create(
           :user,
           email: @user.email.upcase,
           password: user2_password,
-          password_confirmation: user2_password)
+          password_confirmation: user2_password
+        )
       end
 
       context 'when no passwords match' do
@@ -99,19 +102,22 @@ describe User do
     it 'returns the avatar image url' do
       user = FactoryGirl.create(:user, email: 'test@test.com')
       expect(user.avatar_url(21)).to eq(
-        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21')
+        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21'
+      )
     end
 
     it 'hashes the email without leading and trailing whitespace' do
       user = FactoryGirl.create(:user, email: ' test@test.com	')
       expect(user.avatar_url(21)).to eq(
-        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21')
+        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21'
+      )
     end
 
     it 'hashes the email lowercase' do
       user = FactoryGirl.create(:user, email: 'TEST@test.com')
       expect(user.avatar_url(21)).to eq(
-        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21')
+        'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=21'
+      )
     end
   end
 end

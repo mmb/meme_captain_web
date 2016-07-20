@@ -16,7 +16,8 @@ class HomeController < ApplicationController
       SrcImage.without_image.includes(:src_thumb).most_used(12)
     else
       SrcImage.without_image.includes(
-        :src_thumb).publick.active.finished.most_used(12)
+        :src_thumb
+      ).publick.active.finished.most_used(12)
     end
   end
 
@@ -29,7 +30,8 @@ class HomeController < ApplicationController
       GendImage.without_image.includes(:gend_thumb).most_recent(24)
     else
       GendImage.without_image.includes(
-        :gend_thumb).publick.active.finished.most_recent(24)
+        :gend_thumb
+      ).publick.active.finished.most_recent(24)
     end
   end
 end

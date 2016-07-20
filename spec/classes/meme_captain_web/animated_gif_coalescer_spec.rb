@@ -16,7 +16,8 @@ describe MemeCaptainWeb::AnimatedGifCoalescer do
 
       it 'returns stdout from the command' do
         expect(Open3).to receive(:popen3).with(
-          'convert - -coalesce -').and_yield(i, o, e, t)
+          'convert - -coalesce -'
+        ).and_yield(i, o, e, t)
         expect(i).to receive(:binmode)
         expect(o).to receive(:binmode)
         expect(i).to receive(:write).with('test data')
@@ -33,7 +34,8 @@ describe MemeCaptainWeb::AnimatedGifCoalescer do
 
       it 'raises an exception with the stderr output' do
         expect(Open3).to receive(:popen3).with(
-          'convert - -coalesce -').and_yield(i, o, e, t)
+          'convert - -coalesce -'
+        ).and_yield(i, o, e, t)
         expect(i).to receive(:binmode)
         expect(o).to receive(:binmode)
         expect(i).to receive(:write).with('test data')
@@ -43,7 +45,8 @@ describe MemeCaptainWeb::AnimatedGifCoalescer do
         expect(status).to receive(:success?).and_return(success)
         expect(e).to receive(:read).and_return('test error')
         expect { animated_gif_coalescer.coalesce('test data') }.to raise_error(
-          RuntimeError, 'test error')
+          RuntimeError, 'test error'
+        )
       end
     end
 

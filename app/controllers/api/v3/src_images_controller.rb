@@ -67,7 +67,8 @@ module Api
         status_url = url_for(
           controller: :pending_src_images,
           action: :show,
-          id: @src_image.id_hash)
+          id: @src_image.id_hash
+        )
         render(json: {
                  id: @src_image.id_hash,
                  status_url: status_url

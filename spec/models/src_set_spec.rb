@@ -43,7 +43,8 @@ describe SrcSet do
       it 'ignores the in progress images' do
         src_set = FactoryGirl.create(:src_set)
         src_set.src_images << FactoryGirl.create(
-          :src_image, work_in_progress: true)
+          :src_image, work_in_progress: true
+        )
         si = FactoryGirl.create(:finished_src_image)
         src_set.src_images << si
 
@@ -55,7 +56,8 @@ describe SrcSet do
   context 'creating a new src set with the same name as an active src set' do
     it 'fails validation' do
       expect { FactoryGirl.create(:src_set, name: set1.name) }.to(
-        raise_error(ActiveRecord::RecordInvalid))
+        raise_error(ActiveRecord::RecordInvalid)
+      )
     end
   end
 

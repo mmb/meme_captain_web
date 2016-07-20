@@ -29,7 +29,8 @@ describe 'my/show.html.erb', type: :view do
       allow(view).to receive(:render).and_call_original
       expect(view).to receive(:render).with(
         partial: 'src_sets/src_sets',
-        locals: { src_sets: src_sets, paginate: true })
+        locals: { src_sets: src_sets, paginate: true }
+      )
       render
     end
   end
@@ -39,7 +40,8 @@ describe 'my/show.html.erb', type: :view do
     allow(view).to receive(:render).and_call_original
     expect(view).to receive(:render).with(
       partial: 'api_token',
-      locals: { current_token: 'secret' })
+      locals: { current_token: 'secret' }
+    )
     render
   end
 end

@@ -24,16 +24,20 @@ describe MemeCaptainWeb::ImgUrlComposer do
     context 'when the url is a horizontal join' do
       it 'fetches the urls and joins the images horizontally' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(100, 50))
+          body: create_image(100, 50)
+        )
         stub_request(:get, 'http://example.com/image2.jpg').to_return(
-          body: create_image(100, 75))
+          body: create_image(100, 75)
+        )
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
-          body: create_image(100, 100))
+          body: create_image(100, 100)
+        )
 
         composed_data = img_url_composer.load(
           'http://example.com/image.jpg[]' \
           'http://example.com/image2.jpg[]' \
-          'http://example.com/image3.jpg')
+          'http://example.com/image3.jpg'
+        )
 
         composed_img = Magick::ImageList.new.from_blob(composed_data)
 
@@ -45,16 +49,20 @@ describe MemeCaptainWeb::ImgUrlComposer do
     context 'when the url is a vertical join' do
       it 'fetches the urls and joins the images vertically' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(100, 50))
+          body: create_image(100, 50)
+        )
         stub_request(:get, 'http://example.com/image2.jpg').to_return(
-          body: create_image(105, 50))
+          body: create_image(105, 50)
+        )
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
-          body: create_image(110, 50))
+          body: create_image(110, 50)
+        )
 
         composed_data = img_url_composer.load(
           'http://example.com/image.jpg|' \
           'http://example.com/image2.jpg|' \
-          'http://example.com/image3.jpg')
+          'http://example.com/image3.jpg'
+        )
 
         composed_img = Magick::ImageList.new.from_blob(composed_data)
 
@@ -66,16 +74,20 @@ describe MemeCaptainWeb::ImgUrlComposer do
     context 'when the url is a mixed join' do
       it 'fetches the urls and joins the images vertically and horizontally' do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(100, 100))
+          body: create_image(100, 100)
+        )
         stub_request(:get, 'http://example.com/image2.jpg').to_return(
-          body: create_image(100, 100))
+          body: create_image(100, 100)
+        )
         stub_request(:get, 'http://example.com/image3.jpg').to_return(
-          body: create_image(100, 100))
+          body: create_image(100, 100)
+        )
 
         composed_data = img_url_composer.load(
           'http://example.com/image.jpg|' \
           'http://example.com/image2.jpg[]' \
-          'http://example.com/image3.jpg')
+          'http://example.com/image3.jpg'
+        )
 
         composed_img = Magick::ImageList.new.from_blob(composed_data)
 

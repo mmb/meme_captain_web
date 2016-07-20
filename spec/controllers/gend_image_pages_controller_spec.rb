@@ -12,7 +12,8 @@ describe GendImagePagesController, type: :controller do
         captions: [
           FactoryGirl.create(:caption, text: 'caption 1', top_left_y_pct: 0.8),
           FactoryGirl.create(:caption, text: 'caption 2', top_left_y_pct: 0.2)
-        ])
+        ]
+      )
     end
     let(:user) { nil }
 
@@ -31,7 +32,8 @@ describe GendImagePagesController, type: :controller do
     it 'sets the gend image url' do
       get :show, id: gend_image.id_hash
       expect(assigns(:gend_image_url)).to eq(
-        "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
+        "http://test.host/gend_images/#{gend_image.id_hash}.jpg"
+      )
     end
 
     context 'when the gend image is less than 10 seconds old' do

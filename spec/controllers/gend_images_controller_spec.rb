@@ -42,13 +42,15 @@ describe GendImagesController, type: :controller do
     it 'assigns the source image path' do
       get :new, src: src_image.id_hash
       expect(assigns(:src_image_path)).to eq(
-        "http://test.host/src_images/#{src_image.id_hash}")
+        "http://test.host/src_images/#{src_image.id_hash}"
+      )
     end
 
     it 'assigns the source image url with extension' do
       get :new, src: src_image.id_hash
       expect(assigns(:src_image_url_with_extension)).to eq(
-        "http://test.host/src_images/#{src_image.id_hash}.jpg")
+        "http://test.host/src_images/#{src_image.id_hash}.jpg"
+      )
     end
 
     it 'assigns a new gend image with the src_image' do
@@ -136,12 +138,14 @@ describe GendImagesController, type: :controller do
         FactoryGirl.create(
           :gend_image,
           user: user,
-          work_in_progress: false)
+          work_in_progress: false
+        )
         FactoryGirl.create(
           :gend_image,
           user: user,
           work_in_progress: false,
-          is_deleted: true)
+          is_deleted: true
+        )
 
         get :index
 
@@ -154,7 +158,8 @@ describe GendImagesController, type: :controller do
             :gend_image,
             user: user,
             work_in_progress: false,
-            private: false)
+            private: false
+          )
         end
 
         get :index
@@ -167,13 +172,15 @@ describe GendImagesController, type: :controller do
           :gend_image,
           user: user,
           work_in_progress: false,
-          private: false)
+          private: false
+        )
         2.times do
           FactoryGirl.create(
             :gend_image,
             user: user,
             work_in_progress: false,
-            private: true)
+            private: true
+          )
         end
 
         get :index
@@ -303,7 +310,8 @@ describe GendImagesController, type: :controller do
           expect(response).to redirect_to(
             controller: :gend_image_pages,
             action: :show,
-            id: assigns(:gend_image).id_hash)
+            id: assigns(:gend_image).id_hash
+          )
         end
       end
 
@@ -321,7 +329,8 @@ describe GendImagesController, type: :controller do
 
           expect(response.headers['Location']).to eq(
             'http://test.host/pending_gend_images/' \
-            "#{assigns(:gend_image).id_hash}")
+            "#{assigns(:gend_image).id_hash}"
+          )
         end
 
         it 'returns the status url in the response' do
@@ -329,7 +338,8 @@ describe GendImagesController, type: :controller do
 
           expect(JSON.parse(response.body)['status_url']).to eq(
             'http://test.host/pending_gend_images/' \
-            "#{assigns(:gend_image).id_hash}")
+            "#{assigns(:gend_image).id_hash}"
+          )
         end
       end
     end
@@ -363,7 +373,8 @@ describe GendImagesController, type: :controller do
           post(:create, body)
 
           expect(JSON.parse(response.body)).to eq(
-            'captions.height_pct' => ["can't be blank"])
+            'captions.height_pct' => ["can't be blank"]
+          )
         end
       end
     end
@@ -397,7 +408,8 @@ describe GendImagesController, type: :controller do
           post(:create, body)
 
           expect(JSON.parse(response.body)).to eq(
-            'captions.top_left_x_pct' => ["can't be blank"])
+            'captions.top_left_x_pct' => ["can't be blank"]
+          )
         end
       end
     end
@@ -431,7 +443,8 @@ describe GendImagesController, type: :controller do
           post(:create, body)
 
           expect(JSON.parse(response.body)).to eq(
-            'captions.top_left_y_pct' => ["can't be blank"])
+            'captions.top_left_y_pct' => ["can't be blank"]
+          )
         end
       end
     end
@@ -465,7 +478,8 @@ describe GendImagesController, type: :controller do
           post(:create, body)
 
           expect(JSON.parse(response.body)).to eq(
-            'captions.width_pct' => ["can't be blank"])
+            'captions.width_pct' => ["can't be blank"]
+          )
         end
       end
     end
@@ -523,13 +537,15 @@ describe GendImagesController, type: :controller do
       it 'does not save the new gend image to the database' do
         expect do
           post :create, gend_image: {
-            src_image_id: src_image.id_hash, email: 'not@empty.com' }
+            src_image_id: src_image.id_hash, email: 'not@empty.com'
+          }
         end.to_not change { GendImage.count }
       end
 
       it 're-renders the new template' do
         post :create, gend_image: {
-          src_image_id: src_image.id_hash, email: 'not@empty.com' }
+          src_image_id: src_image.id_hash, email: 'not@empty.com'
+        }
 
         expect(response).to render_template('new')
       end
@@ -537,7 +553,8 @@ describe GendImagesController, type: :controller do
       it 'increments the bot.attempt statsd counter' do
         expect do
           post :create, gend_image: {
-            src_image_id: src_image.id_hash, email: 'not@empty.com' }
+            src_image_id: src_image.id_hash, email: 'not@empty.com'
+          }
         end.to trigger_statsd_increment('bot.attempt')
       end
     end
@@ -555,7 +572,8 @@ describe GendImagesController, type: :controller do
           :gend_image,
           src_image: src_image,
           captions: captions,
-          work_in_progress: false)
+          work_in_progress: false
+        )
       end
 
       it 'shows the gend image' do
@@ -588,7 +606,8 @@ describe GendImagesController, type: :controller do
             get :show, id: gend_image.id_hash
 
             expect(response.headers['Meme-Text']).to eq(
-              'caption+1&caption+2')
+              'caption+1&caption+2'
+            )
           end
         end
 
@@ -687,7 +706,8 @@ describe GendImagesController, type: :controller do
         get :show, id: gend_image.id_hash
 
         expect(response.headers['Cache-Control']).to eq(
-          'max-age=31557600, public')
+          'max-age=31557600, public'
+        )
       end
 
       it 'has the correct Expires header' do
@@ -740,7 +760,8 @@ describe GendImagesController, type: :controller do
         delete :destroy, id: id
 
         expect(GendImage.find_by(
-          id_hash: gend_image.id_hash).is_deleted?).to eq(true)
+          id_hash: gend_image.id_hash
+        ).is_deleted?).to eq(true)
       end
 
       it 'returns success' do
@@ -753,7 +774,8 @@ describe GendImagesController, type: :controller do
       let(:id) { 'abc' }
       it 'raises record not found' do
         expect { delete :destroy, id: id }.to raise_error(
-          ActiveRecord::RecordNotFound)
+          ActiveRecord::RecordNotFound
+        )
       end
     end
 

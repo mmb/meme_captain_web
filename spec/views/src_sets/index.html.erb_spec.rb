@@ -9,7 +9,8 @@ describe 'src_sets/index.html.erb', type: :view do
     allow(view).to receive(:render).and_call_original
     expect(view).to receive(:render).with(
       partial: 'src_sets',
-      locals: { src_sets: src_sets, paginate: true })
+      locals: { src_sets: src_sets, paginate: true }
+    )
     render
   end
 end

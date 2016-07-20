@@ -13,7 +13,8 @@ describe 'MemeCaptainWeb::GendImageApiRequestJson' do
         top_left_x_pct: 1.0,
         top_left_y_pct: 2.0,
         width_pct: 3.0,
-        height_pct: 4.0)
+        height_pct: 4.0
+      )
     end
 
     before do
@@ -26,7 +27,8 @@ describe 'MemeCaptainWeb::GendImageApiRequestJson' do
           :gend_image,
           src_image: src_image,
           captions: [caption1, caption2],
-          private: false)
+          private: false
+        )
       end
 
       let(:caption2) do
@@ -36,7 +38,8 @@ describe 'MemeCaptainWeb::GendImageApiRequestJson' do
           top_left_x_pct: 5.0,
           top_left_y_pct: 6.0,
           width_pct: 7.0,
-          height_pct: 8.0)
+          height_pct: 8.0
+        )
       end
 
       it 'sets private to false in the API input JSON' do
@@ -63,7 +66,8 @@ describe 'MemeCaptainWeb::GendImageApiRequestJson' do
 }
 EXPECTED_JSON
         expect(
-          MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json)
+          MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json
+        )
           .to eq(expected_json)
       end
     end
@@ -74,7 +78,8 @@ EXPECTED_JSON
           :gend_image,
           src_image: src_image,
           captions: [caption1],
-          private: true)
+          private: true
+        )
       end
 
       it 'sets private to true in the API input JSON' do
@@ -94,7 +99,8 @@ EXPECTED_JSON
 }
 EXPECTED_JSON
         expect(
-          MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json)
+          MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json
+        )
           .to eq(expected_json.strip)
       end
     end

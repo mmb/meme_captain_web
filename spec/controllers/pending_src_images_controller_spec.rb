@@ -67,7 +67,8 @@ describe PendingSrcImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            src_image.created_at.to_i)
+            src_image.created_at.to_i
+          )
         end
 
         context 'when there was an error processing the image' do
@@ -93,7 +94,8 @@ describe PendingSrcImagesController, type: :controller do
           get :show, id: src_image.id_hash
           expect(response).to have_http_status(303)
           expect(response).to redirect_to(
-            "http://test.host/src_images/#{src_image.id_hash}.jpg")
+            "http://test.host/src_images/#{src_image.id_hash}.jpg"
+          )
         end
       end
     end

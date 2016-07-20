@@ -34,7 +34,8 @@ class GendImage < ActiveRecord::Base
   def meme_text_header
     Rails.cache.fetch("#{cache_key}/meme_text_header") do
       trim_header(
-        captions.map { |c| Rack::Utils.escape(c.text) }.join('&'.freeze))
+        captions.map { |c| Rack::Utils.escape(c.text) }.join('&'.freeze)
+      )
     end
   end
 
@@ -71,7 +72,8 @@ class GendImage < ActiveRecord::Base
   scope :caption_matches, lambda { |query|
     prepared_query = query.try(:strip).try(:downcase)
     joins(:captions).where(
-      'LOWER(captions.text) LIKE ?'.freeze, "%#{prepared_query}%").uniq if \
+      'LOWER(captions.text) LIKE ?'.freeze, "%#{prepared_query}%"
+    ).uniq if \
       prepared_query
   }
 

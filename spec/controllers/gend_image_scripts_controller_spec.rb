@@ -5,7 +5,8 @@ describe GendImageScriptsController, type: :controller do
     context 'when the image is deleted' do
       let(:gend_image) do
         FactoryGirl.create(
-          :gend_image, is_deleted: true, work_in_progress: false)
+          :gend_image, is_deleted: true, work_in_progress: false
+        )
       end
 
       it 'raises record not found' do
@@ -47,11 +48,14 @@ describe GendImageScriptsController, type: :controller do
 
       it 'assigns the json' do
         gend_image_api_request_json = instance_double(
-          MemeCaptainWeb::GendImageApiRequestJson)
+          MemeCaptainWeb::GendImageApiRequestJson
+        )
         expect(MemeCaptainWeb::GendImageApiRequestJson).to receive(:new).with(
-          gend_image).and_return(gend_image_api_request_json)
+          gend_image
+        ).and_return(gend_image_api_request_json)
         expect(gend_image_api_request_json).to receive(:json).and_return(
-          'test json')
+          'test json'
+        )
 
         get(:show, id: gend_image.id_hash, format: :text)
         expect(assigns(:json)).to eq('test json')

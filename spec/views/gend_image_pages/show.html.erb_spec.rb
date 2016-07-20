@@ -62,7 +62,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
   it 'sets the content for the description to the meme captions' do
     expect(view).to receive(:content_for).with(
-      :description, 'caption 2 caption 1')
+      :description, 'caption 2 caption 1'
+    )
     render
   end
 
@@ -87,7 +88,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       it 'does not have the WhatsApp button' do
         params = { text: gend_image_url }.to_query
         expect(render).to_not have_link(
-          'WhatsApp', href: "whatsapp://send?#{params}")
+          'WhatsApp', href: "whatsapp://send?#{params}"
+        )
       end
     end
 
@@ -97,7 +99,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       it 'has the WhatsApp button' do
         params = { text: gend_image_url }.to_query
         expect(render).to have_link(
-          'WhatsApp', href: "whatsapp://send?#{params}")
+          'WhatsApp', href: "whatsapp://send?#{params}"
+        )
       end
     end
   end
@@ -128,7 +131,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
     it 'dismisses the modal when the QR code image is clicked' do
       expect(render).to have_selector(
-        "img[src='#{img_src}'][data-dismiss='modal']")
+        "img[src='#{img_src}'][data-dismiss='modal']"
+      )
     end
   end
 
@@ -141,7 +145,8 @@ describe 'gend_image_pages/show.html.erb', type: :view do
   context 'when the image is animated' do
     let(:gend_image) do
       FactoryGirl.create(
-        :animated_gend_image, work_in_progress: false, private: privat)
+        :animated_gend_image, work_in_progress: false, private: privat
+      )
     end
 
     context 'when the image is private' do
@@ -168,13 +173,15 @@ describe 'gend_image_pages/show.html.erb', type: :view do
 
   it "uses the image's meme text as alt text" do
     expect(render).to have_selector(
-      "img[src='#{gend_image_url}'][alt='caption 2 caption 1']")
+      "img[src='#{gend_image_url}'][alt='caption 2 caption 1']"
+    )
   end
 
   context 'API shell script modal' do
     it 'has an API button' do
       expect(render).to have_link(
-        'API', href: "/gend_image_scripts/#{gend_image.id_hash}.txt")
+        'API', href: "/gend_image_scripts/#{gend_image.id_hash}.txt"
+      )
     end
   end
 

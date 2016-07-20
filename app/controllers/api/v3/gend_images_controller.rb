@@ -26,12 +26,14 @@ module Api
       def build_gend_image_for_create
         src_image_id = params.fetch(:gend_image, {})[:src_image_id]
         src_image = SrcImage.without_image.active.finished.find_by!(
-          id_hash: src_image_id)
+          id_hash: src_image_id
+        )
 
         gend_image = src_image.gend_images.build(gend_image_params)
         gend_image.assign_attributes(
           user: current_user,
-          creator_ip: remote_ip)
+          creator_ip: remote_ip
+        )
         gend_image
       end
 
@@ -53,14 +55,17 @@ module Api
         params.require(:gend_image).permit(
           { captions_attributes: [
             :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
-            :height_pct] }, :private, :email)
+            :height_pct
+          ] }, :private, :email
+        )
       end
 
       def ok_response
         status_url = url_for(
           controller: :pending_gend_images,
           action: :show,
-          id: @gend_image.id_hash)
+          id: @gend_image.id_hash
+        )
         render(json: {
                  id: @gend_image.id_hash,
                  status_url: status_url

@@ -233,7 +233,8 @@ describe HomeController, type: :controller do
         si = FactoryGirl.create(
           :src_image,
           private: true,
-          work_in_progress: false)
+          work_in_progress: false
+        )
         si2 = FactoryGirl.create(:src_image, work_in_progress: false)
         FactoryGirl.create(:gend_image, src_image: si2)
 
@@ -246,7 +247,8 @@ describe HomeController, type: :controller do
         si = FactoryGirl.create(
           :src_image,
           is_deleted: true,
-          work_in_progress: false)
+          work_in_progress: false
+        )
         si2 = FactoryGirl.create(:src_image, work_in_progress: false)
         FactoryGirl.create(:gend_image, src_image: si2)
 
@@ -299,7 +301,8 @@ describe HomeController, type: :controller do
         gi = FactoryGirl.create(
           :gend_image,
           is_deleted: true,
-          work_in_progress: false)
+          work_in_progress: false
+        )
         Timecop.travel(Time.now + 1)
         gi2 = FactoryGirl.create(:gend_image, work_in_progress: false)
         Timecop.return
@@ -360,17 +363,20 @@ describe HomeController, type: :controller do
 
     it 'sends a db timer metric to statsd' do
       expect { get(:index) }.to trigger_statsd_measure(
-        'HomeController.index.html.db_runtime')
+        'HomeController.index.html.db_runtime'
+      )
     end
 
     it 'sends a view timer metric to statsd' do
       expect { get(:index) }.to trigger_statsd_measure(
-        'HomeController.index.html.view_runtime')
+        'HomeController.index.html.view_runtime'
+      )
     end
 
     it 'sends a status increment metric to statsd' do
       expect { get(:index) }.to trigger_statsd_increment(
-        'HomeController.index.html.200')
+        'HomeController.index.html.200'
+      )
     end
   end
 end

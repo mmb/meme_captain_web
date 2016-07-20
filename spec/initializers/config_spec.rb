@@ -10,7 +10,8 @@ describe MemeCaptainWeb::Config do
   after(:all) do
     # Avoid polluting config module for later tests.
     rb_path = File.expand_path(
-      '../../../config/initializers/config.rb', __FILE__)
+      '../../../config/initializers/config.rb', __FILE__
+    )
     Kernel.silence_warnings { load(rb_path) }
   end
 
@@ -25,7 +26,8 @@ describe MemeCaptainWeb::Config do
     before do
       stub_const(
         'ENV',
-        ENV.to_hash.merge('MC_SET_FRONT_PAGE_MIN_QUALITY' => '50'))
+        ENV.to_hash.merge('MC_SET_FRONT_PAGE_MIN_QUALITY' => '50')
+      )
     end
 
     it 'uses the environment variable' do
@@ -45,7 +47,8 @@ describe MemeCaptainWeb::Config do
     before do
       stub_const(
         'ENV',
-        ENV.to_hash.merge('MAX_SRC_IMAGE_SIZE' => '78'))
+        ENV.to_hash.merge('MAX_SRC_IMAGE_SIZE' => '78')
+      )
     end
 
     it 'uses the environment variable' do
@@ -65,7 +68,8 @@ describe MemeCaptainWeb::Config do
     before do
       stub_const(
         'ENV',
-        ENV.to_hash.merge('MAX_GIF_SHRINK_SIZE' => '78'))
+        ENV.to_hash.merge('MAX_GIF_SHRINK_SIZE' => '78')
+      )
     end
 
     it 'uses the environment variable' do

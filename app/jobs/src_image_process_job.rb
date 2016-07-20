@@ -49,9 +49,10 @@ class SrcImageProcessJob
     shrinker = MemeCaptainWeb::AnimatedGifShrinker.new(coalescer, trimmer)
     shrinker.shrink(
       src_image.image,
-      MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE) do |data|
-        src_image.image = data
-      end
+      MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE
+    ) do |data|
+      src_image.image = data
+    end
   end
 
   def shrink_animated?(src_image)
@@ -93,7 +94,8 @@ class SrcImageProcessJob
 
   def watermark(img)
     watermark_img = Magick::ImageList.new(
-      Rails.root + 'app/assets/images/watermark.png'.freeze)
+      Rails.root + 'app/assets/images/watermark.png'.freeze
+    )
     img.extend(MemeCaptain::ImageList::Watermark)
     img.watermark_mc(watermark_img)
     watermark_img.destroy!

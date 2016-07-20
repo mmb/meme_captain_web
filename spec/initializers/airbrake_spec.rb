@@ -7,14 +7,17 @@ describe 'Airbrake initializer' do
     before do
       stub_const(
         'ENV',
-        ENV.to_hash.delete_if { |key| key == 'AIRBRAKE_API_KEY' })
+        ENV.to_hash.delete_if { |key| key == 'AIRBRAKE_API_KEY' }
+      )
     end
 
     it 'does not initializes Airbrake' do
       expect(Airbrake).not_to receive(:configure)
       load(
         File.expand_path(
-          '../../../config/initializers/airbrake.rb', __FILE__))
+          '../../../config/initializers/airbrake.rb', __FILE__
+        )
+      )
     end
   end
 
@@ -22,14 +25,17 @@ describe 'Airbrake initializer' do
     before do
       stub_const(
         'ENV',
-        ENV.to_hash.merge('AIRBRAKE_API_KEY' => ''))
+        ENV.to_hash.merge('AIRBRAKE_API_KEY' => '')
+      )
     end
 
     it 'does not initializes Airbrake' do
       expect(Airbrake).not_to receive(:configure)
       load(
         File.expand_path(
-          '../../../config/initializers/airbrake.rb', __FILE__))
+          '../../../config/initializers/airbrake.rb', __FILE__
+        )
+      )
     end
   end
 
@@ -37,7 +43,8 @@ describe 'Airbrake initializer' do
     before do
       stub_const(
         'ENV',
-        ENV.to_hash.merge('AIRBRAKE_API_KEY' => 'test-api-key'))
+        ENV.to_hash.merge('AIRBRAKE_API_KEY' => 'test-api-key')
+      )
     end
 
     it 'initializes Airbrake' do
@@ -46,15 +53,20 @@ describe 'Airbrake initializer' do
       expect(config).to receive(:api_key=).with('test-api-key')
       load(
         File.expand_path(
-          '../../../config/initializers/airbrake.rb', __FILE__))
+          '../../../config/initializers/airbrake.rb', __FILE__
+        )
+      )
     end
 
     it 'enables the delayed job Airbrake plugin' do
       load(
         File.expand_path(
-          '../../../config/initializers/airbrake.rb', __FILE__))
+          '../../../config/initializers/airbrake.rb', __FILE__
+        )
+      )
       expect(Delayed::Worker.plugins).to include(
-        Delayed::Plugins::Airbrake::Plugin)
+        Delayed::Plugins::Airbrake::Plugin
+      )
     end
   end
 end

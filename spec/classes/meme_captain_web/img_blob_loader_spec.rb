@@ -32,7 +32,8 @@ describe MemeCaptainWeb::ImgBlobLoader do
           img_blob_loader.load_blob(img_data)
         end.to raise_error(
           MemeCaptainWeb::Error::UnsupportedImageFormatError,
-          'unsupported image format')
+          'unsupported image format'
+        )
       end
     end
   end

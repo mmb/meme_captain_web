@@ -26,7 +26,8 @@ describe SrcImage do
 
   it 'should generate a unique id hash' do
     allow(SecureRandom).to receive(:urlsafe_base64).with(4).and_return(
-      'some_id_hash')
+      'some_id_hash'
+    )
     src_image = SrcImage.create(FactoryGirl.attributes_for(:src_image))
     expect(src_image.id_hash).to eq('some_id_hash')
   end
@@ -50,7 +51,8 @@ describe SrcImage do
     context 'when the image is animated' do
       subject(:src_image) do
         src_image = SrcImage.new(
-          FactoryGirl.attributes_for(:animated_src_image))
+          FactoryGirl.attributes_for(:animated_src_image)
+        )
         src_image.set_derived_image_fields
         src_image.valid?
         src_image
@@ -169,12 +171,14 @@ describe SrcImage do
     context 'when url is not nil' do
       before do
         stub_request(:get, 'http://example.com/image.jpg').to_return(
-          body: create_image(37, 22))
+          body: create_image(37, 22)
+        )
       end
 
       it 'loads the image' do
         src_image = FactoryGirl.create(
-          :src_image, url: 'http://example.com/image.jpg')
+          :src_image, url: 'http://example.com/image.jpg'
+        )
         src_image.load_from_url
         expect(src_image.magick_image_list.columns).to eq(37)
         expect(src_image.magick_image_list.rows).to eq(22)
@@ -189,9 +193,11 @@ describe SrcImage do
       it 'enqueues a src image processing job in the src_image_process queue' do
         src_image_process_job = instance_double(SrcImageProcessJob)
         expect(SrcImageProcessJob).to receive(:new).with(
-          src_image.id).and_return(src_image_process_job)
+          src_image.id
+        ).and_return(src_image_process_job)
         expect(src_image_process_job).to receive(:delay).with(
-          queue: :src_image_process).and_return(src_image_process_job)
+          queue: :src_image_process
+        ).and_return(src_image_process_job)
         expect(src_image_process_job).to receive(:perform)
 
         src_image.run_callbacks(:commit)
@@ -205,9 +211,11 @@ describe SrcImage do
         'queue' do
         src_image_process_job = instance_double(SrcImageProcessJob)
         expect(SrcImageProcessJob).to receive(:new).with(
-          src_image.id).and_return(src_image_process_job)
+          src_image.id
+        ).and_return(src_image_process_job)
         expect(src_image_process_job).to receive(:delay).with(
-          queue: :src_image_process_url).and_return(src_image_process_job)
+          queue: :src_image_process_url
+        ).and_return(src_image_process_job)
         expect(src_image_process_job).to receive(:perform)
 
         src_image.run_callbacks(:commit)
@@ -238,7 +246,8 @@ describe SrcImage do
         'created_at' => src_image.created_at,
         'updated_at' => src_image.updated_at,
         'name' => 'test image',
-        'image_url' => 'test image url')
+        'image_url' => 'test image url'
+      )
     end
   end
 
@@ -350,9 +359,11 @@ describe SrcImage do
       it 'returns images that are not private, deleted or in progress' do
         expect(SrcImage).to receive(:without_image).and_return(relation)
         expect(relation).to receive(:includes).with(:src_thumb).and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:name_matches).with('query').and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:publick).and_return(relation)
         expect(relation).to receive(:active).and_return(relation)
         expect(relation).to receive(:finished).and_return(relation)
@@ -368,9 +379,11 @@ describe SrcImage do
       it 'returns images that are not private, deleted or in progress' do
         expect(SrcImage).to receive(:without_image).and_return(relation)
         expect(relation).to receive(:includes).with(:src_thumb).and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:name_matches).with('query').and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:publick).and_return(relation)
         expect(relation).to receive(:active).and_return(relation)
         expect(relation).to receive(:finished).and_return(relation)
@@ -386,9 +399,11 @@ describe SrcImage do
       it 'returns all images' do
         expect(SrcImage).to receive(:without_image).and_return(relation)
         expect(relation).to receive(:includes).with(:src_thumb).and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:name_matches).with('query').and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:most_used).and_return(relation)
         expect(relation).to receive(:page).with(1).and_return(result)
         expect(SrcImage.for_user(user, 'query', 1)).to eq(result)

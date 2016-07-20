@@ -43,7 +43,8 @@ describe GendImage do
 
     subject(:gend_image) do
       gend_image = GendImage.new(
-        FactoryGirl.attributes_for(:gend_image, image: image))
+        FactoryGirl.attributes_for(:gend_image, image: image)
+      )
       gend_image.valid?
       gend_image
     end
@@ -104,9 +105,11 @@ describe GendImage do
       it 'puts the image in the small queue' do
         gend_image_process_job = instance_double(GendImageProcessJob)
         expect(GendImageProcessJob).to receive(:new).with(
-          gend_image.id).and_return(gend_image_process_job)
+          gend_image.id
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:delay).with(
-          queue: :gend_image_process_small).and_return(gend_image_process_job)
+          queue: :gend_image_process_small
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:perform)
 
         gend_image.run_callbacks(:commit)
@@ -119,9 +122,11 @@ describe GendImage do
       it 'puts the image in the small queue' do
         gend_image_process_job = instance_double(GendImageProcessJob)
         expect(GendImageProcessJob).to receive(:new).with(
-          gend_image.id).and_return(gend_image_process_job)
+          gend_image.id
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:delay).with(
-          queue: :gend_image_process_medium).and_return(gend_image_process_job)
+          queue: :gend_image_process_medium
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:perform)
 
         gend_image.run_callbacks(:commit)
@@ -134,9 +139,11 @@ describe GendImage do
       it 'puts the image in the small queue' do
         gend_image_process_job = instance_double(GendImageProcessJob)
         expect(GendImageProcessJob).to receive(:new).with(
-          gend_image.id).and_return(gend_image_process_job)
+          gend_image.id
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:delay).with(
-          queue: :gend_image_process_large).and_return(gend_image_process_job)
+          queue: :gend_image_process_large
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:perform)
 
         gend_image.run_callbacks(:commit)
@@ -149,10 +156,13 @@ describe GendImage do
       it 'puts the image in the small queue' do
         gend_image_process_job = instance_double(GendImageProcessJob)
         expect(GendImageProcessJob).to receive(:new).with(
-          gend_image.id).and_return(gend_image_process_job)
+          gend_image.id
+        ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:delay).with(
-          queue: :gend_image_process_shitload).and_return(
-            gend_image_process_job)
+          queue: :gend_image_process_shitload
+        ).and_return(
+          gend_image_process_job
+        )
         expect(gend_image_process_job).to receive(:perform)
 
         gend_image.run_callbacks(:commit)
@@ -165,7 +175,8 @@ describe GendImage do
     let(:caption2) { FactoryGirl.create(:caption, text: 'def') }
     before do
       @gend_image = FactoryGirl.create(
-        :gend_image, captions: [caption1, caption2])
+        :gend_image, captions: [caption1, caption2]
+      )
     end
 
     context "when one of the image's captions matches" do
@@ -201,13 +212,16 @@ describe GendImage do
       gend_image = FactoryGirl.create(:gend_image)
       gend_image.captions.create(
         text: 'test 1', top_left_x_pct: 9, top_left_y_pct: 20,
-        width_pct: 0.9, height_pct: 0.25)
+        width_pct: 0.9, height_pct: 0.25
+      )
       gend_image.captions.create(
         text: 'test 2', top_left_x_pct: 10, top_left_y_pct: 20,
-        width_pct: 0.9, height_pct: 0.25)
+        width_pct: 0.9, height_pct: 0.25
+      )
       gend_image.captions.create(
         text: 'test 3', top_left_x_pct: 7, top_left_y_pct: 7,
-        width_pct: 0.9, height_pct: 0.25)
+        width_pct: 0.9, height_pct: 0.25
+      )
       gend_image.save!
       expect(gend_image.meme_text).to eq('test 3 test 1 test 2')
     end
@@ -324,9 +338,11 @@ describe GendImage do
       it 'returns images that are not private, deleted or in progress' do
         expect(GendImage).to receive(:without_image).and_return(relation)
         expect(relation).to receive(:includes).with(:gend_thumb).and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:caption_matches).with('query').and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:publick).and_return(relation)
         expect(relation).to receive(:active).and_return(relation)
         expect(relation).to receive(:finished).and_return(relation)
@@ -342,9 +358,11 @@ describe GendImage do
       it 'returns images that are not private, deleted or in progress' do
         expect(GendImage).to receive(:without_image).and_return(relation)
         expect(relation).to receive(:includes).with(:gend_thumb).and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:caption_matches).with('query').and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:publick).and_return(relation)
         expect(relation).to receive(:active).and_return(relation)
         expect(relation).to receive(:finished).and_return(relation)
@@ -360,9 +378,11 @@ describe GendImage do
       it 'returns all images' do
         expect(GendImage).to receive(:without_image).and_return(relation)
         expect(relation).to receive(:includes).with(:gend_thumb).and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:caption_matches).with('query').and_return(
-          relation)
+          relation
+        )
         expect(relation).to receive(:most_recent).and_return(relation)
         expect(relation).to receive(:page).with(1).and_return(result)
         expect(GendImage.for_user(user, 'query', 1)).to eq(result)
@@ -392,7 +412,8 @@ describe GendImage do
     it 'has the meme text' do
       gend_image.captions.create(
         text: 'test 1', top_left_x_pct: 0.05, top_left_y_pct: 0.0,
-        width_pct: 0.9, height_pct: 0.25)
+        width_pct: 0.9, height_pct: 0.25
+      )
       expect(gend_image.headers).to include('Meme-Text' => 'test+1')
     end
   end

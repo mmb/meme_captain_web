@@ -11,7 +11,8 @@ describe MemeCaptainWeb::TextMatchLambda do
 
     before do
       expect(ActiveRecord::Base.connection).to receive(
-        :adapter_name).and_return(adapter_name)
+        :adapter_name
+      ).and_return(adapter_name)
     end
 
     context 'when the database is Postgres' do
@@ -28,7 +29,8 @@ describe MemeCaptainWeb::TextMatchLambda do
 
       it 'uses SQL' do
         expect(o).to receive(:where).with(
-          'LOWER(column1) LIKE ?', '%query1%').and_return(where)
+          'LOWER(column1) LIKE ?', '%query1%'
+        ).and_return(where)
         expect(text_match_lambda.lambder.call('query1')).to eq(where)
       end
     end

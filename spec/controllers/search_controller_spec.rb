@@ -21,13 +21,15 @@ describe SearchController, type: :controller do
 
       it 'sets google_search_url' do
         expect(assigns(:google_search_url)).to eq(
-          'https://www.google.com/search?q=test+meme+template&tbm=isch')
+          'https://www.google.com/search?q=test+meme+template&tbm=isch'
+        )
       end
 
       it 'correctly encodes google_search_url' do
         get :show, q: '<hi&>'
         expect(assigns(:google_search_url)).to eq(
-          'https://www.google.com/search?q=%3Chi%26%3E+meme+template&tbm=isch')
+          'https://www.google.com/search?q=%3Chi%26%3E+meme+template&tbm=isch'
+        )
       end
 
       it 'creates a no result search record' do
@@ -41,11 +43,14 @@ describe SearchController, type: :controller do
     context 'when some results are found' do
       before do
         @src_image_1 = FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false)
+          :src_image, name: 'foo', work_in_progress: false
+        )
         @src_image_2 = FactoryGirl.create(
-          :src_image, name: 'not a match', work_in_progress: false)
+          :src_image, name: 'not a match', work_in_progress: false
+        )
         @src_image_3 = FactoryGirl.create(
-          :src_image, name: 'another foo', work_in_progress: false)
+          :src_image, name: 'another foo', work_in_progress: false
+        )
 
         caption1 = FactoryGirl.create(:caption, text: 'foo')
         caption2 = FactoryGirl.create(:caption, text: 'bar')
@@ -76,7 +81,8 @@ describe SearchController, type: :controller do
 
         it 'does not find private source images' do
           FactoryGirl.create(
-            :src_image, name: 'foo', work_in_progress: false, private: true)
+            :src_image, name: 'foo', work_in_progress: false, private: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
@@ -84,7 +90,8 @@ describe SearchController, type: :controller do
 
         it 'does not find deleted source images' do
           FactoryGirl.create(
-            :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
+            :src_image, name: 'foo', work_in_progress: false, is_deleted: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
@@ -139,21 +146,25 @@ describe SearchController, type: :controller do
         it 'finds private source images' do
           Timecop.travel(Time.now + 1)
           src_image_4 = FactoryGirl.create(
-            :src_image, name: 'foo', work_in_progress: false, private: true)
+            :src_image, name: 'foo', work_in_progress: false, private: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq(
-            [@src_image_3, @src_image_1, src_image_4])
+            [@src_image_3, @src_image_1, src_image_4]
+          )
         end
 
         it 'finds deleted source images' do
           Timecop.travel(Time.now + 1)
           src_image_4 = FactoryGirl.create(
-            :src_image, name: 'foo', work_in_progress: false, is_deleted: true)
+            :src_image, name: 'foo', work_in_progress: false, is_deleted: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq(
-            [@src_image_3, @src_image_1, src_image_4])
+            [@src_image_3, @src_image_1, src_image_4]
+          )
         end
 
         it 'finds in progress source images' do
@@ -162,7 +173,8 @@ describe SearchController, type: :controller do
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq(
-            [@src_image_3, @src_image_1, src_image_4])
+            [@src_image_3, @src_image_1, src_image_4]
+          )
         end
 
         it 'finds private gend images' do
@@ -174,11 +186,13 @@ describe SearchController, type: :controller do
             :gend_image,
             captions: [caption1, caption2],
             work_in_progress: false,
-            private: true)
+            private: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:gend_images)).to eq(
-            [gend_image_4, @gend_image_3, @gend_image_1])
+            [gend_image_4, @gend_image_3, @gend_image_1]
+          )
         end
 
         it 'finds deleted gend images' do
@@ -188,11 +202,13 @@ describe SearchController, type: :controller do
           gend_image_4 = FactoryGirl.create(
             :gend_image,
             captions: [caption1, caption2],
-            work_in_progress: false, is_deleted: true)
+            work_in_progress: false, is_deleted: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:gend_images)).to eq(
-            [gend_image_4, @gend_image_3, @gend_image_1])
+            [gend_image_4, @gend_image_3, @gend_image_1]
+          )
         end
 
         it 'finds in progress gend images' do
@@ -202,11 +218,13 @@ describe SearchController, type: :controller do
           gend_image_4 = FactoryGirl.create(
             :gend_image,
             captions: [caption1, caption2],
-            work_in_progress: true)
+            work_in_progress: true
+          )
           get :show, q: 'foo'
 
           expect(assigns(:gend_images)).to eq(
-            [gend_image_4, @gend_image_3, @gend_image_1])
+            [gend_image_4, @gend_image_3, @gend_image_1]
+          )
         end
       end
 
@@ -227,12 +245,14 @@ describe SearchController, type: :controller do
           @src_set1 = FactoryGirl.create(
             :src_set,
             name: 'test1',
-            src_images: [@src_image_1])
+            src_images: [@src_image_1]
+          )
           Timecop.travel(Time.now + 1)
           @src_set2 = FactoryGirl.create(
             :src_set,
             name: 'test2',
-            src_images: [@src_image_1])
+            src_images: [@src_image_1]
+          )
         end
 
         it 'finds src sets with matching names ordered by most recent' do
@@ -245,7 +265,8 @@ describe SearchController, type: :controller do
             :src_set,
             name: 'test3',
             is_deleted: true,
-            src_images: [@src_image_1])
+            src_images: [@src_image_1]
+          )
           get(:show, q: 'test')
           expect(assigns(:src_sets)).to eq([@src_set2, @src_set1])
         end

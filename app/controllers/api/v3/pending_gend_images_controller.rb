@@ -8,7 +8,8 @@ module Api
 
       def show
         gend_image = GendImage.without_image.active.find_by!(
-          id_hash: params[:id])
+          id_hash: params[:id]
+        )
         render(json:
           {
             created_at: gend_image.created_at,

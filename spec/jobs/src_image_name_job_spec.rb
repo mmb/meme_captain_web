@@ -12,7 +12,8 @@ describe SrcImageNameJob do
     allow(Rails.configuration).to receive(:x).and_return(x)
     allow(x).to receive(:src_image_name_lookup_host).and_return(lookup_host)
     allow(MemeCaptainWeb::GoogleImageNamer).to receive(:new).and_return(
-      google_image_namer)
+      google_image_namer
+    )
   end
 
   context 'when src image name lookups are turned off' do
@@ -54,7 +55,8 @@ describe SrcImageNameJob do
       context 'when the Google image namer returns nil' do
         before do
           allow(google_image_namer).to receive(:name).with(
-            "http://test.com/src_images/#{src_image.id_hash}").and_return(nil)
+            "http://test.com/src_images/#{src_image.id_hash}"
+          ).and_return(nil)
         end
 
         it 'does not change the src image name' do
@@ -67,7 +69,8 @@ describe SrcImageNameJob do
       context 'when Google can identify the image' do
         before do
           allow(google_image_namer).to receive(:name).with(
-            "http://test.com/src_images/#{src_image.id_hash}")
+            "http://test.com/src_images/#{src_image.id_hash}"
+          )
             .and_return('test image')
         end
 
@@ -86,7 +89,8 @@ describe SrcImageNameJob do
       context 'when Google can identify the image' do
         before do
           allow(google_image_namer).to receive(:name).with(
-            "http://test.com/src_images/#{src_image.id_hash}")
+            "http://test.com/src_images/#{src_image.id_hash}"
+          )
             .and_return('test image')
         end
 

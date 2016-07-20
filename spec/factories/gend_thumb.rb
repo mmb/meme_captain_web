@@ -11,6 +11,7 @@ FactoryGirl.define do
       '/wIt3gAAAHpJREFUWIXt1zESgCAMRNE03s9mG+9ns6e0EaKCqDOWf4sU' \
       'JOHREvqciOn7Us0cEZiYmJhnc7HtVbJtS5LsVRo09DScZzmSG5iYmJit' \
       '2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xM' \
-      'TMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC')
+      'TMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC'
+    )
   end
 end

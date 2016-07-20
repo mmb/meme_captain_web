@@ -6,6 +6,7 @@ describe MemeCaptainWeb::Error::UnsupportedImageFormatError do
       raise MemeCaptainWeb::Error::UnsupportedImageFormatError
     end.to raise_error(
       MemeCaptainWeb::Error::UnsupportedImageFormatError,
-      'unsupported image format')
+      'unsupported image format'
+    )
   end
 end

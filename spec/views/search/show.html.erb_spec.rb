@@ -22,7 +22,8 @@ describe 'search/show.html.erb', type: :view do
     let(:src_images) { [] }
     it 'does not render the src images partial' do
       expect(view).to_not receive(:render).with(
-        partial: 'src_images/src_images')
+        partial: 'src_images/src_images'
+      )
       render
     end
   end
@@ -32,12 +33,14 @@ describe 'search/show.html.erb', type: :view do
       src_image1 = FactoryGirl.create(
         :src_image,
         work_in_progress: false,
-        src_thumb: FactoryGirl.create(:src_thumb))
+        src_thumb: FactoryGirl.create(:src_thumb)
+      )
       src_image1.set_derived_image_fields
       src_image2 = FactoryGirl.create(
         :src_image,
         work_in_progress: false,
-        src_thumb: FactoryGirl.create(:src_thumb))
+        src_thumb: FactoryGirl.create(:src_thumb)
+      )
       src_image2.set_derived_image_fields
       [src_image1, src_image2]
     end
@@ -49,7 +52,8 @@ describe 'search/show.html.erb', type: :view do
                                               show_remove_from_set: false,
                                               show_delete: false,
                                               src_images: src_images,
-                                              more_images: false })
+                                              more_images: false
+                                            })
       render
     end
   end
@@ -68,7 +72,8 @@ describe 'search/show.html.erb', type: :view do
     it 'renders the src sets partial' do
       expect(view).to receive(:render).with(
         partial: 'src_sets/src_sets',
-        locals: { src_sets: src_sets, paginate: true })
+        locals: { src_sets: src_sets, paginate: true }
+      )
       render
     end
   end
@@ -77,7 +82,8 @@ describe 'search/show.html.erb', type: :view do
     let(:gend_images) { [] }
     it 'does not render the gend images partial' do
       expect(view).to_not receive(:render).with(
-        partial: 'gend_images/gend_images')
+        partial: 'gend_images/gend_images'
+      )
       render
     end
   end
@@ -88,7 +94,8 @@ describe 'search/show.html.erb', type: :view do
     it 'renders the gend images' do
       expect(view).to receive(:render).with(
         partial: 'gend_images/gend_images',
-        locals: { gend_images: gend_images, show_toolbar: true })
+        locals: { gend_images: gend_images, show_toolbar: true }
+      )
       render
     end
   end

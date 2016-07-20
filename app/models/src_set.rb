@@ -53,7 +53,8 @@ class SrcSet < ActiveRecord::Base
 
   scope :not_empty, lambda {
     joins(:src_images).where(
-      'src_images.is_deleted'.freeze => false).group('src_sets.id'.freeze)
+      'src_images.is_deleted'.freeze => false
+    ).group('src_sets.id'.freeze)
   }
 
   scope :name_matches, lambda { |query|

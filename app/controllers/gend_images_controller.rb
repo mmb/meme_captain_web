@@ -14,12 +14,14 @@ class GendImagesController < ApplicationController
   def new
     src_image = SrcImage.without_image.active.find_by!(id_hash: params[:src])
     @src_image_path = url_for(
-      controller: :src_images, action: :show, id: src_image.id_hash)
+      controller: :src_images, action: :show, id: src_image.id_hash
+    )
     @src_image_url_with_extension = src_image_url_for(src_image)
 
     @gend_image = GendImage.new(
       src_image: src_image,
-      private: src_image.private)
+      private: src_image.private
+    )
     MemeCaptainWeb::CaptionBuilder.new.build(@gend_image)
   end
 
@@ -66,12 +68,14 @@ class GendImagesController < ApplicationController
 
   def build_gend_image_for_create
     src_image = SrcImage.without_image.active.finished.find_by!(
-      id_hash: params.fetch(:gend_image, {})[:src_image_id])
+      id_hash: params.fetch(:gend_image, {})[:src_image_id]
+    )
 
     gend_image = src_image.gend_images.build(gend_image_params)
     gend_image.assign_attributes(
       user: current_user,
-      creator_ip: remote_ip)
+      creator_ip: remote_ip
+    )
     gend_image
   end
 
@@ -100,14 +104,17 @@ class GendImagesController < ApplicationController
     params.require(:gend_image).permit(
       { captions_attributes: [
         :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
-        :height_pct] }, :private, :email)
+        :height_pct
+      ] }, :private, :email
+    )
   end
 
   def redirect_to_pending
     status_url = url_for(
       controller: :pending_gend_images,
       action: :show,
-      id: @gend_image.id_hash)
+      id: @gend_image.id_hash
+    )
     response.status = :accepted
     response.location = status_url
     render(json: { status_url: status_url })
@@ -115,7 +122,8 @@ class GendImagesController < ApplicationController
 
   def redirect_to_page
     redirect_to(
-      controller: :gend_image_pages, action: :show, id: @gend_image.id_hash)
+      controller: :gend_image_pages, action: :show, id: @gend_image.id_hash
+    )
   end
 
   def gend_image_show_headers(gend_image)
@@ -124,6 +132,7 @@ class GendImagesController < ApplicationController
     headers.update(gend_image.headers)
     headers.update(
       'Meme-Name'.freeze => Rack::Utils.escape(src_image.name),
-      'Meme-Source-Image'.freeze => src_image_url_for(src_image))
+      'Meme-Source-Image'.freeze => src_image_url_for(src_image)
+    )
   end
 end

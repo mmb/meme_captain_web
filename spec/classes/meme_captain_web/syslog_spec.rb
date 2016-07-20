@@ -26,7 +26,8 @@ describe 'MemeCaptainWeb::Syslog' do
       it 'returns a syslog logger' do
         remote_syslog_logger = instance_double(RemoteSyslogLogger)
         expect(RemoteSyslogLogger).to receive(:new).with(
-          'localhost', 514, program: 'program').and_return(remote_syslog_logger)
+          'localhost', 514, program: 'program'
+        ).and_return(remote_syslog_logger)
         expect(syslog.logger(env, 'program')).to eq(remote_syslog_logger)
       end
     end

@@ -113,7 +113,8 @@ describe SrcImageProcessJob do
         src_image_process_job.perform
         src_image.reload
       end.to change { src_image.magick_image_list[0]['comment'] }.from(
-        'the best duck').to(nil)
+        'the best duck'
+      ).to(nil)
     end
   end
 
@@ -178,7 +179,8 @@ describe SrcImageProcessJob do
         src_image_process_job.perform
       end.to raise_error(
         MemeCaptainWeb::Error::SrcImageTooBigError,
-        'image is too large (203 Bytes)')
+        'image is too large (203 Bytes)'
+      )
     end
   end
 
@@ -209,9 +211,11 @@ describe SrcImageProcessJob do
     src_image_process_job.perform
     expect(src_image.src_thumb).not_to be_nil
     expect(src_image.src_thumb.width).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
+      MemeCaptainWeb::Config::THUMB_SIDE
+    )
     expect(src_image.src_thumb.height).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
+      MemeCaptainWeb::Config::THUMB_SIDE
+    )
   end
 
   it 'marks the src image as finished' do
@@ -224,9 +228,11 @@ describe SrcImageProcessJob do
   it "enqueues a job to set the src image's name" do
     src_image_name_job = instance_double(SrcImageNameJob)
     expect(SrcImageNameJob).to receive(:new).with(src_image.id).and_return(
-      src_image_name_job)
+      src_image_name_job
+    )
     expect(src_image_name_job).to receive(:delay).with(
-      queue: :src_image_name).and_return(src_image_name_job)
+      queue: :src_image_name
+    ).and_return(src_image_name_job)
     expect(src_image_name_job).to receive(:perform)
 
     src_image_process_job.perform
@@ -235,9 +241,11 @@ describe SrcImageProcessJob do
   it "enqueues a job to set the src image's image hash" do
     src_image_calc_hash_job = instance_double(SrcImageCalcHashJob)
     expect(SrcImageCalcHashJob).to receive(:new).with(src_image.id).and_return(
-      src_image_calc_hash_job)
+      src_image_calc_hash_job
+    )
     expect(src_image_calc_hash_job).to receive(:delay).with(
-      queue: :calc_hash).and_return(src_image_calc_hash_job)
+      queue: :calc_hash
+    ).and_return(src_image_calc_hash_job)
     expect(src_image_calc_hash_job).to receive(:perform)
 
     src_image_process_job.perform
@@ -297,7 +305,8 @@ describe SrcImageProcessJob do
     context 'when the job last_error is not blank' do
       before do
         allow(delayed_job).to receive(:last_error).and_return(
-          "an error\na traceback")
+          "an error\na traceback"
+        )
       end
 
       it 'updates the error field to the first line of the error' do
@@ -310,7 +319,8 @@ describe SrcImageProcessJob do
     context 'when the job last_error has only one line' do
       before do
         allow(delayed_job).to receive(:last_error).and_return(
-          'another error')
+          'another error'
+        )
       end
 
       it 'updates the error field to the first line of the error' do

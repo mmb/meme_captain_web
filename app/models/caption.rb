@@ -24,7 +24,8 @@ class Caption < ActiveRecord::Base
   def text_pos
     MemeCaptain::TextPos.new(
       text_processed, top_left_x_pct, top_left_y_pct, width_pct, height_pct,
-      font: font_path)
+      font: font_path
+    )
   end
 
   private

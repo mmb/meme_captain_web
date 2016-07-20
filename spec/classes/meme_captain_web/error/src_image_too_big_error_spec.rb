@@ -7,7 +7,8 @@ describe MemeCaptainWeb::Error::SrcImageTooBigError do
       expect do
         raise(MemeCaptainWeb::Error::SrcImageTooBigError)
       end.to raise_error(
-        MemeCaptainWeb::Error::SrcImageTooBigError, 'image is too large')
+        MemeCaptainWeb::Error::SrcImageTooBigError, 'image is too large'
+      )
     end
   end
 
@@ -19,7 +20,8 @@ describe MemeCaptainWeb::Error::SrcImageTooBigError do
         raise(MemeCaptainWeb::Error::SrcImageTooBigError, size)
       end.to raise_error(
         MemeCaptainWeb::Error::SrcImageTooBigError,
-        'image is too large (118 MB)')
+        'image is too large (118 MB)'
+      )
     end
   end
 end

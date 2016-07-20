@@ -25,6 +25,7 @@ class SrcImageNameJob
   def src_image_url(src_image)
     Rails.application.routes.url_helpers.url_for(
       host: Rails.configuration.x.src_image_name_lookup_host,
-      controller: :src_images, action: :show, id: src_image.id_hash)
+      controller: :src_images, action: :show, id: src_image.id_hash
+    )
   end
 end

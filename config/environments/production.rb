@@ -19,7 +19,8 @@ MemeCaptainWeb::Application.configure do
   config.middleware.insert_before(
     ActionDispatch::Static,
     Rack::Deflater,
-    if: ->(_, _, headers, _) { headers['Content-Type'][0..5] != 'image/' })
+    if: ->(_, _, headers, _) { headers['Content-Type'][0..5] != 'image/' }
+  )
   config.static_cache_control = 'public, max-age=31536000'
 
   config.assets.js_compressor = :uglifier

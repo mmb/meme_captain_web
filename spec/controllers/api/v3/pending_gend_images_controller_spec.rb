@@ -59,7 +59,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect do
             get(:show, id: gend_image.id_hash)
           end.to trigger_statsd_increment(
-            'api.v3.gend_image.create.poll.success')
+            'api.v3.gend_image.create.poll.success'
+          )
         end
 
         it 'returns json with the created time' do
@@ -67,7 +68,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            gend_image.created_at.to_i)
+            gend_image.created_at.to_i
+          )
         end
 
         it 'returns json with the error field set to null' do
@@ -106,7 +108,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect do
             get(:show, id: gend_image.id_hash)
           end.to trigger_statsd_increment(
-            'api.v3.gend_image.create.poll.success')
+            'api.v3.gend_image.create.poll.success'
+          )
         end
 
         it 'returns json with the created time' do
@@ -114,7 +117,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            gend_image.created_at.to_i)
+            gend_image.created_at.to_i
+          )
         end
 
         it 'returns json with the error' do
@@ -153,7 +157,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect do
             get(:show, id: gend_image.id_hash)
           end.to trigger_statsd_increment(
-            'api.v3.gend_image.create.poll.success')
+            'api.v3.gend_image.create.poll.success'
+          )
         end
 
         it 'returns json with the created time' do
@@ -161,7 +166,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(Time.parse(parsed_json['created_at']).to_i).to eq(
-            gend_image.created_at.to_i)
+            gend_image.created_at.to_i
+          )
         end
 
         it 'returns json with the error field set to null' do
@@ -183,7 +189,8 @@ describe Api::V3::PendingGendImagesController, type: :controller do
           expect(response.content_type).to eq('application/json')
           parsed_json = JSON.parse(response.body)
           expect(parsed_json['url']).to eq(
-            "http://test.host/gend_images/#{gend_image.id_hash}.jpg")
+            "http://test.host/gend_images/#{gend_image.id_hash}.jpg"
+          )
         end
       end
     end

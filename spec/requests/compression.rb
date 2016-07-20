@@ -10,7 +10,8 @@ describe 'response compression', type: :request do
     get(
       '/assets/application.self.css',
       nil,
-      'Accept-Encoding' => 'gzip, deflate, sdch')
+      'Accept-Encoding' => 'gzip, deflate, sdch'
+    )
     expect(response.headers['Content-Encoding']).to eq('gzip')
   end
 
@@ -18,7 +19,8 @@ describe 'response compression', type: :request do
     get(
       '/assets/application.self.js',
       nil,
-      'Accept-Encoding' => 'gzip, deflate, sdch')
+      'Accept-Encoding' => 'gzip, deflate, sdch'
+    )
     expect(response.headers['Content-Encoding']).to eq('gzip')
   end
 
@@ -27,7 +29,8 @@ describe 'response compression', type: :request do
     get(
       "/gend_images/#{image.id_hash}.#{image.format}",
       nil,
-      'Accept-Encoding' => 'gzip, deflate, sdch')
+      'Accept-Encoding' => 'gzip, deflate, sdch'
+    )
     expect(response.headers['Content-Encoding']).to be_nil
   end
 end

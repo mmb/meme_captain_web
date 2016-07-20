@@ -24,7 +24,8 @@ describe 'src_images/_src_images.html', type: :view do
                show_remove_from_set: show_remove_from_set,
                show_delete: show_delete,
                src_images: src_images,
-               more_images: more_images })
+               more_images: more_images
+             })
 
       expect(rendered).to have_selector('.btn-toolbar')
     end
@@ -38,7 +39,8 @@ describe 'src_images/_src_images.html', type: :view do
                  show_remove_from_set: show_remove_from_set,
                  show_delete: show_delete,
                  src_images: src_images,
-                 more_images: more_images })
+                 more_images: more_images
+               })
 
         expect(rendered).to have_text('Remove 0 from Set')
       end
@@ -53,7 +55,8 @@ describe 'src_images/_src_images.html', type: :view do
                  show_remove_from_set: show_remove_from_set,
                  show_delete: show_delete,
                  src_images: src_images,
-                 more_images: more_images })
+                 more_images: more_images
+               })
 
         expect(rendered).to_not have_text('Remove 0 from Set')
       end
@@ -68,7 +71,8 @@ describe 'src_images/_src_images.html', type: :view do
                  show_remove_from_set: show_remove_from_set,
                  show_delete: show_delete,
                  src_images: src_images,
-                 more_images: more_images })
+                 more_images: more_images
+               })
 
         expect(rendered).to have_text('Delete 0')
       end
@@ -83,7 +87,8 @@ describe 'src_images/_src_images.html', type: :view do
                  show_remove_from_set: show_remove_from_set,
                  show_delete: show_delete,
                  src_images: src_images,
-                 more_images: more_images })
+                 more_images: more_images
+               })
 
         expect(rendered).to_not have_text('Delete 0')
       end
@@ -99,7 +104,8 @@ describe 'src_images/_src_images.html', type: :view do
                show_remove_from_set: show_remove_from_set,
                show_delete: show_delete,
                src_images: src_images,
-               more_images: more_images })
+               more_images: more_images
+             })
 
       expect(rendered).to_not have_selector('.btn-toolbar')
     end
@@ -111,11 +117,13 @@ describe 'src_images/_src_images.html', type: :view do
              show_remove_from_set: show_remove_from_set,
              show_delete: show_delete,
              src_images: src_images,
-             more_images: more_images })
+             more_images: more_images
+           })
 
     expect(rendered).to have_selector(
       "img[src='/src_thumbs/#{src_image.src_thumb.id}" \
-      ".#{src_image.src_thumb.format}']")
+      ".#{src_image.src_thumb.format}']"
+    )
   end
 
   context 'when the more images link should be shown' do
@@ -127,7 +135,8 @@ describe 'src_images/_src_images.html', type: :view do
                show_remove_from_set: show_remove_from_set,
                show_delete: show_delete,
                src_images: src_images,
-               more_images: more_images })
+               more_images: more_images
+             })
 
       expect(rendered).to have_text('More images')
     end
@@ -142,7 +151,8 @@ describe 'src_images/_src_images.html', type: :view do
                show_remove_from_set: show_remove_from_set,
                show_delete: show_delete,
                src_images: src_images,
-               more_images: more_images })
+               more_images: more_images
+             })
 
       expect(rendered).to have_selector('ul.pagination')
     end

@@ -10,9 +10,7 @@ class GendImageProcessJob
   def perform
     gend_image = GendImage.find(gend_image_id)
 
-    meme = MemeCaptain.meme(
-      gend_image.src_image.image,
-      gend_image.captions.map(&:text_pos))
+    meme = make_meme(gend_image)
 
     gend_image.image = meme.to_blob
 
@@ -44,5 +42,14 @@ class GendImageProcessJob
 
   def enqueue_jobs(gend_image)
     GendImageCalcHashJob.new(gend_image.id).delay(queue: :calc_hash).perform
+  end
+
+  private
+
+  def make_meme(gend_image)
+    MemeCaptain.meme(
+      gend_image.src_image.image,
+      gend_image.captions.map(&:text_pos)
+    )
   end
 end

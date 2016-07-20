@@ -15,9 +15,11 @@ describe GendImageProcessJob do
     gend_image_process_job.perform
     expect(gend_image.gend_thumb).not_to be_nil
     expect(gend_image.gend_thumb.width).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
+      MemeCaptainWeb::Config::THUMB_SIDE
+    )
     expect(gend_image.gend_thumb.height).to eq(
-      MemeCaptainWeb::Config::THUMB_SIDE)
+      MemeCaptainWeb::Config::THUMB_SIDE
+    )
   end
 
   it 'marks the gend image as finished' do
@@ -30,9 +32,11 @@ describe GendImageProcessJob do
   it "enqueues a job to set the gend image's image hash" do
     gend_image_calc_hash_job = instance_double(GendImageCalcHashJob)
     expect(GendImageCalcHashJob).to receive(:new).with(
-      gend_image.id).and_return(gend_image_calc_hash_job)
+      gend_image.id
+    ).and_return(gend_image_calc_hash_job)
     expect(gend_image_calc_hash_job).to receive(:delay).with(
-      queue: :calc_hash).and_return(gend_image_calc_hash_job)
+      queue: :calc_hash
+    ).and_return(gend_image_calc_hash_job)
     expect(gend_image_calc_hash_job).to receive(:perform)
 
     gend_image_process_job.perform
@@ -64,7 +68,8 @@ describe GendImageProcessJob do
     context 'when the job last_error is not blank' do
       before do
         allow(delayed_job).to receive(:last_error).and_return(
-          "an error\na traceback")
+          "an error\na traceback"
+        )
       end
 
       it 'updates the error field to the first line of the error' do
@@ -77,7 +82,8 @@ describe GendImageProcessJob do
     context 'when the job last_error has only one line' do
       before do
         allow(delayed_job).to receive(:last_error).and_return(
-          'another error')
+          'another error'
+        )
       end
 
       it 'updates the error field to the first line of the error' do

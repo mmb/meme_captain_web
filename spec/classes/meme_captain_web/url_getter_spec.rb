@@ -15,7 +15,8 @@ describe MemeCaptainWeb::UrlGetter do
     it 'follow redirects' do
       stub_request(:get, 'http://example.com/').to_return(
         status: 302,
-        headers: { 'Location' => 'http://example.com/2' })
+        headers: { 'Location' => 'http://example.com/2' }
+      )
       stub_request(:get, 'http://example.com/2').to_return(body: 'body')
 
       url_getter = MemeCaptainWeb::UrlGetter.new
@@ -29,7 +30,8 @@ describe MemeCaptainWeb::UrlGetter do
       url_getter = MemeCaptainWeb::UrlGetter.new
 
       expect { url_getter.get('http://example.com/') }.to raise_error(
-        Faraday::ResourceNotFound)
+        Faraday::ResourceNotFound
+      )
     end
 
     context 'when the URL is not ASCII' do

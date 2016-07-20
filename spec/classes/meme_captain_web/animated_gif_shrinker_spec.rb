@@ -32,17 +32,21 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       it 'coalesces the image' do
         expect(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'x')
+          'x'
+        )
         animated_gif_shrinker.shrink(image_data, max_size) {}
       end
 
       it 'yields the trimmed data' do
         allow(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'x')
+          'x'
+        )
         expect do |b|
           animated_gif_shrinker.shrink(image_data, max_size, &b)
         end.to yield_with_args('x')
@@ -50,9 +54,11 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       it 'returns nil' do
         allow(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'x')
+          'x'
+        )
         expect(
           animated_gif_shrinker.shrink(image_data, max_size) {}
         ).to be_nil
@@ -60,9 +66,11 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       it 'increments the statsd success counter' do
         allow(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'x')
+          'x'
+        )
         expect do
           animated_gif_shrinker.shrink(image_data, max_size) {}
         end.to trigger_statsd_increment('animated_gif_shrinker.shrink.success')
@@ -70,9 +78,11 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       it 'sends a statsd time measurement' do
         allow(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'x')
+          'x'
+        )
         expect do
           animated_gif_shrinker.shrink(image_data, max_size) {}
         end.to trigger_statsd_measure('animated_gif_shrinker.shrink.runtime')
@@ -85,11 +95,14 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       it 'yields the trimmed data' do
         allow(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'xxxx')
+          'xxxx'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'xxx')
+          'xxx'
+        )
         expect do |b|
           animated_gif_shrinker.shrink(image_data, max_size, &b)
         end.to yield_with_args('xxx')
@@ -97,9 +110,11 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       it 'returns nil' do
         allow(coalescer).to receive(:coalesce).with('GIFdata').and_return(
-          'GIFdatacoalesced')
+          'GIFdatacoalesced'
+        )
         allow(trimmer).to receive(:trim).with('GIFdatacoalesced').and_return(
-          'x')
+          'x'
+        )
         expect(
           animated_gif_shrinker.shrink(image_data, max_size) {}
         ). to be_nil
@@ -112,7 +127,8 @@ describe MemeCaptainWeb::AnimatedGifShrinker do
 
       before do
         expect(coalescer).to receive(:coalesce).with('GIFdata').and_raise(
-          'error')
+          'error'
+        )
       end
 
       it 'increments the statsd failure counter' do

@@ -17,13 +17,15 @@ describe 'layouts/application.html.erb', type: :view do
 
   it 'sets the meta description using content_for' do
     allow(view).to receive(:content_for).with(:description).and_return(
-      'test description')
+      'test description'
+    )
 
     render
 
     expect(rendered).to have_selector(
       'meta[name="description"][content="test description"]',
-      visible: false)
+      visible: false
+    )
   end
 
   it 'sets the viewport' do
@@ -32,7 +34,8 @@ describe 'layouts/application.html.erb', type: :view do
     expect(rendered).to have_selector(
       'meta[name="viewport"]' \
       '[content="width=device-width, initial-scale=1, maximum-scale=1"]',
-      visible: false)
+      visible: false
+    )
   end
 
   it 'has an apple-touch-icon.png' do
@@ -40,7 +43,8 @@ describe 'layouts/application.html.erb', type: :view do
 
     expect(rendered).to have_selector(
       'link[rel="apple-touch-icon"][href^="/assets/apple-touch-icon-"]',
-      visible: false)
+      visible: false
+    )
   end
 
   it 'sets the tabindex of the search box to 1' do
@@ -93,7 +97,8 @@ describe 'layouts/application.html.erb', type: :view do
 
       expect(rendered).to have_link(
         'API documentation',
-        href: 'https://github.com/mmb/meme_captain_web/tree/master/doc/api')
+        href: 'https://github.com/mmb/meme_captain_web/tree/master/doc/api'
+      )
     end
   end
 
@@ -111,7 +116,8 @@ describe 'layouts/application.html.erb', type: :view do
       # rubocop:enable Style/TrivialAccessors
       render
       expect(rendered).to have_selector(
-        'img[src^="https://secure.gravatar.com"]')
+        'img[src^="https://secure.gravatar.com"]'
+      )
     end
   end
 end

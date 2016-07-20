@@ -18,11 +18,14 @@ class DashboardController < ApplicationController
 
   def calculate_gend_image(last_day)
     @gend_image_successes_last_24h = GendImage.where(
-      error: nil, created_at: last_day).count
+      error: nil, created_at: last_day
+    ).count
     @gend_image_errors_last_24h = GendImage.where.not(error: nil).where(
-      created_at: last_day).count
+      created_at: last_day
+    ).count
     @gend_image_success_rate_last_24h = success_rate(
-      @gend_image_successes_last_24h, @gend_image_errors_last_24h)
+      @gend_image_successes_last_24h, @gend_image_errors_last_24h
+    )
   end
 
   def success_rate(success_count, error_count)

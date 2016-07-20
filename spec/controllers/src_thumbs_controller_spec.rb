@@ -53,7 +53,8 @@ describe SrcThumbsController, type: :controller do
     context 'when the id is not found' do
       it 'raises record not found' do
         expect { get 'show', id: 1 }.to raise_error(
-          ActiveRecord::RecordNotFound)
+          ActiveRecord::RecordNotFound
+        )
       end
     end
   end
