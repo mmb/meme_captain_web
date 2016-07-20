@@ -20,8 +20,7 @@ class GendImagesController < ApplicationController
     @src_image_url_with_extension = src_image_url_for(src_image)
 
     @gend_image = GendImage.new(
-      src_image: src_image,
-      private: src_image.private
+      src_image: src_image, private: src_image.private
     )
     MemeCaptainWeb::CaptionBuilder.new.build(@gend_image)
   end
@@ -73,10 +72,7 @@ class GendImagesController < ApplicationController
     )
 
     gend_image = src_image.gend_images.build(gend_image_params)
-    gend_image.assign_attributes(
-      user: current_user,
-      creator_ip: remote_ip
-    )
+    gend_image.assign_attributes(user: current_user, creator_ip: remote_ip)
     gend_image
   end
 
