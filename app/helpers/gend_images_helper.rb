@@ -15,7 +15,7 @@ module GendImagesHelper
 
   def gend_thumb_url_for(gend_image)
     url_for(
-      controller: :gend_thumbs,
+      controller: '/gend_thumbs'.freeze,
       action: :show,
       id: gend_image.gend_thumb.id,
       format: gend_image.gend_thumb.format
