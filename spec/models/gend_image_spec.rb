@@ -417,4 +417,22 @@ describe GendImage do
       expect(gend_image.headers).to include('Meme-Text' => 'test+1')
     end
   end
+
+  describe '#image_url' do
+    it 'has a getter and setter' do
+      gend_image = FactoryGirl.create(:finished_gend_image)
+      url = 'http://test.host/gend_images/test.jpg'
+      gend_image.image_url = url
+      expect(gend_image.image_url).to eq(url)
+    end
+  end
+
+  describe '#thumbnail_url' do
+    it 'has a getter and setter' do
+      gend_image = FactoryGirl.create(:finished_gend_image)
+      url = 'http://test.host/gend_thumbs/12345.jpg'
+      gend_image.thumbnail_url = url
+      expect(gend_image.thumbnail_url).to eq(url)
+    end
+  end
 end

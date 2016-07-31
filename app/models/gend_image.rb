@@ -18,6 +18,9 @@ class GendImage < ActiveRecord::Base
   # validation will fail.
   attr_accessor :email
 
+  attr_accessor :image_url
+  attr_accessor :thumbnail_url
+
   before_validation :set_derived_image_fields
   validates :email, length: { maximum: 0 }
 
