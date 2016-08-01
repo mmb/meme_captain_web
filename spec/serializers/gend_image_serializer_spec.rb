@@ -5,8 +5,14 @@ describe GendImageSerializer do
     it 'serializes the correct attributes' do
       expect(GendImageSerializer._attributes).to eq(
         [
+          :content_type,
+          :created_at,
+          :height,
           :image_url,
-          :thumbnail_url
+          :size,
+          :thumbnail_url,
+          :updated_at,
+          :width
         ]
       )
     end

@@ -84,6 +84,7 @@ describe Api::V3::GendImagesController, type: :controller do
       )
       get(:index, format: :json)
       json_body = JSON.parse(response.body)
+      time_format = '%Y-%m-%dT%H:%M:%S.%LZ'
       expect(json_body).to eq(
         [
           {
@@ -91,12 +92,24 @@ describe Api::V3::GendImagesController, type: :controller do
 	    "#{gend_image1.id_hash}.jpg",
             'thumbnail_url' => 'http://test.host/gend_thumbs/' \
 	    "#{gend_image1.gend_thumb.id}.jpg",
+            'content_type' => 'image/jpeg',
+            'created_at' => gend_image1.created_at.strftime(time_format),
+            'height' => 399,
+            'size' => 9141,
+            'updated_at' => gend_image1.updated_at.strftime(time_format),
+            'width' => 399,
             'captions' => []
           }, {
             'image_url' => 'http://test.host/gend_images/' \
 	    "#{gend_image2.id_hash}.jpg",
             'thumbnail_url' => 'http://test.host/gend_thumbs/' \
 	    "#{gend_image2.gend_thumb.id}.jpg",
+            'content_type' => 'image/jpeg',
+            'created_at' => gend_image2.created_at.strftime(time_format),
+            'height' => 399,
+            'size' => 9141,
+            'updated_at' => gend_image2.updated_at.strftime(time_format),
+            'width' => 399,
             'captions' => [
               {
                 'text' => 'test caption 1',
@@ -112,6 +125,12 @@ describe Api::V3::GendImagesController, type: :controller do
 	    "#{gend_image3.id_hash}.jpg",
             'thumbnail_url' => 'http://test.host/gend_thumbs/' \
 	    "#{gend_image3.gend_thumb.id}.jpg",
+            'content_type' => 'image/jpeg',
+            'created_at' => gend_image3.created_at.strftime(time_format),
+            'height' => 399,
+            'size' => 9141,
+            'updated_at' => gend_image3.updated_at.strftime(time_format),
+            'width' => 399,
             'captions' => [
               {
                 'text' => 'test caption 1',
