@@ -15,6 +15,132 @@ describe Api::V3::GendImagesController, type: :controller do
     request.accept = 'application/json'
   end
 
+  describe "GET 'index'" do
+    it 'gets the gend images for the user, query and page' do
+      expect(GendImage).to receive(:for_user).with(user, 'test query', '7')
+        .and_return(GendImage.none)
+      get(:index, q: 'test query', page: '7', format: :json)
+    end
+
+    it 'sets the image url on each gend image' do
+      gend_image1 = FactoryGirl.create(:finished_gend_image)
+      gend_image2 = FactoryGirl.create(:finished_gend_image)
+      for_user_result = GendImage.where(id: [gend_image1.id, gend_image2.id])
+      allow(GendImage).to receive(:for_user).with(user, nil, nil).and_return(
+        for_user_result
+      )
+      allow(for_user_result).to receive(:includes).with(:captions).and_return(
+        [gend_image1, gend_image2]
+      )
+      expect(gend_image1).to receive(:image_url=).with(
+        "http://test.host/gend_images/#{gend_image1.id_hash}.jpg"
+      )
+      expect(gend_image2).to receive(:image_url=).with(
+        "http://test.host/gend_images/#{gend_image2.id_hash}.jpg"
+      )
+      get(:index, format: :json)
+    end
+
+    it 'sets the thumbnail url on each gend image' do
+      gend_image1 = FactoryGirl.create(:finished_gend_image)
+      gend_image2 = FactoryGirl.create(:finished_gend_image)
+      for_user_result = GendImage.where(id: [gend_image1.id, gend_image2.id])
+      allow(GendImage).to receive(:for_user).with(user, nil, nil).and_return(
+        for_user_result
+      )
+      allow(for_user_result).to receive(:includes).with(:captions).and_return(
+        [gend_image1, gend_image2]
+      )
+      expect(gend_image1).to receive(:thumbnail_url=).with(
+        "http://test.host/gend_thumbs/#{gend_image1.gend_thumb.id}.jpg"
+      )
+      expect(gend_image2).to receive(:thumbnail_url=).with(
+        "http://test.host/gend_thumbs/#{gend_image2.gend_thumb.id}.jpg"
+      )
+      get(:index, format: :json)
+    end
+
+    it 'returns the gend images as JSON' do
+      caption1 = FactoryGirl.create(:caption, text: 'test caption 1')
+      caption2 = FactoryGirl.create(:caption, text: 'test caption 2')
+
+      gend_image1 = FactoryGirl.create(:finished_gend_image)
+      gend_image2 = FactoryGirl.create(:finished_gend_image,
+                                       captions: [caption1])
+      gend_image3 = FactoryGirl.create(:finished_gend_image,
+                                       captions: [caption1, caption2])
+      gend_images = [
+        gend_image1,
+        gend_image2,
+        gend_image3
+      ]
+
+      for_user_result = GendImage.where(id: gend_images.map(&:id))
+      allow(GendImage).to receive(:for_user).with(user, nil, nil).and_return(
+        for_user_result
+      )
+      allow(for_user_result).to receive(:includes).with(:captions).and_return(
+        gend_images
+      )
+      get(:index, format: :json)
+      json_body = JSON.parse(response.body)
+      expect(json_body).to eq(
+        [
+          {
+            'image_url' => 'http://test.host/gend_images/' \
+	    "#{gend_image1.id_hash}.jpg",
+            'thumbnail_url' => 'http://test.host/gend_thumbs/' \
+	    "#{gend_image1.gend_thumb.id}.jpg",
+            'captions' => []
+          }, {
+            'image_url' => 'http://test.host/gend_images/' \
+	    "#{gend_image2.id_hash}.jpg",
+            'thumbnail_url' => 'http://test.host/gend_thumbs/' \
+	    "#{gend_image2.gend_thumb.id}.jpg",
+            'captions' => [
+              {
+                'text' => 'test caption 1',
+                'top_left_x_pct' => 1.5,
+                'top_left_y_pct' => 1.5,
+                'height_pct' => 1.5,
+                'width_pct' => 1.5
+
+              }
+            ]
+          }, {
+            'image_url' => 'http://test.host/gend_images/' \
+	    "#{gend_image3.id_hash}.jpg",
+            'thumbnail_url' => 'http://test.host/gend_thumbs/' \
+	    "#{gend_image3.gend_thumb.id}.jpg",
+            'captions' => [
+              {
+                'text' => 'test caption 1',
+                'top_left_x_pct' => 1.5,
+                'top_left_y_pct' => 1.5,
+                'height_pct' => 1.5,
+                'width_pct' => 1.5
+
+              },
+              {
+                'text' => 'test caption 2',
+                'top_left_x_pct' => 1.5,
+                'top_left_y_pct' => 1.5,
+                'height_pct' => 1.5,
+                'width_pct' => 1.5
+
+              }
+            ]
+          }
+        ]
+      )
+    end
+
+    it 'sets the content type to application/json' do
+      get(:index, format: :json)
+      expect(response.content_type).to eq('application/json')
+    end
+  end
+
   describe "POST 'create'" do
     context 'with valid attributes' do
       let(:body) do

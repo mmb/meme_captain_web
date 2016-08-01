@@ -5,11 +5,27 @@ module Api
   module V3
     # Generated (meme) images controller.
     class GendImagesController < ApplicationController
+      include GendImagesHelper
+
       wrap_parameters GendImage, include: [
         :captions_attributes,
         :private,
         :src_image_id
       ]
+
+      def index
+        gend_images = GendImage.for_user(
+          current_user, params[:q], params[:page]
+        ).includes(:captions)
+
+        gend_images.each { |gend_image| url_fields(gend_image) }
+
+        respond_to do |format|
+          format.json do
+            render(json: gend_images)
+          end
+        end
+      end
 
       def create
         @gend_image = build_gend_image_for_create
@@ -70,6 +86,11 @@ module Api
                  id: @gend_image.id_hash,
                  status_url: status_url
                })
+      end
+
+      def url_fields(gend_image)
+        gend_image.image_url = gend_image_url_for(gend_image)
+        gend_image.thumbnail_url = gend_thumb_url_for(gend_image)
       end
     end
   end
