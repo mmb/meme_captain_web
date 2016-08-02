@@ -48,37 +48,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: blocked_ips; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE blocked_ips (
-    id integer NOT NULL,
-    ip text NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: blocked_ips_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE blocked_ips_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: blocked_ips_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE blocked_ips_id_seq OWNED BY blocked_ips.id;
-
-
---
 -- Name: captions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -482,13 +451,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY blocked_ips ALTER COLUMN id SET DEFAULT nextval('blocked_ips_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY captions ALTER COLUMN id SET DEFAULT nextval('captions_id_seq'::regclass);
 
 
@@ -553,14 +515,6 @@ ALTER TABLE ONLY src_thumbs ALTER COLUMN id SET DEFAULT nextval('src_thumbs_id_s
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
-
-
---
--- Name: blocked_ips_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY blocked_ips
-    ADD CONSTRAINT blocked_ips_pkey PRIMARY KEY (id);
 
 
 --
@@ -1006,4 +960,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160224033002');
 INSERT INTO schema_migrations (version) VALUES ('20160604043338');
 
 INSERT INTO schema_migrations (version) VALUES ('20160604044147');
+
+INSERT INTO schema_migrations (version) VALUES ('20160802032538');
 
