@@ -34,23 +34,6 @@ class SrcImage < ActiveRecord::Base
     SrcImageProcessJob.new(id).delay(queue: queue).perform
   end
 
-  # rubocop:disable MethodLength
-  def as_json(_options = nil)
-    super(only: [
-      :id_hash,
-      :width,
-      :height,
-      :size,
-      :content_type,
-      :created_at,
-      :updated_at,
-      :name
-    ], methods: [
-      :image_url
-    ])
-  end
-  # rubocop:enable MethodLength
-
   def self.for_user(user, query, page)
     if user.try(:is_admin)
       without_image.includes(:src_thumb).name_matches(query)
