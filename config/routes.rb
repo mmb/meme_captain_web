@@ -103,8 +103,8 @@ MemeCaptainWeb::Application.routes.draw do
     namespace :v3 do
       resources :pending_gend_images, only: :show
       resources :pending_src_images, only: :show
-      resources :src_images, concerns: :paginatable
-      resources :gend_images, concerns: :paginatable
+      resources :src_images, concerns: :paginatable, only: [:create, :index]
+      resources :gend_images, concerns: :paginatable, only: [:create, :index]
     end
   end
 
