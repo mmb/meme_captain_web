@@ -98,5 +98,19 @@ describe 'search/show.html.erb', type: :view do
       )
       render
     end
+
+    context 'when show_toolbar is false' do
+      before do
+        assign(:show_toolbar, false)
+      end
+
+      it 'renders gend images with show_toolbar false' do
+        expect(view).to receive(:render).with(
+          partial: 'gend_images/gend_images',
+          locals: { gend_images: gend_images, show_toolbar: false }
+        )
+        render
+      end
+    end
   end
 end
