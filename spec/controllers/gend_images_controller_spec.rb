@@ -758,10 +758,8 @@ describe GendImagesController, type: :controller do
     context 'when the id is found' do
       it 'marks the record as deleted in the database' do
         delete :destroy, id: id
-
-        expect(GendImage.find_by(
-          id_hash: gend_image.id_hash
-        ).is_deleted?).to eq(true)
+        gend_image.reload
+        expect(gend_image.is_deleted?).to eq(true)
       end
 
       it 'returns success' do
@@ -807,7 +805,8 @@ describe GendImagesController, type: :controller do
 
         it 'marks the image as deleted' do
           expect { delete(:destroy, id: id) }.to change {
-            GendImage.find(gend_image.id).is_deleted?
+            gend_image.reload
+            gend_image.is_deleted?
           }.from(false).to(true)
         end
       end
@@ -817,7 +816,8 @@ describe GendImagesController, type: :controller do
 
         it 'marks the image as deleted' do
           expect { delete(:destroy, id: id) }.to change {
-            GendImage.find(gend_image.id).is_deleted?
+            gend_image.reload
+            gend_image.is_deleted?
           }.from(false).to(true)
         end
       end
