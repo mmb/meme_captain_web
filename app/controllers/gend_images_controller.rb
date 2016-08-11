@@ -55,7 +55,7 @@ class GendImagesController < ApplicationController
   def destroy
     gend_image = GendImage.find_by!(id_hash: params[:id])
 
-    if gend_image.user && gend_image.user == current_user
+    if admin? || (gend_image.user && gend_image.user == current_user)
       gend_image.update!(is_deleted: true)
 
       head :no_content

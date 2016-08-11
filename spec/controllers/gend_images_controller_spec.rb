@@ -798,5 +798,29 @@ describe GendImagesController, type: :controller do
         expect(response).to be_forbidden
       end
     end
+
+    context 'when the user is an admin' do
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      context 'when the image is not owned by any user' do
+        let(:gend_image) { FactoryGirl.create(:gend_image) }
+
+        it 'marks the image as deleted' do
+          expect { delete(:destroy, id: id) }.to change {
+            GendImage.find(gend_image.id).is_deleted?
+          }.from(false).to(true)
+        end
+      end
+
+      context 'when the image is owned by another user' do
+        let(:gend_image) { FactoryGirl.create(:gend_image, user: user2) }
+
+        it 'marks the image as deleted' do
+          expect { delete(:destroy, id: id) }.to change {
+            GendImage.find(gend_image.id).is_deleted?
+          }.from(false).to(true)
+        end
+      end
+    end
   end
 end
