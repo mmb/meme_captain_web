@@ -138,6 +138,12 @@ describe SearchController, type: :controller do
 
           expect(assigns(:gend_images)).to eq([@gend_image_3, @gend_image_1])
         end
+
+        it 'does not show the gend image toolbar' do
+          get(:show, q: 'foo')
+
+          expect(assigns(:show_toolbar)).to eq(false)
+        end
       end
 
       context 'when the user is an admin user' do
@@ -225,6 +231,12 @@ describe SearchController, type: :controller do
           expect(assigns(:gend_images)).to eq(
             [gend_image_4, @gend_image_3, @gend_image_1]
           )
+        end
+
+        it 'shows the gend image toolbar' do
+          get(:show, q: 'foo')
+
+          expect(assigns(:show_toolbar)).to eq(true)
         end
       end
 

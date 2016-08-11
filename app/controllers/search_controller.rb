@@ -9,6 +9,7 @@ class SearchController < ApplicationController
     @src_images = SrcImage.for_user(current_user, query, params[:page])
     @gend_images = GendImage.for_user(current_user, query, params[:page])
     @src_sets = find_src_sets(query)
+    @show_toolbar = admin?
 
     check_no_results
   end
