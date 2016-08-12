@@ -445,7 +445,9 @@
             "InstancePort": "80",
             "LoadBalancerPort": "443",
             "Protocol": "HTTPS",
-            "SSLCertificateId": "arn:aws:iam::165945320610:server-certificate/memecaptain"
+            "SSLCertificateId": {
+              "Ref": "elbCert"
+            }
           }
         ],
         "LoadBalancerName": "memecaptain",
