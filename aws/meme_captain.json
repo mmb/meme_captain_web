@@ -50,11 +50,6 @@
         "LaunchConfigurationName": {
           "Ref": "canaryLaunchConfig"
         },
-        "LoadBalancerNames": [
-          {
-            "Ref": "elb"
-          }
-        ],
         "MaxSize": 1,
         "MinSize": 1,
         "NotificationConfigurations": [
@@ -261,57 +256,6 @@
         "TopicName": "db"
       },
       "Type": "AWS::SNS::Topic"
-    },
-    "elb": {
-      "DependsOn": "internetGatewayAttachment",
-      "Properties": {
-        "AccessLoggingPolicy": {
-          "Enabled": true,
-          "S3BucketName": {
-            "Ref": "elbLogsBucket"
-          }
-        },
-        "ConnectionDrainingPolicy": {
-          "Enabled": true
-        },
-        "HealthCheck": {
-          "HealthyThreshold": "4",
-          "Interval": "30",
-          "Target": "HTTP:80/",
-          "Timeout": "5",
-          "UnhealthyThreshold": "2"
-        },
-        "Listeners": [
-          {
-            "InstancePort": "80",
-            "LoadBalancerPort": "80",
-            "Protocol": "HTTP"
-          },
-          {
-            "InstancePort": "80",
-            "LoadBalancerPort": "443",
-            "Protocol": "HTTPS",
-            "SSLCertificateId": {
-              "Ref": "elbCert"
-            }
-          }
-        ],
-        "LoadBalancerName": "memecaptain",
-        "SecurityGroups": [
-          {
-            "Ref": "elbSecurityGroup"
-          }
-        ],
-        "Subnets": [
-          {
-            "Ref": "publicSubnet1"
-          },
-          {
-            "Ref": "publicSubnet2"
-          }
-        ]
-      },
-      "Type": "AWS::ElasticLoadBalancing::LoadBalancer"
     },
     "elb2": {
       "DependsOn": "internetGatewayAttachment",
@@ -766,11 +710,6 @@
         "LaunchConfigurationName": {
           "Ref": "onDemandLaunchConfig"
         },
-        "LoadBalancerNames": [
-          {
-            "Ref": "elb"
-          }
-        ],
         "MaxSize": 0,
         "MinSize": 0,
         "NotificationConfigurations": [
@@ -1039,11 +978,6 @@
         "LaunchConfigurationName": {
           "Ref": "spot2LaunchConfig"
         },
-        "LoadBalancerNames": [
-          {
-            "Ref": "elb"
-          }
-        ],
         "MaxSize": 10,
         "MinSize": 0,
         "NotificationConfigurations": [
@@ -1178,11 +1112,6 @@
         "LaunchConfigurationName": {
           "Ref": "spotLaunchConfig"
         },
-        "LoadBalancerNames": [
-          {
-            "Ref": "elb"
-          }
-        ],
         "MaxSize": 10,
         "MetricsCollection": [
           {
@@ -1384,11 +1313,6 @@
         "LaunchConfigurationName": {
           "Ref": "steelReserveLaunchConfig"
         },
-        "LoadBalancerNames": [
-          {
-            "Ref": "elb"
-          }
-        ],
         "MaxSize": 10,
         "MinSize": 0,
         "NotificationConfigurations": [
