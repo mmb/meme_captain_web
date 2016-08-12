@@ -147,6 +147,11 @@
             "Value": "canary"
           }
         ],
+        "TargetGroupARNs": [
+          {
+            "Ref": "elbTargetGroup"
+          }
+        ],
         "VPCZoneIdentifier": [
           {
             "Ref": "privateSubnet1"
@@ -460,6 +465,90 @@
       },
       "Type": "AWS::ElasticLoadBalancing::LoadBalancer"
     },
+    "elb2": {
+      "DependsOn": "internetGatewayAttachment",
+      "Properties": {
+        "LoadBalancerAttributes": [
+          {
+            "Key": "access_logs.s3.enabled",
+            "Value": true
+          },
+          {
+            "Key": "access_logs.s3.bucket",
+            "Value": {
+              "Ref": "elbLogsBucket"
+            }
+          }
+        ],
+        "Name": "memecaptain2",
+        "SecurityGroups": [
+          {
+            "Ref": "elbSecurityGroup"
+          }
+        ],
+        "Subnets": [
+          {
+            "Ref": "publicSubnet1"
+          },
+          {
+            "Ref": "publicSubnet2"
+          }
+        ]
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    },
+    "elbCert": {
+      "Properties": {
+        "DomainName": "*.memecaptain.com",
+        "SubjectAlternativeNames": [
+          "memecaptain.com"
+        ]
+      },
+      "Type": "AWS::CertificateManager::Certificate"
+    },
+    "elbHttpListener": {
+      "Properties": {
+        "DefaultActions": [
+          {
+            "TargetGroupArn": {
+              "Ref": "elbTargetGroup"
+            },
+            "Type": "forward"
+          }
+        ],
+        "LoadBalancerArn": {
+          "Ref": "elb2"
+        },
+        "Port": 80,
+        "Protocol": "HTTP"
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::Listener"
+    },
+    "elbHttpsListener": {
+      "Properties": {
+        "Certificates": [
+          {
+            "CertificateArn": {
+              "Ref": "elbCert"
+            }
+          }
+        ],
+        "DefaultActions": [
+          {
+            "TargetGroupArn": {
+              "Ref": "elbTargetGroup"
+            },
+            "Type": "forward"
+          }
+        ],
+        "LoadBalancerArn": {
+          "Ref": "elb2"
+        },
+        "Port": 443,
+        "Protocol": "HTTPS"
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::Listener"
+    },
     "elbLogsBucket": {
       "Properties": {
         "AccessControl": "Private",
@@ -538,6 +627,24 @@
         }
       },
       "Type": "AWS::EC2::SecurityGroup"
+    },
+    "elbTargetGroup": {
+      "Properties": {
+        "HealthCheckIntervalSeconds": 30,
+        "HealthCheckPath": "/",
+        "HealthCheckPort": "80",
+        "HealthCheckProtocol": "HTTP",
+        "HealthCheckTimeoutSeconds": 5,
+        "HealthyThresholdCount": 4,
+        "Name": "memecaptain",
+        "Port": 80,
+        "Protocol": "HTTP",
+        "UnhealthyThresholdCount": 2,
+        "VpcId": {
+          "Ref": "vpc"
+        }
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::TargetGroup"
     },
     "internetGateway": {
       "Type": "AWS::EC2::InternetGateway"
@@ -844,6 +951,11 @@
             "Value": "ondemand"
           }
         ],
+        "TargetGroupARNs": [
+          {
+            "Ref": "elbTargetGroup"
+          }
+        ],
         "VPCZoneIdentifier": [
           {
             "Ref": "privateSubnet1"
@@ -1136,6 +1248,11 @@
             "Value": "spot2"
           }
         ],
+        "TargetGroupARNs": [
+          {
+            "Ref": "elbTargetGroup"
+          }
+        ],
         "VPCZoneIdentifier": [
           {
             "Ref": "privateSubnet1"
@@ -1276,6 +1393,11 @@
             "Key": "pool",
             "PropagateAtLaunch": true,
             "Value": "spot"
+          }
+        ],
+        "TargetGroupARNs": [
+          {
+            "Ref": "elbTargetGroup"
           }
         ],
         "VPCZoneIdentifier": [
@@ -1469,6 +1591,11 @@
             "Key": "pool",
             "PropagateAtLaunch": true,
             "Value": "steelReserve"
+          }
+        ],
+        "TargetGroupARNs": [
+          {
+            "Ref": "elbTargetGroup"
           }
         ],
         "VPCZoneIdentifier": [
