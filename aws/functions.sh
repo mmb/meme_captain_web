@@ -49,12 +49,20 @@ pool_desired_capacity() {
 }
 
 elb_healthy_instances() {
-  aws elb describe-instance-health \
-    --load-balancer-name memecaptain \
+  TARGET_GROUP_ARN=$(
+    aws elbv2 describe-target-groups \
+      --names memecaptain \
+    | \
+    jq \
+      --raw-output \
+      '.TargetGroups[0].TargetGroupArn'
+    )
+  aws elbv2 describe-target-health \
+    --target-group-arn $TARGET_GROUP_ARN \
   | \
   jq \
     --raw-output \
-    '.InstanceStates | map(select(.State == "InService"))[].InstanceId' \
+    '.TargetHealthDescriptions | map(select(.TargetHealth.State == "healthy"))[].Target.Id' \
   | \
   sort
 }
