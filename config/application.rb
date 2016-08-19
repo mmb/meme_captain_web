@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -15,18 +13,9 @@ module MemeCaptainWeb
   # Main application class.
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those
-    # specified here. Application configuration should go into files
-    # in config/initializers -- all .rb files in that directory are
-    # automatically loaded.
-
-    # Only load the plugins named here, in the order given (default is
-    # alphabetical).
-    # :all can be used as a placeholder for all plugins not explicitly named.
-    # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-    # Activate observers that should always be running.
-    # config.active_record.observers =
-    # :cacher, :garbage_collector, :forum_observer
+    # specified here.
+    # Application configuration should go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded.
 
     # Set Time.zone default to the specified zone and make Active Record
     # auto-convert to this zone.
@@ -64,6 +53,7 @@ module MemeCaptainWeb
 
     config.assets.initialize_on_precompile = false
 
+    # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
     config.x.src_image_name_lookup_host = nil
