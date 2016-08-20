@@ -301,7 +301,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
-    timecop (0.8.0)
     travis (1.8.2)
       backports
       faraday (~> 0.9)
@@ -383,7 +382,6 @@ DEPENDENCIES
   statsd-instrument (~> 2.1, >= 2.1.1)
   textacular (~> 4.0)
   therubyracer (~> 0.12.2)
-  timecop (~> 0.8.0)
   travis (~> 1.8, >= 1.8.2)
   ttfunk (~> 1.4.0)
   twitter_cldr (~> 3.2, >= 3.2.1)

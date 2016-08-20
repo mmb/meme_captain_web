@@ -41,9 +41,8 @@ describe SrcThumbsController, type: :controller do
       end
 
       it 'has the correct Expires header' do
-        Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
-          get 'show', id: src_thumb.id
-        end
+        stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
+        get 'show', id: src_thumb.id
 
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')

@@ -95,3 +95,7 @@ def create_image(width, height, color = 'white')
     i.format = 'JPEG'
   end
 end
+
+def stop_time(time = Time.now)
+  allow(Time).to receive(:now).and_return(time)
+end

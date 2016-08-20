@@ -303,9 +303,8 @@ describe HomeController, type: :controller do
           is_deleted: true,
           work_in_progress: false
         )
-        Timecop.travel(Time.now + 1)
         gi2 = FactoryGirl.create(:gend_image, work_in_progress: false)
-        Timecop.return
+        gi2.update!(updated_at: Time.now + 1)
 
         get :index
 

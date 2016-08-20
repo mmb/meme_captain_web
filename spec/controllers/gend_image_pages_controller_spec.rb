@@ -47,10 +47,9 @@ describe GendImagePagesController, type: :controller do
       it 'does not refresh' do
         gend_image
 
-        Timecop.freeze(20) do
-          get :show, id: gend_image.id_hash
-          expect(assigns(:refresh_in)).to be_nil
-        end
+        stop_time(Time.now + 20)
+        get :show, id: gend_image.id_hash
+        expect(assigns(:refresh_in)).to be_nil
       end
     end
 

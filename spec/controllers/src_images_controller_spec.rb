@@ -192,8 +192,6 @@ describe SrcImagesController, type: :controller do
         # there is a well-defined sort order for the spec
         2.times { FactoryGirl.create(:gend_image, src_image: src_image1) }
 
-        Timecop.travel(Time.now + 1)
-
         src_image2 = FactoryGirl.create(
           :src_image,
           name: 'image 1',
@@ -468,9 +466,8 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'has the correct Expires header' do
-        Timecop.freeze(Time.parse('feb 8 2010 21:55:00 UTC')) do
-          get('show', id: src_image.id_hash)
-        end
+        stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
+        get('show', id: src_image.id_hash)
 
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')

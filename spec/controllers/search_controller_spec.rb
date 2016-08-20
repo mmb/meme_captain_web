@@ -62,19 +62,17 @@ describe SearchController, type: :controller do
                                            captions: [caption1, caption2],
                                            work_in_progress: false,
                                            src_image: @src_image_1)
-        Timecop.travel(Time.now + 1)
         @gend_image_2 = FactoryGirl.create(:gend_image,
                                            captions: [caption3, caption4],
                                            work_in_progress: false,
                                            src_image: @src_image_3)
-        Timecop.travel(Time.now + 1)
+        @gend_image_2.update!(updated_at: Time.now + 1)
         @gend_image_3 = FactoryGirl.create(:gend_image,
                                            captions: [caption5, caption6],
                                            work_in_progress: false,
                                            src_image: @src_image_3)
+        @gend_image_3.update!(updated_at: Time.now + 1)
       end
-
-      after { Timecop.return }
 
       context 'when the user is not an admin user' do
         let(:user) { FactoryGirl.create(:user) }
@@ -150,10 +148,11 @@ describe SearchController, type: :controller do
         let(:user) { FactoryGirl.create(:admin_user) }
 
         it 'finds private source images' do
-          Timecop.travel(Time.now + 1)
           src_image_4 = FactoryGirl.create(
             :src_image, name: 'foo', work_in_progress: false, private: true
           )
+          src_image_4.update!(updated_at: Time.now + 1)
+
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq(
@@ -162,10 +161,11 @@ describe SearchController, type: :controller do
         end
 
         it 'finds deleted source images' do
-          Timecop.travel(Time.now + 1)
           src_image_4 = FactoryGirl.create(
             :src_image, name: 'foo', work_in_progress: false, is_deleted: true
           )
+          src_image_4.update!(updated_at: Time.now + 1)
+
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq(
@@ -174,8 +174,9 @@ describe SearchController, type: :controller do
         end
 
         it 'finds in progress source images' do
-          Timecop.travel(Time.now + 1)
           src_image_4 = FactoryGirl.create(:src_image, name: 'foo')
+          src_image_4.update!(updated_at: Time.now + 1)
+
           get :show, q: 'foo'
 
           expect(assigns(:src_images)).to eq(
@@ -187,13 +188,14 @@ describe SearchController, type: :controller do
           caption1 = FactoryGirl.create(:caption, text: 'foo')
           caption2 = FactoryGirl.create(:caption, text: 'bar')
 
-          Timecop.travel(Time.now + 1)
           gend_image_4 = FactoryGirl.create(
             :gend_image,
             captions: [caption1, caption2],
             work_in_progress: false,
             private: true
           )
+          gend_image_4.update!(updated_at: Time.now + 1)
+
           get :show, q: 'foo'
 
           expect(assigns(:gend_images)).to eq(
@@ -204,12 +206,14 @@ describe SearchController, type: :controller do
         it 'finds deleted gend images' do
           caption1 = FactoryGirl.create(:caption, text: 'foo')
           caption2 = FactoryGirl.create(:caption, text: 'bar')
-          Timecop.travel(Time.now + 1)
+
           gend_image_4 = FactoryGirl.create(
             :gend_image,
             captions: [caption1, caption2],
             work_in_progress: false, is_deleted: true
           )
+          gend_image_4.update!(updated_at: Time.now + 1)
+
           get :show, q: 'foo'
 
           expect(assigns(:gend_images)).to eq(
@@ -220,12 +224,14 @@ describe SearchController, type: :controller do
         it 'finds in progress gend images' do
           caption1 = FactoryGirl.create(:caption, text: 'foo')
           caption2 = FactoryGirl.create(:caption, text: 'bar')
-          Timecop.travel(Time.now + 1)
+
           gend_image_4 = FactoryGirl.create(
             :gend_image,
             captions: [caption1, caption2],
             work_in_progress: true
           )
+          gend_image_4.update!(updated_at: Time.now + 1)
+
           get :show, q: 'foo'
 
           expect(assigns(:gend_images)).to eq(
@@ -259,12 +265,13 @@ describe SearchController, type: :controller do
             name: 'test1',
             src_images: [@src_image_1]
           )
-          Timecop.travel(Time.now + 1)
+
           @src_set2 = FactoryGirl.create(
             :src_set,
             name: 'test2',
             src_images: [@src_image_1]
           )
+          @src_set2.update!(updated_at: Time.now + 1)
         end
 
         it 'finds src sets with matching names ordered by most recent' do

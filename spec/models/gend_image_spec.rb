@@ -320,10 +320,11 @@ describe GendImage do
   describe '.most_recent' do
     it 'order the images by most used' do
       gi1 = FactoryGirl.create(:gend_image)
-      Timecop.travel(Time.now + 1)
       gi2 = FactoryGirl.create(:gend_image)
-      Timecop.travel(Time.now + 1)
+      gi2.update!(updated_at: Time.now + 1)
       gi3 = FactoryGirl.create(:gend_image)
+      gi3.update!(updated_at: Time.now + 2)
+
       expect(GendImage.most_recent(3)).to eq([gi3, gi2, gi1])
     end
   end

@@ -111,12 +111,11 @@ describe ApplicationController, type: :controller do
     end
 
     it 'sets the Expires header' do
-      Timecop.freeze do
-        get(:index)
-        expect(response.headers['Expires']).to eq(
-          (Time.now + 62.minutes).httpdate
-        )
-      end
+      stop_time
+      get(:index)
+      expect(response.headers['Expires']).to eq(
+        (Time.now + 62.minutes).httpdate
+      )
     end
 
     it 'sets the Cache-Control header' do
