@@ -71,7 +71,7 @@ describe SearchController, type: :controller do
                                            captions: [caption5, caption6],
                                            work_in_progress: false,
                                            src_image: @src_image_3)
-        @gend_image_3.update!(updated_at: Time.now + 1)
+        @gend_image_3.update!(updated_at: Time.now + 2)
       end
 
       context 'when the user is not an admin user' do
@@ -194,7 +194,7 @@ describe SearchController, type: :controller do
             work_in_progress: false,
             private: true
           )
-          gend_image_4.update!(updated_at: Time.now + 1)
+          gend_image_4.update!(updated_at: Time.now + 3)
 
           get :show, q: 'foo'
 
@@ -212,7 +212,7 @@ describe SearchController, type: :controller do
             captions: [caption1, caption2],
             work_in_progress: false, is_deleted: true
           )
-          gend_image_4.update!(updated_at: Time.now + 1)
+          gend_image_4.update!(updated_at: Time.now + 3)
 
           get :show, q: 'foo'
 
@@ -230,7 +230,7 @@ describe SearchController, type: :controller do
             captions: [caption1, caption2],
             work_in_progress: true
           )
-          gend_image_4.update!(updated_at: Time.now + 1)
+          gend_image_4.update!(updated_at: Time.now + 3)
 
           get :show, q: 'foo'
 
