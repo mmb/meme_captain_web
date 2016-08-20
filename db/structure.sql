@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.2
--- Dumped by pg_dump version 9.5.2
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -147,7 +147,8 @@ CREATE TABLE gend_images (
     expires_at timestamp without time zone,
     image_hash text,
     average_color text,
-    creator_ip text
+    creator_ip text,
+    search_document text
 );
 
 
@@ -306,7 +307,8 @@ CREATE TABLE src_images (
     expires_at timestamp without time zone,
     image_hash text,
     average_color text,
-    creator_ip text
+    creator_ip text,
+    search_document text
 );
 
 
@@ -350,7 +352,8 @@ CREATE TABLE src_sets (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     is_deleted boolean DEFAULT false,
-    quality integer DEFAULT 0 NOT NULL
+    quality integer DEFAULT 0 NOT NULL,
+    search_document text
 );
 
 
@@ -962,4 +965,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160604043338');
 INSERT INTO schema_migrations (version) VALUES ('20160604044147');
 
 INSERT INTO schema_migrations (version) VALUES ('20160802032538');
+
+INSERT INTO schema_migrations (version) VALUES ('20160820160813');
 
