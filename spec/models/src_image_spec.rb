@@ -133,6 +133,37 @@ describe SrcImage do
     end
   end
 
+  describe 'setting the search document' do
+    it 'sets the search document' do
+      src_image = FactoryGirl.create(:src_image)
+      expect(src_image.search_document).to eq(
+        "src image name #{src_image.id_hash}"
+      )
+    end
+
+    context 'when there is leading whitespace' do
+      it 'strips the whitespace' do
+        src_image = FactoryGirl.create(:src_image, name: ' src image name')
+        expect(src_image.search_document).to eq(
+          "src image name #{src_image.id_hash}"
+        )
+      end
+    end
+
+    context 'when the name is updated' do
+      it 'updates the search document' do
+        src_image = FactoryGirl.create(:src_image, name: 'previous name')
+        expect do
+          src_image.update(name: 'new name')
+        end.to change { src_image.search_document }.from(
+          "previous name #{src_image.id_hash}"
+        ).to(
+          "new name #{src_image.id_hash}"
+        )
+      end
+    end
+  end
+
   describe '#image_if_not_url' do
     let(:attrs) { { image: nil, url: nil } }
 

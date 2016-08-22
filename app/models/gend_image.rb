@@ -5,6 +5,7 @@
 class GendImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
+  include SearchDocumentConcern
 
   belongs_to :src_image, counter_cache: true
   has_one :gend_thumb
@@ -102,5 +103,14 @@ class GendImage < ActiveRecord::Base
     else
       :gend_image_process_shitload
     end
+  end
+
+  def search_document_parts
+    # can't use Caption.position_order because the records are not saved yet
+    parts = captions.sort_by do |c|
+      [c.top_left_y_pct, c.top_left_x_pct]
+    end.map(&:text)
+    parts << src_image.name
+    parts << id_hash
   end
 end

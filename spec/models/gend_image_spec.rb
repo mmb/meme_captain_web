@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe GendImage do
+  subject { FactoryGirl.create(:gend_image) }
+
   it { should validate_uniqueness_of :id_hash }
 
   it { should belong_to :src_image }
@@ -434,6 +436,35 @@ describe GendImage do
       url = 'http://test.host/gend_thumbs/12345.jpg'
       gend_image.thumbnail_url = url
       expect(gend_image.thumbnail_url).to eq(url)
+    end
+  end
+
+  describe 'setting the search document' do
+    let(:caption1) do
+      FactoryGirl.create(:caption, text: 'abc', top_left_y_pct: 0.10)
+    end
+    let(:caption2) do
+      FactoryGirl.create(:caption, text: 'def', top_left_y_pct: 0.20)
+    end
+    let(:gend_image) do
+      FactoryGirl.create(:finished_gend_image, captions: [caption1, caption2])
+    end
+
+    it 'sets the search document' do
+      expect(gend_image.search_document).to eq(
+        "abc def src image name #{gend_image.id_hash}"
+      )
+    end
+
+    context 'when there is leading whitespace' do
+      let(:caption1) do
+        FactoryGirl.create(:caption, text: '  abc', top_left_y_pct: 0.10)
+      end
+      it 'strips the whitespace' do
+        expect(gend_image.search_document).to eq(
+          "abc def src image name #{gend_image.id_hash}"
+        )
+      end
     end
   end
 end

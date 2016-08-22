@@ -5,6 +5,7 @@
 class SrcImage < ActiveRecord::Base
   include HasImageConcern
   include IdHashConcern
+  include SearchDocumentConcern
 
   belongs_to :user
   has_one :src_thumb
@@ -79,5 +80,9 @@ class SrcImage < ActiveRecord::Base
 
   def queue
     url? ? :src_image_process_url : :src_image_process
+  end
+
+  def search_document_parts
+    [name, id_hash]
   end
 end
