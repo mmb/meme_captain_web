@@ -84,11 +84,13 @@ class GendImage < ActiveRecord::Base
   private
 
   def trim_header(header)
-    return header if header.size <= 8181
     # varnish checks total header size (key + value) <= 8k,
     # 8181 = 8192 - 'Meme-Text: '.size
-    result = header.slice(0, 8181)
-    result.slice!(8179..-1) if result[-2] == '%'.freeze
+    # CloudFlare checks total header size (key + value) < 7k,
+    # 6988 = 6999 - 'Meme-Text: '.size
+    return header if header.size <= 6988
+    result = header.slice(0, 6988)
+    result.slice!(6986..-1) if result[-2] == '%'.freeze
     result
   end
 
