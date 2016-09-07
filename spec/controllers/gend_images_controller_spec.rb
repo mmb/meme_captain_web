@@ -600,51 +600,6 @@ describe GendImagesController, type: :controller do
         expect(response.body).to eq(gend_image.image)
       end
 
-      context 'returning the meme text in the headers' do
-        context 'when there is more than one caption' do
-          it 'returns the correct header' do
-            get :show, id: gend_image.id_hash
-
-            expect(response.headers['Meme-Text']).to eq(
-              'caption+1&caption+2'
-            )
-          end
-        end
-
-        context 'when there is one caption' do
-          let(:captions) { [caption1] }
-
-          it 'returns the correct header' do
-            get :show, id: gend_image.id_hash
-
-            expect(response.headers['Meme-Text']).to eq('caption+1')
-          end
-        end
-
-        context 'when the meme text is very long' do
-          let(:caption1) { FactoryGirl.create(:caption, text: 'x' * 6987) }
-          let(:captions) { [caption1] }
-
-          it 'trims the total header length to 6997' do
-            get :show, id: gend_image.id_hash
-
-            expect(response.headers['Meme-Text']).to eq('x' * 6986)
-          end
-
-          context 'when the truncated header cuts an encoded character' do
-            let(:caption1) do
-              FactoryGirl.create(:caption, text: 'x' * 6984 + '/')
-            end
-
-            it 'removes the partial encoded character' do
-              get :show, id: gend_image.id_hash
-
-              expect(response.headers['Meme-Text']).to eq('x' * 6984)
-            end
-          end
-        end
-      end
-
       context 'returning the meme name in the headers' do
         it 'returns the correct header' do
           get :show, id: gend_image.id_hash

@@ -229,36 +229,6 @@ describe GendImage do
     end
   end
 
-  describe '#meme_text_header' do
-    subject(:gend_image) do
-      FactoryGirl.create(:gend_image, captions: caption_models)
-    end
-    let(:caption_models) do
-      captions.map { |text| FactoryGirl.create(:caption, text: text) }
-    end
-
-    context 'when there are no captions' do
-      let(:captions) { [] }
-      it 'returns the empty string' do
-        expect(gend_image.meme_text_header).to eq('')
-      end
-    end
-
-    context 'when there is one caption' do
-      let(:captions) { ['caption 1'] }
-      it 'returns the encoded caption' do
-        expect(gend_image.meme_text_header).to eq('caption+1')
-      end
-    end
-
-    context 'when there is more than one caption' do
-      let(:captions) { ['caption 1', 'caption 2'] }
-      it 'returns the encoded captions joined with an ampersand' do
-        expect(gend_image.meme_text_header).to eq('caption+1&caption+2')
-      end
-    end
-  end
-
   describe '.without_image' do
     it 'does not load the image data' do
       FactoryGirl.create(:gend_image)
@@ -410,14 +380,6 @@ describe GendImage do
 
     it 'has the content type' do
       expect(gend_image.headers).to include('Content-Type' => 'image/jpeg')
-    end
-
-    it 'has the meme text' do
-      gend_image.captions.create(
-        text: 'test 1', top_left_x_pct: 0.05, top_left_y_pct: 0.0,
-        width_pct: 0.9, height_pct: 0.25
-      )
-      expect(gend_image.headers).to include('Meme-Text' => 'test+1')
     end
   end
 

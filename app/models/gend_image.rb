@@ -35,19 +35,10 @@ class GendImage < ActiveRecord::Base
     captions.position_order.map(&:text).join(' '.freeze)
   end
 
-  def meme_text_header
-    Rails.cache.fetch("#{cache_key}/meme_text_header") do
-      trim_header(
-        captions.map { |c| Rack::Utils.escape(c.text) }.join('&'.freeze)
-      )
-    end
-  end
-
   def headers
     {
       'Content-Length'.freeze => size,
-      'Content-Type'.freeze => content_type,
-      'Meme-Text'.freeze => meme_text_header
+      'Content-Type'.freeze => content_type
     }
   end
 
@@ -82,17 +73,6 @@ class GendImage < ActiveRecord::Base
   }
 
   private
-
-  def trim_header(header)
-    # varnish checks total header size (key + value) <= 8k,
-    # 8181 = 8192 - 'Meme-Text: '.size
-    # CloudFlare checks total header size (key + value) <= 6997,
-    # 6986 = 6997 - 'Meme-Text: '.size
-    return header if header.size <= 6986
-    result = header.slice(0, 6986)
-    result.slice!(6984..-1) if result[-2] == '%'.freeze
-    result
-  end
 
   def queue
     case src_image.size
