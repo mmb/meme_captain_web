@@ -195,7 +195,7 @@ describe GendImage do
 
     context "when none of the image's captions matches" do
       it 'returns no matches' do
-        expect(GendImage.caption_matches('g')).to eq([])
+        expect(GendImage.caption_matches('no match')).to eq([])
       end
     end
 
