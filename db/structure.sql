@@ -608,6 +608,13 @@ CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at
 
 
 --
+-- Name: gend_images_to_tsvector_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX gend_images_to_tsvector_idx ON gend_images USING gin (to_tsvector('english'::regconfig, search_document));
+
+
+--
 -- Name: index_captions_on_gend_image_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -661,6 +668,13 @@ CREATE INDEX index_gend_images_on_is_deleted ON gend_images USING btree (is_dele
 --
 
 CREATE INDEX index_gend_images_on_private ON gend_images USING btree (private);
+
+
+--
+-- Name: index_gend_images_on_search_document; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gend_images_on_search_document ON gend_images USING btree (search_document);
 
 
 --
@@ -967,4 +981,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160604044147');
 INSERT INTO schema_migrations (version) VALUES ('20160802032538');
 
 INSERT INTO schema_migrations (version) VALUES ('20160820160813');
+
+INSERT INTO schema_migrations (version) VALUES ('20160907043542');
+
+INSERT INTO schema_migrations (version) VALUES ('20160907043835');
 

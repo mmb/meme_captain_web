@@ -64,13 +64,9 @@ class GendImage < ActiveRecord::Base
 
   scope :publick, -> { where private: false }
 
-  scope :caption_matches, lambda { |query|
-    prepared_query = query.try(:strip).try(:downcase)
-    joins(:captions).where(
-      'LOWER(captions.text) LIKE ?'.freeze, "%#{prepared_query}%"
-    ).uniq if \
-      prepared_query
-  }
+  scope :caption_matches, MemeCaptainWeb::TextMatchLambda.new(
+    self, :search_document
+  ).lambder
 
   private
 

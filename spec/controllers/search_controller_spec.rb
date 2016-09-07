@@ -43,13 +43,13 @@ describe SearchController, type: :controller do
     context 'when some results are found' do
       before do
         @src_image_1 = FactoryGirl.create(
-          :src_image, name: 'foo', work_in_progress: false
+          :src_image, name: 'sp1', work_in_progress: false
         )
         @src_image_2 = FactoryGirl.create(
           :src_image, name: 'not a match', work_in_progress: false
         )
         @src_image_3 = FactoryGirl.create(
-          :src_image, name: 'another foo', work_in_progress: false
+          :src_image, name: 'another sp1', work_in_progress: false
         )
 
         caption1 = FactoryGirl.create(:caption, text: 'foo')
@@ -81,7 +81,7 @@ describe SearchController, type: :controller do
           FactoryGirl.create(
             :src_image, name: 'foo', work_in_progress: false, private: true
           )
-          get :show, q: 'foo'
+          get :show, q: 'sp1'
 
           expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
         end
@@ -90,14 +90,14 @@ describe SearchController, type: :controller do
           FactoryGirl.create(
             :src_image, name: 'foo', work_in_progress: false, is_deleted: true
           )
-          get :show, q: 'foo'
+          get :show, q: 'sp1'
 
           expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
         end
 
         it 'does not find in progress source images' do
           FactoryGirl.create(:src_image, name: 'foo')
-          get :show, q: 'foo'
+          get :show, q: 'sp1'
 
           expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
         end
@@ -149,11 +149,11 @@ describe SearchController, type: :controller do
 
         it 'finds private source images' do
           src_image_4 = FactoryGirl.create(
-            :src_image, name: 'foo', work_in_progress: false, private: true
+            :src_image, name: 'sp1', work_in_progress: false, private: true
           )
           src_image_4.update!(updated_at: Time.now + 1)
 
-          get :show, q: 'foo'
+          get :show, q: 'sp1'
 
           expect(assigns(:src_images)).to eq(
             [@src_image_3, @src_image_1, src_image_4]
@@ -162,11 +162,11 @@ describe SearchController, type: :controller do
 
         it 'finds deleted source images' do
           src_image_4 = FactoryGirl.create(
-            :src_image, name: 'foo', work_in_progress: false, is_deleted: true
+            :src_image, name: 'sp1', work_in_progress: false, is_deleted: true
           )
           src_image_4.update!(updated_at: Time.now + 1)
 
-          get :show, q: 'foo'
+          get :show, q: 'sp1'
 
           expect(assigns(:src_images)).to eq(
             [@src_image_3, @src_image_1, src_image_4]
@@ -174,10 +174,10 @@ describe SearchController, type: :controller do
         end
 
         it 'finds in progress source images' do
-          src_image_4 = FactoryGirl.create(:src_image, name: 'foo')
+          src_image_4 = FactoryGirl.create(:src_image, name: 'sp1')
           src_image_4.update!(updated_at: Time.now + 1)
 
-          get :show, q: 'foo'
+          get :show, q: 'sp1'
 
           expect(assigns(:src_images)).to eq(
             [@src_image_3, @src_image_1, src_image_4]
@@ -247,7 +247,7 @@ describe SearchController, type: :controller do
       end
 
       it 'finds src images with matching names ordered by most used' do
-        get :show, q: 'foo'
+        get :show, q: 'sp1'
 
         expect(assigns(:src_images)).to eq([@src_image_3, @src_image_1])
       end

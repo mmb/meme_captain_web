@@ -183,13 +183,13 @@ describe GendImage do
 
     context "when one of the image's captions matches" do
       it 'returns the matching image' do
-        expect(GendImage.caption_matches('b')).to eq([@gend_image])
+        expect(GendImage.caption_matches('abc')).to eq([@gend_image])
       end
     end
 
     context "when one of the image's captions matches case insensitive" do
       it 'returns the matching image' do
-        expect(GendImage.caption_matches('C')).to eq([@gend_image])
+        expect(GendImage.caption_matches('ABC')).to eq([@gend_image])
       end
     end
 
@@ -200,11 +200,13 @@ describe GendImage do
     end
 
     context 'when both of the captions match' do
-      let(:caption1) { FactoryGirl.create(:caption, text: 'abc') }
-      let(:caption2) { FactoryGirl.create(:caption, text: 'cba') }
+      let(:caption1) { FactoryGirl.create(:caption, text: 'the quick') }
+      let(:caption2) do
+        FactoryGirl.create(:caption, text: 'brown fox is quick')
+      end
 
       it 'returns only one match' do
-        expect(GendImage.caption_matches('C')).to eq([@gend_image])
+        expect(GendImage.caption_matches('quick')).to eq([@gend_image])
       end
     end
   end
