@@ -4,6 +4,7 @@
 
 * [Authentication](v3/authentication.md)
 * [Create a meme image](v3/create_meme_image.md)
+* [Search meme images](v3/search_meme_images.md)
 * [Create a source image](v3/create_source_image.md)
 * [Search source images](v3/search_source_images.md)
 
