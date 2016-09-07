@@ -12,8 +12,11 @@ header to `application/json`.
 
 ## curl example
 
+```sh
+curl -s -H 'Accept: application/json' 'http://memecaptain.com/src_images/?q=test&page=1' | jq .
 ```
-$ curl -s -H 'Accept: application/json' 'http://memecaptain.com/src_images/?q=test&page=1' | jq .
+
+```json
 [
   {
     "id_hash": "j5k4_g",

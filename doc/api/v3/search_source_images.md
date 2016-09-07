@@ -11,8 +11,11 @@ HTTP GET https://memecaptain.com/api/v3/src_images.
 
 ## curl example
 
+```sh
+curl -s 'https://memecaptain.com/api/v3/src_images/?q=test&page=1' | jq .
 ```
-$ curl -s 'https://memecaptain.com/api/v3/src_images/?q=test&page=1' | jq .
+
+```json
 [
   {
     "id_hash": "j5k4_g",
