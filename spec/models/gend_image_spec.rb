@@ -172,7 +172,7 @@ describe GendImage do
     end
   end
 
-  describe '.caption_matches' do
+  describe '.text_matches' do
     let(:caption1) { FactoryGirl.create(:caption, text: 'the quick brown fox') }
     let(:caption2) do
       FactoryGirl.create(:caption, text: 'jumped over the lazy dog')
@@ -185,25 +185,25 @@ describe GendImage do
 
     context "when one of the image's captions matches" do
       it 'returns the matching image' do
-        expect(GendImage.caption_matches('fox')).to eq([@gend_image])
+        expect(GendImage.text_matches('fox')).to eq([@gend_image])
       end
     end
 
     context "when one of the image's captions matches case insensitive" do
       it 'returns the matching image' do
-        expect(GendImage.caption_matches('QuIcK')).to eq([@gend_image])
+        expect(GendImage.text_matches('QuIcK')).to eq([@gend_image])
       end
     end
 
     context 'when there is whitespace in the query' do
       it 'still matches' do
-        expect(GendImage.caption_matches("jumped \t\r\n")).to eq([@gend_image])
+        expect(GendImage.text_matches("jumped \t\r\n")).to eq([@gend_image])
       end
     end
 
     context "when none of the image's captions matches" do
       it 'returns no matches' do
-        expect(GendImage.caption_matches('no match')).to eq([])
+        expect(GendImage.text_matches('no match')).to eq([])
       end
     end
 
@@ -216,7 +216,7 @@ describe GendImage do
       end
 
       it 'returns only one match' do
-        expect(GendImage.caption_matches('quick')).to eq([@gend_image])
+        expect(GendImage.text_matches('quick')).to eq([@gend_image])
       end
     end
   end
@@ -301,7 +301,7 @@ describe GendImage do
         expect(relation).to receive(:includes).with(:gend_thumb).and_return(
           relation
         )
-        expect(relation).to receive(:caption_matches).with('query').and_return(
+        expect(relation).to receive(:text_matches).with('query').and_return(
           relation
         )
         expect(relation).to receive(:publick).and_return(relation)
@@ -321,7 +321,7 @@ describe GendImage do
         expect(relation).to receive(:includes).with(:gend_thumb).and_return(
           relation
         )
-        expect(relation).to receive(:caption_matches).with('query').and_return(
+        expect(relation).to receive(:text_matches).with('query').and_return(
           relation
         )
         expect(relation).to receive(:publick).and_return(relation)
@@ -341,7 +341,7 @@ describe GendImage do
         expect(relation).to receive(:includes).with(:gend_thumb).and_return(
           relation
         )
-        expect(relation).to receive(:caption_matches).with('query').and_return(
+        expect(relation).to receive(:text_matches).with('query').and_return(
           relation
         )
         expect(relation).to receive(:most_recent).and_return(relation)

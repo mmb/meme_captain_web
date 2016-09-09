@@ -44,10 +44,10 @@ class GendImage < ActiveRecord::Base
 
   def self.for_user(user, query, page)
     if user.try(:is_admin)
-      without_image.includes(:gend_thumb).caption_matches(query)
+      without_image.includes(:gend_thumb).text_matches(query)
                    .most_recent.page(page)
     else
-      without_image.includes(:gend_thumb).caption_matches(query)
+      without_image.includes(:gend_thumb).text_matches(query)
                    .publick.active.finished.most_recent.page(page)
     end
   end
@@ -64,7 +64,7 @@ class GendImage < ActiveRecord::Base
 
   scope :publick, -> { where private: false }
 
-  scope :caption_matches, MemeCaptainWeb::TextMatchLambda.new(
+  scope :text_matches, MemeCaptainWeb::TextMatchLambda.new(
     self, :search_document
   ).lambder
 
