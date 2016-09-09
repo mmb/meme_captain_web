@@ -431,4 +431,10 @@ describe GendImage do
       end
     end
   end
+
+  describe '.searchable_columns' do
+    it 'is the search_document' do
+      expect(GendImage.searchable_columns).to eq([:search_document])
+    end
+  end
 end

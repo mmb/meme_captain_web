@@ -68,6 +68,10 @@ class GendImage < ActiveRecord::Base
     self, :search_document
   ).lambder
 
+  def self.searchable_columns
+    [:search_document]
+  end
+
   private
 
   def queue
