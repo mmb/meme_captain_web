@@ -173,8 +173,10 @@ describe GendImage do
   end
 
   describe '.caption_matches' do
-    let(:caption1) { FactoryGirl.create(:caption, text: 'abc') }
-    let(:caption2) { FactoryGirl.create(:caption, text: 'def') }
+    let(:caption1) { FactoryGirl.create(:caption, text: 'the quick brown fox') }
+    let(:caption2) do
+      FactoryGirl.create(:caption, text: 'jumped over the lazy dog')
+    end
     before do
       @gend_image = FactoryGirl.create(
         :gend_image, captions: [caption1, caption2]
@@ -183,13 +185,19 @@ describe GendImage do
 
     context "when one of the image's captions matches" do
       it 'returns the matching image' do
-        expect(GendImage.caption_matches('abc')).to eq([@gend_image])
+        expect(GendImage.caption_matches('fox')).to eq([@gend_image])
       end
     end
 
     context "when one of the image's captions matches case insensitive" do
       it 'returns the matching image' do
-        expect(GendImage.caption_matches('ABC')).to eq([@gend_image])
+        expect(GendImage.caption_matches('QuIcK')).to eq([@gend_image])
+      end
+    end
+
+    context 'when there is whitespace in the query' do
+      it 'still matches' do
+        expect(GendImage.caption_matches("jumped \t\r\n")).to eq([@gend_image])
       end
     end
 
@@ -200,9 +208,11 @@ describe GendImage do
     end
 
     context 'when both of the captions match' do
-      let(:caption1) { FactoryGirl.create(:caption, text: 'the quick') }
+      let(:caption1) do
+        FactoryGirl.create(:caption, text: 'the quick brown fox')
+      end
       let(:caption2) do
-        FactoryGirl.create(:caption, text: 'brown fox is quick')
+        FactoryGirl.create(:caption, text: 'jumped over the quick dog')
       end
 
       it 'returns only one match' do
@@ -237,30 +247,6 @@ describe GendImage do
       expect do
         GendImage.without_image.first.image
       end.to raise_error(ActiveModel::MissingAttributeError)
-    end
-  end
-
-  describe '.caption_matches' do
-    it 'finds images where the query is a subtring of one of the captions' do
-      caption1 = FactoryGirl.create(:caption, text: 'the quick brown fox')
-      caption2 = FactoryGirl.create(:caption, text: 'not a match')
-      caption3 = FactoryGirl.create(:caption, text: 'fox brown quick the')
-      gi1 = FactoryGirl.create(:gend_image, captions: [caption1, caption2])
-      FactoryGirl.create(:gend_image, captions: [caption2])
-      gi3 = FactoryGirl.create(:gend_image, captions: [caption2, caption3])
-      expect(GendImage.caption_matches('quick')).to contain_exactly(gi1, gi3)
-    end
-
-    it 'it case insensitive' do
-      caption1 = FactoryGirl.create(:caption, text: 'the quick brown fox')
-      gi1 = FactoryGirl.create(:gend_image, captions: [caption1])
-      expect(GendImage.caption_matches('QuIcK')).to contain_exactly(gi1)
-    end
-
-    it 'strips whitespace' do
-      caption1 = FactoryGirl.create(:caption, text: 'the quick brown fox')
-      gi1 = FactoryGirl.create(:gend_image, captions: [caption1])
-      expect(GendImage.caption_matches(" quick\t\r\n")).to contain_exactly(gi1)
     end
   end
 
