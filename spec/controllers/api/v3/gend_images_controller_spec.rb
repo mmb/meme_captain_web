@@ -32,10 +32,10 @@ describe Api::V3::GendImagesController, type: :controller do
       allow(for_user_result).to receive(:includes).with(:captions).and_return(
         [gend_image1, gend_image2]
       )
-      expect(gend_image1).to receive(:image_url=).with(
+      expect(gend_image1).to receive(:'image_url=').with(
         "http://test.host/gend_images/#{gend_image1.id_hash}.jpg"
       )
-      expect(gend_image2).to receive(:image_url=).with(
+      expect(gend_image2).to receive(:'image_url=').with(
         "http://test.host/gend_images/#{gend_image2.id_hash}.jpg"
       )
       get(:index, format: :json)
@@ -51,10 +51,10 @@ describe Api::V3::GendImagesController, type: :controller do
       allow(for_user_result).to receive(:includes).with(:captions).and_return(
         [gend_image1, gend_image2]
       )
-      expect(gend_image1).to receive(:thumbnail_url=).with(
+      expect(gend_image1).to receive(:'thumbnail_url=').with(
         "http://test.host/gend_thumbs/#{gend_image1.gend_thumb.id}.jpg"
       )
-      expect(gend_image2).to receive(:thumbnail_url=).with(
+      expect(gend_image2).to receive(:'thumbnail_url=').with(
         "http://test.host/gend_thumbs/#{gend_image2.gend_thumb.id}.jpg"
       )
       get(:index, format: :json)

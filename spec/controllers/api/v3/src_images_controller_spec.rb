@@ -43,13 +43,13 @@ describe Api::V3::SrcImagesController, type: :controller do
       allow(SrcImage).to receive(:for_user).with(user, nil, nil).and_return(
         src_images
       )
-      expect(src_image1).to receive(:image_url=).with(
+      expect(src_image1).to receive(:'image_url=').with(
         "http://test.host/src_images/#{src_image1.id_hash}.jpg"
       )
-      expect(src_image2).to receive(:image_url=).with(
+      expect(src_image2).to receive(:'image_url=').with(
         "http://test.host/src_images/#{src_image2.id_hash}.jpg"
       )
-      expect(src_image3).to receive(:image_url=).with(
+      expect(src_image3).to receive(:'image_url=').with(
         "http://test.host/src_images/#{src_image3.id_hash}.jpg"
       )
       get(:index, format: :json)

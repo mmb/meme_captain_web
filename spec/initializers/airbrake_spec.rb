@@ -50,7 +50,7 @@ describe 'Airbrake initializer' do
     it 'initializes Airbrake' do
       config = instance_double('Airbrake::Configuration')
       expect(Airbrake).to receive(:configure).and_yield(config)
-      expect(config).to receive(:api_key=).with('test-api-key')
+      expect(config).to receive(:'api_key=').with('test-api-key')
       load(
         File.expand_path(
           '../../../config/initializers/airbrake.rb', __FILE__
