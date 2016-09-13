@@ -22,4 +22,15 @@ namespace :search_document do
       gi.update_column(:search_document, search_document)
     end
   end
+
+  desc 'Populate src image search documents that are empty'
+  task populate_src_image: :environment do
+    SrcImage.where(search_document: nil).without_image.find_each(
+      batch_size: 100
+    ) do |si|
+      parts = [si.name, si.id_hash]
+      search_document = parts.join(' ').strip
+      si.update_column(:search_document, search_document)
+    end
+  end
 end
