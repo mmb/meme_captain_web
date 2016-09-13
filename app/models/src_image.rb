@@ -37,10 +37,10 @@ class SrcImage < ActiveRecord::Base
 
   def self.for_user(user, query, page)
     if user.try(:is_admin)
-      without_image.includes(:src_thumb).name_matches(query)
+      without_image.includes(:src_thumb).text_matches(query)
                    .most_used.page(page)
     else
-      without_image.includes(:src_thumb).name_matches(query)
+      without_image.includes(:src_thumb).text_matches(query)
                    .publick.active.finished.most_used.page(page)
     end
   end
@@ -55,10 +55,12 @@ class SrcImage < ActiveRecord::Base
 
   scope :publick, -> { where private: false }
 
-  scope :name_matches, MemeCaptainWeb::TextMatchLambda.new(self, :name).lambder
+  scope :text_matches, MemeCaptainWeb::TextMatchLambda.new(
+    self, :search_document
+  ).lambder
 
   def self.searchable_columns
-    [:name]
+    [:search_document]
   end
 
   scope :most_used, lambda { |limit = 1|

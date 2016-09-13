@@ -271,22 +271,22 @@ describe SrcImage do
     end
   end
 
-  describe '.name_matches' do
+  describe '.text_matches' do
     it 'finds images where the query is a substring of their name' do
       si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
       FactoryGirl.create(:src_image, name: 'not a match')
       si3 = FactoryGirl.create(:src_image, name: 'fox brown quick then')
-      expect(SrcImage.name_matches('quick')).to contain_exactly(si1, si3)
+      expect(SrcImage.text_matches('quick')).to contain_exactly(si1, si3)
     end
 
     it 'it case insensitive' do
       si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
-      expect(SrcImage.name_matches('QuIcK')).to contain_exactly(si1)
+      expect(SrcImage.text_matches('QuIcK')).to contain_exactly(si1)
     end
 
     it 'strips whitespace' do
       si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
-      expect(SrcImage.name_matches(" quick\t\r\n")).to contain_exactly(si1)
+      expect(SrcImage.text_matches(" quick\t\r\n")).to contain_exactly(si1)
     end
 
     context 'when the database is Postgres', postgres: true do
@@ -294,32 +294,32 @@ describe SrcImage do
         si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
         FactoryGirl.create(:src_image, name: 'not a match')
         si3 = FactoryGirl.create(:src_image, name: 'fox brown quick then')
-        expect(SrcImage.name_matches('quick')).to contain_exactly(si1, si3)
+        expect(SrcImage.text_matches('quick')).to contain_exactly(si1, si3)
       end
 
       it 'it case insensitive' do
         si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
-        expect(SrcImage.name_matches('QuIcK')).to contain_exactly(si1)
+        expect(SrcImage.text_matches('QuIcK')).to contain_exactly(si1)
       end
 
       it 'strips whitespace' do
         si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
-        expect(SrcImage.name_matches(" quick\t\r\n")).to contain_exactly(si1)
+        expect(SrcImage.text_matches(" quick\t\r\n")).to contain_exactly(si1)
       end
 
       it 'does stemming' do
         si1 = FactoryGirl.create(:src_image, name: 'stemming for the win')
-        expect(SrcImage.name_matches('winning')).to contain_exactly(si1)
+        expect(SrcImage.text_matches('winning')).to contain_exactly(si1)
       end
 
       it 'ignores the order' do
         si1 = FactoryGirl.create(:src_image, name: 'query languages')
-        expect(SrcImage.name_matches('languages query')).to contain_exactly(si1)
+        expect(SrcImage.text_matches('languages query')).to contain_exactly(si1)
       end
 
       it 'understands a query language' do
         si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
-        expect(SrcImage.name_matches('quick and fox')).to contain_exactly(si1)
+        expect(SrcImage.text_matches('quick and fox')).to contain_exactly(si1)
       end
     end
   end
@@ -372,7 +372,7 @@ describe SrcImage do
         expect(relation).to receive(:includes).with(:src_thumb).and_return(
           relation
         )
-        expect(relation).to receive(:name_matches).with('query').and_return(
+        expect(relation).to receive(:text_matches).with('query').and_return(
           relation
         )
         expect(relation).to receive(:publick).and_return(relation)
@@ -392,7 +392,7 @@ describe SrcImage do
         expect(relation).to receive(:includes).with(:src_thumb).and_return(
           relation
         )
-        expect(relation).to receive(:name_matches).with('query').and_return(
+        expect(relation).to receive(:text_matches).with('query').and_return(
           relation
         )
         expect(relation).to receive(:publick).and_return(relation)
@@ -412,7 +412,7 @@ describe SrcImage do
         expect(relation).to receive(:includes).with(:src_thumb).and_return(
           relation
         )
-        expect(relation).to receive(:name_matches).with('query').and_return(
+        expect(relation).to receive(:text_matches).with('query').and_return(
           relation
         )
         expect(relation).to receive(:most_used).and_return(relation)
@@ -431,8 +431,8 @@ describe SrcImage do
   end
 
   describe '.searchable_columns' do
-    it 'is the name' do
-      expect(SrcImage.searchable_columns).to eq([:name])
+    it 'is the search_document' do
+      expect(SrcImage.searchable_columns).to eq([:search_document])
     end
   end
 end
