@@ -671,13 +671,6 @@ CREATE INDEX index_gend_images_on_private ON gend_images USING btree (private);
 
 
 --
--- Name: index_gend_images_on_search_document; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_gend_images_on_search_document ON gend_images USING btree (search_document);
-
-
---
 -- Name: index_gend_images_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -856,7 +849,7 @@ CREATE INDEX index_users_on_password_reset_token ON users USING btree (password_
 -- Name: src_images_to_tsvector_idx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX src_images_to_tsvector_idx ON src_images USING gin (to_tsvector('english'::regconfig, name));
+CREATE INDEX src_images_to_tsvector_idx ON src_images USING gin (to_tsvector('english'::regconfig, search_document));
 
 
 --
@@ -983,4 +976,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160802032538');
 INSERT INTO schema_migrations (version) VALUES ('20160820160813');
 
 INSERT INTO schema_migrations (version) VALUES ('20160907043542');
+
+INSERT INTO schema_migrations (version) VALUES ('20160913024041');
 
