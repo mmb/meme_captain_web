@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-MemeCaptainWeb::Application.routes.draw do
+Rails.application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   concern :paginatable do
     get '(page/:page)', action: :index, on: :collection, as: ''
@@ -51,8 +49,23 @@ MemeCaptainWeb::Application.routes.draw do
 
   resources :gend_image_scripts, only: :show
 
+  namespace :api do
+    namespace :v3 do
+      resources :pending_gend_images, only: :show
+      resources :pending_src_images, only: :show
+      resources :src_images, concerns: :paginatable, only: [:create, :index]
+      resources :gend_images, concerns: :paginatable, only: [:create, :index]
+    end
+  end
+
+  root 'home#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
+
+  # You can have the root of your site routed with "root"
+  # root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -103,25 +116,4 @@ MemeCaptainWeb::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  namespace :api do
-    namespace :v3 do
-      resources :pending_gend_images, only: :show
-      resources :pending_src_images, only: :show
-      resources :src_images, concerns: :paginatable, only: [:create, :index]
-      resources :gend_images, concerns: :paginatable, only: [:create, :index]
-    end
-  end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root to: 'home#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful
-  # applications.
-  # Note: This route will make all actions in every controller accessible via
-  # GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

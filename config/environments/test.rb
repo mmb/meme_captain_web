@@ -1,8 +1,6 @@
-# encoding: UTF-8
-
-MemeCaptainWeb::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in
-  # config/application.rb
+  # config/application.rb.
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
@@ -10,8 +8,13 @@ MemeCaptainWeb::Application.configure do
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
-  # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_files = true
+  # Do not eager load code on boot. This avoids loading your whole application
+  # just for the purpose of running a single test. If you are using a tool that
+  # preloads Rails for running tests, you may have to set it to true.
+  config.eager_load = false
+
+  # Configure static file server for tests with Cache-Control for performance.
+  config.serve_static_files   = true
   config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching.
@@ -29,16 +32,20 @@ MemeCaptainWeb::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Print deprecation notices to the stderr
+  # Randomize the order test cases are executed.
+  config.active_support.test_order = :random
+
+  # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  Delayed::Worker.delay_jobs = false
-
-  config.eager_load = false
+  # Raises error for missing translations
+  # config.action_view.raise_on_missing_translations = true
 
   config.middleware.insert_before(
     ActionDispatch::Static,
     Rack::Deflater,
     if: ->(_, _, headers, _) { headers['Content-Type'][0..5] != 'image/' }
   )
+
+  Delayed::Worker.delay_jobs = false
 end
