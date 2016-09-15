@@ -103,7 +103,7 @@ module MemeCaptainWeb
     def read_blocks(options = {})
       loop do
         block_size = read(1, options).unpack('C'.freeze).first
-        break if block_size == 0
+        break if block_size.zero?
         read(block_size, options)
       end
     end
