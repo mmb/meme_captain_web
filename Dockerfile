@@ -45,7 +45,7 @@ RUN apt-get install --assume-yes \
     libssl-dev \
   && curl http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.bz2 \
     | tar xj \
-  && cd ruby-2.3.1 \
+  && cd $(ls -d ruby-* | head -n 1) \
   && ./configure \
     --disable-install-doc \
   && make \
@@ -72,7 +72,7 @@ RUN apt-get install --assume-yes \
     libpam-dev \
   && curl https://mmonit.com/monit/dist/monit-5.16.tar.gz \
     | tar xz \
-  && cd monit-5.16 \
+  && cd $(ls -d monit-* | head -n 1) \
   && ./configure \
   && make \
   && make install \
