@@ -44,7 +44,7 @@ RUN apt-get install --assume-yes \
     libreadline-dev \
     libssl-dev \
   && curl http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.bz2 \
-    | tar jx \
+    | tar xj \
   && cd ruby-2.3.1 \
   && ./configure \
     --disable-install-doc \
