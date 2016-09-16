@@ -36,7 +36,8 @@ RUN apt-get install --assume-yes \
   && ./configure \
   && make \
   && make install \
-  && cd ..
+  && cd .. \
+  && rm -rf $(ls -d ImageMagick-* | head -n 1)
 
 # ruby
 RUN apt-get install --assume-yes \
@@ -52,7 +53,8 @@ RUN apt-get install --assume-yes \
   && make install \
   && echo 'gem: --no-document' >> "$HOME/.gemrc" \
   && gem install bundler \
-  && cd ..
+  && cd .. \
+  && rm -rf $(ls -d ruby-* | head -n 1)
 
 # varnish
 RUN apt-get install --assume-yes \
@@ -77,7 +79,8 @@ RUN apt-get install --assume-yes \
   && make \
   && make install \
   && mkdir -p /var/lib/monit/events \
-  && cd ..
+  && cd .. \
+  && rm -rf $(ls -d monit-* | head -n 1)
 
 COPY . /app
 
