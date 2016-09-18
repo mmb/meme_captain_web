@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Source image set model.
-class SrcSet < ActiveRecord::Base
+class SrcSet < ApplicationRecord
   validates :name, presence: true
   validate :name, :one_active_name
 

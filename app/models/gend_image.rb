@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Generated (meme) image model.
-class GendImage < ActiveRecord::Base
+class GendImage < ApplicationRecord
   include HasImageConcern
   include IdHashConcern
   include SearchDocumentConcern

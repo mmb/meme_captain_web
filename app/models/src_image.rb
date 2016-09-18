@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Source image model.
-class SrcImage < ActiveRecord::Base
+class SrcImage < ApplicationRecord
   include HasImageConcern
   include IdHashConcern
   include SearchDocumentConcern

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # A caption is a box of text in a meme.
-class Caption < ActiveRecord::Base
+class Caption < ApplicationRecord
   belongs_to :gend_image
 
   validates :height_pct, presence: true

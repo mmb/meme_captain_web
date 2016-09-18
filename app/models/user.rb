@@ -4,7 +4,7 @@
 require 'digest/md5'
 
 # User model.
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   validates :email, presence: true
   validates :email, uniqueness: true
 

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # Source image thumbnail model.
-class SrcThumb < ActiveRecord::Base
+class SrcThumb < ApplicationRecord
   include HasImageConcern
 
   before_validation :set_derived_image_fields

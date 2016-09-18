@@ -1,2 +1,2 @@
-class NoResultSearch < ActiveRecord::Base
+class NoResultSearch < ApplicationRecord
 end

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # Generated (meme) image thumbnail model.
-class GendThumb < ActiveRecord::Base
+class GendThumb < ApplicationRecord
   include HasImageConcern
 
   before_validation :set_derived_image_fields
