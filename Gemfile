@@ -30,7 +30,7 @@ gem 'meme_captain',
     git: 'https://github.com/mmb/meme_captain.git',
     ref: 'd80fb4b'
 
-gem 'kaminari', '~> 0.16.3'
+gem 'kaminari', '~> 0.17.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'puma', '~> 3.4'
 gem 'browser', '~> 2.2'
