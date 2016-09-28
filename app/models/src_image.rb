@@ -55,9 +55,9 @@ class SrcImage < ApplicationRecord
 
   scope :publick, -> { where private: false }
 
-  scope :text_matches, MemeCaptainWeb::TextMatchLambda.new(
+  scope :text_matches, MemeCaptainWeb::TextMatchLambda.new.lambder(
     self, :search_document
-  ).lambder
+  )
 
   def self.searchable_columns
     [:search_document]

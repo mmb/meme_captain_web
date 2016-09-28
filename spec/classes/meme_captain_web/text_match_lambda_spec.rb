@@ -2,9 +2,7 @@ require 'rails_helper'
 
 describe MemeCaptainWeb::TextMatchLambda do
   describe '#lambder' do
-    subject(:text_match_lambda) do
-      MemeCaptainWeb::TextMatchLambda.new(o, 'column1')
-    end
+    subject(:text_match_lambda) { MemeCaptainWeb::TextMatchLambda.new }
 
     let(:o) { double }
     let(:where) { double }
@@ -20,7 +18,9 @@ describe MemeCaptainWeb::TextMatchLambda do
 
       it 'uses Postgres full text search' do
         expect(o).to receive(:basic_search).with('query1').and_return(where)
-        expect(text_match_lambda.lambder.call('query1')).to eq(where)
+        expect(text_match_lambda.lambder(o, 'column1').call('query1')).to eq(
+          where
+        )
       end
     end
 
@@ -31,7 +31,9 @@ describe MemeCaptainWeb::TextMatchLambda do
         expect(o).to receive(:where).with(
           'LOWER(column1) LIKE ?', '%query1%'
         ).and_return(where)
-        expect(text_match_lambda.lambder.call('query1')).to eq(where)
+        expect(text_match_lambda.lambder(o, 'column1').call('query1')).to eq(
+          where
+        )
       end
     end
   end
