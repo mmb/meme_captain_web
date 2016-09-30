@@ -116,6 +116,7 @@ describe SrcSetsController, type: :controller do
       end
 
       it "changes the set's updated time" do
+        src_set.update_column(:updated_at, Time.now - 1)
         expect do
           put :update,
               id: src_set.name,
@@ -160,6 +161,7 @@ describe SrcSetsController, type: :controller do
       end
 
       it "changes the set's updated time" do
+        src_set.update_column(:updated_at, Time.now - 1)
         expect do
           put :update,
               id: src_set.name,
