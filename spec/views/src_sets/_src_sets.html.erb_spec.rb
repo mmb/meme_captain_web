@@ -16,6 +16,10 @@ describe 'src_sets/_src_sets.html', type: :view do
 
   before do
     assign(:src_sets, src_sets)
+
+    # kaminari paginate in the partial needs an action or it fails with
+    # No route matches {:controller=>"src_sets", :page=>nil}
+    controller.request.path_parameters[:action] = 'index'
   end
 
   it 'renders each source set' do

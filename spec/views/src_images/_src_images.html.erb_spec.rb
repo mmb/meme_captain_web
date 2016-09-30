@@ -15,6 +15,12 @@ describe 'src_images/_src_images.html', type: :view do
                             ]).page(1).per(1)
   end
 
+  before do
+    # kaminari paginate in the partial needs an action or it fails with
+    # No route matches {:controller=>"src_images", :page=>nil}
+    controller.request.path_parameters[:action] = 'index'
+  end
+
   context 'when the user is logged in' do
     let(:user) { FactoryGirl.create(:user) }
 
