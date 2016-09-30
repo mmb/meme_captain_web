@@ -231,7 +231,9 @@ describe SrcImage do
         ).and_return(src_image_process_job)
         expect(src_image_process_job).to receive(:perform)
 
+        SrcImage.set_callback(:commit, :after, :create_jobs)
         src_image.run_callbacks(:commit)
+        SrcImage.skip_callback(:commit, :after, :create_jobs)
       end
     end
 
@@ -249,7 +251,9 @@ describe SrcImage do
         ).and_return(src_image_process_job)
         expect(src_image_process_job).to receive(:perform)
 
+        SrcImage.set_callback(:commit, :after, :create_jobs)
         src_image.run_callbacks(:commit)
+        SrcImage.skip_callback(:commit, :after, :create_jobs)
       end
     end
   end

@@ -24,3 +24,6 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 end
+
+GendImage.skip_callback(:commit, :after, :create_jobs)
+SrcImage.skip_callback(:commit, :after, :create_jobs)

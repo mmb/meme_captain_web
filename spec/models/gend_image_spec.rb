@@ -114,7 +114,9 @@ describe GendImage do
         ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:perform)
 
+        GendImage.set_callback(:commit, :after, :create_jobs)
         gend_image.run_callbacks(:commit)
+        GendImage.skip_callback(:commit, :after, :create_jobs)
       end
     end
 
@@ -131,7 +133,9 @@ describe GendImage do
         ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:perform)
 
+        GendImage.set_callback(:commit, :after, :create_jobs)
         gend_image.run_callbacks(:commit)
+        GendImage.skip_callback(:commit, :after, :create_jobs)
       end
     end
 
@@ -148,7 +152,9 @@ describe GendImage do
         ).and_return(gend_image_process_job)
         expect(gend_image_process_job).to receive(:perform)
 
+        GendImage.set_callback(:commit, :after, :create_jobs)
         gend_image.run_callbacks(:commit)
+        GendImage.skip_callback(:commit, :after, :create_jobs)
       end
     end
 
@@ -167,7 +173,9 @@ describe GendImage do
         )
         expect(gend_image_process_job).to receive(:perform)
 
+        GendImage.set_callback(:commit, :after, :create_jobs)
         gend_image.run_callbacks(:commit)
+        GendImage.skip_callback(:commit, :after, :create_jobs)
       end
     end
   end
