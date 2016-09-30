@@ -8,7 +8,18 @@ describe User do
   it 'should validate that the email address is valid' do
   end
 
-  it { should validate_confirmation_of :password }
+  it 'confirms the password' do
+    expect do
+      FactoryGirl.create(
+        :user,
+        password: 'password',
+        password_confirmation: 'a different password'
+      )
+    end.to raise_error(
+      ActiveRecord::RecordInvalid,
+      "Validation failed: Password confirmation doesn't match Password"
+    )
+  end
 
   it { should have_many(:gend_images).through(:src_images) }
   it { should have_many :src_images }
