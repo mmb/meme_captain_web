@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2', '>= 4.2.7.1'
+gem 'rails', '~> 5.0'
 
 group :assets do
   gem 'sass-rails', '~> 5.0', '>= 5.0.5'
@@ -64,6 +64,7 @@ group :test, :development do
   gem 'coffeelint', '~> 1.14'
   gem 'travis', '~> 1.8', '>= 1.8.2', require: false
   gem 'capybara', '~> 2.7', '>= 2.7.1'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'
 end
 
 group :test do
