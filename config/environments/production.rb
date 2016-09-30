@@ -18,14 +18,6 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
-  config.middleware.insert_before(
-    ActionDispatch::Static,
-    Rack::Deflater,
-    if: ->(_, _, headers, _) { headers['Content-Type'][0..5] != 'image/' }
-  )
-  config.public_file_server.headers = {
-    'Cache-Control' => 'public, max-age=31536000'
-  }
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -60,8 +52,6 @@ Rails.application.configure do
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
-  syslog_logger = MemeCaptainWeb::Syslog.new.logger(ENV, 'rails'.freeze)
-  config.logger = syslog_logger if syslog_logger
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -87,19 +77,6 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  MemeCaptainWeb::AssetHostConfig.new.configure(config, ENV)
-  MemeCaptainWeb::SrcImageNameLookupConfig.new.configure(config, ENV)
-
-  if ENV['MEMCACHE_SERVERS']
-    config.cache_store = :dalli_store
-
-    config.action_dispatch.rack_cache = {
-      metastore: Dalli::Client.new,
-      entitystore: 'file:tmp/cache/rack/body',
-      allow_reload: false
-    }
-  end
-
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(
@@ -113,4 +90,30 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.middleware.insert_before(
+    ActionDispatch::Static,
+    Rack::Deflater,
+    if: ->(_, _, headers, _) { headers['Content-Type'][0..5] != 'image/' }
+  )
+
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=31536000'
+  }
+
+  MemeCaptainWeb::AssetHostConfig.new.configure(config, ENV)
+  MemeCaptainWeb::SrcImageNameLookupConfig.new.configure(config, ENV)
+
+  if ENV['MEMCACHE_SERVERS']
+    config.cache_store = :dalli_store
+
+    config.action_dispatch.rack_cache = {
+      metastore: Dalli::Client.new,
+      entitystore: 'file:tmp/cache/rack/body',
+      allow_reload: false
+    }
+  end
+
+  syslog_logger = MemeCaptainWeb::Syslog.new.logger(ENV, 'rails'.freeze)
+  config.logger = syslog_logger if syslog_logger
 end
