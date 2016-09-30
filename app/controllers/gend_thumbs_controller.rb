@@ -10,7 +10,7 @@ class GendThumbsController < ApplicationController
 
     return unless stale?(gend_thumb)
     make_headers(gend_thumb)
-    render(text: gend_thumb.image)
+    render(body: gend_thumb.image)
   end
 
   private

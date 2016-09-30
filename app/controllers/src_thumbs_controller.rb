@@ -10,7 +10,7 @@ class SrcThumbsController < ApplicationController
 
     return unless stale?(src_thumb)
     make_headers(src_thumb)
-    render(text: src_thumb.image)
+    render(body: src_thumb.image)
   end
 
   private

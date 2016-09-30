@@ -43,7 +43,7 @@ class SrcImagesController < ApplicationController
 
     src_image_show_headers(src_image)
 
-    render(text: src_image.image)
+    render(body: src_image.image)
   end
 
   def update

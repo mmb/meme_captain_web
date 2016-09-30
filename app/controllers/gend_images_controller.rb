@@ -49,7 +49,7 @@ class GendImagesController < ApplicationController
 
     gend_image_show_headers(gend_image)
 
-    render(text: gend_image.image)
+    render(body: gend_image.image)
   end
 
   def destroy
