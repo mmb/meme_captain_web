@@ -12,7 +12,7 @@ describe SrcSetsController, type: :controller do
 
   describe "GET 'new'" do
     it 'does not match a route' do
-      expect { get(:new) }.to raise_error ActionController::UrlGenerationError
+      expect { get(:new) }.to raise_error(ActionController::UrlGenerationError)
     end
   end
 
