@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ApplicationController, type: :controller do
   controller do
     def index
-      render(text: 'ok')
+      render(plain: 'ok')
     end
   end
 
@@ -106,7 +106,7 @@ describe ApplicationController, type: :controller do
     controller do
       def index
         cache_expires(62.minutes)
-        render(text: 'ok')
+        render(plain: 'ok')
       end
     end
 

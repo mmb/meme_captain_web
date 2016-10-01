@@ -27,13 +27,13 @@ class SrcSetsController < ApplicationController
 
   def update
     unless current_user
-      render(status: :forbidden, text: 'Forbidden'.freeze) && return
+      render(status: :forbidden, plain: 'Forbidden'.freeze) && return
     end
 
     @src_set = first_or_create
 
     unless @src_set.user == current_user
-      render(status: :forbidden, text: 'Forbidden'.freeze) && return
+      render(status: :forbidden, plain: 'Forbidden'.freeze) && return
     end
 
     add_and_delete
