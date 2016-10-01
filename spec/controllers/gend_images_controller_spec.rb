@@ -26,7 +26,7 @@ describe GendImagesController, type: :controller do
 
   describe "GET 'new'" do
     it 'returns http success' do
-      get :new, src: src_image.id_hash
+      get(:new, params: { src: src_image.id_hash })
       expect(response).to be_success
     end
 
@@ -34,32 +34,32 @@ describe GendImagesController, type: :controller do
       let(:user) { nil }
 
       it 'returns http success' do
-        get :new, src: src_image.id_hash
+        get(:new, params: { src: src_image.id_hash })
         expect(response).to be_success
       end
     end
 
     it 'assigns the source image path' do
-      get :new, src: src_image.id_hash
+      get(:new, params: { src: src_image.id_hash })
       expect(assigns(:src_image_path)).to eq(
         "http://test.host/src_images/#{src_image.id_hash}"
       )
     end
 
     it 'assigns the source image url with extension' do
-      get :new, src: src_image.id_hash
+      get(:new, params: { src: src_image.id_hash })
       expect(assigns(:src_image_url_with_extension)).to eq(
         "http://test.host/src_images/#{src_image.id_hash}.jpg"
       )
     end
 
     it 'assigns a new gend image with the src_image' do
-      get :new, src: src_image.id_hash
+      get(:new, params: { src: src_image.id_hash })
       expect(assigns(:gend_image).src_image).to eq(src_image)
     end
 
     it 'assigns caption 1' do
-      get :new, src: src_image.id_hash
+      get(:new, params: { src: src_image.id_hash })
       caption = assigns(:gend_image).captions[0]
       expect(caption.top_left_x_pct).to eq(0.05)
       expect(caption.top_left_y_pct).to eq(0)
@@ -68,7 +68,7 @@ describe GendImagesController, type: :controller do
     end
 
     it 'assigns caption 2' do
-      get :new, src: src_image.id_hash
+      get(:new, params: { src: src_image.id_hash })
       caption = assigns(:gend_image).captions[1]
       expect(caption.top_left_x_pct).to eq(0.05)
       expect(caption.top_left_y_pct).to eq(0.75)
@@ -82,7 +82,7 @@ describe GendImagesController, type: :controller do
       end
 
       it "sets the new image's private flag to false" do
-        get :new, src: src_image.id_hash
+        get(:new, params: { src: src_image.id_hash })
 
         expect(assigns(:gend_image).private).to eq(false)
       end
@@ -94,7 +94,7 @@ describe GendImagesController, type: :controller do
       end
 
       it "sets the new image's private flag to true" do
-        get :new, src: src_image.id_hash
+        get(:new, params: { src: src_image.id_hash })
 
         expect(assigns(:gend_image).private).to eq(true)
       end
@@ -105,7 +105,7 @@ describe GendImagesController, type: :controller do
 
       it 'returns not found' do
         expect do
-          get :new, src: src_image.id_hash
+          get(:new, params: { src: src_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -113,7 +113,7 @@ describe GendImagesController, type: :controller do
 
   describe "GET 'index'" do
     it 'returns http success' do
-      get :index
+      get(:index)
 
       expect(response).to be_success
     end
@@ -123,7 +123,7 @@ describe GendImagesController, type: :controller do
         FactoryGirl.create(:gend_image, user: user, work_in_progress: false)
       end
 
-      get :index
+      get(:index)
 
       gend_images = assigns(:gend_images)
 
@@ -147,7 +147,7 @@ describe GendImagesController, type: :controller do
           is_deleted: true
         )
 
-        get :index
+        get(:index)
 
         expect(assigns(:gend_images).size).to eq(1)
       end
@@ -162,7 +162,7 @@ describe GendImagesController, type: :controller do
           )
         end
 
-        get :index
+        get(:index)
 
         expect(assigns(:gend_images).size).to eq(3)
       end
@@ -183,7 +183,7 @@ describe GendImagesController, type: :controller do
           )
         end
 
-        get :index
+        get(:index)
 
         expect(assigns(:gend_images).size).to eq(1)
       end
@@ -196,7 +196,7 @@ describe GendImagesController, type: :controller do
         FactoryGirl.create(:gend_image, user: user)
         FactoryGirl.create(:gend_image, user: user, is_deleted: true)
 
-        get :index
+        get(:index)
 
         expect(assigns(:gend_images).size).to eq(2)
       end
@@ -204,7 +204,7 @@ describe GendImagesController, type: :controller do
       it 'shows public images' do
         3.times { FactoryGirl.create(:gend_image, user: user, private: false) }
 
-        get :index
+        get(:index)
 
         expect(assigns(:gend_images).size).to eq(3)
       end
@@ -213,7 +213,7 @@ describe GendImagesController, type: :controller do
         FactoryGirl.create(:gend_image, user: user, private: false)
         2.times { FactoryGirl.create(:gend_image, user: user, private: true) }
 
-        get :index
+        get(:index)
 
         expect(assigns(:gend_images).size).to eq(3)
       end
@@ -285,12 +285,16 @@ describe GendImagesController, type: :controller do
 
       it 'does not increment the bot.attempt statsd counter' do
         expect do
-          post(:create, gend_image: { src_image_id: src_image.id_hash })
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
         end.not_to trigger_statsd_increment('bot.attempt')
       end
 
       it 'sets the creator_ip to the remote ip address' do
-        post(:create, gend_image: { src_image_id: src_image.id_hash })
+        post(:create, params: {
+               gend_image: { src_image_id: src_image.id_hash }
+             })
         expect(GendImage.last.creator_ip).to eq('0.0.0.0')
       end
 
@@ -298,14 +302,18 @@ describe GendImagesController, type: :controller do
         before { request.headers['CF-Connecting-IP'] = '6.6.2.2' }
 
         it 'sets the creator_ip to the value of CF-Connecting-IP' do
-          post(:create, gend_image: { src_image_id: src_image.id_hash })
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
           expect(GendImage.last.creator_ip).to eq('6.6.2.2')
         end
       end
 
       context 'when the client requests html' do
         it 'redirects to the gend image page' do
-          post(:create, gend_image: { src_image_id: src_image.id_hash })
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
 
           expect(response).to redirect_to(
             controller: :gend_image_pages,
@@ -319,13 +327,17 @@ describe GendImagesController, type: :controller do
         before { request.accept = 'application/json' }
 
         it 'responds with accepted' do
-          post :create, gend_image: { src_image_id: src_image.id_hash }
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
 
           expect(response).to have_http_status(:accepted)
         end
 
         it 'sets the location header to the pending image url' do
-          post :create, gend_image: { src_image_id: src_image.id_hash }
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
 
           expect(response.headers['Location']).to eq(
             'http://test.host/pending_gend_images/' \
@@ -334,7 +346,9 @@ describe GendImagesController, type: :controller do
         end
 
         it 'returns the status url in the response' do
-          post(:create, gend_image: { src_image_id: src_image.id_hash })
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
 
           expect(JSON.parse(response.body)['status_url']).to eq(
             'http://test.host/pending_gend_images/' \
@@ -487,7 +501,7 @@ describe GendImagesController, type: :controller do
     context 'when the source image is not found' do
       it 'raises record not found' do
         expect do
-          post :create, gend_image: { src_image_id: 'abc' }
+          post(:create, params: { gend_image: { src_image_id: 'abc' } })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -497,7 +511,9 @@ describe GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          post :create, gend_image: { src_image_id: src_image.id_hash }
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -511,7 +527,9 @@ describe GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          post :create, gend_image: { src_image_id: src_image.id_hash }
+          post(:create, params: {
+                 gend_image: { src_image_id: src_image.id_hash }
+               })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -528,7 +546,9 @@ describe GendImagesController, type: :controller do
       specify 'the gend image is owned by the current user' do
         FactoryGirl.create(:gend_image, src_image: src_image2)
 
-        post :create, gend_image: { src_image_id: src_image2.id_hash }
+        post(:create, params: {
+               gend_image: { src_image_id: src_image2.id_hash }
+             })
         expect(GendImage.last.user).to eq user
       end
     end
@@ -577,32 +597,32 @@ describe GendImagesController, type: :controller do
       end
 
       it 'shows the gend image' do
-        get :show, id: gend_image.id_hash
+        get(:show, params: { id: gend_image.id_hash })
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
-        get :show, id: gend_image.id_hash
+        get(:show, params: { id: gend_image.id_hash })
 
         expect(response.headers['Content-Type']).to eq(gend_image.content_type)
       end
 
       it 'has the right Content-Length header' do
-        get(:show, id: gend_image.id_hash)
+        get(:show, params: { id: gend_image.id_hash })
 
         expect(response.headers['Content-Length']).to eq(9141)
       end
 
       it 'has the right content' do
-        get :show, id: gend_image.id_hash
+        get(:show, params: { id: gend_image.id_hash })
 
         expect(response.body).to eq(gend_image.image)
       end
 
       context 'returning the meme name in the headers' do
         it 'returns the correct header' do
-          get :show, id: gend_image.id_hash
+          get(:show, params: { id: gend_image.id_hash })
 
           expect(response.headers['Meme-Name']).to eq('meme+name')
         end
@@ -611,7 +631,7 @@ describe GendImagesController, type: :controller do
           let(:name) { nil }
 
           it 'returns nil' do
-            get :show, id: gend_image.id_hash
+            get(:show, params: { id: gend_image.id_hash })
 
             expect(response.headers['Meme-Name']).to eq('')
           end
@@ -621,7 +641,7 @@ describe GendImagesController, type: :controller do
           let(:name) { "a\r\nb" }
 
           it 'url encodes special characters' do
-            get :show, id: gend_image.id_hash
+            get(:show, params: { id: gend_image.id_hash })
 
             expect(response.headers['Meme-Name']).to eq('a%0D%0Ab')
           end
@@ -635,7 +655,7 @@ describe GendImagesController, type: :controller do
           end
 
           it 'uses the image url on the server' do
-            get :show, id: gend_image.id_hash
+            get(:show, params: { id: gend_image.id_hash })
 
             expected_url = \
               "http://#{request.host}/src_images/#{src_image.id_hash}.jpg"
@@ -649,7 +669,7 @@ describe GendImagesController, type: :controller do
           end
 
           it 'uses the image url on the CDN' do
-            get :show, id: gend_image.id_hash
+            get(:show, params: { id: gend_image.id_hash })
 
             expected_url = "http://cdn.com/src_images/#{src_image.id_hash}.jpg"
             expect(response.headers['Meme-Source-Image']).to eq(expected_url)
@@ -658,7 +678,7 @@ describe GendImagesController, type: :controller do
       end
 
       it 'has the correct Cache-Control headers' do
-        get :show, id: gend_image.id_hash
+        get(:show, params: { id: gend_image.id_hash })
 
         expect(response.headers['Cache-Control']).to eq(
           'max-age=31557600, public'
@@ -667,7 +687,7 @@ describe GendImagesController, type: :controller do
 
       it 'has the correct Expires header' do
         stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
-        get('show', id: gend_image.id_hash)
+        get(:show, params: { id: gend_image.id_hash })
 
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')
@@ -687,7 +707,7 @@ describe GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get :show, id: gend_image.id_hash
+          get(:show, params: { id: gend_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -699,7 +719,7 @@ describe GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get(:show, id: gend_image.id_hash)
+          get(:show, params: { id: gend_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -711,13 +731,13 @@ describe GendImagesController, type: :controller do
 
     context 'when the id is found' do
       it 'marks the record as deleted in the database' do
-        delete :destroy, id: id
+        delete(:destroy, params: { id: id })
         gend_image.reload
         expect(gend_image.is_deleted?).to eq(true)
       end
 
       it 'returns success' do
-        delete :destroy, id: id
+        delete(:destroy, params: { id: id })
         expect(response).to be_success
       end
     end
@@ -725,7 +745,7 @@ describe GendImagesController, type: :controller do
     context 'when the id is not found' do
       let(:id) { 'abc' }
       it 'raises record not found' do
-        expect { delete :destroy, id: id }.to raise_error(
+        expect { delete(:destroy, params: { id: id }) }.to raise_error(
           ActiveRecord::RecordNotFound
         )
       end
@@ -735,7 +755,7 @@ describe GendImagesController, type: :controller do
       let(:gend_image) { FactoryGirl.create(:gend_image, user: user2) }
 
       it "doesn't allow it to be deleted" do
-        delete :destroy, id: id
+        delete(:destroy, params: { id: id })
 
         expect(response).to be_forbidden
       end
@@ -745,7 +765,7 @@ describe GendImagesController, type: :controller do
       let(:user) { nil }
 
       it 'cannot be deleted' do
-        delete :destroy, id: id
+        delete(:destroy, params: { id: id })
 
         expect(response).to be_forbidden
       end
@@ -758,7 +778,7 @@ describe GendImagesController, type: :controller do
         let(:gend_image) { FactoryGirl.create(:gend_image) }
 
         it 'marks the image as deleted' do
-          expect { delete(:destroy, id: id) }.to change {
+          expect { delete(:destroy, params: { id: id }) }.to change {
             gend_image.reload
             gend_image.is_deleted?
           }.from(false).to(true)
@@ -769,7 +789,7 @@ describe GendImagesController, type: :controller do
         let(:gend_image) { FactoryGirl.create(:gend_image, user: user2) }
 
         it 'marks the image as deleted' do
-          expect { delete(:destroy, id: id) }.to change {
+          expect { delete(:destroy, params: { id: id }) }.to change {
             gend_image.reload
             gend_image.is_deleted?
           }.from(false).to(true)

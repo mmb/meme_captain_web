@@ -31,7 +31,7 @@ describe SrcImagesController, type: :controller do
 
   describe "GET 'index'" do
     it 'returns http success' do
-      get :index
+      get(:index)
 
       expect(response).to be_success
     end
@@ -50,7 +50,7 @@ describe SrcImagesController, type: :controller do
                                gend_images_count: 30,
                                work_in_progress: false)
 
-      get :index
+      get(:index)
 
       expect(assigns(:src_images)).to eq([si3, si1, si2])
     end
@@ -62,7 +62,7 @@ describe SrcImagesController, type: :controller do
           :src_image, user: user, is_deleted: true, work_in_progress: false
         )
 
-        get :index
+        get(:index)
 
         expect(assigns(:src_images).size).to eq(1)
       end
@@ -71,7 +71,7 @@ describe SrcImagesController, type: :controller do
         FactoryGirl.create(:src_image, user: user)
         FactoryGirl.create(:src_image, user: user, work_in_progress: false)
 
-        get :index
+        get(:index)
 
         expect(assigns(:src_images).size).to eq(1)
       end
@@ -80,7 +80,7 @@ describe SrcImagesController, type: :controller do
         FactoryGirl.create(:src_image, private: true, work_in_progress: false)
         3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
 
-        get :index
+        get(:index)
 
         expect(assigns(:src_images).size).to eq(3)
       end
@@ -95,7 +95,7 @@ describe SrcImagesController, type: :controller do
           :src_image, user: user, is_deleted: true, work_in_progress: false
         )
 
-        get :index
+        get(:index)
 
         expect(assigns(:src_images).size).to eq(2)
       end
@@ -104,7 +104,7 @@ describe SrcImagesController, type: :controller do
         FactoryGirl.create(:src_image, user: user)
         FactoryGirl.create(:src_image, user: user, work_in_progress: false)
 
-        get :index
+        get(:index)
 
         expect(assigns(:src_images).size).to eq(2)
       end
@@ -113,7 +113,7 @@ describe SrcImagesController, type: :controller do
         FactoryGirl.create(:src_image, private: true, work_in_progress: false)
         3.times { FactoryGirl.create(:src_image, work_in_progress: false) }
 
-        get :index
+        get(:index)
 
         expect(assigns(:src_images).size).to eq(4)
       end
@@ -140,7 +140,7 @@ describe SrcImagesController, type: :controller do
           work_in_progress: false
         )
 
-        get :index, q: 'red'
+        get(:index, params: { q: 'red' })
         expect(assigns(:src_images)).to eq([si2])
       end
 
@@ -152,7 +152,7 @@ describe SrcImagesController, type: :controller do
           work_in_progress: false
         )
 
-        get :index, q: 'QuIcK'
+        get(:index, params: { q: 'QuIcK' })
         expect(assigns(:src_images)).to eq([si])
       end
 
@@ -163,7 +163,7 @@ describe SrcImagesController, type: :controller do
           name: 'the quick brown fox',
           work_in_progress: false
         )
-        get :index, q: " \t\r\nquick"
+        get(:index, params: { q: " \t\r\nquick" })
         expect(assigns(:src_images)).to eq([si])
       end
 
@@ -174,7 +174,7 @@ describe SrcImagesController, type: :controller do
           name: 'the quick brown fox',
           work_in_progress: false
         )
-        get :index, q: "quick \t\n\r"
+        get(:index, params: { q: "quick \t\n\r" })
         expect(assigns(:src_images)).to eq([si])
       end
     end
@@ -282,18 +282,18 @@ describe SrcImagesController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new source image to the database' do
         expect do
-          post :create, src_image: { image: image }
+          post(:create, params: { src_image: { image: image } })
         end.to change { SrcImage.count }.by(1)
       end
 
       it 'increments the src_image.upload statsd counter' do
         expect do
-          post :create, src_image: { image: image }
+          post(:create, params: { src_image: { image: image } })
         end.to trigger_statsd_increment('src_image.upload')
       end
 
       it 'sets the creator_ip to the remote ip address' do
-        post :create, src_image: { image: image }
+        post(:create, params: { src_image: { image: image } })
         expect(SrcImage.last.creator_ip).to eq('0.0.0.0')
       end
 
@@ -301,7 +301,7 @@ describe SrcImagesController, type: :controller do
         before { request.headers['CF-Connecting-IP'] = '6.6.2.2' }
 
         it 'sets the creator_ip to the value of CF-Connecting-IP' do
-          post(:create, src_image: { image: image })
+          post(:create, params: { src_image: { image: image } })
           expect(SrcImage.last.creator_ip).to eq('6.6.2.2')
         end
       end
@@ -309,20 +309,22 @@ describe SrcImagesController, type: :controller do
       context 'when the image is loaded from a url' do
         it 'does not increment the src_image.upload statsd counter' do
           expect do
-            post :create, src_image: { url: 'http://images.com/image.jpg' }
+            post(:create, params: {
+                   src_image: { url: 'http://images.com/image.jpg' }
+                 })
           end.not_to trigger_statsd_increment('src_image.upload')
         end
       end
 
       context 'when the user requests html' do
         it 'redirects to the index page' do
-          post :create, src_image: { image: image }
+          post(:create, params: { src_image: { image: image } })
 
           expect(response).to redirect_to controller: :my, action: :show
         end
 
         it 'informs the user of success with flash' do
-          post :create, src_image: { image: image }
+          post(:create, params: { src_image: { image: image } })
 
           expect(flash[:notice]).to eq('Source image created.')
         end
@@ -332,19 +334,25 @@ describe SrcImagesController, type: :controller do
         before { request.accept = 'application/json' }
 
         it 'returns accepted' do
-          post :create, src_image: { url: 'http://test.com/image.jpg' }
+          post(:create, params: {
+                 src_image: { url: 'http://test.com/image.jpg' }
+               })
           expect(response).to have_http_status(:accepted)
         end
 
         it 'returns json with id' do
-          post :create, src_image: { url: 'http://test.com/image.jpg' }
+          post(:create, params: {
+                 src_image: { url: 'http://test.com/image.jpg' }
+               })
           expect(JSON.parse(response.body)['id']).to eq(
             assigns(:src_image).id_hash
           )
         end
 
         it 'sets the Location header to the pending src image url' do
-          post :create, src_image: { url: 'http://test.com/image.jpg' }
+          post(:create, params: {
+                 src_image: { url: 'http://test.com/image.jpg' }
+               })
           expect(response.headers['Location']).to eq(
             'http://test.host/pending_src_images/' \
             "#{assigns(:src_image).id_hash}"
@@ -352,7 +360,9 @@ describe SrcImagesController, type: :controller do
         end
 
         it 'returns the status url in the response' do
-          post(:create, src_image: { url: 'http://test.com/image.jpg' })
+          post(:create, params: {
+                 src_image: { url: 'http://test.com/image.jpg' }
+               })
 
           expect(JSON.parse(response.body)['status_url']).to eq(
             'http://test.host/pending_src_images/' \
@@ -367,12 +377,12 @@ describe SrcImagesController, type: :controller do
 
       it 'does not save the new source image in the database' do
         expect do
-          post :create, src_image: { image: image }
+          post(:create, params: { src_image: { image: image } })
         end.to_not change { SrcImage.count }
       end
 
       it 're-renders the new template' do
-        post :create, src_image: { image: image }
+        post(:create, params: { src_image: { image: image } })
 
         expect(response).to render_template('new')
       end
@@ -383,14 +393,16 @@ describe SrcImagesController, type: :controller do
 
       it 'saves the new source image to the database' do
         expect do
-          post :create, src_image: { image: image }
+          post(:create, params: { src_image: { image: image } })
         end.to change { SrcImage.count }.by(1)
       end
     end
 
     context 'setting an optional name' do
       it 'saves the name to the database' do
-        post :create, src_image: { image: image, name: 'a test name' }
+        post(:create, params: {
+               src_image: { image: image, name: 'a test name' }
+             })
         expect(SrcImage.last.name).to eq('a test name')
       end
     end
@@ -404,7 +416,9 @@ describe SrcImagesController, type: :controller do
 
       it 'updates the name' do
         request.accept = 'application/json'
-        put :update, id: src_image.id_hash, src_image: { name: 'test' }
+        put(:update, params: {
+              id: src_image.id_hash, src_image: { name: 'test' }
+            })
 
         expect(SrcImage.find_by(id_hash: src_image.id_hash).name).to eq('test')
       end
@@ -417,7 +431,9 @@ describe SrcImagesController, type: :controller do
 
       it 'does not change the name' do
         request.accept = 'application/json'
-        put :update, id: src_image.id_hash, src_image: { name: 'test' }
+        put(:update, params: {
+              id: src_image.id_hash, src_image: { name: 'test' }
+            })
 
         expect(SrcImage.find_by(id_hash: src_image.id_hash).name).to eq('pre')
       end
@@ -434,31 +450,31 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'shows the source image' do
-        get 'show', id: src_image.id_hash
+        get(:show, params: { id: src_image.id_hash })
 
         expect(response).to be_success
       end
 
       it 'has the right content type' do
-        get 'show', id: src_image.id_hash
+        get(:show, params: { id: src_image.id_hash })
 
         expect(response.headers['Content-Type']).to eq(src_image.content_type)
       end
 
       it 'has the right Content-Length header' do
-        get('show', id: src_image.id_hash)
+        get('show', params: { id: src_image.id_hash })
 
         expect(response.headers['Content-Length']).to eq(9141)
       end
 
       it 'has the right content' do
-        get 'show', id: src_image.id_hash
+        get(:show, params: { id: src_image.id_hash })
 
         expect(response.body).to eq(src_image.image)
       end
 
       it 'has the correct Cache-Control headers' do
-        get(:show, id: src_image.id_hash)
+        get(:show, params: { id: src_image.id_hash })
 
         expect(response.headers['Cache-Control']).to eq(
           'max-age=31557600, public'
@@ -467,7 +483,7 @@ describe SrcImagesController, type: :controller do
 
       it 'has the correct Expires header' do
         stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
-        get('show', id: src_image.id_hash)
+        get('show', params: { id: src_image.id_hash })
 
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')
@@ -477,7 +493,7 @@ describe SrcImagesController, type: :controller do
     context 'when the id is not found' do
       it 'raises record not found' do
         expect do
-          get 'show', id: 'does not exist'
+          get('show', params: { id: 'does not exist' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -493,7 +509,7 @@ describe SrcImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get 'show', id: src_image.id_hash
+          get(:show, params: { id: src_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -502,10 +518,10 @@ describe SrcImagesController, type: :controller do
   describe "DELETE 'destroy'" do
     context 'when the id is found' do
       it 'marks the record as deleted in the database' do
-        post :create, src_image: {
-          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')
-        }
-        delete :destroy, id: assigns(:src_image).id_hash
+        post(:create, params: { src_image: {
+               image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')
+             } })
+        delete(:destroy, params: { id: assigns(:src_image).id_hash })
 
         expect(SrcImage.find_by(
           id_hash: assigns(:src_image).id_hash
@@ -513,10 +529,10 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'returns success' do
-        post :create, src_image: {
-          image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')
-        }
-        delete :destroy, id: assigns(:src_image).id_hash
+        post(:create, params: { src_image: {
+               image: fixture_file_upload('/files/ti_duck.jpg', 'image/jpeg')
+             } })
+        delete(:destroy, params: { id: assigns(:src_image).id_hash })
 
         expect(response).to be_success
       end
@@ -525,7 +541,7 @@ describe SrcImagesController, type: :controller do
     context 'when the id is not found' do
       it 'raises record not found' do
         expect do
-          delete :destroy, id: 'abc'
+          delete(:destroy, params: { id: 'abc' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -534,7 +550,7 @@ describe SrcImagesController, type: :controller do
       it "doesn't allow it to be deleted" do
         src_image = FactoryGirl.create(:src_image, user: user2)
 
-        delete :destroy, id: src_image.id_hash
+        delete(:destroy, params: { id: src_image.id_hash })
 
         expect(response).to be_forbidden
       end

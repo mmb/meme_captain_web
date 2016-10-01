@@ -10,7 +10,7 @@ describe GendThumbsController, type: :controller do
       it 'shows the thumbnail' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: gend_thumb.id
+        get(:show, params: { id: gend_thumb.id })
 
         expect(response).to be_success
       end
@@ -18,7 +18,7 @@ describe GendThumbsController, type: :controller do
       it 'has the right content type' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: gend_thumb.id
+        get(:show, params: { id: gend_thumb.id })
 
         expect(response.headers['Content-Type']).to eq(gend_thumb.content_type)
       end
@@ -26,7 +26,7 @@ describe GendThumbsController, type: :controller do
       it 'has the right Content-Length header' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get('show', id: gend_thumb.id)
+        get(:show, params: { id: gend_thumb.id })
 
         expect(response.headers['Content-Length']).to eq(279)
       end
@@ -34,7 +34,7 @@ describe GendThumbsController, type: :controller do
       it 'has the right content' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: gend_thumb.id
+        get(:show, params: { id: gend_thumb.id })
 
         expect(response.body).to eq(gend_thumb.image)
       end
@@ -42,7 +42,7 @@ describe GendThumbsController, type: :controller do
       it 'has the correct Cache-Control header' do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
-        get :show, id: gend_thumb.id
+        get(:show, params: { id: gend_thumb.id })
 
         cache_control = response.headers['Cache-Control']
         expect(cache_control).to eq('max-age=31557600, public')
@@ -52,7 +52,7 @@ describe GendThumbsController, type: :controller do
         gend_thumb = FactoryGirl.create(:gend_thumb)
 
         stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
-        get :show, id: gend_thumb.id
+        get(:show, params: { id: gend_thumb.id })
 
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')
@@ -61,7 +61,7 @@ describe GendThumbsController, type: :controller do
 
     context 'when the id is not found' do
       it 'raises record not found' do
-        expect { get :show, id: 1 }.to raise_error(
+        expect { get(:show, params: { id: 1 }) }.to raise_error(
           ActiveRecord::RecordNotFound
         )
       end

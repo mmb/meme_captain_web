@@ -12,7 +12,7 @@ describe SrcSetsController, type: :controller do
 
   describe "GET 'new'" do
     it 'does not match a route' do
-      expect { get :new }.to raise_error ActionController::UrlGenerationError
+      expect { get(:new) }.to raise_error ActionController::UrlGenerationError
     end
   end
 
@@ -20,18 +20,18 @@ describe SrcSetsController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new src set to the database' do
         expect do
-          post :create, src_set: { name: 'test' }
+          post(:create, params: { src_set: { name: 'test' } })
         end.to change { SrcSet.count }.by(1)
       end
 
       it 'redirects to the index' do
-        post :create, src_set: { name: 'test' }
+        post(:create, params: { src_set: { name: 'test' } })
 
         expect(response).to redirect_to action: :index
       end
 
       it 'informs the user of success with flash' do
-        post :create, src_set: { name: 'test' }
+        post(:create, params: { src_set: { name: 'test' } })
 
         expect(flash[:notice]).to eq('Source set created.')
       end
@@ -39,7 +39,7 @@ describe SrcSetsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'renders the form again' do
-        post :create, src_set: {}
+        post(:create, params: { src_set: {} })
         expect(response).to render_template(:new)
       end
     end
@@ -108,9 +108,10 @@ describe SrcSetsController, type: :controller do
     context 'adding source images' do
       it 'adds source images to the set' do
         expect do
-          put :update,
-              id: src_set.name,
-              add_src_images: [src_image.id_hash, src_image2.id_hash]
+          put(:update, params: {
+                id: src_set.name,
+                add_src_images: [src_image.id_hash, src_image2.id_hash]
+              })
           src_set.reload
         end.to change { src_set.src_images.size }.by(2)
       end
@@ -118,26 +119,29 @@ describe SrcSetsController, type: :controller do
       it "changes the set's updated time" do
         src_set.update_column(:updated_at, Time.now - 1)
         expect do
-          put :update,
-              id: src_set.name,
-              add_src_images: [src_image.id_hash, src_image2.id_hash]
+          put(:update, params: {
+                id: src_set.name,
+                add_src_images: [src_image.id_hash, src_image2.id_hash]
+              })
           src_set.reload
         end.to change { src_set.updated_at }
       end
 
       it 'redirects to the source set' do
-        put :update,
-            id: src_set.name,
-            add_src_images: [src_image.id_hash, src_image2.id_hash]
+        put(:update, params: {
+              id: src_set.name,
+              add_src_images: [src_image.id_hash, src_image2.id_hash]
+            })
         src_set.reload
 
         expect(response).to redirect_to action: :show
       end
 
       it 'informs the user of success with a notice' do
-        put :update,
-            id: src_set.name,
-            add_src_images: [src_image.id_hash, src_image2.id_hash]
+        put(:update, params: {
+              id: src_set.name,
+              add_src_images: [src_image.id_hash, src_image2.id_hash]
+            })
         src_set.reload
 
         expect(flash[:notice]).to eq 'The set was successfully updated.'
@@ -146,16 +150,18 @@ describe SrcSetsController, type: :controller do
 
     context 'deleting source images' do
       before(:each) do
-        put :update,
-            id: src_set.name,
-            add_src_images: [src_image.id_hash, src_image2.id_hash]
+        put(:update, params: {
+              id: src_set.name,
+              add_src_images: [src_image.id_hash, src_image2.id_hash]
+            })
       end
 
       it 'deletes source images from the set' do
         expect do
-          put :update,
-              id: src_set.name,
-              delete_src_images: [src_image.id_hash, src_image2.id_hash]
+          put(:update, params: {
+                id: src_set.name,
+                delete_src_images: [src_image.id_hash, src_image2.id_hash]
+              })
           src_set.reload
         end.to change { src_set.src_images.size }.by(-2)
       end
@@ -163,26 +169,29 @@ describe SrcSetsController, type: :controller do
       it "changes the set's updated time" do
         src_set.update_column(:updated_at, Time.now - 1)
         expect do
-          put :update,
-              id: src_set.name,
-              delete_src_images: [src_image.id_hash, src_image2.id_hash]
+          put(:update, params: {
+                id: src_set.name,
+                delete_src_images: [src_image.id_hash, src_image2.id_hash]
+              })
           src_set.reload
         end.to change { src_set.updated_at }
       end
 
       it 'redirects to the source set' do
-        put :update,
-            id: src_set.name,
-            delete_src_images: [src_image.id_hash, src_image2.id_hash]
+        put(:update, params: {
+              id: src_set.name,
+              delete_src_images: [src_image.id_hash, src_image2.id_hash]
+            })
         src_set.reload
 
         expect(response).to redirect_to action: :show
       end
 
       it 'informs the user of success with a notice' do
-        put :update,
-            id: src_set.name,
-            delete_src_images: [src_image.id_hash, src_image2.id_hash]
+        put(:update, params: {
+              id: src_set.name,
+              delete_src_images: [src_image.id_hash, src_image2.id_hash]
+            })
         src_set.reload
 
         expect(flash[:notice]).to eq 'The set was successfully updated.'
@@ -191,21 +200,21 @@ describe SrcSetsController, type: :controller do
 
     context 'changing the name' do
       it 'has the new name' do
-        put :update, id: src_set.name, src_set: { name: 'newname' }
+        put(:update, params: { id: src_set.name, src_set: { name: 'newname' } })
         src_set.reload
 
         expect(src_set.name).to eq 'newname'
       end
 
       it 'redirects to the source set' do
-        put :update, id: src_set.name, src_set: { name: 'newname' }
+        put(:update, params: { id: src_set.name, src_set: { name: 'newname' } })
         src_set.reload
 
         expect(response).to redirect_to action: :show, id: 'newname'
       end
 
       it 'informs the user of success with a notice' do
-        put :update, id: src_set.name, src_set: { name: 'newname' }
+        put(:update, params: { id: src_set.name, src_set: { name: 'newname' } })
         src_set.reload
 
         expect(flash[:notice]).to eq 'The set was successfully updated.'
@@ -216,7 +225,7 @@ describe SrcSetsController, type: :controller do
       it "doesn't allow it to be updated" do
         src_set = FactoryGirl.create(:src_set, user: user2)
 
-        put :update, id: src_set.name, src_set: { name: 'newname' }
+        put(:update, params: { id: src_set.name, src_set: { name: 'newname' } })
 
         expect(response).to be_forbidden
       end
@@ -225,7 +234,9 @@ describe SrcSetsController, type: :controller do
     context "when the set doesn't exist" do
       it 'creates the set' do
         expect do
-          put :update, id: 'a new set', add_src_images: [src_image.id_hash]
+          put(:update, params: {
+                id: 'a new set', add_src_images: [src_image.id_hash]
+              })
         end.to change { SrcSet.count }.by(1)
       end
     end
@@ -234,7 +245,7 @@ describe SrcSetsController, type: :controller do
       let(:src_set) { FactoryGirl.create(:src_set, is_deleted: true) }
 
       it 'creates the set' do
-        put :update, id: src_set.name, src_set: { name: 'newname' }
+        put(:update, params: { id: src_set.name, src_set: { name: 'newname' } })
         expect(SrcSet.last.name).to eq('newname')
       end
     end
@@ -245,7 +256,7 @@ describe SrcSetsController, type: :controller do
       let(:src_set) { FactoryGirl.create(:src_set) }
 
       it 'assigns the source set' do
-        get :show, id: src_set.name
+        get(:show, params: { id: src_set.name })
 
         expect(assigns(:src_set)).to eq src_set
       end
@@ -259,7 +270,7 @@ describe SrcSetsController, type: :controller do
         src_set.src_images << si2
         src_set.src_images << si3
 
-        get :show, id: src_set.name
+        get(:show, params: { id: src_set.name })
 
         expect(assigns(:src_images)).to eq [si1, si3, si2]
       end
@@ -271,13 +282,13 @@ describe SrcSetsController, type: :controller do
         src_set.src_images << si1
         src_set.src_images << si2
 
-        get :show, id: src_set.name
+        get(:show, params: { id: src_set.name })
 
         expect(assigns(:src_images)).to eq [si2]
       end
 
       it 'returns success' do
-        get :show, id: src_set.name
+        get(:show, params: { id: src_set.name })
 
         expect(response).to be_success
       end
@@ -286,7 +297,7 @@ describe SrcSetsController, type: :controller do
     context 'when the name is not found' do
       it 'raises record not found' do
         expect do
-          get 'show', id: 'abc'
+          get('show', params: { id: 'abc' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -296,7 +307,7 @@ describe SrcSetsController, type: :controller do
 
       it 'returns not found' do
         expect do
-          get :show, id: src_set.name
+          get(:show, params: { id: src_set.name })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -307,12 +318,12 @@ describe SrcSetsController, type: :controller do
 
     context 'when the name is found' do
       it 'marks the record as deleted in the database' do
-        delete :destroy, id: src_set.name
+        delete(:destroy, params: { id: src_set.name })
         expect(SrcSet.find(src_set.id).is_deleted?).to eq(true)
       end
 
       it 'redirects to the index page' do
-        delete :destroy, id: src_set.name
+        delete(:destroy, params: { id: src_set.name })
         expect(response).to redirect_to action: :index
       end
     end
@@ -320,7 +331,7 @@ describe SrcSetsController, type: :controller do
     context 'when the name is not found' do
       it 'raises record not found' do
         expect do
-          delete :destroy, id: 'abc'
+          delete(:destroy, params: { id: 'abc' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -330,7 +341,7 @@ describe SrcSetsController, type: :controller do
 
       it 'returns not found' do
         expect do
-          delete :destroy, id: src_set.name
+          delete(:destroy, params: { id: src_set.name })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -340,7 +351,7 @@ describe SrcSetsController, type: :controller do
         session[:user_id] = nil
 
         expect do
-          delete :destroy, id: src_set.name
+          delete(:destroy, params: { id: src_set.name })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -352,7 +363,7 @@ describe SrcSetsController, type: :controller do
 
       it 'returns not found' do
         expect do
-          delete :destroy, id: src_set.name
+          delete(:destroy, params: { id: src_set.name })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
