@@ -297,7 +297,7 @@ describe SrcSetsController, type: :controller do
     context 'when the name is not found' do
       it 'raises record not found' do
         expect do
-          get('show', params: { id: 'abc' })
+          get(:show, params: { id: 'abc' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end

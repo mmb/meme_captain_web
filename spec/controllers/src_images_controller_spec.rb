@@ -462,7 +462,7 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'has the right Content-Length header' do
-        get('show', params: { id: src_image.id_hash })
+        get(:show, params: { id: src_image.id_hash })
 
         expect(response.headers['Content-Length']).to eq(9141)
       end
@@ -483,7 +483,7 @@ describe SrcImagesController, type: :controller do
 
       it 'has the correct Expires header' do
         stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
-        get('show', params: { id: src_image.id_hash })
+        get(:show, params: { id: src_image.id_hash })
 
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')
@@ -493,7 +493,7 @@ describe SrcImagesController, type: :controller do
     context 'when the id is not found' do
       it 'raises record not found' do
         expect do
-          get('show', params: { id: 'does not exist' })
+          get(:show, params: { id: 'does not exist' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
