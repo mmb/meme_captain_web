@@ -93,7 +93,9 @@ RUN apt-get install --assume-yes \
   && bundle install --jobs=4 \
   && bundle exec rake \
     build_metadata[build_metadata.json] \
-    assets:precompile RAILS_ENV=production
+    assets:precompile \
+    RAILS_ENV=production \
+    RAILS_SERVE_STATIC_FILES=true
 
 # cleanup
 RUN apt-get clean \
