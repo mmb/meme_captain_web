@@ -8,7 +8,7 @@ curl \
   --fail \
   --head \
   --verbose \
-  https://www.imagemagick.org/download/ImageMagick-6.9.5-10.tar.xz
+  https://www.imagemagick.org/download/ImageMagick-6.9.6-0.tar.xz
 
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 if [ "$CURRENT_BRANCH" != "master" ]; then
