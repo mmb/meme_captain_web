@@ -11,12 +11,12 @@ describe StatsController, type: :controller do
 
       it 'sends a stat to statsd' do
         expect do
-          post(:create, key: 'test.key', secret: stats_secret)
+          post(:create, params: { key: 'test.key', secret: stats_secret })
         end.to trigger_statsd_increment('test.key')
       end
 
       it 'returns ok' do
-        post(:create, key: 'test.key', secret: stats_secret)
+        post(:create, params: { key: 'test.key', secret: stats_secret })
         expect(response).to be_ok
       end
     end
@@ -26,12 +26,12 @@ describe StatsController, type: :controller do
 
       it 'does not send a stat to statsd' do
         expect do
-          post(:create, key: 'test.key', secret: stats_secret)
+          post(:create, params: { key: 'test.key', secret: stats_secret })
         end.to_not trigger_statsd_increment('test.key')
       end
 
       it 'returns forbidden' do
-        post(:create, key: 'test.key', secret: stats_secret)
+        post(:create, params: { key: 'test.key', secret: stats_secret })
         expect(response).to be_forbidden
       end
     end
@@ -51,12 +51,12 @@ describe StatsController, type: :controller do
 
       it 'does not send a stat to statsd' do
         expect do
-          post(:create, key: 'test.key', secret: stats_secret)
+          post(:create, params: { key: 'test.key', secret: stats_secret })
         end.to_not trigger_statsd_increment('test.key')
       end
 
       it 'returns forbidden' do
-        post(:create, key: 'test.key', secret: stats_secret)
+        post(:create, params: { key: 'test.key', secret: stats_secret })
         expect(response).to be_forbidden
       end
     end

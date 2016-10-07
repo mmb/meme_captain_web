@@ -20,17 +20,17 @@ describe GendImagePagesController, type: :controller do
     before(:each) { session[:user_id] = user.try(:id) }
 
     it 'sets the gend image' do
-      get :show, id: gend_image.id_hash
+      get(:show, params: { id: gend_image.id_hash })
       expect(assigns(:gend_image)).to eq gend_image
     end
 
     it 'sets the src image' do
-      get :show, id: gend_image.id_hash
+      get(:show, params: { id: gend_image.id_hash })
       expect(assigns(:src_image)).to eq src_image
     end
 
     it 'sets the gend image url' do
-      get :show, id: gend_image.id_hash
+      get(:show, params: { id: gend_image.id_hash })
       expect(assigns(:gend_image_url)).to eq(
         "http://test.host/gend_images/#{gend_image.id_hash}.jpg"
       )
@@ -38,7 +38,7 @@ describe GendImagePagesController, type: :controller do
 
     context 'when the gend image is less than 10 seconds old' do
       it 'refreshes in 2 seconds' do
-        get :show, id: gend_image.id_hash
+        get(:show, params: { id: gend_image.id_hash })
         expect(assigns(:refresh_in)).to eq 2
       end
     end
@@ -48,7 +48,7 @@ describe GendImagePagesController, type: :controller do
         gend_image
 
         stop_time(Time.now + 20)
-        get :show, id: gend_image.id_hash
+        get(:show, params: { id: gend_image.id_hash })
         expect(assigns(:refresh_in)).to be_nil
       end
     end
@@ -60,7 +60,7 @@ describe GendImagePagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get :show, id: gend_image.id_hash
+          get(:show, params: { id: gend_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -69,7 +69,7 @@ describe GendImagePagesController, type: :controller do
       let(:user) { nil }
 
       it 'sets show_creator_ip to false' do
-        get(:show, id: gend_image.id_hash)
+        get(:show, params: { id: gend_image.id_hash })
         expect(assigns(:show_creator_ip)).to eq(false)
       end
     end
@@ -78,7 +78,7 @@ describe GendImagePagesController, type: :controller do
       let(:user) { FactoryGirl.create(:admin_user) }
 
       it 'sets show_creator_ip to true' do
-        get(:show, id: gend_image.id_hash)
+        get(:show, params: { id: gend_image.id_hash })
         expect(assigns(:show_creator_ip)).to eq(true)
       end
     end

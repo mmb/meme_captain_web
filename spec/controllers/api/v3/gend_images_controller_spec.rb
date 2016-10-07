@@ -19,7 +19,7 @@ describe Api::V3::GendImagesController, type: :controller do
     it 'gets the gend images for the user, query and page' do
       expect(GendImage).to receive(:for_user).with(user, 'test query', '7')
         .and_return(GendImage.none)
-      get(:index, q: 'test query', page: '7', format: :json)
+      get(:index, params: { q: 'test query', page: '7', format: :json })
     end
 
     it 'sets the image url on each gend image' do
@@ -260,24 +260,26 @@ describe Api::V3::GendImagesController, type: :controller do
 
     it 'saves the image to the database' do
       expect do
-        post(:create, gend_image: { src_image_id: src_image.id_hash })
+        post(:create, params: {
+               gend_image: { src_image_id: src_image.id_hash }
+             })
       end.to change { GendImage.count }.by(1)
     end
 
     it 'responds with ok' do
-      post(:create, gend_image: { src_image_id: src_image.id_hash })
+      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
 
       expect(response).to have_http_status(:ok)
     end
 
     it 'returns application/json as the content type' do
-      post(:create, gend_image: { src_image_id: src_image.id_hash })
+      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
 
       expect(response.content_type).to eq('application/json')
     end
 
     it 'returns a json body with the gend image id' do
-      post(:create, gend_image: { src_image_id: src_image.id_hash })
+      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
 
       expect(JSON.parse(response.body)['id']).to eq(
         assigns(:gend_image).id_hash
@@ -285,7 +287,7 @@ describe Api::V3::GendImagesController, type: :controller do
     end
 
     it 'returns a json body with the gend image id' do
-      post(:create, gend_image: { src_image_id: src_image.id_hash })
+      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
 
       expect(JSON.parse(response.body)['status_url']).to eq(
         'http://test.host/api/v3/pending_gend_images/' \
@@ -427,7 +429,9 @@ describe Api::V3::GendImagesController, type: :controller do
   context 'when the source image is not found' do
     it 'raises record not found' do
       expect do
-        post(:create, gend_image: { src_image_id: 'abc' })
+        post(:create, params: {
+               gend_image: { src_image_id: 'abc' }
+             })
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -437,7 +441,9 @@ describe Api::V3::GendImagesController, type: :controller do
 
     it 'raises record not found' do
       expect do
-        post(:create, gend_image: { src_image_id: src_image.id_hash })
+        post(:create, params: {
+               gend_image: { src_image_id: src_image.id_hash }
+             })
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -451,7 +457,9 @@ describe Api::V3::GendImagesController, type: :controller do
 
     it 'raises record not found' do
       expect do
-        post(:create, gend_image: { src_image_id: src_image.id_hash })
+        post(:create, params: {
+               gend_image: { src_image_id: src_image.id_hash }
+             })
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -459,7 +467,7 @@ describe Api::V3::GendImagesController, type: :controller do
   context 'when the gend_image parameter is missing' do
     it 'raises record not found' do
       expect do
-        post(:create, {})
+        post(:create, params: {})
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end

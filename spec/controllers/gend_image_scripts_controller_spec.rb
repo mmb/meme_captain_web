@@ -11,7 +11,7 @@ describe GendImageScriptsController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get(:show, id: gend_image.id_hash)
+          get(:show, params: { id: gend_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -23,7 +23,7 @@ describe GendImageScriptsController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          get(:show, id: gend_image.id_hash)
+          get(:show, params: { id: gend_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -31,7 +31,7 @@ describe GendImageScriptsController, type: :controller do
     context "when the image doesn't exist" do
       it 'raises record not found' do
         expect do
-          get(:show, id: 'not here')
+          get(:show, params: { id: 'not here' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -42,7 +42,7 @@ describe GendImageScriptsController, type: :controller do
       end
 
       it 'assigns the endpoint' do
-        get(:show, id: gend_image.id_hash, format: :text)
+        get(:show, params: { id: gend_image.id_hash, format: :text })
         expect(assigns(:endpoint)).to eq('http://test.host/api/v3/gend_images')
       end
 
@@ -57,12 +57,12 @@ describe GendImageScriptsController, type: :controller do
           'test json'
         )
 
-        get(:show, id: gend_image.id_hash, format: :text)
+        get(:show, params: { id: gend_image.id_hash, format: :text })
         expect(assigns(:json)).to eq('test json')
       end
 
       it 'has text/plain as the content type' do
-        get(:show, id: gend_image.id_hash, format: :text)
+        get(:show, params: { id: gend_image.id_hash, format: :text })
         expect(response.content_type).to eq('text/plain')
       end
     end
