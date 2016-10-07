@@ -79,7 +79,7 @@
         ],
         "VPCZoneIdentifier": [
           {
-            "Ref": "privateSubnet1"
+            "Ref": "publicSubnet1"
           }
         ]
       },
@@ -90,6 +90,7 @@
     },
     "canaryLaunchConfig": {
       "Properties": {
+        "AssociatePublicIpAddress": true,
         "BlockDeviceMappings": [
           {
             "DeviceName": "/dev/xvda",
