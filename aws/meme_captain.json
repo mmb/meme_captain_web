@@ -736,7 +736,7 @@
         ],
         "VPCZoneIdentifier": [
           {
-            "Ref": "privateSubnet1"
+            "Ref": "publicSubnet1"
           }
         ]
       },
@@ -747,6 +747,7 @@
     },
     "onDemandLaunchConfig": {
       "Properties": {
+        "AssociatePublicIpAddress": true,
         "BlockDeviceMappings": [
           {
             "DeviceName": "/dev/xvda",
@@ -1004,7 +1005,7 @@
         ],
         "VPCZoneIdentifier": [
           {
-            "Ref": "privateSubnet1"
+            "Ref": "publicSubnet1"
           }
         ]
       },
@@ -1052,6 +1053,7 @@
     },
     "spot2LaunchConfig": {
       "Properties": {
+        "AssociatePublicIpAddress": true,
         "BlockDeviceMappings": [
           {
             "DeviceName": "/dev/xvda",
@@ -1146,7 +1148,7 @@
         ],
         "VPCZoneIdentifier": [
           {
-            "Ref": "privateSubnet1"
+            "Ref": "publicSubnet1"
           }
         ]
       },
@@ -1243,6 +1245,7 @@
     },
     "spotLaunchConfig": {
       "Properties": {
+        "AssociatePublicIpAddress": true,
         "BlockDeviceMappings": [
           {
             "DeviceName": "/dev/xvda",
@@ -1339,7 +1342,7 @@
         ],
         "VPCZoneIdentifier": [
           {
-            "Ref": "privateSubnet1"
+            "Ref": "publicSubnet1"
           }
         ]
       },
@@ -1350,6 +1353,7 @@
     },
     "steelReserveLaunchConfig": {
       "Properties": {
+        "AssociatePublicIpAddress": true,
         "BlockDeviceMappings": [
           {
             "DeviceName": "/dev/xvda",
