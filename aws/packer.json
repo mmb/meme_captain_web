@@ -52,6 +52,7 @@
         "sudo docker build --rm=true --tag=meme_captain https://github.com/mmb/meme_captain_web.git#deploy",
         "cat << EOF > startup",
         "export INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)",
+        "iptables -A OUTPUT -d 169.254.169.254 -j DROP",
         "docker run \\",
         "  --name meme_captain \\",
         "  --env=INSTANCE_ID \\",
