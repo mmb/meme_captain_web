@@ -36,7 +36,7 @@ describe Api::V3::SrcImagesController, type: :controller do
     it 'gets the src images for the user, query and page' do
       expect(SrcImage).to receive(:for_user).with(user, 'test query', '7')
         .and_return(src_images)
-      get(:index, q: 'test query', page: '7', format: :json)
+      get(:index, params: { q: 'test query', page: '7', format: :json })
     end
 
     it 'sets the image url on each src image' do
@@ -125,10 +125,12 @@ describe Api::V3::SrcImagesController, type: :controller do
     context 'with valid attributes' do
       context 'when uploading image data' do
         it 'creates a src image with the image data' do
-          post(:create, src_image: {
-                 image: fixture_file_upload(
-                   '/files/ti_duck.jpg', 'image/jpeg'
-                 )
+          post(:create, params: {
+                 src_image: {
+                   image: fixture_file_upload(
+                     '/files/ti_duck.jpg', 'image/jpeg'
+                   )
+                 }
                })
           expect(response).to have_http_status(:ok)
           expected_image_data = File.open(
@@ -140,20 +142,24 @@ describe Api::V3::SrcImagesController, type: :controller do
 
         it 'increments the src image upload statsd counter' do
           expect do
-            post(:create, src_image: {
-                   image: fixture_file_upload(
-                     '/files/ti_duck.jpg', 'image/jpeg'
-                   )
+            post(:create, params: {
+                   src_image: {
+                     image: fixture_file_upload(
+                       '/files/ti_duck.jpg', 'image/jpeg'
+                     )
+                   }
                  })
             expect(response).to have_http_status(:ok)
           end.to trigger_statsd_increment('src_image.upload')
         end
 
         it 'sets the creator_ip to the remote ip address' do
-          post(:create, src_image: {
-                 image: fixture_file_upload(
-                   '/files/ti_duck.jpg', 'image/jpeg'
-                 )
+          post(:create, params: {
+                 src_image: {
+                   image: fixture_file_upload(
+                     '/files/ti_duck.jpg', 'image/jpeg'
+                   )
+                 }
                })
           expect(SrcImage.last.creator_ip).to eq('0.0.0.0')
         end
@@ -162,10 +168,12 @@ describe Api::V3::SrcImagesController, type: :controller do
           before { request.headers['CF-Connecting-IP'] = '6.6.2.2' }
 
           it 'sets the creator_ip to the value of CF-Connecting-IP' do
-            post(:create, src_image: {
-                   image: fixture_file_upload(
-                     '/files/ti_duck.jpg', 'image/jpeg'
-                   )
+            post(:create, params: {
+                   src_image: {
+                     image: fixture_file_upload(
+                       '/files/ti_duck.jpg', 'image/jpeg'
+                     )
+                   }
                  })
             expect(SrcImage.last.creator_ip).to eq('6.6.2.2')
           end
@@ -174,55 +182,73 @@ describe Api::V3::SrcImagesController, type: :controller do
 
       context 'when loading an image url' do
         it 'creates a src image with the url' do
-          post(:create, src_image: { url: 'http://test.com/image.jpg' })
+          post(:create, params: {
+                 src_image: {
+                   url: 'http://test.com/image.jpg'
+                 }
+               })
           expect(response).to have_http_status(:ok)
           expect(SrcImage.last.url).to eq('http://test.com/image.jpg')
         end
 
         it 'does not increment the src image upload statsd counter' do
           expect do
-            post(:create, src_image: { url: 'http://test.com/image.jpg' })
+            post(:create, params: {
+                   src_image: {
+                     url: 'http://test.com/image.jpg'
+                   }
+                 })
             expect(response).to have_http_status(:ok)
           end.to_not trigger_statsd_increment('src_image.upload')
         end
       end
 
       it 'creates the src image with the private flag' do
-        post(:create, src_image: {
-               url: 'http://test.com/image.jpg',
-               private: true
+        post(:create, params: {
+               src_image: {
+                 url: 'http://test.com/image.jpg',
+                 private: true
+               }
              })
         expect(response).to have_http_status(:ok)
         expect(SrcImage.last.private).to eq(true)
       end
 
       it 'creates the src image with the name' do
-        post(:create, src_image: {
-               url: 'http://test.com/image.jpg',
-               name: 'test name'
+        post(:create, params: {
+               src_image: {
+                 url: 'http://test.com/image.jpg',
+                 name: 'test name'
+               }
              })
         expect(response).to have_http_status(:ok)
         expect(SrcImage.last.name).to eq('test name')
       end
 
       it 'creates the src image owned by the current user' do
-        post(:create, src_image: {
-               url: 'http://test.com/image.jpg'
+        post(:create, params: {
+               src_image: {
+                 url: 'http://test.com/image.jpg'
+               }
              })
         expect(response).to have_http_status(:ok)
         expect(SrcImage.last.user).to eq(user)
       end
 
       it 'returns ok' do
-        post(:create, src_image: {
-               url: 'http://test.com/image.jpg'
+        post(:create, params: {
+               src_image: {
+                 url: 'http://test.com/image.jpg'
+               }
              })
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns json with the src image id' do
-        post(:create, src_image: {
-               url: 'http://test.com/image.jpg'
+        post(:create, params: {
+               src_image: {
+                 url: 'http://test.com/image.jpg'
+               }
              })
         expect(response).to have_http_status(:ok)
         created_src_image = SrcImage.last
@@ -232,8 +258,10 @@ describe Api::V3::SrcImagesController, type: :controller do
       end
 
       it 'returns json with the status url' do
-        post(:create, src_image: {
-               url: 'http://test.com/image.jpg'
+        post(:create, params: {
+               src_image: {
+                 url: 'http://test.com/image.jpg'
+               }
              })
         expect(response).to have_http_status(:ok)
         created_src_image = SrcImage.last
@@ -247,12 +275,12 @@ describe Api::V3::SrcImagesController, type: :controller do
 
     context 'with invalid attributes' do
       it 'returns unprocessable entity' do
-        post(:create, src_image: { name: 'test name' })
+        post(:create, params: { src_image: { name: 'test name' } })
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'returns json with the errors' do
-        post(:create, src_image: { name: 'test name' })
+        post(:create, params: { src_image: { name: 'test name' } })
         expect(JSON.parse(response.body)).to eq(
           'image' => ['is required if url is not set.']
         )

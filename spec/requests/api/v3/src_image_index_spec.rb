@@ -9,8 +9,9 @@ describe 'list src images using the JSON API', type: :request do
 
     get(
       '/api/v3/src_images',
-      '',
-      'HTTP_ACCEPT' => 'application/json'
+      headers: {
+        'Accept' => 'application/json'
+      }
     )
 
     expect(JSON.parse(response.body)).to eq(

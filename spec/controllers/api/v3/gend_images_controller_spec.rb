@@ -161,6 +161,10 @@ describe Api::V3::GendImagesController, type: :controller do
   end
 
   describe "POST 'create'" do
+    before do
+      request.content_type = 'application/json'
+    end
+
     context 'with valid attributes' do
       let(:body) do
         {
@@ -194,17 +198,17 @@ describe Api::V3::GendImagesController, type: :controller do
             },
             private: '1'
           }
-        }
+        }.to_json
       end
 
       it 'sets the src image' do
-        post(:create, body)
+        post(:create, body: body)
 
         expect(assigns(:gend_image).src_image).to eq(src_image)
       end
 
       it 'sets the caption 1' do
-        post(:create, body)
+        post(:create, body: body)
         caption = assigns(:gend_image).captions[0]
 
         expect(caption.font).to eq('font1')
@@ -216,7 +220,7 @@ describe Api::V3::GendImagesController, type: :controller do
       end
 
       it 'sets the caption 2' do
-        post(:create, body)
+        post(:create, body: body)
         caption = assigns(:gend_image).captions[1]
 
         expect(caption.font).to eq('font2')
@@ -228,7 +232,7 @@ describe Api::V3::GendImagesController, type: :controller do
       end
 
       it 'sets the caption 2' do
-        post(:create, body)
+        post(:create, body: body)
         caption = assigns(:gend_image).captions[2]
 
         expect(caption.font).to eq('font3')
@@ -240,235 +244,259 @@ describe Api::V3::GendImagesController, type: :controller do
       end
 
       it 'sets the private flag' do
-        post(:create, body)
+        post(:create, body: body)
 
         expect(assigns(:gend_image).private).to eq(true)
       end
 
       it 'sets the user to the current user' do
-        post(:create, body)
+        post(:create, body: body)
 
         expect(assigns(:gend_image).user).to eq(user)
       end
 
       it 'sets the creator ip' do
-        post(:create, body)
+        post(:create, body: body)
 
         expect(assigns(:gend_image).creator_ip).to eq('0.0.0.0')
       end
-    end
 
-    it 'saves the image to the database' do
-      expect do
+      it 'saves the image to the database' do
+        expect do
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: src_image.id_hash
+                 }
+               })
+        end.to change { GendImage.count }.by(1)
+      end
+
+      it 'responds with ok' do
         post(:create, params: {
-               gend_image: { src_image_id: src_image.id_hash }
+               gend_image: {
+                 src_image_id: src_image.id_hash
+               }
              })
-      end.to change { GendImage.count }.by(1)
-    end
 
-    it 'responds with ok' do
-      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
-
-      expect(response).to have_http_status(:ok)
-    end
-
-    it 'returns application/json as the content type' do
-      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
-
-      expect(response.content_type).to eq('application/json')
-    end
-
-    it 'returns a json body with the gend image id' do
-      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
-
-      expect(JSON.parse(response.body)['id']).to eq(
-        assigns(:gend_image).id_hash
-      )
-    end
-
-    it 'returns a json body with the gend image id' do
-      post(:create, params: { gend_image: { src_image_id: src_image.id_hash } })
-
-      expect(JSON.parse(response.body)['status_url']).to eq(
-        'http://test.host/api/v3/pending_gend_images/' \
-        "#{assigns(:gend_image).id_hash}"
-      )
-    end
-  end
-
-  context 'with invalid attributes' do
-    context 'when the height_pct is missing' do
-      let(:body) do
-        {
-          gend_image: {
-            src_image_id: src_image.id_hash,
-            captions_attributes: [
-              {
-                text: 'test',
-                top_left_x_pct: 0.05,
-                top_left_y_pct: 0.0,
-                width_pct: 0.9
-              }
-            ]
-          }
-        }
+        expect(response).to have_http_status(:ok)
       end
 
-      it 'returns unprocessable entity status' do
-        post(:create, body)
+      it 'returns application/json as the content type' do
+        post(:create, params: {
+               gend_image: {
+                 src_image_id: src_image.id_hash
+               }
+             })
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.content_type).to eq('application/json')
       end
 
-      it 'returns an error in the response body' do
-        post(:create, body)
+      it 'returns a json body with the gend image id' do
+        post(:create, params: {
+               gend_image: {
+                 src_image_id: src_image.id_hash
+               }
+             })
 
-        expect(JSON.parse(response.body)).to eq(
-          'captions.height_pct' => ["can't be blank"]
+        expect(JSON.parse(response.body)['id']).to eq(
+          assigns(:gend_image).id_hash
+        )
+      end
+
+      it 'returns a json body with the gend image id' do
+        post(:create, params: {
+               gend_image: {
+                 src_image_id: src_image.id_hash
+               }
+             })
+
+        expect(JSON.parse(response.body)['status_url']).to eq(
+          'http://test.host/api/v3/pending_gend_images/' \
+          "#{assigns(:gend_image).id_hash}"
         )
       end
     end
 
-    context 'when the top_left_x_pct is missing' do
-      let(:body) do
-        {
-          gend_image: {
-            src_image_id: src_image.id_hash,
-            captions_attributes: [
-              {
-                text: 'test',
-                height_pct: 0.25,
-                top_left_y_pct: 0.0,
-                width_pct: 0.9
-              }
-            ]
-          }
-        }
+    context 'with invalid attributes' do
+      context 'when the height_pct is missing' do
+        let(:body) do
+          {
+            gend_image: {
+              src_image_id: src_image.id_hash,
+              captions_attributes: [
+                {
+                  text: 'test',
+                  top_left_x_pct: 0.05,
+                  top_left_y_pct: 0.0,
+                  width_pct: 0.9
+                }
+              ]
+            }
+          }.to_json
+        end
+
+        it 'returns unprocessable entity status' do
+          post(:create, body: body)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body: body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.height_pct' => ["can't be blank"]
+          )
+        end
       end
 
-      it 'returns unprocessable entity status' do
-        post(:create, body)
+      context 'when the top_left_x_pct is missing' do
+        let(:body) do
+          {
+            gend_image: {
+              src_image_id: src_image.id_hash,
+              captions_attributes: [
+                {
+                  text: 'test',
+                  height_pct: 0.25,
+                  top_left_y_pct: 0.0,
+                  width_pct: 0.9
+                }
+              ]
+            }
+          }.to_json
+        end
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        it 'returns unprocessable entity status' do
+          post(:create, body: body)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body: body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.top_left_x_pct' => ["can't be blank"]
+          )
+        end
       end
 
-      it 'returns an error in the response body' do
-        post(:create, body)
+      context 'when the top_left_y_pct is missing' do
+        let(:body) do
+          {
+            gend_image: {
+              src_image_id: src_image.id_hash,
+              captions_attributes: [
+                {
+                  text: 'test',
+                  height_pct: 0.25,
+                  top_left_x_pct: 0.05,
+                  width_pct: 0.9
+                }
+              ]
+            }
+          }.to_json
+        end
 
-        expect(JSON.parse(response.body)).to eq(
-          'captions.top_left_x_pct' => ["can't be blank"]
-        )
+        it 'returns unprocessable entity status' do
+          post(:create, body: body)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body: body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.top_left_y_pct' => ["can't be blank"]
+          )
+        end
+      end
+
+      context 'when the width_pct is missing' do
+        let(:body) do
+          {
+            gend_image: {
+              src_image_id: src_image.id_hash,
+              captions_attributes: [
+                {
+                  text: 'test',
+                  height_pct: 0.25,
+                  top_left_x_pct: 0.05,
+                  top_left_y_pct: 0.0
+                }
+              ]
+            }
+          }.to_json
+        end
+
+        it 'returns unprocessable entity status' do
+          post(:create, body: body)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns an error in the response body' do
+          post(:create, body: body)
+
+          expect(JSON.parse(response.body)).to eq(
+            'captions.width_pct' => ["can't be blank"]
+          )
+        end
       end
     end
 
-    context 'when the top_left_y_pct is missing' do
-      let(:body) do
-        {
-          gend_image: {
-            src_image_id: src_image.id_hash,
-            captions_attributes: [
-              {
-                text: 'test',
-                height_pct: 0.25,
-                top_left_x_pct: 0.05,
-                width_pct: 0.9
-              }
-            ]
-          }
-        }
-      end
-
-      it 'returns unprocessable entity status' do
-        post(:create, body)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'returns an error in the response body' do
-        post(:create, body)
-
-        expect(JSON.parse(response.body)).to eq(
-          'captions.top_left_y_pct' => ["can't be blank"]
-        )
+    context 'when the source image is not found' do
+      it 'raises record not found' do
+        expect do
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: 'abc'
+                 }
+               })
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
-    context 'when the width_pct is missing' do
-      let(:body) do
-        {
-          gend_image: {
-            src_image_id: src_image.id_hash,
-            captions_attributes: [
-              {
-                text: 'test',
-                height_pct: 0.25,
-                top_left_x_pct: 0.05,
-                top_left_y_pct: 0.0
-              }
-            ]
-          }
-        }
-      end
+    context 'when the source image is still in progress' do
+      let(:src_image) { FactoryGirl.create(:src_image, work_in_progress: true) }
 
-      it 'returns unprocessable entity status' do
-        post(:create, body)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'returns an error in the response body' do
-        post(:create, body)
-
-        expect(JSON.parse(response.body)).to eq(
-          'captions.width_pct' => ["can't be blank"]
-        )
+      it 'raises record not found' do
+        expect do
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: src_image.id_hash
+                 }
+               })
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
-  end
 
-  context 'when the source image is not found' do
-    it 'raises record not found' do
-      expect do
-        post(:create, params: {
-               gend_image: { src_image_id: 'abc' }
-             })
-      end.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
+    context 'when the source image is deleted' do
+      let(:src_image) do
+        FactoryGirl.create(:src_image,
+                           work_in_progress: false,
+                           is_deleted: true)
+      end
 
-  context 'when the source image is still in progress' do
-    let(:src_image) { FactoryGirl.create(:src_image, work_in_progress: true) }
-
-    it 'raises record not found' do
-      expect do
-        post(:create, params: {
-               gend_image: { src_image_id: src_image.id_hash }
-             })
-      end.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
-  context 'when the source image is deleted' do
-    let(:src_image) do
-      FactoryGirl.create(:src_image,
-                         work_in_progress: false,
-                         is_deleted: true)
+      it 'raises record not found' do
+        expect do
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: src_image.id_hash
+                 }
+               })
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
 
-    it 'raises record not found' do
-      expect do
-        post(:create, params: {
-               gend_image: { src_image_id: src_image.id_hash }
-             })
-      end.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
-  context 'when the gend_image parameter is missing' do
-    it 'raises record not found' do
-      expect do
-        post(:create, params: {})
-      end.to raise_error(ActiveRecord::RecordNotFound)
+    context 'when the gend_image parameter is missing' do
+      it 'raises record not found' do
+        expect do
+          post(:create, params: {})
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end

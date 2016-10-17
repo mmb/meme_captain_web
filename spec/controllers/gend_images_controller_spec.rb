@@ -224,37 +224,38 @@ describe GendImagesController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new generated image to the database' do
         expect do
-          post :create,
-               gend_image: {
-                 src_image_id: src_image.id_hash,
-                 captions_attributes: {
-                   '0' => {
-                     'font' => 'font1',
-                     'text' => 'hello',
-                     'top_left_x_pct' => '0.01',
-                     'top_left_y_pct' => '0.02',
-                     'width_pct' => '0.03',
-                     'height_pct' => '0.04'
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: src_image.id_hash,
+                   captions_attributes: {
+                     '0' => {
+                       'font' => 'font1',
+                       'text' => 'hello',
+                       'top_left_x_pct' => '0.01',
+                       'top_left_y_pct' => '0.02',
+                       'width_pct' => '0.03',
+                       'height_pct' => '0.04'
+                     },
+                     '1' => {
+                       'font' => 'font2',
+                       'text' => 'world',
+                       'top_left_x_pct' => '0.05',
+                       'top_left_y_pct' => '0.06',
+                       'width_pct' => '0.07',
+                       'height_pct' => '0.08'
+                     },
+                     '2' => {
+                       'font' => 'font3',
+                       'text' => '!',
+                       'top_left_x_pct' => '0.09',
+                       'top_left_y_pct' => '0.10',
+                       'width_pct' => '0.11',
+                       'height_pct' => '0.12'
+                     }
                    },
-                   '1' => {
-                     'font' => 'font2',
-                     'text' => 'world',
-                     'top_left_x_pct' => '0.05',
-                     'top_left_y_pct' => '0.06',
-                     'width_pct' => '0.07',
-                     'height_pct' => '0.08'
-                   },
-                   '2' => {
-                     'font' => 'font3',
-                     'text' => '!',
-                     'top_left_x_pct' => '0.09',
-                     'top_left_y_pct' => '0.10',
-                     'width_pct' => '0.11',
-                     'height_pct' => '0.12'
-                   }
-                 },
-                 private: '1'
-               }
+                   private: '1'
+                 }
+               })
         end.to change { GendImage.count }.by(1)
 
         created = GendImage.last
@@ -372,19 +373,22 @@ describe GendImagesController, type: :controller do
               }
             ]
           }
-        }
+        }.to_json
       end
 
       context 'when the client requests json' do
-        before { request.accept = 'application/json' }
+        before do
+          request.accept = 'application/json'
+          request.content_type = 'application/json'
+        end
 
         it 'returns unprocessable entity status' do
-          post(:create, body)
+          post(:create, body: body)
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it 'returns an error in the response body' do
-          post(:create, body)
+          post(:create, body: body)
 
           expect(JSON.parse(response.body)).to eq(
             'captions.height_pct' => ["can't be blank"]
@@ -407,19 +411,22 @@ describe GendImagesController, type: :controller do
               }
             ]
           }
-        }
+        }.to_json
       end
 
       context 'when the client requests json' do
-        before { request.accept = 'application/json' }
+        before do
+          request.accept = 'application/json'
+          request.content_type = 'application/json'
+        end
 
         it 'returns unprocessable entity status' do
-          post(:create, body)
+          post(:create, body: body)
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it 'returns an error in the response body' do
-          post(:create, body)
+          post(:create, body: body)
 
           expect(JSON.parse(response.body)).to eq(
             'captions.top_left_x_pct' => ["can't be blank"]
@@ -442,19 +449,22 @@ describe GendImagesController, type: :controller do
               }
             ]
           }
-        }
+        }.to_json
       end
 
       context 'when the client requests json' do
-        before { request.accept = 'application/json' }
+        before do
+          request.accept = 'application/json'
+          request.content_type = 'application/json'
+        end
 
         it 'returns unprocessable entity status' do
-          post(:create, body)
+          post(:create, body: body)
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it 'returns an error in the response body' do
-          post(:create, body)
+          post(:create, body: body)
 
           expect(JSON.parse(response.body)).to eq(
             'captions.top_left_y_pct' => ["can't be blank"]
@@ -477,19 +487,22 @@ describe GendImagesController, type: :controller do
               }
             ]
           }
-        }
+        }.to_json
       end
 
       context 'when the client requests json' do
-        before { request.accept = 'application/json' }
+        before do
+          request.accept = 'application/json'
+          request.content_type = 'application/json'
+        end
 
         it 'returns unprocessable entity status' do
-          post(:create, body)
+          post(:create, body: body)
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it 'returns an error in the response body' do
-          post(:create, body)
+          post(:create, body: body)
 
           expect(JSON.parse(response.body)).to eq(
             'captions.width_pct' => ["can't be blank"]
@@ -537,7 +550,7 @@ describe GendImagesController, type: :controller do
     context 'when the gend_image parameter is missing' do
       it 'raises record not found' do
         expect do
-          post(:create, {})
+          post(:create, params: {})
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -556,25 +569,34 @@ describe GendImagesController, type: :controller do
     context 'when an email is passed in' do
       it 'does not save the new gend image to the database' do
         expect do
-          post :create, gend_image: {
-            src_image_id: src_image.id_hash, email: 'not@empty.com'
-          }
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: src_image.id_hash,
+                   email: 'not@empty.com'
+                 }
+               })
         end.to_not change { GendImage.count }
       end
 
       it 're-renders the new template' do
-        post :create, gend_image: {
-          src_image_id: src_image.id_hash, email: 'not@empty.com'
-        }
+        post(:create, params: {
+               gend_image: {
+                 src_image_id: src_image.id_hash,
+                 email: 'not@empty.com'
+               }
+             })
 
         expect(response).to render_template('new')
       end
 
       it 'increments the bot.attempt statsd counter' do
         expect do
-          post :create, gend_image: {
-            src_image_id: src_image.id_hash, email: 'not@empty.com'
-          }
+          post(:create, params: {
+                 gend_image: {
+                   src_image_id: src_image.id_hash,
+                   email: 'not@empty.com'
+                 }
+               })
         end.to trigger_statsd_increment('bot.attempt')
       end
     end
@@ -697,7 +719,7 @@ describe GendImagesController, type: :controller do
     context 'when the id is not found' do
       it 'raises record not found' do
         expect do
-          get :show, id: 'does not exist'
+          get(:show, params: { id: 'does not exist' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
