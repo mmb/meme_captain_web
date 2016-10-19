@@ -86,6 +86,8 @@ COPY . /app
 
 WORKDIR /app
 
+ENV RAILS_SERVE_STATIC_FILES true
+
 RUN apt-get install --assume-yes \
     libpq-dev \
     libsqlite3-dev \
@@ -94,8 +96,7 @@ RUN apt-get install --assume-yes \
   && bundle exec rake \
     build_metadata[build_metadata.json] \
     assets:precompile \
-    RAILS_ENV=production \
-    RAILS_SERVE_STATIC_FILES=true
+    RAILS_ENV=production
 
 # cleanup
 RUN apt-get clean \
