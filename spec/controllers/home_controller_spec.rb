@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+require 'support/src_image_skip_callbacks'
+
 describe HomeController, type: :controller do
   include StatsD::Instrument::Matchers
 

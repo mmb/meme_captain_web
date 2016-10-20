@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe 'src_images/_src_images.html', type: :view do
   let(:user) { nil }
   let(:show_remove_from_set) { false }

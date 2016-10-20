@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe SrcSet do
   it { should validate_presence_of :name }
 

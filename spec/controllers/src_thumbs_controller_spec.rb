@@ -4,6 +4,8 @@ require 'time'
 
 require 'rails_helper'
 
+require 'support/stop_time'
+
 describe SrcThumbsController, type: :controller do
   describe "GET 'show'" do
     context 'when the id is found' do

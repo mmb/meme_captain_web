@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+require 'support/stop_time'
+
 describe SrcImagesController, type: :controller do
   include StatsD::Instrument::Matchers
 

@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require 'support/stop_time'
+
 describe ApplicationController, type: :controller do
   controller do
     def index

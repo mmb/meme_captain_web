@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+require 'support/create_image'
+require 'support/src_image_skip_callbacks'
+
 describe SrcImage do
   it { should_not validate_presence_of :content_type }
 

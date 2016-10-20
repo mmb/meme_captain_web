@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe 'search/show.html.erb', type: :view do
   let(:src_images) { [] }
   let(:src_sets) { [] }

@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe 'src_images/_src_image.html', type: :view do
   let(:src_image) do
     FactoryGirl.create(:finished_src_image, name: 'test src image')

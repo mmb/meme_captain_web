@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe 'gend_images/_gend_image.html', type: :view do
   let(:gend_image) { FactoryGirl.create(:finished_gend_image) }
   let(:show_toolbar) { true }

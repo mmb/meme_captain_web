@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe PendingGendImagesController, type: :controller do
   include StatsD::Instrument::Matchers
 

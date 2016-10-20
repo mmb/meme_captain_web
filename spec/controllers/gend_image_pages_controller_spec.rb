@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+require 'support/stop_time'
+
 describe GendImagePagesController, type: :controller do
   describe 'show' do
     let(:src_image) { FactoryGirl.create(:src_image) }

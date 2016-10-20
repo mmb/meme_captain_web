@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+require 'support/src_image_skip_callbacks'
+
 describe GendImageProcessJob do
   subject(:gend_image_process_job) { GendImageProcessJob.new(gend_image.id) }
   let(:gend_image) { FactoryGirl.create(:gend_image, image: nil) }

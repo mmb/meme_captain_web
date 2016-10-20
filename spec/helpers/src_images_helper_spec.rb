@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe SrcImagesHelper, type: :helper do
   describe '#src_image_url_for' do
     let(:host) { 'cdn.com' }

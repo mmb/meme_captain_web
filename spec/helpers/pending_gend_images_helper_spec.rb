@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe PendingGendImagesHelper, type: :helper do
   describe '#pending_gend_thumb_url_for' do
     let(:gend_image) { FactoryGirl.create(:finished_gend_image) }

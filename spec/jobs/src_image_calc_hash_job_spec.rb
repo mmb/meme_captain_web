@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe SrcImageCalcHashJob do
   subject(:src_image_calc_hash_job) { SrcImageCalcHashJob.new(src_image.id) }
   let(:src_image) { FactoryGirl.create(:src_image) }

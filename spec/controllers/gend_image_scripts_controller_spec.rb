@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe GendImageScriptsController, type: :controller do
   describe '#show' do
     context 'when the image is deleted' do

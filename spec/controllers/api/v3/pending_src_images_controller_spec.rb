@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/src_image_skip_callbacks'
+
 describe Api::V3::PendingSrcImagesController, type: :controller do
   include StatsD::Instrument::Matchers
 

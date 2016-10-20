@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+require 'support/src_image_skip_callbacks'
+
 describe Api::V3::GendImagesController, type: :controller do
   include StatsD::Instrument::Matchers
 

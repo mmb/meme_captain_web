@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe SearchController, type: :controller do
   describe "GET 'show'" do
     let(:user) { nil }

@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe GendImagesHelper, type: :helper do
   describe '#gend_image_url_for' do
     let(:host) { 'cdn.com' }

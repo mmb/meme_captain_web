@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+require 'support/create_image'
+require 'support/src_image_skip_callbacks'
+
 describe SrcImageProcessJob do
   subject(:src_image_process_job) { SrcImageProcessJob.new(src_image.id) }
   let(:src_image) { FactoryGirl.create(:src_image) }

@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require 'support/gend_image_skip_callbacks'
+
 describe GendImageCalcHashJob do
   subject(:gend_image_calc_hash_job) { GendImageCalcHashJob.new(gend_image.id) }
   let(:gend_image) { FactoryGirl.create(:gend_image) }
