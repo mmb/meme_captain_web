@@ -64,6 +64,7 @@ group :test, :development do
   gem 'coffeelint', '~> 1.14'
   gem 'travis', '~> 1.8', '>= 1.8.2', require: false
   gem 'capybara', '~> 2.7', '>= 2.7.1'
+  gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'
 end
 
