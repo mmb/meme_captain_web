@@ -1,6 +1,8 @@
 FROM debian:jessie
 MAINTAINER matthewm@boedicker.org
 
+ENV MAKEFLAGS --jobs
+
 WORKDIR /tmp
 
 COPY docker/sources.list /etc/apt/sources.list
@@ -35,7 +37,6 @@ RUN apt-get install --assume-yes \
   && cd $(ls -d ImageMagick-* | head -n 1) \
   && ./configure \
   && make \
-    --jobs \
   && make install \
   && cd .. \
   && rm -rf $(ls -d ImageMagick-* | head -n 1)
@@ -51,7 +52,6 @@ RUN apt-get install --assume-yes \
   && ./configure \
     --disable-install-doc \
   && make \
-    --jobs \
   && make install \
   && echo 'gem: --no-document' >> "$HOME/.gemrc" \
   && gem install bundler \
@@ -79,7 +79,6 @@ RUN apt-get install --assume-yes \
   && cd $(ls -d monit-* | head -n 1) \
   && ./configure \
   && make \
-    --jobs \
   && make install \
   && mkdir -p /var/lib/monit/events \
   && cd .. \
