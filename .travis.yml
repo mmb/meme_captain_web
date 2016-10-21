@@ -65,6 +65,7 @@ addons:
       - libgmp-dev
 services:
   - docker
+  - mysql
 script: bundle exec rake $TASK
 notifications:
   slack:
