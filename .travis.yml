@@ -4,10 +4,7 @@ cache: bundler
 rvm:
 - 2.2.5
 - 2.3.1
-- rbx-2
 matrix:
-  allow_failures:
-    - rvm: rbx-2
   exclude:
     - rvm: 2.2.5
       env: TASK=coffeelint
@@ -22,21 +19,6 @@ matrix:
     - rvm: 2.2.5
       env: TASK=spec:javascript
     - rvm: 2.2.5
-      env: TASK=spec:container
-
-    - rvm: rbx-2
-      env: TASK=coffeelint
-    - rvm: rbx-2
-      env: TASK=rails_best_practices
-    - rvm: rbx-2
-      env: TASK=rubocop
-    - rvm: rbx-2
-      env: TASK=spec DB=mysql
-    - rvm: rbx-2
-      env: TASK="spec spec:postgres" DB=postgresql
-    - rvm: rbx-2
-      env: TASK=spec:javascript
-    - rvm: rbx-2
       env: TASK=spec:container
 env:
   global:
