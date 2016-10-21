@@ -1,9 +1,7 @@
 test:
   adapter: mysql2
-  host: 127.0.0.1
   database: memecaptain_test
-  username: travis
-  encoding: utf8
+  username: root
 
 production:
   adapter: sqlite3

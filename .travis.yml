@@ -38,6 +38,7 @@ before_install:
 install: bundle install --jobs=4
 before_script:
 - if [ -n "$DB" ]; then cp config/database.yml.$DB config/database.yml; fi
+- if [ "$DB" == 'mysql' ]; then sudo service mysql start; fi
 - bundle exec rake db:create db:migrate
 sudo: required
 addons:
