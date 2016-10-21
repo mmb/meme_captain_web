@@ -16,7 +16,7 @@ if [ "$CURRENT_BRANCH" != "master" ]; then
   exit 1
 fi
 
-bundle exec rake spec:all
+RAILS_ENV=test bundle exec rake spec:all
 
 if [ "$(git log @{u}.. | wc -l)" -ne "0" ]; then
   git push
