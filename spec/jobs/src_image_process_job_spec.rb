@@ -182,7 +182,7 @@ describe SrcImageProcessJob do
         src_image_process_job.perform
       end.to raise_error(
         MemeCaptainWeb::Error::SrcImageTooBigError,
-        'image is too large (203 Bytes)'
+        "image is too large (#{src_image.image.size} Bytes)"
       )
     end
   end
