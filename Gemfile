@@ -50,6 +50,7 @@ gem 'twitter_cldr', '~> 3.2', '>= 3.2.1'
 gem 'addressable', '~> 2.4'
 gem 'textacular', '~> 4.0'
 gem 'active_model_serializers', '~> 0.10.2'
+gem 'sqlite3', '~> 1.3', '>= 1.3.11'
 
 group :test, :development do
   gem 'factory_girl_rails', '~> 4.7'
@@ -59,7 +60,6 @@ group :test, :development do
   gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
   gem 'shoulda', '~> 3.5.0'
   gem 'jasmine-rails', '~> 0.12.5'
-  gem 'sqlite3', '~> 1.3', '>= 1.3.11'
   gem 'rails_best_practices', '~> 1.16', platforms: [:jruby, :mri, :mswin]
   gem 'coffeelint', '~> 1.14'
   gem 'travis', '~> 1.8', '>= 1.8.2', require: false
