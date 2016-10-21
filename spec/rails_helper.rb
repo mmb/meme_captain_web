@@ -59,3 +59,8 @@ end
 
 Capybara.default_driver = :webkit
 Capybara.javascript_driver = :webkit
+
+if ENV['FEATURE_SPEC_HOST'].present?
+  Capybara.app_host = ENV['FEATURE_SPEC_HOST']
+  Capybara.run_server = false
+end
