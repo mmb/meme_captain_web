@@ -122,12 +122,25 @@ diff_env() {
   rm -rf env.current
 }
 
+slack_message() {
+  if [ -n "$SLACK_WEBHOOK" ]; then
+    jq \
+      -n \
+      --arg text "$1" \
+      '{"channel":"#war-room","username":"derploy","text": $text,"icon_emoji":":squirrel:"}' \
+    | \
+    curl $SLACK_WEBHOOK --data @-
+  fi
+}
+
 deploy_start() {
   if [ -n "$STATS_SECRET" ]; then
     curl https://memecaptain.com/stats \
       --data key=deploy.start \
       --data-urlencode "secret=$STATS_SECRET"
   fi
+
+  slack_message 'deploy started'
 }
 
 deploy_end() {
@@ -136,4 +149,6 @@ deploy_end() {
       --data key=deploy.end \
       --data-urlencode "secret=$STATS_SECRET"
   fi
+
+  slack_message "deploy finished after $(echo "scale=2; $SECONDS/60.0" | bc -l) minutes"
 }
