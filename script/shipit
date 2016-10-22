@@ -35,7 +35,7 @@ if [ "$(git log @{u}.. | wc -l)" -ne "0" ]; then
   until travis status --fail-pending --no-exit-code; do
     sleep 10
     SLEPT_FOR=$((SLEPT_FOR + 10))
-    if [ $SLEPT_FOR -ge 1200 ]; then exit 1; fi
+    if [ $SLEPT_FOR -ge 1800 ]; then exit 1; fi
   done
   set -e
 
