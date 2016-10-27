@@ -192,6 +192,34 @@ describe SrcImage do
     end
   end
 
+  describe 'url validation' do
+    let(:src_image) { FactoryGirl.build(:src_image, url: url) }
+
+    before { src_image.valid? }
+
+    context 'when the url has an invalid host' do
+      let(:url) { 'http://space host' }
+
+      it 'is invalid' do
+        expect(src_image).to_not be_valid
+        expect(src_image.errors[:url]).to include(
+          "Invalid character in host: 'space host'"
+        )
+      end
+    end
+
+    context 'when the url is a data URI' do
+      let(:url) do
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAA' \
+        'AAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
+      end
+
+      it 'is valid' do
+        expect(src_image).to be_valid
+      end
+    end
+  end
+
   describe '#load_from_url' do
     context 'when url is nil' do
       it 'does not load the image' do
@@ -241,7 +269,9 @@ describe SrcImage do
     end
 
     context 'when the url is not nil' do
-      let(:src_image) { FactoryGirl.create(:src_image, url: 'some url') }
+      let(:src_image) do
+        FactoryGirl.create(:src_image, url: 'http://someurl.com/')
+      end
 
       it 'enqueues a src image processing job in the src_image_process_url ' \
         'queue' do

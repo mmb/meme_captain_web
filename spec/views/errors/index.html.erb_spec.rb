@@ -5,8 +5,8 @@ require 'support/src_image_skip_callbacks'
 describe 'errors/index.html.erb', type: :view do
   let(:src_images) do
     [
-      FactoryGirl.create(:src_image, error: 'src image 1 error', url: 'url 1'),
-      FactoryGirl.create(:src_image, error: 'src image 2 error', url: 'url 2')
+      FactoryGirl.create(:src_image, error: 'src image 1 error', url: 'http://url1.com/'),
+      FactoryGirl.create(:src_image, error: 'src image 2 error', url: 'http://url2.com/')
     ]
   end
 
@@ -36,8 +36,8 @@ describe 'errors/index.html.erb', type: :view do
 
   it 'shows the src image url' do
     render
-    expect(rendered).to have_text('url 1')
-    expect(rendered).to have_text('url 2')
+    expect(rendered).to have_text('http://url1.com/')
+    expect(rendered).to have_text('http://url2.com/')
   end
 
   it 'shows the gend image last updated time' do

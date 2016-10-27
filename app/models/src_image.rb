@@ -13,6 +13,7 @@ class SrcImage < ApplicationRecord
   has_and_belongs_to_many :src_sets, join_table: :src_images_src_sets
 
   before_validation :add_url_scheme
+  validates :url, url: true
 
   validate :image_if_not_url
 
