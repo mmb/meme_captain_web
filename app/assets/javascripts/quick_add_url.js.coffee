@@ -6,7 +6,10 @@
     type: 'post'
     contentType: 'application/json'
     dataType: 'json'
-    data: JSON.stringify(url: url)
+    data: JSON.stringify(
+      src_image:
+        url: url
+    )
     success: (data) ->
       callbacks.submit_success()
       count = 0
