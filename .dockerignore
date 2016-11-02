@@ -1,3 +1,6 @@
-ci
+.git
+db
 doc
+log
 spec
+tmp

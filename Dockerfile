@@ -96,7 +96,6 @@ RUN apt-get install --assume-yes \
      --without=development test \
      --jobs=4 \
   && bundle exec rake \
-    build_metadata[build_metadata.json] \
     assets:precompile \
     RAILS_ENV=production
 
