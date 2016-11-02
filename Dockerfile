@@ -1,8 +1,6 @@
 FROM debian:jessie
 MAINTAINER matthewm@boedicker.org
 
-ENV MAKEFLAGS --jobs
-
 WORKDIR /tmp
 
 COPY docker/sources.list /etc/apt/sources.list
