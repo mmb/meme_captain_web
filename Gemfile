@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0'
+gem 'rails', '~> 5.0', '>= 5.0.0.1'
 
 group :assets do
-  gem 'sass-rails', '~> 5.0', '>= 5.0.5'
+  gem 'sass-rails', '~> 5.0', '>= 5.0.6'
   gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
-  gem 'uglifier', '~> 3.0'
+  gem 'uglifier', '~> 3.0', '>= 3.0.3'
 end
 
 gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
@@ -47,7 +47,7 @@ gem 'data_uri', '~> 0.1.0'
 gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
 gem 'twitter_cldr', '~> 3.2', '>= 3.2.1'
 gem 'addressable', '~> 2.4'
-gem 'textacular', '~> 4.0'
+gem 'textacular', '~> 4.0', '>= 4.0.1'
 gem 'active_model_serializers', '~> 0.10.2'
 gem 'sqlite3', '~> 1.3', '>= 1.3.11'
 
