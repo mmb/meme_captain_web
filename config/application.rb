@@ -16,9 +16,6 @@ module MemeCaptainWeb
 
     config.active_record.schema_format = :sql
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
-
     config.x.src_image_name_lookup_host = nil
   end
 end
