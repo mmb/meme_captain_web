@@ -4,7 +4,7 @@ set -e
 set -o pipefail
 
 # fail fast if ImageMagick download URL goes away
-IMAGEMAGICK_URL=https://www.imagemagick.org/download/ImageMagick-6.9.6-2.tar.xz
+IMAGEMAGICK_URL=https://www.imagemagick.org/download/ImageMagick-6.9.6-3.tar.xz
 echo "Checking $IMAGEMAGICK_URL"
 curl \
   --fail \
