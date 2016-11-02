@@ -4,11 +4,12 @@ set -e
 set -o pipefail
 
 # fail fast if ImageMagick download URL goes away
+IMAGEMAGICK_URL=https://www.imagemagick.org/download/ImageMagick-6.9.6-2.tar.xz
+echo "Checking $IMAGEMAGICK_URL"
 curl \
   --fail \
   --head \
-  --verbose \
-  https://www.imagemagick.org/download/ImageMagick-6.9.6-2.tar.xz
+  $IMAGEMAGICK_URL
 
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 if [ "$CURRENT_BRANCH" != "master" ]; then
