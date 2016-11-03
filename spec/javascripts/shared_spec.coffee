@@ -5,6 +5,9 @@ class FakeLocation
   replace: (new_location) ->
 
 describe 'shared', ->
+  beforeEach ->
+    loadFixtures 'shared.html'
+
   describe 'paste_handler', ->
     fake_location = new FakeLocation
     fake_window = new FakeWindow(fake_location)
@@ -151,3 +154,7 @@ describe 'shared', ->
               fake_modal)
             expect(fake_log.error).toHaveBeenCalledWith(
               'Error submitting image data')
+
+  describe 'count_caption_fields', ->
+    it 'counts the caption fields', ->
+      expect(count_caption_fields($('#new_gend_image'))).toEqual(3)
