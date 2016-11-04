@@ -1,5 +1,5 @@
 .git
-db
+db/*.sqlite3
 doc
 log
 spec
