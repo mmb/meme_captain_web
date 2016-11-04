@@ -6,15 +6,16 @@ WORKDIR /tmp
 COPY docker/sources.list /etc/apt/sources.list
 
 # packages
-RUN apt-get update && \
-  apt-get install --assume-yes \
+RUN apt-get update \
+  && apt-get install --assume-yes \
     build-essential \
     curl \
     memcached \
     runit
 
 # imagemagick
-RUN apt-get install --assume-yes \
+RUN apt-get update \
+  && apt-get install --assume-yes \
     inkscape \
     libbz2-dev \
     libfftw3-dev \
@@ -40,7 +41,8 @@ RUN apt-get install --assume-yes \
   && rm -rf $(ls -d ImageMagick-* | head -n 1)
 
 # ruby
-RUN apt-get install --assume-yes \
+RUN apt-get update \
+  && apt-get install --assume-yes \
     git \
     libreadline-dev \
     libssl-dev \
@@ -57,20 +59,23 @@ RUN apt-get install --assume-yes \
   && rm -rf $(ls -d ruby-* | head -n 1)
 
 # varnish
-RUN apt-get install --assume-yes \
+RUN apt-get update \
+  && apt-get install --assume-yes \
     apt-transport-https \
   && curl https://repo.varnish-cache.org/GPG-key.txt \
     | apt-key add - \
   && echo 'deb https://repo.varnish-cache.org/debian/ jessie varnish-4.1' \
     >> /etc/apt/sources.list.d/varnish-cache.list \
   && apt-get update \
-  && apt-get install --assume-yes varnish
+  && apt-get install --assume-yes \
+    varnish
 COPY docker/default.vcl /etc/varnish/default.vcl
 RUN varnishd -C -f /etc/varnish/default.vcl
 COPY docker/varnish_defaults /etc/default/varnish
 
 # monit
-RUN apt-get install --assume-yes \
+RUN apt-get update \
+  && apt-get install --assume-yes \
     libpam-dev \
   && curl https://mmonit.com/monit/dist/monit-5.16.tar.gz \
     | tar xz \
@@ -88,7 +93,8 @@ WORKDIR /app
 
 ENV RAILS_SERVE_STATIC_FILES true
 
-RUN apt-get install --assume-yes \
+RUN apt-get update \
+  && apt-get install --assume-yes \
     libpq-dev \
     libsqlite3-dev \
   && export LDFLAGS=-lMagickWand-6.Q16 \
