@@ -55,12 +55,14 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  if ENV['FEATURE_SPEC_HOST'].present?
+    Capybara.default_driver = :webkit
+    Capybara.app_host = ENV['FEATURE_SPEC_HOST']
+    Capybara.run_server = false
+  else
+    config.filter_run_excluding(:js)
+  end
 end
 
-Capybara.default_driver = :webkit
 Capybara.javascript_driver = :webkit
-
-if ENV['FEATURE_SPEC_HOST'].present?
-  Capybara.app_host = ENV['FEATURE_SPEC_HOST']
-  Capybara.run_server = false
-end
