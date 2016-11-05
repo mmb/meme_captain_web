@@ -13,12 +13,14 @@ describe 'quick_add_url', ->
   fake_log =
     info: ->
     error: ->
+  fake_modal =
+    modal: ->
 
   beforeEach ->
     loadFixtures 'quick_add_url.html'
     fake_location = new FakeLocation
     fake_window = new FakeWindow(fake_location)
-    window.quick_add_url_init(fake_window, fake_log)
+    window.quick_add_url_init(fake_window, fake_log, fake_modal)
 
   describe 'loading an image from a url', ->
     describe 'when the url is empty', ->
@@ -38,8 +40,10 @@ describe 'quick_add_url', ->
       it 'informs the user that the URL is being submitted', ->
         ajax_spy = spyOn($, 'ajax')
         spyOn(fake_log, 'info')
+        spyOn(fake_modal, 'modal')
 
         submit_url()
+        expect(fake_modal.modal).toHaveBeenCalled()
         expect(fake_log.info).toHaveBeenCalledWith(
           'Submitting URL http://images.com/image.jpg')
 

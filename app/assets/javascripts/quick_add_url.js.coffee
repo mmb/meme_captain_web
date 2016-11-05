@@ -29,7 +29,7 @@
       , 1000
     error: callbacks.submit_error
 
-@quick_add_url_init = (win, log) ->
+@quick_add_url_init = (win, log, modal) ->
   input_element = $('#quick-add-url')
 
   input_element.keypress (e) ->
@@ -37,7 +37,7 @@
       url = input_element.val()
       quick_add_url url,
         before_submit: ->
-          $('#quick-add-modal').modal()
+          modal.modal()
           log.info("Submitting URL #{url}")
         submit_success: ->
           log.info('URL successfully submitted')
@@ -56,4 +56,5 @@
 $(document).ready ->
   $('#quick-add-url').tooltip()
   log = new TerminalLog $('#quick-add-url-status')
-  quick_add_url_init(window, log)
+  modal = $('#quick-add-modal')
+  quick_add_url_init(window, log, modal)
