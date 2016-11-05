@@ -35,6 +35,6 @@ window.addEventListener 'paste', (event) ->
   clipboard = new Clipboard
   reader = new FileReader
   log = new TerminalLog $('#terminal-status')
-  modal = $('#quick-add-modal')
+  modal = $('#terminal-modal')
 
   paste_handler window, event, clipboard, reader, log, modal

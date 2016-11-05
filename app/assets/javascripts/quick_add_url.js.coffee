@@ -56,5 +56,5 @@
 $(document).ready ->
   $('#quick-add-url').tooltip()
   log = new TerminalLog $('#terminal-status')
-  modal = $('#quick-add-modal')
+  modal = $('#terminal-modal')
   quick_add_url_init(window, log, modal)
