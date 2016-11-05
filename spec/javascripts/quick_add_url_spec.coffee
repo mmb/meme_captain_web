@@ -5,8 +5,7 @@ class FakeLocation
   replace: (new_location) ->
 
 submit_url = ->
-  e = $.Event('keypress')
-  e.which = 13
+  e = $.Event('keypress', which: 13)
   $('#quick-add-url').trigger(e)
 
 describe 'quick_add_url', ->
