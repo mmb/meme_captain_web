@@ -6,7 +6,7 @@
   container.prepend($('<div />').addClass("alert #{klass}").append(
     close_button).append(message))
 
-@paste_handler = (win, event, clipboard, reader, log) ->
+@paste_handler = (win, event, clipboard, reader, log, modal) ->
   image_file = clipboard.last_if_image(event)
   return unless image_file?
 
@@ -14,7 +14,7 @@
     url = reader.result
     quick_add_url url,
       before_submit: ->
-        $('#quick-add-modal').modal()
+        modal.modal()
         log.info("Submitting image data #{url[0..31]}...")
       submit_success: ->
         log.info('Image data successfully submitted')
@@ -35,5 +35,6 @@ window.addEventListener 'paste', (event) ->
   clipboard = new Clipboard
   reader = new FileReader
   log = new TerminalLog $('#quick-add-url-status')
+  modal = $('#quick-add-modal')
 
-  paste_handler window, event, clipboard, reader, log
+  paste_handler window, event, clipboard, reader, log, modal
