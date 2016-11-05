@@ -192,7 +192,7 @@ class @Target
   bottom_side: ->
     @target.getTop() + @target.getHeight()
 
-window.text_positioner_init = ->
+@text_positioner_init = ->
   $('.text-positioner').each (index, element) ->
     tp = new TextPositioner
     tp.bind_div element

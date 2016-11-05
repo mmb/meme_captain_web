@@ -2,7 +2,7 @@ count_caption_fields = (form) ->
   form.find('textarea').filter(->
     $(this).attr('id')?.match /gend_image_captions_attributes_\d_text/).size()
 
-window.add_text_positioner = (index) ->
+@add_text_positioner = (index) ->
   text_positioner = $('.text-positioner').data('tp')
 
   text_positioner.add_rect index,

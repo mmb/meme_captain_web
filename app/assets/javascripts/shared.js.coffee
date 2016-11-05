@@ -1,8 +1,8 @@
-window.close_button = ->
+@close_button = ->
   $('<button />').addClass('close').attr('data-dismiss', 'alert').append(
     '&times;')
 
-window.add_alert = (container, message, klass = 'alert-danger') ->
+@add_alert = (container, message, klass = 'alert-danger') ->
   container.prepend($('<div />').addClass("alert #{klass}").append(
     close_button).append(message))
 

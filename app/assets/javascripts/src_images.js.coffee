@@ -11,7 +11,7 @@ create_with_url = (url) ->
          error: (xhr, text_status) ->
            add_alert $('#load-urls-message'), "Error adding #{url}"
 
-window.load_urls_init = ->
+@load_urls_init = ->
   $('#load-urls-button').click ->
     urls = split_urls($('#load-urls').val())
     $.when((create_with_url url for url in urls)...).then ->

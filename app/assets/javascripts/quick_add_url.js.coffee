@@ -29,7 +29,7 @@
       , 1000
     error: callbacks.submit_error
 
-window.quick_add_url_init = (win) ->
+@quick_add_url_init = (win) ->
   input_element = $('#quick-add-url')
 
   input_element.keypress (e) ->

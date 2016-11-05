@@ -95,7 +95,7 @@ update_selected = (container) ->
 
   container.find('.selected-count').text selected_ct
 
-window.thumb_selector_init = ->
+@thumb_selector_init = ->
   $('input:checkbox.selector').change (event) ->
     target = $(event.target)
     div = target.parents 'div.thumbnail'
