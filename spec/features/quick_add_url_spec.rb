@@ -12,6 +12,6 @@ RSpec.feature 'quick add url', type: :feature, js: true do
     press_enter_in('#quick-add-url')
 
     expect(page).to have_text('URL successfully submitted')
-    expect(page).to have_current_path(%r{/gend_images/new\?src=.+}, wait: 5)
+    expect(page).to have_current_path(%r{/gend_images/new\?src=.+}, wait: 10)
   end
 end
