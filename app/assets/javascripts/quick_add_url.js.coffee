@@ -29,31 +29,31 @@
       , 1000
     error: callbacks.submit_error
 
-@quick_add_url_init = (win) ->
+@quick_add_url_init = (win, log) ->
   input_element = $('#quick-add-url')
 
   input_element.keypress (e) ->
     if e.which == 13
-      terminal_log = new TerminalLog $('#quick-add-url-status')
       url = input_element.val()
       quick_add_url url,
         before_submit: ->
           $('#quick-add-modal').modal()
-          terminal_log.info("Submitting URL #{url}")
+          log.info("Submitting URL #{url}")
         submit_success: ->
-          terminal_log.info('URL successfully submitted')
+          log.info('URL successfully submitted')
           input_element.val('')
         tick: ->
-          terminal_log.info('Waiting for image to be loaded')
+          log.info('Waiting for image to be loaded')
         success: (src_image_id) ->
           win.location.replace("/gend_images/new?src=#{src_image_id}")
         timed_out: ->
-          terminal_log.error('Error loading URL')
+          log.error('Error loading URL')
         submit_error: ->
-          terminal_log.error('Error submitting URL')
+          log.error('Error submitting URL')
         error_resp: (error) ->
-          terminal_log.error(error)
+          log.error(error)
 
 $(document).ready ->
   $('#quick-add-url').tooltip()
-  quick_add_url_init(window)
+  log = new TerminalLog $('#quick-add-url-status')
+  quick_add_url_init(window, log)
