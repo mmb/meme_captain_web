@@ -77,6 +77,7 @@ COPY docker/varnish_defaults /etc/default/varnish
 RUN apt-get update \
   && apt-get install --assume-yes \
     libpam-dev \
+    ucspi-tcp \
   && curl https://mmonit.com/monit/dist/monit-5.16.tar.gz \
     | tar xz \
   && cd $(ls -d monit-* | head -n 1) \

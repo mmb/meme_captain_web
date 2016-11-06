@@ -12,6 +12,8 @@ set statefile /var/lib/monit/state
 set eventqueue
   basedir /var/lib/monit/events
   slots 100
+set alert ops@127.0.0.1
+set mailserver 127.0.0.1 port 2525
 
 check process puma
   with pidfile /run/puma.pid
@@ -38,6 +40,11 @@ check process metrics
   with pidfile /run/metrics.pid
   start program = "/sbin/start-stop-daemon --pidfile /run/metrics.pid --start --background --make-pidfile --exec /app/docker/metrics"
   stop program = "/sbin/start-stop-daemon --pidfile /run/metrics.pid --stop --remove-pidfile"
+
+check process mailslack
+  with pidfile /run/mailslack.pid
+  start program = "/sbin/start-stop-daemon --pidfile /run/mailslack.pid --start --background --make-pidfile --exec /usr/bin/tcpserver 127.0.0.1 2525 /app/docker/mailslack.rb"
+  stop program = "/sbin/start-stop-daemon --pidfile /run/mailslack.pid --stop --remove-pidfile"
 
 check filesystem rootfs
   with path /
