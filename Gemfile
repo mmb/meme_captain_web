@@ -8,7 +8,7 @@ group :assets do
   gem 'uglifier', '~> 3.0', '>= 3.0.3'
 end
 
-gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
+gem 'jquery-rails', '~> 4.2', '>= 4.2.1'
 gem 'therubyracer', '~> 0.12.2'
 gem 'less-rails', '~> 2.7', '>= 2.7.1'
 
