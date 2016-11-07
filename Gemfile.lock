@@ -82,7 +82,7 @@ GEM
       capybara (>= 2.3.0, < 2.8.0)
       json
     cldr-plurals-runtime-rb (1.0.1)
-    code_analyzer (0.4.5)
+    code_analyzer (0.4.7)
       sexp_processor
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -224,7 +224,7 @@ GEM
       nokogiri (~> 1.6.0)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails_best_practices (1.16.0)
+    rails_best_practices (1.17.0)
       activesupport
       code_analyzer (>= 0.4.3)
       erubis
@@ -378,7 +378,7 @@ DEPENDENCIES
   rack-rewrite (~> 1.5.1)
   rails (~> 5.0, >= 5.0.0.1)
   rails-controller-testing (~> 1.0, >= 1.0.1)
-  rails_best_practices (~> 1.16)
+  rails_best_practices (~> 1.17)
   remote_syslog_logger (~> 1.0, >= 1.0.3)
   rmagick (~> 2.15, >= 2.15.4)
   rmagick4j (~> 0.3.9)
