@@ -33,7 +33,7 @@ gem 'meme_captain',
 gem 'kaminari', '~> 0.17.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'puma', '~> 3.6'
-gem 'browser', '~> 2.2'
+gem 'browser', '~> 2.3'
 gem 'faraday', '~> 0.9.2'
 gem 'faraday-cookie_jar', '~> 0.0.6'
 gem 'faraday_middleware', '~> 0.10.0'
