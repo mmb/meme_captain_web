@@ -116,4 +116,6 @@ Rails.application.configure do
 
   syslog_logger = MemeCaptainWeb::Syslog.new.logger(ENV, 'rails'.freeze)
   config.logger = syslog_logger if syslog_logger
+
+  config.colorize_logging = false
 end
