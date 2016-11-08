@@ -47,7 +47,7 @@
         success: (src_image_id) ->
           win.location.replace("/gend_images/new?src=#{src_image_id}")
         timed_out: ->
-          log.error('Error loading URL')
+          log.error('Timed out loading URL')
         submit_error: ->
           log.error('Error submitting URL')
         error_resp: (error) ->

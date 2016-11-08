@@ -127,7 +127,7 @@ describe 'shared', ->
                 fake_modal)
               jasmine.clock().tick(10000)
               expect(fake_log.error).toHaveBeenCalledWith(
-                'Error loading image data')
+                'Timed out loading image data')
 
             it 'logs a message each time it checks if the image is finished', ->
               spyOn(fake_log, 'info')

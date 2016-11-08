@@ -109,7 +109,7 @@ describe 'quick_add_url', ->
             submit_url()
             jasmine.clock().tick(10000)
             expect(fake_log.error).toHaveBeenCalledWith(
-              'Error loading URL')
+              'Timed out loading URL')
 
           it 'logs a message each time it checks if the image is finished', ->
             spyOn(fake_log, 'info')

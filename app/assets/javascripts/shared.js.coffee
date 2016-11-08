@@ -23,7 +23,7 @@
       success: (src_image_id) ->
         win.location.replace("/gend_images/new?src=#{src_image_id}")
       timed_out: ->
-        log.error('Error loading image data')
+        log.error('Timed out loading image data')
       submit_error: ->
         log.error('Error submitting image data')
       error_resp: (error) ->
