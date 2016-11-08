@@ -22,9 +22,8 @@ class SrcImage < ApplicationRecord
   attr_accessor :image_url
 
   def image_if_not_url
-    if url.blank? && image.blank?
-      errors.add :image, 'is required if url is not set.'.freeze
-    end
+    return if url.present? || image.present?
+    errors.add :image, 'is required if url is not set.'.freeze
   end
 
   def load_from_url

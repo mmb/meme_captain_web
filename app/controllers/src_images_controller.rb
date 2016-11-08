@@ -78,9 +78,8 @@ class SrcImagesController < ApplicationController
   end
 
   def record_create_stats(create_params)
-    if create_params.try(:[], :image)
-      StatsD.increment('src_image.upload'.freeze)
-    end
+    return unless create_params.try(:[], :image)
+    StatsD.increment('src_image.upload'.freeze)
   end
 
   def create_success

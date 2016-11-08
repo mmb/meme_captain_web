@@ -23,8 +23,10 @@ module MemeCaptainWeb
     def other_lambda(o, column)
       lambda do |query|
         prepared_query = query.try(:strip).try(:downcase)
-        o.where("LOWER(#{column}) LIKE ?".freeze,
-                "%#{prepared_query}%") if prepared_query
+        if prepared_query
+          o.where("LOWER(#{column}) LIKE ?".freeze,
+                  "%#{prepared_query}%")
+        end
       end
     end
   end

@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   concern :paginatable do
@@ -117,3 +118,4 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 end
+# rubocop:enable Metrics/BlockLength

@@ -43,9 +43,8 @@ module Api
       end
 
       def read_image_data(submitted_params)
-        if submitted_params.try(:[], :image)
-          submitted_params[:image] = submitted_params[:image].read
-        end
+        return unless submitted_params.try(:[], :image)
+        submitted_params[:image] = submitted_params[:image].read
       end
 
       def create_success
