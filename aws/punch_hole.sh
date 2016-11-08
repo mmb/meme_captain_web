@@ -39,7 +39,16 @@ close_hole() {
     --cidr $MY_IP/32
 }
 
+spot_ip() {
+  aws \
+    ec2 \
+    describe-instances \
+    --filter 'Name=tag:pool,Values=spot' \
+  | jq \
+    --raw-output \
+    '.Reservations[].Instances[0].PublicIpAddress'
+}
+
 open_hole
-echo 'Press ENTER to close hole'
-read
-close_hole
+trap close_hole EXIT
+ssh -A ec2-user@$(spot_ip)
