@@ -26,7 +26,7 @@ headers_started = false
 body_started = false
 done = false
 body = ''
-subject = ENV['INSTANCE_ID'].to_s
+subject = '' << ENV['INSTANCE_ID'].to_s
 
 ARGF.each do |line|
   line.chomp!
