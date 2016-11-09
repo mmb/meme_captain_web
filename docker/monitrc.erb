@@ -14,6 +14,9 @@ set eventqueue
   slots 100
 set alert ops@127.0.0.1
 set mailserver 127.0.0.1 port 2525
+set mail-format {
+  subject: *$ACTION* `$SERVICE $EVENT` $DESCRIPTION on $DATE
+}
 
 check process puma
   with pidfile /run/puma.pid

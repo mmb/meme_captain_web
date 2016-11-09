@@ -63,8 +63,5 @@ slack_message(
   channel: '#war-room',
   icon_emoji: ':dog:',
   username: 'monit',
-  text: subject,
-  attachments: [
-    text: body
-  ]
+  text: subject
 )
