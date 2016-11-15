@@ -4,4 +4,5 @@ daemonize
 
 pidfile '/run/puma.pid'
 
-threads(*ENV['PUMA_THREADS'].split(':').map(&:to_i)) if ENV['PUMA_THREADS']
+threads_count = ENV.fetch('RAILS_MAX_THREADS') { 5 }.to_i
+threads threads_count, threads_count
