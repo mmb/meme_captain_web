@@ -21,7 +21,7 @@ aws s3 sync --delete env s3://memecaptain-secrets/env
 
 aws s3 sync --delete fonts s3://memecaptain-secrets/fonts
 
-deploy_start
+deploy_start "$AMI"
 
 aws \
   cloudformation \

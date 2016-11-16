@@ -134,13 +134,14 @@ slack_message() {
 }
 
 deploy_start() {
+  AMI="$1"
   if [ -n "$STATS_SECRET" ]; then
     curl https://memecaptain.com/stats \
       --data key=deploy.start \
       --data-urlencode "secret=$STATS_SECRET"
   fi
 
-  slack_message 'deploy started'
+  slack_message "deploy of $AMI started"
 }
 
 deploy_end() {
