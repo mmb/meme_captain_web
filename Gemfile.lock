@@ -366,7 +366,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.7)
   faraday (~> 0.9.2)
   faraday-cookie_jar (~> 0.0.6)
-  faraday_middleware (~> 0.10.0)
+  faraday_middleware (~> 0.10.1)
   jasmine-rails (~> 0.14.1)
   jquery-rails (~> 4.2, >= 4.2.1)
   kaminari (~> 0.17.0)
