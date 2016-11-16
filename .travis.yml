@@ -19,7 +19,7 @@ matrix:
     - rvm: 2.2.5
       env: TASK=spec:javascript
     - rvm: 2.2.5
-      env: TASK=spec:container
+      env: TASK=container:spec
 env:
   global:
     - DISPLAY=:99.0
@@ -31,7 +31,7 @@ env:
     - TASK=spec DB=mysql
     - TASK="spec spec:postgres" DB=postgresql
     - TASK=spec:javascript
-    - TASK=spec:container
+    - TASK=container:spec
 before_install:
 - sh -e /etc/init.d/xvfb start
 - if [ "$DB" == 'mysql' ]; then echo "gem 'mysql2', '~> 0.3.13'" >> Gemfile; fi
