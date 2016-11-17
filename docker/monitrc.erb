@@ -23,15 +23,16 @@ check process puma
   start program = "/usr/local/bin/puma --config /app/docker/puma_config.rb"
   stop program = "/usr/bin/pkill --pidfile /run/puma.pid"
 
+check process varnish
+  with pidfile /run/varnishd.pid
+  start program = "/etc/init.d/varnish start"
+  stop program = "/etc/init.d/varnish stop"
+
 check process memcache
   with pidfile /run/memcached.pid
   start program = "/etc/init.d/memcached start"
   stop program = "/etc/init.d/memcached stop"
 
-check process varnish
-  with pidfile /run/varnishd.pid
-  start program = "/etc/init.d/varnish start"
-  stop program = "/etc/init.d/varnish stop"
 <% 0.upto((ENV['NUM_DELAYED_JOB_WORKERS'] || 1).to_i - 1) do |i| %>
 check process delayed_job.<%= i %>
   with pidfile /run/delayed_job.<%= i %>.pid
