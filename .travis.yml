@@ -53,3 +53,6 @@ script: bundle exec rake $TASK
 notifications:
   slack:
     secure: xe6V8beAfRDNcyJFEY1Gn0diRTiXCmNmvdKkAM0Ft5T7RSqDAtFtumPvRs03Esn66FfqGqdjqa7BsTURBrf40t+shkF3Ab5AfHkNys/rCYnboGwdyUUAOIhWBl64Yjv7DzHW6AWWrTBqSDmeTGC3vX/FUwAHwcmyagBVurSoT5w=
+branches:
+  except:
+    - deploy
