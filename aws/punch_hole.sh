@@ -43,7 +43,9 @@ spot_ip() {
   aws \
     ec2 \
     describe-instances \
-    --filter 'Name=tag:pool,Values=spot' \
+    --filters \
+      'Name=tag:pool,Values=spot' \
+      'Name=instance-state-name,Values=running' \
   | jq \
     --raw-output \
     '.Reservations[].Instances[0].PublicIpAddress'
