@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 require 'support/gend_image_skip_callbacks'
-require 'support/stop_time'
 
 describe GendImagePagesController, type: :controller do
   describe 'show' do
@@ -37,23 +36,6 @@ describe GendImagePagesController, type: :controller do
       expect(assigns(:gend_image_url)).to eq(
         "http://test.host/gend_images/#{gend_image.id_hash}.jpg"
       )
-    end
-
-    context 'when the gend image is less than 10 seconds old' do
-      it 'refreshes in 2 seconds' do
-        get(:show, params: { id: gend_image.id_hash })
-        expect(assigns(:refresh_in)).to eq 2
-      end
-    end
-
-    context 'when the gend image is more than 10 seconds old' do
-      it 'does not refresh' do
-        gend_image
-
-        stop_time(Time.now + 20)
-        get(:show, params: { id: gend_image.id_hash })
-        expect(assigns(:refresh_in)).to be_nil
-      end
     end
 
     context 'when the image has been deleted' do

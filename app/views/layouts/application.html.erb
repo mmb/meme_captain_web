@@ -7,9 +7,6 @@
   <%= csrf_meta_tags %>
   <%= favicon_link_tag %>
   <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
-  <% if @refresh_in %>
-      <meta http-equiv="refresh" content="<%= @refresh_in %>"/>
-  <% end %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body>
