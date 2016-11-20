@@ -35,7 +35,7 @@ ARGF.each do |line|
     subject << line[8..-1] if line.start_with?('Subject: ')
   else
     if line == 'DATA'
-      puts "354\r"
+      puts "354 Ok\r"
       headers_started = true
     end
     next
