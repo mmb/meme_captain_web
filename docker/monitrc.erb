@@ -20,7 +20,7 @@ set mail-format {
 
 check process puma
   with pidfile /run/puma.pid
-  start program = "/usr/local/bin/puma --config /app/docker/puma_config.rb" with timeout 45 seconds
+  start program = "/usr/local/bin/puma --config /app/docker/puma_config.rb"
   stop program = "/usr/bin/pkill --pidfile /run/puma.pid"
 
 check process varnish
@@ -36,7 +36,7 @@ check process memcache
 <% 0.upto((ENV['NUM_DELAYED_JOB_WORKERS'] || 1).to_i - 1) do |i| %>
 check process delayed_job.<%= i %>
   with pidfile /run/delayed_job.<%= i %>.pid
-  start program = "/app/bin/delayed_job start --pid-dir=/run --identifier=<%= i %><%= queues_arg %>" with timeout 45 seconds
+  start program = "/app/bin/delayed_job start --pid-dir=/run --identifier=<%= i %><%= queues_arg %>"
   stop program = "/app/bin/delayed_job stop --pid-dir=/run --identifier=<%= i %>"
 <% end %>
 
