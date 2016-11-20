@@ -20,7 +20,7 @@ set mail-format {
 
 check process puma
   with pidfile /run/puma.pid
-  start program = "/usr/local/bin/puma"
+  start program = "/usr/local/bin/puma --config /app/docker/puma_config.rb"
   stop program = "/usr/bin/pkill --pidfile /run/puma.pid"
 
 check process varnish
