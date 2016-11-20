@@ -8,6 +8,7 @@ namespace :container do
   task start: :build do
     sh('docker run ' \
       '--detach ' \
+      '--env RACK_ENV=production ' \
       '--env RAILS_ENV=production ' \
       '--env SECRET_KEY_BASE=secret ' \
       '--name meme_captain_test ' \
