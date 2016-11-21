@@ -54,7 +54,7 @@ ARGF.each do |line|
     end
     body << line.chomp << "\n"
   elsif line == 'QUIT'
-    puts "221\r"
+    puts "221 127.0.0.1\r"
     break
   end
 end
