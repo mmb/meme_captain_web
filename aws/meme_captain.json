@@ -121,6 +121,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/small.env /env",
+                "echo canary > /pool",
                 ". /startup"
               ]
             ]
@@ -569,6 +570,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/small.env /env",
+                "echo ondemand > /pool",
                 ". /startup"
               ]
             ]
@@ -876,6 +878,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/large.env /env",
+                "echo spot2 > /pool",
                 ". /startup"
               ]
             ]
@@ -1068,6 +1071,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/large.env /env",
+                "echo spot > /pool",
                 ". /startup"
               ]
             ]
@@ -1176,6 +1180,7 @@
                 "set -e",
                 "aws s3 cp s3://memecaptain-secrets/database.yml /database.yml",
                 "aws s3 cp s3://memecaptain-secrets/env/large.env /env",
+                "echo steelReserve > /pool",
                 ". /startup"
               ]
             ]

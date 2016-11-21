@@ -26,13 +26,13 @@ headers_started = false
 body_started = false
 done = false
 body = ''
-subject = '' << ENV['INSTANCE_ID'].to_s
+subject = ''
 
 ARGF.each do |line|
   line.chomp!
 
   if headers_started
-    subject << line[8..-1] if line.start_with?('Subject: ')
+    subject = line[8..-1] if line.start_with?('Subject: ')
   else
     if line == 'DATA'
       puts "354 Ok\r"

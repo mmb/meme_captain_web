@@ -15,7 +15,7 @@ set eventqueue
 set alert ops@127.0.0.1
 set mailserver 127.0.0.1 port 2525
 set mail-format {
-  subject: *$ACTION* `$SERVICE $EVENT` $DESCRIPTION on $DATE
+  subject: $HOST *$ACTION* `$SERVICE $EVENT` $DESCRIPTION on $DATE
 }
 
 check process puma
