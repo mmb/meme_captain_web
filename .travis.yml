@@ -45,7 +45,7 @@ addons:
   apt:
     packages:
       - libgmp-dev
-      - mysql-server
+      - mysql-server-5.6
 services:
   - docker
   - mysql
