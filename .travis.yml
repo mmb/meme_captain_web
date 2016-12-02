@@ -48,7 +48,6 @@ addons:
       - mysql-server-5.6
 services:
   - docker
-  - mysql
 script: bundle exec rake $TASK
 notifications:
   slack:
