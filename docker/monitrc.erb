@@ -25,8 +25,8 @@ check process puma
 
 check process varnish
   with pidfile /run/varnishd.pid
-  start program = "/etc/init.d/varnish start"
-  stop program = "/etc/init.d/varnish stop"
+  start program = "/sbin/start-stop-daemon --pidfile /run/varnishd.pid --start --exec /app/docker/varnish"
+  stop program = "/sbin/start-stop-daemon --pidfile /run/varnishd.pid --stop"
 
 check process memcache
   with pidfile /run/memcached.pid

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -eu
+
+# give the application 2G and rest of the machine's memory to varnish
+TOTAL_MEMORY_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
+VARNISH_MEMORY_KB=$((TOTAL_MEMORY_KB - 2000000))
+VARNISH_MEMORY=$((
+  VARNISH_MEMORY_KB < 268435 ? 256 : VARNISH_MEMORY_KB / 1048
+  ))
+VARNISH_STORAGE=malloc,${VARNISH_MEMORY}M
+
+/usr/local/sbin/varnishd \
+  -P /run/varnishd.pid \
+  -a :6081 \
+  -f /app/docker/default.vcl \
+  -p timeout_idle=65 \
+  -s $VARNISH_STORAGE

@@ -61,17 +61,17 @@ RUN apt-get update \
 # varnish
 RUN apt-get update \
   && apt-get install --assume-yes \
-    apt-transport-https \
-  && curl https://repo.varnish-cache.org/GPG-key.txt \
-    | apt-key add - \
-  && echo 'deb https://repo.varnish-cache.org/debian/ jessie varnish-4.1' \
-    >> /etc/apt/sources.list.d/varnish-cache.list \
-  && apt-get update \
-  && apt-get install --assume-yes \
-    varnish
-COPY docker/default.vcl /etc/varnish/default.vcl
-RUN varnishd -C -f /etc/varnish/default.vcl
-COPY docker/varnish_defaults /etc/default/varnish
+    libjemalloc-dev \
+    libncurses-dev \
+    python-docutils \
+  && curl https://repo.varnish-cache.org/source/varnish-5.0.0.tar.gz \
+    | tar xz \
+  && cd $(ls -d varnish-* | head -n 1) \
+  && ./configure \
+  && make \
+  && make install \
+  && cd .. \
+  && rm -rf $(ls -d varnish-* | head -n 1)
 
 # monit
 RUN apt-get update \
@@ -91,6 +91,8 @@ RUN apt-get update \
 COPY . /app
 
 WORKDIR /app
+
+RUN /usr/local/sbin/varnishd -C -f docker/default.vcl
 
 ENV RAILS_SERVE_STATIC_FILES true
 

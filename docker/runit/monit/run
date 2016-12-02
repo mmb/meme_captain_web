@@ -7,14 +7,6 @@ NUM_DELAYED_JOB_WORKERS=$((
   ))
 export NUM_DELAYED_JOB_WORKERS
 
-# give the application 2G and rest of the machine's memory to varnish
-TOTAL_MEMORY_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
-VARNISH_MEMORY_KB=$((TOTAL_MEMORY_KB - 2000000))
-VARNISH_MEMORY=$((
-  VARNISH_MEMORY_KB < 268435 ? 256 : VARNISH_MEMORY_KB / 1048
-  ))
-export VARNISH_STORAGE=malloc,${VARNISH_MEMORY}M
-
 erb /app/docker/monitrc.erb > /app/docker/monitrc
 
 chmod 0700 /app/docker/monitrc

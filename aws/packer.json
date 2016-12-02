@@ -60,6 +60,8 @@
         "  --env=POOL \\",
         "  --env-file=/env \\",
         "  --privileged=true \\",
+        "  --ulimit memlock=83968000 \\",
+        "  --ulimit nofile=131072 \\",
         "  -d \\",
         "  -h \"\\${POOL}-\\${INSTANCE_ID}\" \\",
         "  -p 80:6081 \\",
