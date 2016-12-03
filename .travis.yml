@@ -28,7 +28,7 @@ env:
     - TASK=rails_best_practices
     - TASK=rubocop
     - TASK=spec
-    # - TASK=spec DB=mysql
+    - TASK=spec DB=mysql
     - TASK="spec spec:postgres" DB=postgresql
     - TASK=spec:javascript
     - TASK=container:spec
@@ -45,9 +45,9 @@ addons:
   apt:
     packages:
       - libgmp-dev
-      - mysql-server-5.6
 services:
   - docker
+  - mysql
 script: bundle exec rake $TASK
 notifications:
   slack:
