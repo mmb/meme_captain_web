@@ -424,6 +424,22 @@ describe GendImage do
         )
       end
     end
+
+    context 'when there is leading and trailing whitespace in the parts' do
+      let(:caption1) do
+        FactoryGirl.create(:caption, text: "abc \t\r\n", top_left_y_pct: 0.10)
+      end
+
+      let(:caption2) do
+        FactoryGirl.create(:caption, text: "\r\n def", top_left_y_pct: 0.10)
+      end
+
+      it 'strips the whitespace' do
+        expect(gend_image.search_document).to eq(
+          "abc def src image name #{gend_image.id_hash}"
+        )
+      end
+    end
   end
 
   describe '.searchable_columns' do

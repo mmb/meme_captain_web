@@ -8,7 +8,8 @@ module SearchDocumentConcern
   end
 
   def set_search_document
-    self.search_document = search_document_parts.join(' ').strip
+    self.search_document = search_document_parts.join(' ')
+                                                .gsub(/\s+/, ' ').strip
     true
   end
 end
