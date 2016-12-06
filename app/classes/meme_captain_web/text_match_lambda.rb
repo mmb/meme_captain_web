@@ -16,7 +16,11 @@ module MemeCaptainWeb
     def postgres_lambda(o)
       lambda do |query|
         prepared_query = query.try(:strip)
-        o.basic_search(prepared_query) if prepared_query
+        if prepared_query
+          result = o.basic_search(prepared_query)
+          result = o.fuzzy_search(prepared_query) if result.empty?
+          result
+        end
       end
     end
 

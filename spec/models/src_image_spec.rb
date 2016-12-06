@@ -358,6 +358,15 @@ describe SrcImage do
         si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
         expect(SrcImage.text_matches('quick and fox')).to contain_exactly(si1)
       end
+
+      context 'when the basic search returns no results' do
+        it 'does a fuzzy search' do
+          si1 = FactoryGirl.create(:src_image, name: 'the quick brown fox')
+          expect(SrcImage.text_matches(
+                   'the queck brwn fdx'
+          )).to contain_exactly(si1)
+        end
+      end
     end
   end
 

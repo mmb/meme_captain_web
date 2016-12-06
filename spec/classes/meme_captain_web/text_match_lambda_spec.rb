@@ -18,9 +18,24 @@ describe MemeCaptainWeb::TextMatchLambda do
 
       it 'uses Postgres full text search' do
         expect(o).to receive(:basic_search).with('query1').and_return(where)
+        expect(where).to receive(:empty?).and_return(false)
         expect(text_match_lambda.lambder(o, 'column1').call('query1')).to eq(
           where
         )
+      end
+
+      context 'when the basic search returns no results' do
+        it 'does a fuzzy search' do
+          basic_where = double('basic_where')
+          expect(basic_where).to receive(:empty?).and_return(true)
+          expect(o).to receive(:basic_search).with('query1').and_return(
+            basic_where
+          )
+          expect(o).to receive(:fuzzy_search).with('query1').and_return(where)
+          expect(text_match_lambda.lambder(o, 'column1').call('query1')).to eq(
+            where
+          )
+        end
       end
     end
 
