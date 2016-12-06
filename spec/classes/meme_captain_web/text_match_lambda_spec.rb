@@ -4,8 +4,8 @@ describe MemeCaptainWeb::TextMatchLambda do
   describe '#lambder' do
     subject(:text_match_lambda) { MemeCaptainWeb::TextMatchLambda.new }
 
-    let(:o) { double }
-    let(:where) { double }
+    let(:o) { double('o') }
+    let(:where) { double('where') }
 
     before do
       expect(ActiveRecord::Base.connection).to receive(
