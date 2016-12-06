@@ -96,4 +96,11 @@ describe SrcSet do
       expect(SrcSet.name_matches('test')).to eq([src_set1])
     end
   end
+
+  describe 'setting the search document' do
+    it 'sets the search document' do
+      src_set1 = FactoryGirl.create(:src_set, name: 'test')
+      expect(src_set1.search_document).to eq('test')
+    end
+  end
 end

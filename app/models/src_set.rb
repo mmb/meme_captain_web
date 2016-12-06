@@ -3,6 +3,8 @@
 
 # Source image set model.
 class SrcSet < ApplicationRecord
+  include SearchDocumentConcern
+
   validates :name, presence: true
   validate :name, :one_active_name
 
@@ -69,5 +71,9 @@ class SrcSet < ApplicationRecord
 
   def name_taken_by_other?
     SrcSet.where('name = ? AND id != ?'.freeze, name, id).active.exists?
+  end
+
+  def search_document_parts
+    [name]
   end
 end

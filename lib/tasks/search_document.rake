@@ -33,4 +33,15 @@ namespace :search_document do
       si.update_column(:search_document, search_document)
     end
   end
+
+  desc 'Populate src set search documents that are empty'
+  task populate_src_set: :environment do
+    SrcSet.where(search_document: nil).find_each(
+      batch_size: 100
+    ) do |ss|
+      parts = [ss.name]
+      search_document = parts.join(' ').gsub(/\s+/, ' ').strip
+      ss.update_column(:search_document, search_document)
+    end
+  end
 end
