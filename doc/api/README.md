@@ -21,3 +21,4 @@ To add your application here, send a pull request.
 
 * [Sassy HipChat bot](https://bitbucket.org/atlassianlabs/ac-koa-hipchat-sassy)
 * [Hubot script](https://github.com/github/hubot-scripts/blob/master/src/scripts/meme_captain.coffee)
+* [Slacky bot for Slack](http://zomg.oliy.co.uk/)
