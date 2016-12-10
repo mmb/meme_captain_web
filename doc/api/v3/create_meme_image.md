@@ -39,6 +39,10 @@ Example JSON body:
 * width_pct
 * height_pct
 
+## Optional fields
+
+* private - true if the meme is private (defaults to false), a private meme will not show up on public pages on the web site
+
 ## Caption Coordinates
 
 The top left corner of the image has the coordinates (0, 0).

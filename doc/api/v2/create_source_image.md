@@ -20,7 +20,7 @@ Example JSON body:
 
 - url - the URL of the image to load (can be a URL or a data URI)
 - name - the name of the source image (optional)
-- private - true if the source image is private (optional)
+- private - true if the source image is private (optional, defaults to false), a private image will not show up on public pages on the web site
 
 The size limit for source images is 10MB.
 
