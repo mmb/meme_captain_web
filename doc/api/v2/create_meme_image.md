@@ -38,7 +38,7 @@ Example JSON body:
 * width_pct
 * height_pct
 
-## Optional fields
+## Optional Fields
 
 * private - true if the meme is private (defaults to false), a private meme will not show up on public pages on the web site
 
