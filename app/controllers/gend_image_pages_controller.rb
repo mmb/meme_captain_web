@@ -12,5 +12,6 @@ class GendImagePagesController < ApplicationController
     @src_image = SrcImage.without_image.find(@gend_image.src_image_id)
     @gend_image_url = gend_image_url_for(@gend_image)
     @show_creator_ip = admin?
+    @show_delete_button = admin?
   end
 end

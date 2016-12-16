@@ -237,19 +237,39 @@ describe 'gend_image_pages/show.html.erb', type: :view do
     end
   end
 
-  context 'when show_creator_ip is true' do
-    before { assign(:show_creator_ip, true) }
+  context 'creator ip' do
+    context 'when show_creator_ip is true' do
+      before { assign(:show_creator_ip, true) }
 
-    it 'show the creator ip' do
-      expect(render).to have_text('8.7.6.5')
+      it 'shows the creator ip' do
+        expect(render).to have_text('8.7.6.5')
+      end
+    end
+
+    context 'when show_creator_ip is false' do
+      before { assign(:show_creator_ip, false) }
+
+      it 'does not show the creator ip' do
+        expect(render).to_not have_text('8.7.6.5')
+      end
     end
   end
 
-  context 'when show_creator_ip is false' do
-    before { assign(:show_creator_ip, false) }
+  context 'delete button' do
+    context 'when show_delete_button is true' do
+      before { assign(:show_delete_button, true) }
 
-    it 'show the creator ip' do
-      expect(render).to_not have_text('8.7.6.5')
+      it 'shows the delete button' do
+        expect(render).to have_button('Delete')
+      end
+    end
+
+    context 'when show_delete_button is false' do
+      before { assign(:show_delete_button, false) }
+
+      it 'does not show the delete button' do
+        expect(render).to_not have_button('Delete')
+      end
     end
   end
 end

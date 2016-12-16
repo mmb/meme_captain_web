@@ -57,6 +57,11 @@ describe GendImagePagesController, type: :controller do
         get(:show, params: { id: gend_image.id_hash })
         expect(assigns(:show_creator_ip)).to eq(false)
       end
+
+      it 'sets show_delete_button to false' do
+        get(:show, params: { id: gend_image.id_hash })
+        expect(assigns(:show_delete_button)).to eq(false)
+      end
     end
 
     context 'when the user is an admin' do
@@ -65,6 +70,11 @@ describe GendImagePagesController, type: :controller do
       it 'sets show_creator_ip to true' do
         get(:show, params: { id: gend_image.id_hash })
         expect(assigns(:show_creator_ip)).to eq(true)
+      end
+
+      it 'sets show_delete_button to true' do
+        get(:show, params: { id: gend_image.id_hash })
+        expect(assigns(:show_delete_button)).to eq(true)
       end
     end
   end

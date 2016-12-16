@@ -93,6 +93,15 @@
           <p class="meme-meta">Creator IP: <%= @gend_image.creator_ip %></p>
         <% end %>
 
+        <% if @show_delete_button %>
+          <p><%= button_to('Delete',
+            { action: :destroy, controller: :gend_images, id: @gend_image.id_hash },
+            method: :delete,
+            remote: true,
+            data: { confirm: 'Are you sure?' },
+            class: 'btn btn-danger') %></p>
+        <% end %>
+
         <div id="qr-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
