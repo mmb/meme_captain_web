@@ -46,7 +46,7 @@ RUN apt-get update \
     git \
     libreadline-dev \
     libssl-dev \
-  && curl https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.bz2 \
+  && curl https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.2.tar.bz2 \
     | tar xj \
   && cd $(ls -d ruby-* | head -n 1) \
   && ./configure \
