@@ -31,7 +31,7 @@ RUN apt-get update \
     libxml2-dev \
     pkg-config \
     zlib1g-dev \
-  && curl https://www.imagemagick.org/download/ImageMagick-6.9.6-8.tar.xz \
+  && curl https://www.imagemagick.org/download/ImageMagick-6.9.7-0.tar.xz \
     | tar xJ \
   && cd $(ls -d ImageMagick-* | head -n 1) \
   && ./configure \
