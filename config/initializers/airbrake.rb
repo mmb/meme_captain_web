@@ -62,3 +62,9 @@ end
 # line below. It might simplify debugging of background Airbrake workers, which
 # can silently die.
 # Thread.abort_on_exception = ['test', 'development'].include?(Rails.env)
+
+Airbrake.add_filter do |notice|
+  notice.ignore! if notice[:errors].any? do |error|
+    %w(ActiveRecord::RecordNotFound).include?(error[:type])
+  end
+end
