@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.3
--- Dumped by pg_dump version 9.5.3
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -46,6 +47,18 @@ SET search_path = public, pg_catalog;
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
 
 --
 -- Name: captions; Type: TABLE; Schema: public; Owner: -
@@ -353,7 +366,8 @@ CREATE TABLE src_sets (
     updated_at timestamp without time zone,
     is_deleted boolean DEFAULT false,
     quality integer DEFAULT 0 NOT NULL,
-    search_document text
+    search_document text,
+    src_images_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -451,77 +465,85 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: captions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY captions ALTER COLUMN id SET DEFAULT nextval('captions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: delayed_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY delayed_jobs ALTER COLUMN id SET DEFAULT nextval('delayed_jobs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: gend_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY gend_images ALTER COLUMN id SET DEFAULT nextval('gend_images_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: gend_thumbs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY gend_thumbs ALTER COLUMN id SET DEFAULT nextval('gend_thumbs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: no_result_searches id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY no_result_searches ALTER COLUMN id SET DEFAULT nextval('no_result_searches_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sessions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sessions ALTER COLUMN id SET DEFAULT nextval('sessions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: src_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY src_images ALTER COLUMN id SET DEFAULT nextval('src_images_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: src_sets id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY src_sets ALTER COLUMN id SET DEFAULT nextval('src_sets_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: src_thumbs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY src_thumbs ALTER COLUMN id SET DEFAULT nextval('src_thumbs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: captions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: captions captions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY captions
@@ -529,7 +551,7 @@ ALTER TABLE ONLY captions
 
 
 --
--- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY delayed_jobs
@@ -537,7 +559,7 @@ ALTER TABLE ONLY delayed_jobs
 
 
 --
--- Name: gend_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: gend_images gend_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY gend_images
@@ -545,7 +567,7 @@ ALTER TABLE ONLY gend_images
 
 
 --
--- Name: gend_thumbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: gend_thumbs gend_thumbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY gend_thumbs
@@ -553,7 +575,7 @@ ALTER TABLE ONLY gend_thumbs
 
 
 --
--- Name: no_result_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: no_result_searches no_result_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY no_result_searches
@@ -561,7 +583,15 @@ ALTER TABLE ONLY no_result_searches
 
 
 --
--- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sessions
@@ -569,7 +599,7 @@ ALTER TABLE ONLY sessions
 
 
 --
--- Name: src_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: src_images src_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY src_images
@@ -577,7 +607,7 @@ ALTER TABLE ONLY src_images
 
 
 --
--- Name: src_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: src_sets src_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY src_sets
@@ -585,7 +615,7 @@ ALTER TABLE ONLY src_sets
 
 
 --
--- Name: src_thumbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: src_thumbs src_thumbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY src_thumbs
@@ -593,7 +623,7 @@ ALTER TABLE ONLY src_thumbs
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -612,6 +642,13 @@ CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at
 --
 
 CREATE INDEX gend_images_to_tsvector_idx ON gend_images USING gin (to_tsvector('english'::regconfig, search_document));
+
+
+--
+-- Name: gend_images_trgm_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX gend_images_trgm_idx ON gend_images USING gin (search_document gin_trgm_ops);
 
 
 --
@@ -804,6 +841,13 @@ CREATE INDEX index_src_sets_on_quality ON src_sets USING btree (quality);
 
 
 --
+-- Name: index_src_sets_on_src_images_count; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_src_sets_on_src_images_count ON src_sets USING btree (src_images_count);
+
+
+--
 -- Name: index_src_sets_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -853,10 +897,24 @@ CREATE INDEX src_images_to_tsvector_idx ON src_images USING gin (to_tsvector('en
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+-- Name: src_images_trgm_idx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+CREATE INDEX src_images_trgm_idx ON src_images USING gin (search_document gin_trgm_ops);
+
+
+--
+-- Name: src_sets_to_tsvector_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX src_sets_to_tsvector_idx ON src_sets USING gin (to_tsvector('english'::regconfig, search_document));
+
+
+--
+-- Name: src_sets_trgm_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX src_sets_trgm_idx ON src_sets USING gin (search_document gin_trgm_ops);
 
 
 --
@@ -865,117 +923,6 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20121201212212');
+INSERT INTO schema_migrations (version) VALUES ('20121201212212'), ('20121201215914'), ('20121206052011'), ('20121208064132'), ('20121208064414'), ('20121208070934'), ('20121209081928'), ('20121212063843'), ('20121213051820'), ('20121213070351'), ('20121218025528'), ('20121220054004'), ('20121220063250'), ('20121220065946'), ('20121222222948'), ('20130102025207'), ('20130102025223'), ('20130102044216'), ('20130105025257'), ('20130105065853'), ('20130109080014'), ('20130113054632'), ('20130116055207'), ('20130116055326'), ('20130116074545'), ('20130126072700'), ('20130308084654'), ('20130312050331'), ('20130511083437'), ('20130526045843'), ('20130527013239'), ('20130627041103'), ('20130627044401'), ('20130715032514'), ('20140723044551'), ('20150613203150'), ('20150619062758'), ('20150730035705'), ('20150818034625'), ('20150818040553'), ('20150818044048'), ('20151025062324'), ('20151025062928'), ('20151025063144'), ('20151025064342'), ('20151227053339'), ('20151227060507'), ('20160131055617'), ('20160203060839'), ('20160218045925'), ('20160224033002'), ('20160604043338'), ('20160604044147'), ('20160802032538'), ('20160820160813'), ('20160907043542'), ('20160913024041'), ('20161206051008'), ('20161207053333'), ('20170117054337');
 
-INSERT INTO schema_migrations (version) VALUES ('20121201215914');
-
-INSERT INTO schema_migrations (version) VALUES ('20121206052011');
-
-INSERT INTO schema_migrations (version) VALUES ('20121208064132');
-
-INSERT INTO schema_migrations (version) VALUES ('20121208064414');
-
-INSERT INTO schema_migrations (version) VALUES ('20121208070934');
-
-INSERT INTO schema_migrations (version) VALUES ('20121209081928');
-
-INSERT INTO schema_migrations (version) VALUES ('20121212063843');
-
-INSERT INTO schema_migrations (version) VALUES ('20121213051820');
-
-INSERT INTO schema_migrations (version) VALUES ('20121213070351');
-
-INSERT INTO schema_migrations (version) VALUES ('20121218025528');
-
-INSERT INTO schema_migrations (version) VALUES ('20121220054004');
-
-INSERT INTO schema_migrations (version) VALUES ('20121220063250');
-
-INSERT INTO schema_migrations (version) VALUES ('20121220065946');
-
-INSERT INTO schema_migrations (version) VALUES ('20121222222948');
-
-INSERT INTO schema_migrations (version) VALUES ('20130102025207');
-
-INSERT INTO schema_migrations (version) VALUES ('20130102025223');
-
-INSERT INTO schema_migrations (version) VALUES ('20130102044216');
-
-INSERT INTO schema_migrations (version) VALUES ('20130105025257');
-
-INSERT INTO schema_migrations (version) VALUES ('20130105065853');
-
-INSERT INTO schema_migrations (version) VALUES ('20130109080014');
-
-INSERT INTO schema_migrations (version) VALUES ('20130113054632');
-
-INSERT INTO schema_migrations (version) VALUES ('20130116055207');
-
-INSERT INTO schema_migrations (version) VALUES ('20130116055326');
-
-INSERT INTO schema_migrations (version) VALUES ('20130116074545');
-
-INSERT INTO schema_migrations (version) VALUES ('20130126072700');
-
-INSERT INTO schema_migrations (version) VALUES ('20130308084654');
-
-INSERT INTO schema_migrations (version) VALUES ('20130312050331');
-
-INSERT INTO schema_migrations (version) VALUES ('20130511083437');
-
-INSERT INTO schema_migrations (version) VALUES ('20130526045843');
-
-INSERT INTO schema_migrations (version) VALUES ('20130527013239');
-
-INSERT INTO schema_migrations (version) VALUES ('20130627041103');
-
-INSERT INTO schema_migrations (version) VALUES ('20130627044401');
-
-INSERT INTO schema_migrations (version) VALUES ('20130715032514');
-
-INSERT INTO schema_migrations (version) VALUES ('20140723044551');
-
-INSERT INTO schema_migrations (version) VALUES ('20150613203150');
-
-INSERT INTO schema_migrations (version) VALUES ('20150619062758');
-
-INSERT INTO schema_migrations (version) VALUES ('20150730035705');
-
-INSERT INTO schema_migrations (version) VALUES ('20150818034625');
-
-INSERT INTO schema_migrations (version) VALUES ('20150818040553');
-
-INSERT INTO schema_migrations (version) VALUES ('20150818044048');
-
-INSERT INTO schema_migrations (version) VALUES ('20151025062324');
-
-INSERT INTO schema_migrations (version) VALUES ('20151025062928');
-
-INSERT INTO schema_migrations (version) VALUES ('20151025063144');
-
-INSERT INTO schema_migrations (version) VALUES ('20151025064342');
-
-INSERT INTO schema_migrations (version) VALUES ('20151227053339');
-
-INSERT INTO schema_migrations (version) VALUES ('20151227060507');
-
-INSERT INTO schema_migrations (version) VALUES ('20160131055617');
-
-INSERT INTO schema_migrations (version) VALUES ('20160203060839');
-
-INSERT INTO schema_migrations (version) VALUES ('20160218045925');
-
-INSERT INTO schema_migrations (version) VALUES ('20160224033002');
-
-INSERT INTO schema_migrations (version) VALUES ('20160604043338');
-
-INSERT INTO schema_migrations (version) VALUES ('20160604044147');
-
-INSERT INTO schema_migrations (version) VALUES ('20160802032538');
-
-INSERT INTO schema_migrations (version) VALUES ('20160820160813');
-
-INSERT INTO schema_migrations (version) VALUES ('20160907043542');
-
-INSERT INTO schema_migrations (version) VALUES ('20160913024041');
 
