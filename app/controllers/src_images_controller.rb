@@ -21,7 +21,7 @@ class SrcImagesController < ApplicationController
 
   def create
     submitted_params = src_image_params
-    record_create_stats(submitted_params)
+    read_image_data(submitted_params)
 
     @src_image = SrcImage.new(submitted_params)
     @src_image.user = current_user
@@ -77,8 +77,9 @@ class SrcImagesController < ApplicationController
     params.require(:src_image).permit(:name)
   end
 
-  def record_create_stats(create_params)
+  def read_image_data(create_params)
     return unless create_params.try(:[], :image)
+    create_params[:image] = create_params[:image].read
     StatsD.increment('src_image.upload'.freeze)
   end
 

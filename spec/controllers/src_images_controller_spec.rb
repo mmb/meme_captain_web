@@ -376,16 +376,14 @@ describe SrcImagesController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      let(:image) { nil }
-
       it 'does not save the new source image in the database' do
         expect do
-          post(:create, params: { src_image: { image: image } })
+          post(:create, params: { src_image: { name: 'test' } })
         end.to_not change { SrcImage.count }
       end
 
       it 're-renders the new template' do
-        post(:create, params: { src_image: { image: image } })
+        post(:create, params: { src_image: { name: 'test' } })
 
         expect(response).to render_template('new')
       end
