@@ -5,6 +5,8 @@
 class SrcSet < ApplicationRecord
   include SearchDocumentConcern
 
+  after_save :update_src_images_count
+
   validates :name, presence: true
   validate :name, :one_active_name
 
@@ -41,6 +43,10 @@ class SrcSet < ApplicationRecord
     end
   end
 
+  def update_src_images_count
+    update_column(:src_images_count, src_images.active.count)
+  end
+
   scope :active, -> { where is_deleted: false }
 
   scope :owned_by, ->(user) { where user_id: user.id }
@@ -53,11 +59,7 @@ class SrcSet < ApplicationRecord
     where('quality >= ?'.freeze, MemeCaptainWeb::Config::SetFrontPageMinQuality)
   }
 
-  scope :not_empty, lambda {
-    joins(:src_images).where(
-      'src_images.is_deleted'.freeze => false
-    ).group('src_sets.id'.freeze)
-  }
+  scope :not_empty, -> { where.not(src_images_count: 0) }
 
   scope :name_matches, lambda { |query|
     where('LOWER(src_sets.name) LIKE ?'.freeze, "%#{query.downcase}%") if query

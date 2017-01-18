@@ -120,7 +120,10 @@ describe SrcSet do
                             src_image2.id_hash
                           ])
 
+      set1.save!
+
       expect(set1.src_images.size).to eq(3)
+      expect(set1.src_images_count).to eq(3)
     end
   end
 
@@ -145,7 +148,58 @@ describe SrcSet do
                                src_image2.id_hash
                              ])
 
+      set1.save!
+
       expect(set1.src_images.size).to eq(1)
+      expect(set1.src_images_count).to eq(1)
+    end
+  end
+
+  describe '#update_src_images_count' do
+    it 'sets the src_images_count to the number of active src images' do
+      src_image1 = FactoryGirl.create(:src_image)
+      src_image2 = FactoryGirl.create(:src_image, is_deleted: true)
+      src_image3 = FactoryGirl.create(:src_image)
+
+      set1.add_src_images([
+                            src_image1.id_hash,
+                            src_image2.id_hash,
+                            src_image3.id_hash
+                          ])
+
+      set1.update_src_images_count
+      expect(set1.src_images_count).to eq(2)
+    end
+  end
+
+  describe '.not_empty' do
+    context 'when the src set contains images' do
+      before do
+        src_image1 = FactoryGirl.create(:src_image)
+        src_image2 = FactoryGirl.create(:src_image, is_deleted: true)
+        src_image3 = FactoryGirl.create(:src_image)
+
+        set1.add_src_images([
+                              src_image1.id_hash,
+                              src_image2.id_hash,
+                              src_image3.id_hash
+                            ])
+        set1.save!
+      end
+
+      it 'finds the set' do
+        expect(SrcSet.not_empty).to include(set1)
+      end
+    end
+
+    context 'when the src set does not contain images' do
+      before do
+        set1
+      end
+
+      it 'does not find the set' do
+        expect(SrcSet.not_empty).to be_empty
+      end
     end
   end
 end
