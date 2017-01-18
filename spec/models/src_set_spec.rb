@@ -103,4 +103,49 @@ describe SrcSet do
       expect(src_set1.search_document).to eq('test')
     end
   end
+
+  describe '#add_src_images' do
+    it 'adds src images to the set' do
+      src_image1 = FactoryGirl.create(:src_image)
+      src_image2 = FactoryGirl.create(:src_image)
+      src_image3 = FactoryGirl.create(:src_image)
+
+      set1.add_src_images([
+                            src_image1.id_hash,
+                            src_image2.id_hash,
+                            src_image3.id_hash
+                          ])
+
+      set1.add_src_images([
+                            src_image2.id_hash
+                          ])
+
+      expect(set1.src_images.size).to eq(3)
+    end
+  end
+
+  describe '#delete_src_images' do
+    it 'deletes src images from the set' do
+      src_image1 = FactoryGirl.create(:src_image)
+      src_image2 = FactoryGirl.create(:src_image)
+      src_image3 = FactoryGirl.create(:src_image)
+
+      set1.add_src_images([
+                            src_image1.id_hash,
+                            src_image2.id_hash,
+                            src_image3.id_hash
+                          ])
+
+      set1.delete_src_images([
+                               src_image2.id_hash,
+                               src_image3.id_hash
+                             ])
+
+      set1.delete_src_images([
+                               src_image2.id_hash
+                             ])
+
+      expect(set1.src_images.size).to eq(1)
+    end
+  end
 end
