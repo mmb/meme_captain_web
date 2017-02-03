@@ -35,7 +35,9 @@ env:
 before_install:
 - sh -e /etc/init.d/xvfb start
 - if [ "$DB" == 'mysql' ]; then echo "gem 'mysql2', '~> 0.3.13'" >> Gemfile; fi
-install: bundle install --jobs=4
+install:
+- gem update --system
+- bundle install --jobs=4
 before_script:
 - if [ -n "$DB" ]; then cp config/database.yml.$DB config/database.yml; fi
 - bundle exec rake db:create db:migrate
