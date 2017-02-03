@@ -101,6 +101,7 @@ RUN apt-get update \
     libpq-dev \
     libsqlite3-dev \
   && export LDFLAGS=-lMagickWand-6.Q16 \
+  && gem update --system \
   && bundle install \
      --without=development test \
      --jobs=4 \
