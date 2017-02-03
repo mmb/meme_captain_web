@@ -61,9 +61,13 @@ class SrcSet < ApplicationRecord
 
   scope :not_empty, -> { where.not(src_images_count: 0) }
 
-  scope :name_matches, lambda { |query|
-    where('LOWER(src_sets.name) LIKE ?'.freeze, "%#{query.downcase}%") if query
-  }
+  scope :text_matches, MemeCaptainWeb::TextMatchLambda.new.lambder(
+    self, :search_document
+  )
+
+  def self.searchable_columns
+    [:search_document]
+  end
 
   private
 

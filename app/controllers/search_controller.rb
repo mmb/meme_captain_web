@@ -17,7 +17,7 @@ class SearchController < ApplicationController
   private
 
   def find_src_sets(query)
-    SrcSet.name_matches(query).active.not_empty.most_recent.page(params[:page])
+    SrcSet.text_matches(query).active.not_empty.most_recent.page(params[:page])
   end
 
   def check_no_results
