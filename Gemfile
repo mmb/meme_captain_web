@@ -68,5 +68,5 @@ group :test, :development do
   gem 'rspec', '~> 3.5'
   gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
   gem 'shoulda', '~> 3.5.0'
-  gem 'travis', '~> 1.8', '>= 1.8.5', require: false
+  gem 'travis', '~> 1.8', '>= 1.8.6', require: false
 end
