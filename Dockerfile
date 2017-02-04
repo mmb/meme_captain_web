@@ -43,7 +43,6 @@ RUN apt-get update \
 # ruby
 RUN apt-get update \
   && apt-get install --assume-yes \
-    git \
     libreadline-dev \
     libssl-dev \
   && curl https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.bz2 \
@@ -98,6 +97,7 @@ ENV RAILS_SERVE_STATIC_FILES true
 
 RUN apt-get update \
   && apt-get install --assume-yes \
+    git \
     libpq-dev \
     libsqlite3-dev \
   && export LDFLAGS=-lMagickWand-6.Q16 \
