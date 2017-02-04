@@ -30,37 +30,4 @@ describe 'monitrc.erb' do
       end
     end
   end
-
-  describe 'job queues' do
-    context 'when the JOB_QUEUES environment variable is not set' do
-      before { stub_const('ENV', {}) }
-
-      it 'does not pass the --queues argument to delayed job start' do
-        expect(output).to include(
-          "/app/bin/delayed_job start --pid-dir=/run --identifier=0\"\n"
-        )
-      end
-    end
-
-    context 'when the JOB_QUEUES environment variable is empty' do
-      before { stub_const('ENV', 'JOB_QUEUES' => '') }
-
-      it 'does not pass the --queues argument to delayed job start' do
-        expect(output).to include(
-          "/app/bin/delayed_job start --pid-dir=/run --identifier=0\"\n"
-        )
-      end
-    end
-
-    context 'when the JOB_QUEUES environment variable is set' do
-      before { stub_const('ENV', 'JOB_QUEUES' => 'q1,q2,q3') }
-
-      it 'passes the --queues argument to delayed job start' do
-        expect(output).to include(
-          '/app/bin/delayed_job start --pid-dir=/run --identifier=0 ' \
-          "--queues=q1,q2,q3\"\n"
-        )
-      end
-    end
-  end
 end

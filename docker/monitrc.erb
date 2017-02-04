@@ -1,10 +1,3 @@
-<%
-if ENV['JOB_QUEUES'].to_s.empty?
-  queues_arg = ''
-else
-  queues_arg = " --queues=#{ENV['JOB_QUEUES']}"
-end
-%>
 set daemon 120
 set logfile /var/log/monit.log
 set idfile /var/lib/monit/id
@@ -36,8 +29,8 @@ check process memcache
 <% 0.upto((ENV['NUM_DELAYED_JOB_WORKERS'] || 1).to_i - 1) do |i| %>
 check process delayed_job.<%= i %>
   with pidfile /run/delayed_job.<%= i %>.pid
-  start program = "/app/bin/delayed_job start --pid-dir=/run --identifier=<%= i %><%= queues_arg %>"
-  stop program = "/app/bin/delayed_job stop --pid-dir=/run --identifier=<%= i %>"
+  start program = "/sbin/start-stop-daemon --pidfile /run/delayed_job.<%= i %>.pid --start --background --make-pidfile --exec /usr/local/bin/rake -- --rakefile /app/Rakefile jobs:work"
+  stop program = "/sbin/start-stop-daemon --pidfile /run/delayed_job.<%= i %>.pid --stop --remove-pidfile"
 <% end %>
 
 check process metrics
