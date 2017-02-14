@@ -33,11 +33,7 @@ class GendImagesController < ApplicationController
     @gend_image = build_gend_image_for_create
     check_bot_attempt
 
-    if @gend_image.save
-      create_success
-    else
-      create_fail
-    end
+    @gend_image.save ? create_success : create_fail
   end
 
   def show
@@ -108,9 +104,8 @@ class GendImagesController < ApplicationController
 
   def redirect_to_pending
     status_url = pending_gend_image_url_for(@gend_image)
-    response.status = :accepted
     response.location = status_url
-    render(json: { status_url: status_url })
+    render(json: { status_url: status_url }, status: :accepted)
   end
 
   def redirect_to_page
