@@ -470,4 +470,73 @@ describe GendImage do
       expect(GendImage.searchable_columns).to eq([:search_document])
     end
   end
+
+  describe '#image_external_body' do
+    let(:client) do
+      Aws::S3::Client.new(
+        stub_responses: {
+          get_object: { body: 'data' }
+        }
+      )
+    end
+
+    context 'when image_external_bucket is nil' do
+      it 'returns nil' do
+        gend_image = FactoryGirl.create(:gend_image, image_external_key: 'key1')
+        expect(gend_image.image_external_body(client)).to be_nil
+      end
+    end
+
+    context 'when image_external_key is nil' do
+      it 'returns nil' do
+        gend_image = FactoryGirl.create(
+          :gend_image, image_external_bucket: 'bucket1'
+        )
+        expect(gend_image.image_external_body(client)).to be_nil
+      end
+    end
+
+    context 'when image_external_bucket and image_external_key are not nil' do
+      it 'returns an IO of the image body from the external object store' do
+        gend_image = FactoryGirl.create(
+          :gend_image,
+          image_external_bucket: 'bucket1',
+          image_external_key: 'key1'
+        )
+        expect(gend_image.image_external_body(client).read).to eq('data')
+      end
+    end
+  end
+
+  describe '#move_image_external' do
+    let(:client) do
+      Aws::S3::Client.new(
+        stub_responses: {
+          put_object: 'Forbidden'
+        }
+      )
+    end
+
+    context 'when the image is already in the bucket' do
+      it 'does not write the image to the bucket' do
+        gend_image = FactoryGirl.create(:gend_image, image_hash: 'hash1')
+        expect do
+          gend_image.move_image_external('bucket1', client)
+        end.to_not raise_error
+        expect(gend_image.image_external_bucket).to eq('bucket1')
+        expect(gend_image.image_external_key).to eq('hash1')
+      end
+    end
+
+    context 'when the image is not already in the bucket' do
+      before { client.stub_responses(:head_object, 'Forbidden') }
+
+      it 'writes the image to the bucket' do
+        gend_image = FactoryGirl.create(:gend_image, image_hash: 'hash1')
+        expect do
+          gend_image.move_image_external('bucket1', client)
+        end.to raise_error(Aws::S3::Errors::Forbidden)
+      end
+    end
+  end
 end

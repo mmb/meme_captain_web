@@ -45,7 +45,12 @@ class GendImagesController < ApplicationController
 
     gend_image_show_headers(gend_image)
 
-    render(body: gend_image.image)
+    body = gend_image.image_external_body
+    if body
+      self.response_body = body
+    else
+      render(body: gend_image.image)
+    end
   end
 
   def destroy

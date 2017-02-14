@@ -42,9 +42,25 @@ module HasImageConcern
     "#{width}x#{height}"
   end
 
+  def image_external_body(client = nil)
+    return unless image_external_bucket && image_external_key
+    client ||= Aws::S3::Client.new
+    client.get_object(
+      bucket: image_external_bucket,
+      key: image_external_key
+    ).body
+  end
+
   def set_image_hash
     return unless image
     update!(image_hash: Digest::SHA2.new.hexdigest(image))
+  end
+
+  def move_image_external(bucket, client = nil)
+    client ||= Aws::S3::Client.new
+    key = write_image_external(bucket, client)
+    update!(image_external_bucket: bucket, image_external_key: key)
+    # TODO: update image to nil
   end
 
   private
@@ -53,5 +69,24 @@ module HasImageConcern
     self.width = img.columns
     self.height = img.rows
     self.size = image.size
+  end
+
+  def write_image_external(bucket, client)
+    return image_hash if image_external_exists(bucket, image_hash, client)
+
+    client.put_object(
+      bucket: bucket,
+      key: image_hash,
+      body: image
+    )
+
+    image_hash
+  end
+
+  def image_external_exists(bucket, key, client)
+    client.head_object(bucket: bucket, key: key)
+    true
+  rescue Aws::S3::Errors::Forbidden
+    false
   end
 end

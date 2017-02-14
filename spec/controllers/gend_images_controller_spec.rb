@@ -718,6 +718,28 @@ describe GendImagesController, type: :controller do
         expires_header = response.headers['Expires']
         expect(expires_header).to eq('Tue, 08 Feb 2011 21:55:00 GMT')
       end
+
+      context 'when the image data is in an external object store' do
+        let(:gend_image) do
+          FactoryGirl.create(
+            :finished_gend_image,
+            image_external_bucket: 'bucket1',
+            image_external_key: 'key1'
+          )
+        end
+
+        before do
+          stub_request(:get, 'https://bucket1.s3.amazonaws.com/key1').to_return(
+            body: 'data'
+          )
+        end
+
+        it 'has the right content' do
+          get(:show, params: { id: gend_image.id_hash })
+
+          expect(response.body).to eq('data')
+        end
+      end
     end
 
     context 'when the id is not found' do
