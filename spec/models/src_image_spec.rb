@@ -476,6 +476,29 @@ describe SrcImage do
     end
   end
 
+  describe '#set_image_hash' do
+    let(:src_image) { FactoryGirl.create(:finished_src_image) }
+
+    context 'when image is nil' do
+      before { src_image.image = nil }
+
+      it 'does not set the image_hash' do
+        expect { src_image.set_image_hash }.to_not change {
+          src_image.image_hash
+        }
+      end
+    end
+
+    context 'when image is not nil' do
+      it 'sets the image_hash to the SHA2 hash' do
+        src_image.set_image_hash
+        expect(src_image.image_hash).to eq(
+          '8bb295b79d039aa6477d3a805ba9579a8a578edc180c099d783b9e8369fc0352'
+        )
+      end
+    end
+  end
+
   describe '.searchable_columns' do
     it 'is the search_document' do
       expect(SrcImage.searchable_columns).to eq([:search_document])

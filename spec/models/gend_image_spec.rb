@@ -367,6 +367,29 @@ describe GendImage do
     end
   end
 
+  describe '#set_image_hash' do
+    let(:gend_image) { FactoryGirl.create(:finished_gend_image) }
+
+    context 'when image is nil' do
+      before { gend_image.image = nil }
+
+      it 'does not set the image_hash' do
+        expect { gend_image.set_image_hash }.to_not change {
+          gend_image.image_hash
+        }
+      end
+    end
+
+    context 'when image is not nil' do
+      it 'sets the image_hash to the SHA2 hash' do
+        gend_image.set_image_hash
+        expect(gend_image.image_hash).to eq(
+          '8bb295b79d039aa6477d3a805ba9579a8a578edc180c099d783b9e8369fc0352'
+        )
+      end
+    end
+  end
+
   describe '#headers' do
     subject(:gend_image) { FactoryGirl.create(:finished_gend_image) }
 

@@ -1,6 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+require 'digest/sha2'
+
 # ActiveRecord::Model mixin for models that store an image in a binary
 # column.
 module HasImageConcern
@@ -38,6 +40,11 @@ module HasImageConcern
 
   def dimensions
     "#{width}x#{height}"
+  end
+
+  def set_image_hash
+    return unless image
+    update!(image_hash: Digest::SHA2.new.hexdigest(image))
   end
 
   private
