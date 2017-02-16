@@ -738,6 +738,9 @@ describe GendImagesController, type: :controller do
           ).to_return(
             status: 404
           )
+          stub_const('ENV', 'AWS_ACCESS_KEY_ID' => 'test',
+                            'AWS_SECRET_ACCESS_KEY' => 'test',
+                            'AWS_REGION' => 'us-east-1')
         end
 
         it 'has the right content' do
