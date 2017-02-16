@@ -732,6 +732,12 @@ describe GendImagesController, type: :controller do
           stub_request(:get, 'https://bucket1.s3.amazonaws.com/key1').to_return(
             body: 'data'
           )
+          stub_request(
+            :get,
+            'http://169.254.169.254/latest/meta-data/iam/security-credentials/'
+          ).to_return(
+            status: 404
+          )
         end
 
         it 'has the right content' do
