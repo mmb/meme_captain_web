@@ -696,7 +696,6 @@
     },
     "secretsInstanceProfile": {
       "Properties": {
-        "Path": "/",
         "Roles": [
           {
             "Ref": "secretsRole"
