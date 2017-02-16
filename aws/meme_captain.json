@@ -100,7 +100,7 @@
           }
         ],
         "IamInstanceProfile": {
-          "Ref": "secretsInstanceProfile"
+          "Ref": "instanceProfile"
         },
         "ImageId": {
           "Ref": "canaryAmi"
@@ -435,6 +435,67 @@
         }
       },
       "Type": "AWS::ElasticLoadBalancingV2::TargetGroup"
+    },
+    "imageStoreBucket": {
+      "Properties": {
+        "AccessControl": "Private",
+        "BucketName": "memecaptain-images"
+      },
+      "Type": "AWS::S3::Bucket"
+    },
+    "imageStoreRole": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "sts:AssumeRole"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "s3:CreateMultipartUpload",
+                    "s3:PutObject",
+                    "s3:GetObject"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:s3:::memecaptain-images/*"
+                }
+              ],
+              "Version": "2012-10-17"
+            },
+            "PolicyName": "imageStorePolicy"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::Role"
+    },
+    "instanceProfile": {
+      "Properties": {
+        "Roles": [
+          {
+            "Ref": "secretsRole"
+          },
+          {
+            "Ref": "imageStoreRole"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::InstanceProfile"
     },
     "internetGateway": {
       "Type": "AWS::EC2::InternetGateway"
