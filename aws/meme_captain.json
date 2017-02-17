@@ -439,7 +439,10 @@
     "imageStoreBucket": {
       "Properties": {
         "AccessControl": "Private",
-        "BucketName": "memecaptain-images"
+        "BucketName": "memecaptain-images",
+        "VersioningConfiguration": {
+          "Status": "Enabled"
+        }
       },
       "Type": "AWS::S3::Bucket"
     },
