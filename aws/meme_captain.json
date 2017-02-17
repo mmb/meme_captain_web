@@ -632,7 +632,7 @@
           }
         ],
         "IamInstanceProfile": {
-          "Ref": "secretsInstanceProfile"
+          "Ref": "instanceProfile"
         },
         "ImageId": {
           "Ref": "onDemandAmi"
@@ -938,7 +938,7 @@
           }
         ],
         "IamInstanceProfile": {
-          "Ref": "secretsInstanceProfile"
+          "Ref": "instanceProfile"
         },
         "ImageId": {
           "Ref": "spotAmi"
@@ -1240,7 +1240,7 @@
           }
         ],
         "IamInstanceProfile": {
-          "Ref": "secretsInstanceProfile"
+          "Ref": "instanceProfile"
         },
         "ImageId": {
           "Ref": "spotAmi"
