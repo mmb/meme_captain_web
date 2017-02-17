@@ -443,7 +443,17 @@
       },
       "Type": "AWS::S3::Bucket"
     },
-    "imageStoreRole": {
+    "instanceProfile": {
+      "Properties": {
+        "Roles": [
+          {
+            "Ref": "instanceRole"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::InstanceProfile"
+    },
+    "instanceRole": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -468,6 +478,28 @@
               "Statement": [
                 {
                   "Action": [
+                    "s3:ListBucket"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:s3:::memecaptain-secrets"
+                },
+                {
+                  "Action": [
+                    "s3:GetObject"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:s3:::memecaptain-secrets/*"
+                }
+              ],
+              "Version": "2012-10-17"
+            },
+            "PolicyName": "secretsPolicy"
+          },
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
                     "s3:CreateMultipartUpload",
                     "s3:PutObject",
                     "s3:GetObject"
@@ -483,19 +515,6 @@
         ]
       },
       "Type": "AWS::IAM::Role"
-    },
-    "instanceProfile": {
-      "Properties": {
-        "Roles": [
-          {
-            "Ref": "secretsRole"
-          },
-          {
-            "Ref": "imageStoreRole"
-          }
-        ]
-      },
-      "Type": "AWS::IAM::InstanceProfile"
     },
     "internetGateway": {
       "Type": "AWS::EC2::InternetGateway"
