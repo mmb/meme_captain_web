@@ -14,6 +14,7 @@ captions_data = ->
 
   src_image_id: $('#gend_image_src_image_id').val()
   captions_attributes: (captions_attributes_for(i) for i in [0...num_captions])
+  private: $('#gend_image_private').prop('checked')
 
 @gend_images_init = (win, log, modal) ->
   $('#create-meme-button').click ->
