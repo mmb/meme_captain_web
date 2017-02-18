@@ -5,9 +5,7 @@ require 'support/fixture_file'
 describe MemeCaptainWeb::ImgFormatValidator do
   subject(:img_format_validator) { MemeCaptainWeb::ImgFormatValidator.new }
 
-  let(:image_data) do
-    open(fixture_file(image), 'rb', &:read)
-  end
+  let(:image_data) { fixture_file_data(image) }
 
   describe '#valid?' do
     context 'when the image is a bitmap' do

@@ -4,17 +4,13 @@ require_relative '../support/fixture_file'
 
 FactoryGirl.define do
   factory :gend_image do
-    File.open(fixture_file('ti_duck.jpg'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('ti_duck.jpg'))
     src_image
     user
   end
 
   factory :animated_gend_image, parent: :gend_image do
-    File.open(fixture_file('omgcat.gif'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('omgcat.gif'))
     association :src_image, factory: :animated_src_image
   end
 

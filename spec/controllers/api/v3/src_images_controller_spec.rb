@@ -136,9 +136,7 @@ describe Api::V3::SrcImagesController, type: :controller do
                  }
                })
           expect(response).to have_http_status(:ok)
-          expected_image_data = File.open(
-            fixture_file('ti_duck.jpg'), 'rb', &:read
-          )
+          expected_image_data = fixture_file_data('ti_duck.jpg')
 
           expect(SrcImage.last.image).to eq(expected_image_data)
         end

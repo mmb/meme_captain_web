@@ -4,16 +4,12 @@ require_relative '../support/fixture_file'
 
 FactoryGirl.define do
   factory :src_image do
-    File.open(fixture_file('ti_duck.jpg'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('ti_duck.jpg'))
     name('src image name')
   end
 
   factory :animated_src_image, parent: :src_image do
-    File.open(fixture_file('omgcat.gif'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('omgcat.gif'))
   end
 
   factory :finished_src_image, parent: :src_image do
@@ -27,20 +23,14 @@ FactoryGirl.define do
   end
 
   factory :svg_src_image, parent: :src_image do
-    File.open(fixture_file('thumbs_up.svg'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('thumbs_up.svg'))
   end
 
   factory :src_image_with_comment, parent: :src_image do
-    File.open(fixture_file('ti_duck_with_comment.jpg'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('ti_duck_with_comment.jpg'))
   end
 
   factory :src_image_with_orientation, parent: :src_image do
-    File.open(fixture_file('rectangle.jpg'), 'rb') do |f|
-      image(f.read)
-    end
+    image(fixture_file_data('rectangle.jpg'))
   end
 end

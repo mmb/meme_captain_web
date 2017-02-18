@@ -13,7 +13,7 @@ describe SrcImageProcessJob do
     let(:src_image) { FactoryGirl.create(:src_image, image: nil, url: url) }
 
     before do
-      image_data = File.read(fixture_file('ti_duck.jpg'))
+      image_data = fixture_file_data('ti_duck.jpg')
       stub_request(:get, url).to_return(body: image_data)
       stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
     end

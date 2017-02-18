@@ -6,10 +6,8 @@ describe MemeCaptainWeb::AnimatedGifTrimmer do
   subject(:animated_gif_trimmer) { MemeCaptainWeb::AnimatedGifTrimmer.new }
 
   describe '#trim' do
-    let(:image_data) { File.open(image_path, 'rb', &:read) }
-
     context 'when the image is a typical animated gif' do
-      let(:image_path) { fixture_file('omgcat_unoptimized.gif') }
+      let(:image_data) { fixture_file_data('omgcat_unoptimized.gif') }
 
       it 'deletes every other frame of the image' do
         trimmed_data = MemeCaptainWeb::AnimatedGifTrimmer.new.trim(image_data)
@@ -20,7 +18,7 @@ describe MemeCaptainWeb::AnimatedGifTrimmer do
 
     context 'when the image has graphics control extension, application ' \
       'extension' do
-      let(:image_path) { fixture_file('omgcat_ga.gif') }
+      let(:image_data) { fixture_file_data('omgcat_ga.gif') }
 
       it 'deletes every other frame of the image' do
         trimmed_data = MemeCaptainWeb::AnimatedGifTrimmer.new.trim(image_data)
@@ -31,7 +29,7 @@ describe MemeCaptainWeb::AnimatedGifTrimmer do
 
     context 'when the image contains graphics control extension, comment ' \
       'extension, application extension' do
-      let(:image_path) { fixture_file('omgcat_gca.gif') }
+      let(:image_data) { fixture_file_data('omgcat_gca.gif') }
 
       it 'deletes every other frame of the image' do
         trimmed_data = MemeCaptainWeb::AnimatedGifTrimmer.new.trim(image_data)
@@ -42,7 +40,7 @@ describe MemeCaptainWeb::AnimatedGifTrimmer do
 
     context 'when the image contains application extension, graphics control ' \
       'extension' do
-      let(:image_path) { fixture_file('omgcat_ag.gif') }
+      let(:image_data) { fixture_file_data('omgcat_ag.gif') }
 
       it 'deletes every other frame of the image' do
         trimmed_data = MemeCaptainWeb::AnimatedGifTrimmer.new.trim(image_data)

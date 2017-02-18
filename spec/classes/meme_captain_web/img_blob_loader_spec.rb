@@ -8,7 +8,7 @@ describe MemeCaptainWeb::ImgBlobLoader do
   end
 
   let(:validator) { instance_double('MemeCaptainWeb::ImgFormatValidator') }
-  let(:img_data) { File.read(fixture_file('ti_duck.jpg')) }
+  let(:img_data) { fixture_file_data('ti_duck.jpg') }
 
   before do
     allow(validator).to receive(:valid?).with(img_data).and_return(valid)
