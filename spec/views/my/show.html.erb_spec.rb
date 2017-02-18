@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'rails_helper'
 
 describe 'my/show.html.erb', type: :view do

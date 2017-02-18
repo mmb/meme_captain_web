@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 module Magick
   # Add helpers for resizing all frames of animated images.
   class ImageList

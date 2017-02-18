@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 module Api
   module V3
     # Pending src images controller.

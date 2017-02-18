@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 # ActiveRecord::Model mixin to set a random id hash column.
 module IdHashConcern
   extend ActiveSupport::Concern

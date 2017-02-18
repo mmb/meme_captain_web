@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 # User page controller.
 class MyController < ApplicationController
   def show

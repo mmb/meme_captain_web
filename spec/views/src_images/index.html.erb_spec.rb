@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'rails_helper'
 
 describe 'src_images/index.html.erb', type: :view do

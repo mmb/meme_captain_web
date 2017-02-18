@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 # Pending src images controller.
 class PendingSrcImagesController < ApplicationController
   include SrcImagesHelper

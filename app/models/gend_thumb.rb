@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 # Generated (meme) image thumbnail model.
 class GendThumb < ApplicationRecord
   include HasImageConcern

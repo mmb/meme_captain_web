@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 describe 'rack middleware' do
   it 'assembles production middleware' do
     # this can catch errors in production middleware configuration

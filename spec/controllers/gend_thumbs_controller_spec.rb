@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'time'
 
 require 'rails_helper'

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 module MemeCaptainWeb
   # Configuration constants.
   module Config

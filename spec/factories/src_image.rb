@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require_relative '../support/fixture_file'
 
 FactoryGirl.define do

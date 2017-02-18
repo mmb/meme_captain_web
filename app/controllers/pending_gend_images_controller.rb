@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 # Pending generated (meme) images controller.
 class PendingGendImagesController < ApplicationController
   include GendImagesHelper

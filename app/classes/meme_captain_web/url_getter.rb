@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 module MemeCaptainWeb
   # URL content fetcher.
   class UrlGetter

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'base64'
 
 FactoryGirl.define do

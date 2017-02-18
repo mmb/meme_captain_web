@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'rails_helper'
 
 describe 'gend_image_scripts/show.text.erb', type: :view do

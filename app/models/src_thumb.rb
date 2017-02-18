@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 # Source image thumbnail model.
 class SrcThumb < ApplicationRecord
   include HasImageConcern
