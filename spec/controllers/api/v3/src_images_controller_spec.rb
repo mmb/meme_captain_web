@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'support/fixture_file'
 require 'support/src_image_skip_callbacks'
 
 describe Api::V3::SrcImagesController, type: :controller do
@@ -136,7 +137,7 @@ describe Api::V3::SrcImagesController, type: :controller do
                })
           expect(response).to have_http_status(:ok)
           expected_image_data = File.open(
-            Rails.root + 'spec/fixtures/files/ti_duck.jpg', 'rb', &:read
+            fixture_file('ti_duck.jpg'), 'rb', &:read
           )
 
           expect(SrcImage.last.image).to eq(expected_image_data)

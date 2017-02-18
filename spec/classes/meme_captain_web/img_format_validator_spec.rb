@@ -1,10 +1,12 @@
 require 'rails_helper'
 
+require 'support/fixture_file'
+
 describe MemeCaptainWeb::ImgFormatValidator do
   subject(:img_format_validator) { MemeCaptainWeb::ImgFormatValidator.new }
 
   let(:image_data) do
-    open(Rails.root + 'spec/fixtures/files' + image, 'rb', &:read)
+    open(fixture_file(image), 'rb', &:read)
   end
 
   describe '#valid?' do

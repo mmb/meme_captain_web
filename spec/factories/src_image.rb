@@ -1,15 +1,17 @@
 # encoding: UTF-8
 
+require_relative '../support/fixture_file'
+
 FactoryGirl.define do
   factory :src_image do
-    File.open(Rails.root + 'spec/fixtures/files/ti_duck.jpg', 'rb') do |f|
+    File.open(fixture_file('ti_duck.jpg'), 'rb') do |f|
       image(f.read)
     end
     name('src image name')
   end
 
   factory :animated_src_image, parent: :src_image do
-    File.open(Rails.root + 'spec/fixtures/files/omgcat.gif', 'rb') do |f|
+    File.open(fixture_file('omgcat.gif'), 'rb') do |f|
       image(f.read)
     end
   end
@@ -25,23 +27,19 @@ FactoryGirl.define do
   end
 
   factory :svg_src_image, parent: :src_image do
-    File.open(Rails.root + 'spec/fixtures/files/thumbs_up.svg', 'rb') do |f|
+    File.open(fixture_file('thumbs_up.svg'), 'rb') do |f|
       image(f.read)
     end
   end
 
   factory :src_image_with_comment, parent: :src_image do
-    File.open(
-      Rails.root + 'spec/fixtures/files/ti_duck_with_comment.jpg', 'rb'
-    ) do |f|
+    File.open(fixture_file('ti_duck_with_comment.jpg'), 'rb') do |f|
       image(f.read)
     end
   end
 
   factory :src_image_with_orientation, parent: :src_image do
-    File.open(
-      Rails.root + 'spec/fixtures/files/rectangle.jpg', 'rb'
-    ) do |f|
+    File.open(fixture_file('rectangle.jpg'), 'rb') do |f|
       image(f.read)
     end
   end

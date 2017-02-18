@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 require 'support/create_image'
+require 'support/fixture_file'
 require 'support/src_image_skip_callbacks'
 
 describe SrcImageProcessJob do
@@ -12,7 +13,7 @@ describe SrcImageProcessJob do
     let(:src_image) { FactoryGirl.create(:src_image, image: nil, url: url) }
 
     before do
-      image_data = File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg')
+      image_data = File.read(fixture_file('ti_duck.jpg'))
       stub_request(:get, url).to_return(body: image_data)
       stub_const('MemeCaptainWeb::Config::MIN_SOURCE_IMAGE_SIDE', 0)
     end

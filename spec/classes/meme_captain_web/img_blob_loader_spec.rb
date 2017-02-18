@@ -1,12 +1,14 @@
 require 'rails_helper'
 
+require 'support/fixture_file'
+
 describe MemeCaptainWeb::ImgBlobLoader do
   subject(:img_blob_loader) do
     MemeCaptainWeb::ImgBlobLoader.new(validator: validator)
   end
 
   let(:validator) { instance_double('MemeCaptainWeb::ImgFormatValidator') }
-  let(:img_data) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
+  let(:img_data) { File.read(fixture_file('ti_duck.jpg')) }
 
   before do
     allow(validator).to receive(:valid?).with(img_data).and_return(valid)

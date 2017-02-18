@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/fixture_file'
+
 describe GendImage do
   subject { FactoryGirl.create(:gend_image) }
 
@@ -41,7 +43,7 @@ describe GendImage do
   end
 
   describe '#ext' do
-    let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.jpg') }
+    let(:image) { File.read(fixture_file('ti_duck.jpg')) }
 
     subject(:gend_image) do
       gend_image = GendImage.new(
@@ -56,13 +58,13 @@ describe GendImage do
     end
 
     context 'gif' do
-      let(:image) { File.read(Rails.root + 'spec/fixtures/files/omgcat.gif') }
+      let(:image) { File.read(fixture_file('omgcat.gif')) }
 
       specify { expect(gend_image.format).to eq(:gif) }
     end
 
     context 'png' do
-      let(:image) { File.read(Rails.root + 'spec/fixtures/files/ti_duck.png') }
+      let(:image) { File.read(fixture_file('ti_duck.png')) }
 
       specify { expect(gend_image.format).to eq(:png) }
     end

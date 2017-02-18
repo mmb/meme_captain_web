@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 require 'support/features'
+require 'support/fixture_file'
 
 RSpec.feature 'upload src image', type: :feature do
   scenario 'upload src image' do
@@ -8,8 +9,7 @@ RSpec.feature 'upload src image', type: :feature do
 
     click_on('New')
 
-    attach_file('src_image_image',
-                Rails.root + 'spec/fixtures/files/ti_duck.jpg')
+    attach_file('src_image_image', fixture_file('ti_duck.jpg'))
 
     click_button('Create')
 
