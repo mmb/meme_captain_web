@@ -12,6 +12,9 @@
   more_images: false }) %>
 
 <% if current_user && @src_set.user == current_user %>
-    <%= button_to 'Delete Set', {action: :destroy, id: @src_set.name},
-                  confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger' %>
+  <%= button_to('Delete Set',
+    { action: :destroy, id: @src_set.name },
+    data: { confirm: 'Are you sure?' },
+    method: :delete,
+    class: 'btn btn-danger') %>
 <% end %>
