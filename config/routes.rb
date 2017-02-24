@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
   resource :dashboard, only: :show, controller: :dashboard
 
+  resources :jobs, only: [:index, :destroy]
+
   resources :gend_image_scripts, only: :show
 
   namespace :api do
