@@ -240,7 +240,7 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       before { assign(:show_creator_ip, true) }
 
       it 'shows the creator ip' do
-        expect(render).to have_text('8.7.6.5')
+        expect(render).to have_link('8.7.6.5', href: 'https://ipinfo.io/8.7.6.5')
       end
     end
 

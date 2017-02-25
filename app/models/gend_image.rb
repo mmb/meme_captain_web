@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 # Generated (meme) image model.
 class GendImage < ApplicationRecord
   include HasImageConcern
@@ -39,6 +41,12 @@ class GendImage < ApplicationRecord
       'Content-Length'.freeze => size,
       'Content-Type'.freeze => content_type
     }
+  end
+
+  def creator_ip_url
+    url = URI('https://ipinfo.io/')
+    url.path = "/#{creator_ip}"
+    url.to_s
   end
 
   def self.for_user(user, query, page)

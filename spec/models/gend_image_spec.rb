@@ -402,6 +402,16 @@ describe GendImage do
     end
   end
 
+  describe '#creator_ip_url' do
+    subject(:gend_image) do
+      FactoryGirl.create(:gend_image, creator_ip: '1.2.3.4')
+    end
+
+    it "returns a URL to information about the creator's IP address" do
+      expect(gend_image.creator_ip_url).to eq('https://ipinfo.io/1.2.3.4')
+    end
+  end
+
   describe '#image_url' do
     it 'has a getter and setter' do
       gend_image = FactoryGirl.create(:finished_gend_image)

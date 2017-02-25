@@ -90,7 +90,7 @@
         <% end %>
 
 	<% if @show_creator_ip %>
-          <p class="meme-meta">Creator IP: <%= @gend_image.creator_ip %></p>
+          <p class="meme-meta">Creator IP: <%= link_to(@gend_image.creator_ip, @gend_image.creator_ip_url) %></p>
         <% end %>
 
         <% if @show_delete_button %>
