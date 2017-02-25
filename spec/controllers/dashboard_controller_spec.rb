@@ -102,6 +102,15 @@ describe DashboardController, type: :controller do
           searches.slice(1, 20).reverse
         )
       end
+
+      it 'sets jobs that have not been attempted yet oldest first' do
+        job1 = FactoryGirl.create(:job, created_at: Time.at(0))
+        job2 = FactoryGirl.create(:job, created_at: Time.at(60))
+
+        get(:show)
+
+        expect(assigns(:jobs)).to eq([job1, job2])
+      end
     end
   end
 end

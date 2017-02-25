@@ -12,6 +12,8 @@ class DashboardController < ApplicationController
     @new_users_last_24h = User.where(created_at: last_day).count
 
     @no_result_searches = NoResultSearch.last(20).reverse
+
+    set_jobs
   end
 
   private
@@ -32,5 +34,9 @@ class DashboardController < ApplicationController
     total = success_count + error_count
     return 100.00 if total <= 0
     (success_count / total.to_f * 100).round(2)
+  end
+
+  def set_jobs
+    @jobs = Delayed::Job.where(attempts: 0).order(:created_at)
   end
 end

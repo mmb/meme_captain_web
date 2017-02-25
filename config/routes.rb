@@ -48,7 +48,7 @@ Rails.application.routes.draw do
 
   resource :dashboard, only: :show, controller: :dashboard
 
-  resources :jobs, only: [:index, :destroy]
+  resources :jobs, only: [:destroy]
 
   resources :gend_image_scripts, only: :show
 
