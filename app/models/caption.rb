@@ -5,7 +5,6 @@ class Caption < ApplicationRecord
   belongs_to :gend_image
 
   validates :height_pct, presence: true
-  validates :text, presence: true
   validates :top_left_x_pct, presence: true
   validates :top_left_y_pct, presence: true
   validates :width_pct, presence: true

@@ -5,8 +5,6 @@ describe Caption do
 
   it { should validate_presence_of :height_pct }
 
-  it { should validate_presence_of :text }
-
   it { should validate_presence_of :top_left_x_pct }
 
   it { should validate_presence_of :top_left_y_pct }
