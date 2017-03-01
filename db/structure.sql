@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -328,6 +328,36 @@ CREATE TABLE src_images (
 
 
 --
+-- Name: src_images_captions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE src_images_captions (
+    id integer NOT NULL,
+    src_image_id integer,
+    caption_id integer
+);
+
+
+--
+-- Name: src_images_captions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE src_images_captions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: src_images_captions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE src_images_captions_id_seq OWNED BY src_images_captions.id;
+
+
+--
 -- Name: src_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -516,6 +546,13 @@ ALTER TABLE ONLY src_images ALTER COLUMN id SET DEFAULT nextval('src_images_id_s
 
 
 --
+-- Name: src_images_captions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY src_images_captions ALTER COLUMN id SET DEFAULT nextval('src_images_captions_id_seq'::regclass);
+
+
+--
 -- Name: src_sets id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -598,6 +635,14 @@ ALTER TABLE ONLY schema_migrations
 
 ALTER TABLE ONLY sessions
     ADD CONSTRAINT sessions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: src_images_captions src_images_captions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY src_images_captions
+    ADD CONSTRAINT src_images_captions_pkey PRIMARY KEY (id);
 
 
 --
@@ -749,6 +794,20 @@ CREATE INDEX index_sessions_on_session_id ON sessions USING btree (session_id);
 --
 
 CREATE INDEX index_sessions_on_updated_at ON sessions USING btree (updated_at);
+
+
+--
+-- Name: index_src_images_captions_on_caption_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_src_images_captions_on_caption_id ON src_images_captions USING btree (caption_id);
+
+
+--
+-- Name: index_src_images_captions_on_src_image_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_src_images_captions_on_src_image_id ON src_images_captions USING btree (src_image_id);
 
 
 --
@@ -920,11 +979,27 @@ CREATE INDEX src_sets_trgm_idx ON src_sets USING gin (search_document gin_trgm_o
 
 
 --
+-- Name: src_images_captions fk_rails_2d3f46f2e8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY src_images_captions
+    ADD CONSTRAINT fk_rails_2d3f46f2e8 FOREIGN KEY (caption_id) REFERENCES captions(id);
+
+
+--
+-- Name: src_images_captions fk_rails_71159cb694; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY src_images_captions
+    ADD CONSTRAINT fk_rails_71159cb694 FOREIGN KEY (src_image_id) REFERENCES src_images(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20121201212212'), ('20121201215914'), ('20121206052011'), ('20121208064132'), ('20121208064414'), ('20121208070934'), ('20121209081928'), ('20121212063843'), ('20121213051820'), ('20121213070351'), ('20121218025528'), ('20121220054004'), ('20121220063250'), ('20121220065946'), ('20121222222948'), ('20130102025207'), ('20130102025223'), ('20130102044216'), ('20130105025257'), ('20130105065853'), ('20130109080014'), ('20130113054632'), ('20130116055207'), ('20130116055326'), ('20130116074545'), ('20130126072700'), ('20130308084654'), ('20130312050331'), ('20130511083437'), ('20130526045843'), ('20130527013239'), ('20130627041103'), ('20130627044401'), ('20130715032514'), ('20140723044551'), ('20150613203150'), ('20150619062758'), ('20150730035705'), ('20150818034625'), ('20150818040553'), ('20150818044048'), ('20151025062324'), ('20151025062928'), ('20151025063144'), ('20151025064342'), ('20151227053339'), ('20151227060507'), ('20160131055617'), ('20160203060839'), ('20160218045925'), ('20160224033002'), ('20160604043338'), ('20160604044147'), ('20160802032538'), ('20160820160813'), ('20160907043542'), ('20160913024041'), ('20161206051008'), ('20161207053333'), ('20170117054337'), ('20170214052503');
+INSERT INTO schema_migrations (version) VALUES ('20121201212212'), ('20121201215914'), ('20121206052011'), ('20121208064132'), ('20121208064414'), ('20121208070934'), ('20121209081928'), ('20121212063843'), ('20121213051820'), ('20121213070351'), ('20121218025528'), ('20121220054004'), ('20121220063250'), ('20121220065946'), ('20121222222948'), ('20130102025207'), ('20130102025223'), ('20130102044216'), ('20130105025257'), ('20130105065853'), ('20130109080014'), ('20130113054632'), ('20130116055207'), ('20130116055326'), ('20130116074545'), ('20130126072700'), ('20130308084654'), ('20130312050331'), ('20130511083437'), ('20130526045843'), ('20130527013239'), ('20130627041103'), ('20130627044401'), ('20130715032514'), ('20140723044551'), ('20150613203150'), ('20150619062758'), ('20150730035705'), ('20150818034625'), ('20150818040553'), ('20150818044048'), ('20151025062324'), ('20151025062928'), ('20151025063144'), ('20151025064342'), ('20151227053339'), ('20151227060507'), ('20160131055617'), ('20160203060839'), ('20160218045925'), ('20160224033002'), ('20160604043338'), ('20160604044147'), ('20160802032538'), ('20160820160813'), ('20160907043542'), ('20160913024041'), ('20161206051008'), ('20161207053333'), ('20170117054337'), ('20170214052503'), ('20170228061601');
 
 
