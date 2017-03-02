@@ -286,4 +286,139 @@ describe Api::V3::SrcImagesController, type: :controller do
       end
     end
   end
+
+  describe "PUT 'update'" do
+    before do
+      request.accept = 'application/json'
+      request.content_type = 'application/json'
+    end
+
+    context 'when the user is not logged in' do
+      let(:user) { nil }
+      let(:src_image) { FactoryGirl.create(:finished_src_image) }
+
+      it 'returns forbidden' do
+        put(:update, params: { id: src_image.id_hash })
+
+        expect(response).to be_forbidden
+      end
+    end
+
+    context 'when the user does not own the image' do
+      let(:src_image) do
+        FactoryGirl.create(
+          :finished_src_image,
+          user: FactoryGirl.create(:user)
+        )
+      end
+
+      context 'when the user is not an admin' do
+        it 'returns forbidden' do
+          put(:update, params: {
+                id: src_image.id_hash,
+                captions_attributes: [
+                  { top_left_x_pct: 0.01 }
+                ]
+              })
+
+          expect(response).to be_forbidden
+        end
+      end
+
+      context 'when the user is an admin' do
+        let(:user) { FactoryGirl.create(:admin_user) }
+
+        it 'updates the image' do
+          put(:update, params: {
+                id: src_image.id_hash,
+                captions_attributes: [
+                  {
+                    top_left_x_pct: '0.01',
+                    top_left_y_pct: '0.02',
+                    width_pct: '0.03',
+                    height_pct: '0.04',
+                    text: 'test'
+                  }
+                ]
+              })
+
+          expect(response).to have_http_status(204)
+          expect(src_image.captions.size).to eq(1)
+
+          caption = src_image.captions[0]
+          expect(caption.top_left_x_pct).to eq(0.01)
+          expect(caption.top_left_y_pct).to eq(0.02)
+          expect(caption.width_pct).to eq(0.03)
+          expect(caption.height_pct).to eq(0.04)
+          expect(caption.text).to eq('test')
+        end
+      end
+    end
+
+    context 'when the user owns the image' do
+      let(:src_image) { FactoryGirl.create(:finished_src_image, user: user) }
+
+      it 'updates the image' do
+        put(:update, params: {
+              id: src_image.id_hash,
+              captions_attributes: [
+                {
+                  top_left_x_pct: '0.01',
+                  top_left_y_pct: '0.02',
+                  width_pct: '0.03',
+                  height_pct: '0.04',
+                  text: 'test'
+                },
+                {
+                  top_left_x_pct: '0.05',
+                  top_left_y_pct: '0.06',
+                  width_pct: '0.07',
+                  height_pct: '0.08',
+                  text: 'test 2'
+                }
+              ]
+            })
+
+        expect(response).to have_http_status(204)
+        expect(src_image.captions.size).to eq(2)
+
+        caption1 = src_image.captions[0]
+        expect(caption1.top_left_x_pct).to eq(0.01)
+        expect(caption1.top_left_y_pct).to eq(0.02)
+        expect(caption1.width_pct).to eq(0.03)
+        expect(caption1.height_pct).to eq(0.04)
+        expect(caption1.text).to eq('test')
+
+        caption2 = src_image.captions[1]
+        expect(caption2.top_left_x_pct).to eq(0.05)
+        expect(caption2.top_left_y_pct).to eq(0.06)
+        expect(caption2.width_pct).to eq(0.07)
+        expect(caption2.height_pct).to eq(0.08)
+        expect(caption2.text).to eq('test 2')
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:src_image) { FactoryGirl.create(:finished_src_image, user: user) }
+
+      it 'returns unprocessable entity with errors' do
+        put(:update, params: {
+              id: src_image.id_hash,
+              captions_attributes: [
+                {
+                  top_left_x_pct: '0.01',
+                  top_left_y_pct: '0.02',
+                  width_pct: '0.03',
+                  text: 'test'
+                }
+              ]
+            })
+
+        expect(response).to have_http_status(422)
+        expect(JSON.parse(response.body)).to eq(
+          'captions.height_pct' => ["can't be blank"]
+        )
+      end
+    end
+  end
 end

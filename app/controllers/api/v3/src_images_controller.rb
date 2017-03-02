@@ -6,6 +6,14 @@ module Api
     class SrcImagesController < ApplicationController
       include SrcImagesHelper
 
+      wrap_parameters SrcImage, include: [
+        :captions_attributes,
+        :image,
+        :name,
+        :private,
+        :url
+      ]
+
       def index
         src_images = SrcImage.for_user(current_user, params[:q], params[:page])
 
@@ -35,10 +43,34 @@ module Api
         end
       end
 
+      def update
+        @src_image = SrcImage.find_by!(id_hash: params[:id])
+
+        head(:forbidden) && return unless can_edit
+
+        if @src_image.update(edit_params)
+          update_success
+        else
+          update_fail
+        end
+      end
+
       private
 
       def src_image_params
         params.require(:src_image).permit(:image, :private, :url, :name)
+      end
+
+      def edit_params
+        params.require(:src_image).permit(
+          captions_attributes: [
+            :top_left_x_pct,
+            :top_left_y_pct,
+            :width_pct,
+            :height_pct,
+            :text
+          ]
+        )
       end
 
       def read_image_data(submitted_params)
@@ -71,6 +103,22 @@ module Api
                  id: @src_image.id_hash,
                  status_url: status_url
                })
+      end
+
+      def can_edit
+        admin? || current_user && @src_image.user == current_user
+      end
+
+      def update_success
+        respond_to { |format| format.json { head(:no_content) } }
+      end
+
+      def update_fail
+        respond_to do |format|
+          format.json do
+            render(json: @src_image.errors, status: :unprocessable_entity)
+          end
+        end
       end
     end
   end

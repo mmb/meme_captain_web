@@ -56,7 +56,9 @@ Rails.application.routes.draw do
     namespace :v3 do
       resources :pending_gend_images, only: :show
       resources :pending_src_images, only: :show
-      resources :src_images, concerns: :paginatable, only: [:create, :index]
+      resources :src_images,
+                concerns: :paginatable,
+                only: [:create, :index, :update]
       resources :gend_images, concerns: :paginatable, only: [:create, :index]
     end
   end

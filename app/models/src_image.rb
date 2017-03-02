@@ -12,6 +12,8 @@ class SrcImage < ApplicationRecord
   has_and_belongs_to_many :src_sets, join_table: :src_images_src_sets
   has_and_belongs_to_many :captions, join_table: :src_images_captions
 
+  accepts_nested_attributes_for :captions
+
   before_validation :add_url_scheme
   validates :url, url: true
 
