@@ -24,6 +24,7 @@ describe SrcImage do
   it { should have_one :src_thumb }
   it { should have_many :gend_images }
   it { should have_and_belong_to_many :src_sets }
+  it { should have_and_belong_to_many :captions }
 
   it 'should generate a unique id hash' do
     allow(SecureRandom).to receive(:urlsafe_base64).with(4).and_return(

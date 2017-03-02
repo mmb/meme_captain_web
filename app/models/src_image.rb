@@ -10,6 +10,7 @@ class SrcImage < ApplicationRecord
   has_one :src_thumb
   has_many :gend_images
   has_and_belongs_to_many :src_sets, join_table: :src_images_src_sets
+  has_and_belongs_to_many :captions, join_table: :src_images_captions
 
   before_validation :add_url_scheme
   validates :url, url: true
