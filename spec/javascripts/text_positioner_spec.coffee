@@ -11,6 +11,12 @@ describe 'text positioner', ->
       expect(fabric_canvas.getWidth()).toEqual(200)
       expect(fabric_canvas.getHeight()).toEqual(100)
 
+    it 'adds the rectangles to the canvas', ->
+      text_positioner = $('#tp1').data('tp')
+      fabric_canvas = text_positioner.fabric_canvas
+
+      expect(fabric_canvas.getObjects().length).toEqual(2)
+
     it 'resizes when the div changes size', ->
       div = $('#tp1')
       div.width(150)

@@ -199,7 +199,7 @@ class @Target
 
     num_captions = $('.caption-label').size()
 
-    for index in [0..num_captions]
+    for index in [0...num_captions]
       tp.add_rect index,
         $("#gend_image_captions_attributes_#{index}_top_left_x_pct"),
         $("#gend_image_captions_attributes_#{index}_top_left_y_pct"),
