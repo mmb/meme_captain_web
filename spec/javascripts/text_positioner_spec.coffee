@@ -63,6 +63,37 @@ describe 'text positioner', ->
       expect(fabric_canvas.setBackgroundImage).toHaveBeenCalledWith('',
         jasmine.any(Function), width: 200, height: 100)
 
+    describe '#add_rect', ->
+      it 'adds a rectangle to the canvas', ->
+        text_positioner = $('#tp1').data('tp')
+        fabric_canvas = text_positioner.fabric_canvas
+
+        text_positioner.add_rect(
+          'rect0',
+          $("#gend_image_captions_attributes_0_top_left_x_pct"),
+          $("#gend_image_captions_attributes_0_top_left_y_pct"),
+          $("#gend_image_captions_attributes_0_width_pct"),
+          $("#gend_image_captions_attributes_0_height_pct"))
+
+        text_positioner.add_rect(
+          'rect1',
+          $("#gend_image_captions_attributes_1_top_left_x_pct"),
+          $("#gend_image_captions_attributes_1_top_left_y_pct"),
+          $("#gend_image_captions_attributes_1_width_pct"),
+          $("#gend_image_captions_attributes_1_height_pct"))
+
+        expect(fabric_canvas.getObjects().length).toEqual(4)
+
+    describe '#remove_rect', ->
+      it 'removes a rectangle from the canvas', ->
+        text_positioner = $('#tp1').data('tp')
+        fabric_canvas = text_positioner.fabric_canvas
+
+        text_positioner.remove_rect(0)
+        text_positioner.remove_rect(1)
+
+        expect(fabric_canvas.getObjects().length).toEqual(0)
+
   describe 'Target', ->
     describe '#bound_top', ->
       describe 'when the target is outside the canvas', ->

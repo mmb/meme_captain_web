@@ -48,6 +48,13 @@ class TextPositioner
 
     @fabric_canvas.add rect
 
+  remove_rect: (name) ->
+    toRemove = (
+      obj for obj in @fabric_canvas.getObjects() when obj.name is name)
+
+    for obj in toRemove
+      @fabric_canvas.remove(obj)
+
   set_img_attrs: ->
     @img_url = @div.attr('data-img-url')
     @img_width = @div.attr('data-img-width')
