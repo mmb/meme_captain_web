@@ -158,3 +158,7 @@ describe 'shared', ->
   describe 'count_caption_fields', ->
     it 'counts the caption fields', ->
       expect(count_caption_fields($('#new_gend_image'))).toEqual(3)
+
+    describe 'when the number of caption is in the double digits', ->
+      it 'counts the caption fields', ->
+        expect(count_caption_fields($('#many_captions'))).toEqual(11)

@@ -33,7 +33,7 @@
 
 @count_caption_fields = (form) ->
   form.find('textarea').filter(->
-    $(this).attr('id')?.match /gend_image_captions_attributes_\d_text/).length
+    $(this).attr('id')?.match /gend_image_captions_attributes_\d+_text/).length
 
 window.addEventListener 'paste', (event) ->
   clipboard = new Clipboard
