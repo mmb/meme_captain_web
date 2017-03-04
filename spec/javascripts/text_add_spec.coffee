@@ -2,6 +2,7 @@ describe 'text_add', ->
   beforeEach ->
     loadFixtures 'text_add.html'
     spyOn window, 'add_text_positioner'
+    spyOn window, 'remove_text_positioner'
     text_add_init()
 
   describe 'adding a text box to the form', ->
@@ -18,7 +19,8 @@ describe 'text_add', ->
         expect($('#new_gend_image')).toContainHtml('<textarea
           id="gend_image_captions_attributes_2_text"
           name="gend_image[captions_attributes][2][text]"
-          class="form-control" cols="40" rows="2" />')
+          class="form-control caption-textarea" cols="40" rows="2"
+          data-index="2" />')
 
       it 'focuses the new text input', ->
         expect($('#new_gend_image > div.form-group >
@@ -69,7 +71,8 @@ describe 'text_add', ->
         expect($('#empty')).toContainHtml('<textarea
           id="gend_image_captions_attributes_0_text"
           name="gend_image[captions_attributes][0][text]"
-          class="form-control" cols="40" rows="2" />')
+          class="form-control caption-textarea" cols="40" rows="2"
+          data-index="0" />')
 
       it 'focuses the new text input', ->
         expect($('#empty > div.form-group >
@@ -107,3 +110,13 @@ describe 'text_add', ->
 
       it 'adds a new box to the text positioner', ->
         expect(window.add_text_positioner).toHaveBeenCalledWith 0
+
+  describe 'removing a text box from the form', ->
+    beforeEach ->
+      $('#caption-0-form-group > .caption-close > span').click()
+
+    it 'removes the form group', ->
+      expect($('#caption-0-form-group')).toHaveLength(0)
+
+    it 'removes the rectangle from the canvas', ->
+      expect(window.remove_text_positioner).toHaveBeenCalledWith(0)

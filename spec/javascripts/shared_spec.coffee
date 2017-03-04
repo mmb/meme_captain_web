@@ -155,10 +155,7 @@ describe 'shared', ->
             expect(fake_log.error).toHaveBeenCalledWith(
               'Error submitting image data')
 
-  describe 'count_caption_fields', ->
-    it 'counts the caption fields', ->
-      expect(count_caption_fields($('#new_gend_image'))).toEqual(3)
-
-    describe 'when the number of caption is in the double digits', ->
-      it 'counts the caption fields', ->
-        expect(count_caption_fields($('#many_captions'))).toEqual(11)
+  describe 'caption_indices', ->
+    it 'returns the indices of all caption inputs', ->
+      expect(caption_indices($('#new_gend_image'))).toEqual(
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])

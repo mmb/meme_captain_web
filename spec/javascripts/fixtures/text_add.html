@@ -1,29 +1,35 @@
 <form id="new_gend_image">
-    <label for="gend_image_captions_attributes_0_text">Text</label>
-    <textarea id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" size="30"/>
-    <input id="gend_image_captions_attributes_0_font" name="gend_image[captions_attributes][0][font]" type="hidden"
-           value="some_font.ttf"/>
-    <input id="gend_image_captions_attributes_0_top_left_x_pct"
-           name="gend_image[captions_attributes][0][top_left_x_pct]" type="hidden" value="0.05"/>
-    <input id="gend_image_captions_attributes_0_top_left_y_pct"
-           name="gend_image[captions_attributes][0][top_left_y_pct]" type="hidden" value="0"/>
-    <input id="gend_image_captions_attributes_0_width_pct" name="gend_image[captions_attributes][0][width_pct]"
-           type="hidden" value="0.9"/>
-    <input id="gend_image_captions_attributes_0_height_pct" name="gend_image[captions_attributes][0][height_pct]"
-           type="hidden" value="0.25"/>
+    <div id="caption-0-form-group">
+        <label for="gend_image_captions_attributes_0_text">Text</label>
+        <button class="caption-close"><span data-index="0">&times;</span></button>
+        <textarea id="gend_image_captions_attributes_0_text" name="gend_image[captions_attributes][0][text]" size="30" class="caption-textarea" data-index="0"/>
+        <input id="gend_image_captions_attributes_0_font" name="gend_image[captions_attributes][0][font]" type="hidden"
+               value="some_font.ttf"/>
+        <input id="gend_image_captions_attributes_0_top_left_x_pct"
+               name="gend_image[captions_attributes][0][top_left_x_pct]" type="hidden" value="0.05"/>
+        <input id="gend_image_captions_attributes_0_top_left_y_pct"
+               name="gend_image[captions_attributes][0][top_left_y_pct]" type="hidden" value="0"/>
+        <input id="gend_image_captions_attributes_0_width_pct" name="gend_image[captions_attributes][0][width_pct]"
+               type="hidden" value="0.9"/>
+        <input id="gend_image_captions_attributes_0_height_pct" name="gend_image[captions_attributes][0][height_pct]"
+               type="hidden" value="0.25"/>
+    </div>
 
-    <label for="gend_image_captions_attributes_1_text">Text</label>
-    <textarea id="gend_image_captions_attributes_1_text" name="gend_image[captions_attributes][1][text]" size="30"/>
-    <input id="gend_image_captions_attributes_1_font" name="gend_image[captions_attributes][1][font]" type="hidden"
-           value="some_font.ttf"/>
-    <input id="gend_image_captions_attributes_1_top_left_x_pct"
-           name="gend_image[captions_attributes][1][top_left_x_pct]" type="hidden" value="0.05"/>
-    <input id="gend_image_captions_attributes_1_top_left_y_pct"
-           name="gend_image[captions_attributes][1][top_left_y_pct]" type="hidden" value="0"/>
-    <input id="gend_image_captions_attributes_1_width_pct" name="gend_image[captions_attributes][1][width_pct]"
-           type="hidden" value="0.9"/>
-    <input id="gend_image_captions_attributes_1_height_pct" name="gend_image[captions_attributes][1][height_pct]"
-           type="hidden" value="0.25"/>
+    <div id="caption-1-form-group">
+        <label for="gend_image_captions_attributes_1_text">Text</label>
+        <button class="caption-close"><span data-index="1">&times;</span></button>
+        <textarea id="gend_image_captions_attributes_1_text" name="gend_image[captions_attributes][1][text]" size="30" class="caption-textarea" data-index="1"/>
+        <input id="gend_image_captions_attributes_1_font" name="gend_image[captions_attributes][1][font]" type="hidden"
+             value="some_font.ttf"/>
+        <input id="gend_image_captions_attributes_1_top_left_x_pct"
+             name="gend_image[captions_attributes][1][top_left_x_pct]" type="hidden" value="0.05"/>
+        <input id="gend_image_captions_attributes_1_top_left_y_pct"
+             name="gend_image[captions_attributes][1][top_left_y_pct]" type="hidden" value="0"/>
+        <input id="gend_image_captions_attributes_1_width_pct" name="gend_image[captions_attributes][1][width_pct]"
+             type="hidden" value="0.9"/>
+        <input id="gend_image_captions_attributes_1_height_pct" name="gend_image[captions_attributes][1][height_pct]"
+             type="hidden" value="0.25"/>
+    </div>
 
     <input type="button" class="text-add" id="text-add-has-inputs"/>
 </form>

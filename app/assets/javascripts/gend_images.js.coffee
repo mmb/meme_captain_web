@@ -10,10 +10,10 @@ captions_attributes_for = (index) ->
     $("#gend_image_captions_attributes_#{index}_height_pct").val())
 
 captions_data = ->
-  num_captions = count_caption_fields($('#new_gend_image'))
+  indices = caption_indices($('#new_gend_image'))
 
   src_image_id: $('#gend_image_src_image_id').val()
-  captions_attributes: (captions_attributes_for(i) for i in [0...num_captions])
+  captions_attributes: (captions_attributes_for(i) for i in indices)
   private: $('#gend_image_private').prop('checked')
 
 @gend_images_init = (win, log, modal) ->

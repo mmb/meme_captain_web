@@ -30,11 +30,11 @@
       <%= f.hidden_field(:src_image_id, value: @gend_image.src_image.id_hash) %>
 
       <% @gend_image.captions.each.with_index do |caption, index| %>
-        <div class="form-group">
+        <div id="caption-<%= index %>-form-group" class="form-group">
           <%= f.fields_for :captions, caption do |cf| %>
               <%= cf.label :text, "Caption #{index + 1}", class: 'caption-label' %>
-              <%= cf.text_area :text, autofocus: index == 0, class: 'form-control', rows: 2 %>
-
+              <button type="button" class="close caption-close" aria-label="Close" tabindex="-1"><span aria-hidden="true" data-index="<%= index %>">&times;</span></button>
+              <%= cf.text_area :text, autofocus: index == 0, class: 'form-control caption-textarea', rows: 2, :'data-index' => index %>
               <%= cf.hidden_field :font, value: '' %>
               <%= cf.hidden_field :top_left_x_pct %>
               <%= cf.hidden_field :top_left_y_pct %>

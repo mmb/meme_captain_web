@@ -31,9 +31,10 @@
 
   reader.readAsDataURL(image_file)
 
-@count_caption_fields = (form) ->
-  form.find('textarea').filter(->
-    $(this).attr('id')?.match /gend_image_captions_attributes_\d+_text/).length
+@caption_indices = (form) ->
+  form.find('.caption-textarea').
+    map(-> $(this).data('index')).
+    sort((a, b) -> a - b)
 
 window.addEventListener 'paste', (event) ->
   clipboard = new Clipboard
