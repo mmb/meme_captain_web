@@ -21,6 +21,9 @@ class GendImagesController < ApplicationController
     @gend_image = GendImage.new(
       src_image: src_image, private: src_image.private
     )
+
+    @can_edit_src_image = admin?
+
     MemeCaptainWeb::CaptionBuilder.new.build(@gend_image)
   end
 
@@ -30,7 +33,7 @@ class GendImagesController < ApplicationController
 
   def create
     @gend_image = build_gend_image_for_create
-    check_bot_attempt
+    MemeCaptainWeb::BotChecker.new.check(params)
 
     @gend_image.save ? create_success : create_fail
   end
@@ -74,11 +77,6 @@ class GendImagesController < ApplicationController
     gend_image = src_image.gend_images.build(gend_image_params)
     gend_image.assign_attributes(user: current_user, creator_ip: remote_ip)
     gend_image
-  end
-
-  def check_bot_attempt
-    return if params[:gend_image][:email].blank?
-    StatsD.increment('bot.attempt'.freeze)
   end
 
   def create_success

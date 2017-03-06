@@ -46,6 +46,10 @@
 
       <%= button_tag('Add another caption', class: 'btn btn-default text-add', type: :button) %>
 
+      <% if @can_edit_src_image %>
+        <%= button_tag('Set as default captions', class: 'btn btn-default set-default-captions', type: :button) %>
+      <% end %>
+
       <%= f.label :private do %>
           Private?
           <%= f.check_box :private %>

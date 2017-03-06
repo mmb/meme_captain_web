@@ -150,3 +150,20 @@ describe 'gend_images', ->
         $('#create-meme-button').click()
         expect(fake_log.error).toHaveBeenCalledWith(
           'Error submitting request')
+
+  describe 'setting src image default captions', ->
+    it 'makes the AJAX request to set the default captions', ->
+      ajax_spy = spyOn($, 'ajax')
+
+      $('.set-default-captions').click()
+
+      expect(ajax_spy).toHaveBeenCalledWith '/api/v3/src_images/abcdef',
+        type: 'put',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: '{"captions_attributes":[{"text":' +
+          '"caption 0","top_left_x_pct":0.1,"top_left_y_pct":0.2,' +
+          '"width_pct":0.3,"height_pct":0.4},{"text":"caption 1",' +
+          '"top_left_x_pct":0.5,"top_left_y_pct":0.6,"width_pct":0.7,' +
+          '"height_pct":0.8},{"text":"caption 2","top_left_x_pct":0.9,' +
+          '"top_left_y_pct":0.11,"width_pct":0.12,"height_pct":0.13}]}'

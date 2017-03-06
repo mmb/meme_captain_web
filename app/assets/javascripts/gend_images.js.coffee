@@ -16,6 +16,11 @@ captions_data = ->
   captions_attributes: (captions_attributes_for(i) for i in indices)
   private: $('#gend_image_private').prop('checked')
 
+default_captions_data = ->
+  indices = caption_indices($('#new_gend_image'))
+
+  captions_attributes: (captions_attributes_for(i) for i in indices)
+
 @gend_images_init = (win, log, modal) ->
   $('#create-meme-button').click ->
     modal.modal()
@@ -46,6 +51,16 @@ captions_data = ->
         , 1000
       error: (xhr, text_status) ->
         log.error('Error submitting request')
+
+  $('.set-default-captions').click ->
+    src_image_id = $('#gend_image_src_image_id').val()
+    url = "/api/v3/src_images/#{src_image_id}"
+    $.ajax url,
+      type: 'put'
+      contentType: 'application/json'
+      dataType: 'json'
+      data:
+        JSON.stringify(default_captions_data())
 
 $(document).ready ->
   log = new TerminalLog $('#terminal-status')

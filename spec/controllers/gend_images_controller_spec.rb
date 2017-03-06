@@ -111,6 +111,25 @@ describe GendImagesController, type: :controller do
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
+
+    context 'setting can_edit_src_image' do
+      context 'when the user is an admin' do
+        let(:user) { FactoryGirl.create(:admin_user) }
+
+        it 'set can_edit_src_image to true' do
+          get(:new, params: { src: src_image.id_hash })
+          expect(assigns(:can_edit_src_image)).to eq(true)
+        end
+      end
+
+      context 'when the user is not an admin' do
+        let(:user) { FactoryGirl.create(:user) }
+        it 'set can_edit_src_image to false' do
+          get(:new, params: { src: src_image.id_hash })
+          expect(assigns(:can_edit_src_image)).to eq(false)
+        end
+      end
+    end
   end
 
   describe "GET 'index'" do
