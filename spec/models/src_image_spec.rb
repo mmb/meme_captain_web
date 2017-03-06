@@ -503,4 +503,29 @@ describe SrcImage do
       expect(SrcImage.searchable_columns).to eq([:search_document])
     end
   end
+
+  describe 'updating captions' do
+    let(:src_image) { FactoryGirl.create(:finished_src_image) }
+
+    context 'when there are already existing captions' do
+      before do
+        src_image.update(
+          captions_attributes: [
+            { text: 'test 1' },
+            { text: 'test 2' }
+          ]
+        )
+      end
+
+      it 'deletes the existing captions' do
+        src_image.update(
+          captions_attributes: [
+            { text: 'test 3' },
+            { text: 'test 4' }
+          ]
+        )
+        expect(src_image.captions.size).to eq(2)
+      end
+    end
+  end
 end

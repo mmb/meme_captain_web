@@ -47,6 +47,11 @@ class SrcImage < ApplicationRecord
     end
   end
 
+  def captions_attributes=(*attrs)
+    captions.destroy_all
+    super(*attrs)
+  end
+
   scope :active, -> { where is_deleted: false }
 
   scope :owned_by, ->(user) { where user_id: user.id }
