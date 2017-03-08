@@ -31,11 +31,11 @@ class TextPositioner
       opacity: 0.9
 
     rect.setGradient 'fill',
-      type: 'linear',
-      x1: -rect.getWidth() / 2,
-      y1: -rect.getHeight() / 2,
-      x2: rect.getWidth() / 2,
-      y2: rect.getHeight() / 2,
+      type: 'linear'
+      x1: 0
+      y1: 0
+      x2: rect.getWidth()
+      y2: rect.getHeight()
       colorStops:
         0: 'black'
         1: 'white'
