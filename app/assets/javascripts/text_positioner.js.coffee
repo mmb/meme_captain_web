@@ -25,7 +25,7 @@ class TextPositioner
       height: @scale_height(height_input.val())
       fill: '#808080'
       cornerSize: 20
-      transparentCorners: false,
+      transparentCorners: false
       lockRotation: true
       hasRotatingPoint: false
       opacity: 0.9
