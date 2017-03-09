@@ -17,5 +17,7 @@ module MemeCaptainWeb
     config.active_record.schema_format = :sql
 
     config.x.src_image_name_lookup_host = nil
+
+    config.middleware.insert_before(0, 'InstanceHealth')
   end
 end
