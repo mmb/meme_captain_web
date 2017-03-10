@@ -18,16 +18,9 @@ class TextPositioner
 
   add_rect: (name, x_input, y_input, width_input, height_input) ->
     rect = new fabric.Rect
-      name: name
-      top: @scale_height(y_input.val())
-      left: @scale_width(x_input.val())
       width: @scale_width(width_input.val())
       height: @scale_height(height_input.val())
       fill: '#808080'
-      cornerSize: 20
-      transparentCorners: false
-      lockRotation: true
-      hasRotatingPoint: false
       opacity: 0.9
 
     rect.setGradient 'fill',
@@ -40,13 +33,30 @@ class TextPositioner
         0: 'black'
         1: 'white'
 
-    rect.setShadow
+    text = new fabric.Text "#{name + 1}",
+      left: rect.getWidth() / 2
+      top: rect.getHeight() / 2
+      originX: 'center'
+      originY: 'center'
+
+    group = new fabric.Group [rect, text],
+      name: name
+      top: @scale_height(y_input.val())
+      left: @scale_width(x_input.val())
+      width: @scale_width(width_input.val())
+      height: @scale_height(height_input.val())
+      cornerSize: 20
+      transparentCorners: false
+      lockRotation: true
+      hasRotatingPoint: false
+
+    group.setShadow
       color: 'rgba(0,0,0,0.3)'
       blur: 10
       offsetX: 10
       offsetY: 10
 
-    @fabric_canvas.add rect
+    @fabric_canvas.add group
 
   remove_rect: (name) ->
     toRemove = (
@@ -120,6 +130,8 @@ class TextPositioner
     target.bound_scale_y()
 
     target.fire 'object:moving'
+
+    target.preserve_item_scale(1)
 
   object_modified: (o) ->
     target = new Target(o)
@@ -198,6 +210,12 @@ class @Target
 
   bottom_side: ->
     @target.getTop() + @target.getHeight()
+
+  preserve_item_scale: (index) ->
+    text = @target.item(index)
+    text.setScaleX(1 / @target.getScaleX())
+    text.setScaleY(1 / @target.getScaleY())
+    @target.dirty = true
 
 @text_positioner_init = ->
   $('.text-positioner').each (index, element) ->
