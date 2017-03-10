@@ -421,7 +421,7 @@
     "elbTargetGroup": {
       "Properties": {
         "HealthCheckIntervalSeconds": 30,
-        "HealthCheckPath": "/",
+        "HealthCheckPath": "/instance_health",
         "HealthCheckPort": "80",
         "HealthCheckProtocol": "HTTP",
         "HealthCheckTimeoutSeconds": 5,
