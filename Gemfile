@@ -33,7 +33,7 @@ gem 'rmagick',
 gem 'rmagick4j', '~> 0.3.9', platforms: :jruby, require: 'rmagick'
 gem 'rubocop', '~> 0.46.0', require: false
 gem 'sqlite3', '~> 1.3', '>= 1.3.11'
-gem 'statsd-instrument', '~> 2.1', '>= 2.1.1'
+gem 'statsd-instrument', '~> 2.1', '>= 2.1.2'
 gem 'textacular', '~> 4.0', '>= 4.0.1'
 gem 'therubyracer', '~> 0.12.2'
 gem 'ttfunk', '~> 1.4.0'
