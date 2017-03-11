@@ -3,15 +3,6 @@
 set -e
 set -o pipefail
 
-# fail fast if ImageMagick download URL goes away
-IMAGEMAGICK_URL=$(ruby -r uri -e 'puts URI.extract($stdin.read).find { |u| u.include?("imagemagick.org") }' < Dockerfile)
-
-echo "Checking $IMAGEMAGICK_URL"
-curl \
-  --fail \
-  --head \
-  $IMAGEMAGICK_URL
-
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 if [ "$CURRENT_BRANCH" != "master" ]; then
   echo 'The current branch must be master'
