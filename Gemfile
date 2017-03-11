@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'active_model_serializers', '~> 0.10.5'
 gem 'addressable', '~> 2.4'
 gem 'airbrake', '~> 5.8', '>= 5.8.1'
-gem 'aws-sdk', '~> 2.7', '>= 2.7.7'
+gem 'aws-sdk', '~> 2.8', '>= 2.8.5'
 gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 gem 'browser', '~> 2.3'
@@ -57,8 +57,8 @@ group :test do
 end
 
 group :test, :development do
-  gem 'capybara', '~> 2.7', '>= 2.7.1'
-  gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
+  gem 'capybara', '~> 2.12', '>= 2.12.1'
+  gem 'capybara-webkit', '~> 1.12'
   gem 'coffeelint', '~> 1.14'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'jasmine-rails', '~> 0.14.1'
