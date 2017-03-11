@@ -19,7 +19,7 @@ describe GendImageSerializer do
 
     it 'includes captions' do
       expect(GendImageSerializer._reflections).to include(
-        ActiveModel::Serializer::HasManyReflection.new(:captions, {})
+        captions: ActiveModel::Serializer::HasManyReflection.new(:captions, {})
       )
     end
   end
