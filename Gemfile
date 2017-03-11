@@ -42,7 +42,7 @@ gem 'twitter_cldr', '~> 4.3'
 group :assets do
   gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
   gem 'sass-rails', '~> 5.0', '>= 5.0.6'
-  gem 'uglifier', '~> 3.0', '>= 3.0.3'
+  gem 'uglifier', '~> 3.1', '>= 3.1.6'
 end
 
 group :production do
