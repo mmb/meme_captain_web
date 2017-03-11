@@ -67,7 +67,7 @@ group :test, :development do
   # Should not be needed. Workaround described in:
   #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
   gem 'rspec', '~> 3.5'
-  gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
   gem 'shoulda', '~> 3.5.0'
   gem 'travis', '~> 1.8', '>= 1.8.8', require: false
 end
