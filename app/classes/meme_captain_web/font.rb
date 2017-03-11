@@ -26,7 +26,7 @@ module MemeCaptainWeb
     def self.default_fonts
       return @default_fonts if @default_fonts
 
-      font_paths = Dir.glob("#{Rails.root}/fonts/*.ttf")
+      font_paths = Dir.glob(Rails.root.join('fonts', '*.ttf'))
       font_paths = font_paths.sort_by { |p| File.basename(p) }
       @default_fonts = font_paths.map { |font_path| Font.new(font_path) }
     end

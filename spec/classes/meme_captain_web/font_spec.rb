@@ -124,7 +124,9 @@ describe 'MemeCaptainWeb::Font' do
     before do
       MemeCaptainWeb::Font.instance_variable_set(:@default_fonts, nil)
 
-      allow(Dir).to receive(:glob).with("#{Rails.root}/fonts/*.ttf").and_return(
+      allow(Dir).to receive(:glob).with(
+        Rails.root.join('fonts', '*.ttf')
+      ).and_return(
         %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf)
       )
       allow(a_file).to receive(:cmap).with(no_args).and_return(a_cmap)
@@ -239,9 +241,9 @@ describe 'MemeCaptainWeb::Font' do
     end
 
     it 'loads the fonts in the correct order' do
-      allow(Dir).to receive(:glob).with("#{Rails.root}/fonts/*.ttf").and_return(
-        %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf)
-      )
+      allow(Dir).to receive(:glob).with(
+        Rails.root.join('fonts', '*.ttf')
+      ).and_return(%w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf))
       allow(TTFunk::File).to receive(:open).with(
         '/tmp/fonts/a.ttf'
       ).and_return(file)
@@ -255,7 +257,7 @@ describe 'MemeCaptainWeb::Font' do
 
     it 'caches the results' do
       allow(Dir).to receive(:glob).with(
-        "#{Rails.root}/fonts/*.ttf"
+        Rails.root.join('fonts', '*.ttf')
       ).once.and_return(
         %w(/tmp/fonts/a.ttf)
       )

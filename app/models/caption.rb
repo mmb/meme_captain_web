@@ -16,7 +16,7 @@ class Caption < ApplicationRecord
   end
 
   def font_path
-    "#{Rails.root}/fonts/#{font}"
+    Rails.root.join('fonts', font).to_s
   end
 
   def text_pos
