@@ -48,7 +48,7 @@ end
 group :production do
   gem 'dalli', '~> 2.7', '>= 2.7.6'
   gem 'pg', '~> 0.19.0'
-  gem 'rack-cache', '~> 1.6', '>= 1.6.1'
+  gem 'rack-cache', '~> 1.7'
   gem 'rack-rewrite', '~> 1.5.1'
 end
 

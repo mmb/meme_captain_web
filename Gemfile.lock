@@ -216,7 +216,7 @@ GEM
       json
       websocket (~> 1.0)
     rack (2.0.1)
-    rack-cache (1.6.1)
+    rack-cache (1.7.0)
       rack (>= 0.4)
     rack-rewrite (1.5.1)
     rack-test (0.6.3)
@@ -392,7 +392,7 @@ DEPENDENCIES
   meme_captain!
   pg (~> 0.19.0)
   puma (~> 3.6)
-  rack-cache (~> 1.6, >= 1.6.1)
+  rack-cache (~> 1.7)
   rack-rewrite (~> 1.5.1)
   rails (~> 5.0, >= 5.0.2)
   rails-controller-testing (~> 1.0, >= 1.0.1)
