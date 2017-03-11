@@ -164,12 +164,21 @@ GEM
     json (1.8.3)
     jsonapi (0.1.1.beta2)
       json (~> 1.8)
-    kaminari (0.17.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
+    kaminari (1.0.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
+      activerecord
+      kaminari-core (= 1.0.1)
     kaminari-bootstrap (3.0.1)
       kaminari (>= 0.13.0)
       rails
+    kaminari-core (1.0.1)
     launchy (2.4.3)
       addressable (~> 2.3)
     less (2.6.0)
@@ -376,7 +385,7 @@ DEPENDENCIES
   faraday_middleware (~> 0.10.1)
   jasmine-rails (~> 0.14.1)
   jquery-rails (~> 4.2, >= 4.2.1)
-  kaminari (~> 0.17.0)
+  kaminari (~> 1.0, >= 1.0.1)
   kaminari-bootstrap (~> 3.0.1)
   less-rails (~> 2.8)
   local_time (~> 1.0.3)
@@ -407,4 +416,4 @@ DEPENDENCIES
   webmock (~> 2.1)
 
 BUNDLED WITH
-   1.13.6
+   1.14.6
