@@ -36,7 +36,7 @@ gem 'sqlite3', '~> 1.3', '>= 1.3.11'
 gem 'statsd-instrument', '~> 2.1', '>= 2.1.2'
 gem 'textacular', '~> 4.0', '>= 4.0.1'
 gem 'therubyracer', '~> 0.12.2'
-gem 'ttfunk', '~> 1.4.0'
+gem 'ttfunk', '~> 1.5'
 gem 'twitter_cldr', '~> 4.3'
 
 group :assets do
