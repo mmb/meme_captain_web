@@ -22,7 +22,7 @@ gem 'local_time', '~> 1.0.3'
 gem 'meme_captain',
     git: 'https://github.com/mmb/meme_captain.git',
     ref: 'd80fb4b'
-gem 'puma', '~> 3.6'
+gem 'puma', '~> 3.8', '>= 3.8.1'
 gem 'rails', '~> 5.0', '>= 5.0.2'
 gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
 gem 'rmagick',
