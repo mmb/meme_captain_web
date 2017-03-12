@@ -66,3 +66,6 @@ RSpec.configure do |config|
 end
 
 Capybara.javascript_driver = :webkit
+Capybara::Webkit.configure do |config|
+  config.allow_url('secure.gravatar.com')
+end
