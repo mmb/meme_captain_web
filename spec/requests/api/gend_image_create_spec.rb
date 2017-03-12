@@ -26,9 +26,11 @@ describe 'creating a gend image using the JSON API', type: :request do
 
     post(
       '/gend_images',
-      request_body,
-      'CONTENT_TYPE' => 'application/json',
-      'HTTP_ACCEPT' => 'application/json'
+      params: request_body,
+      headers: {
+        'CONTENT_TYPE' => 'application/json',
+        'HTTP_ACCEPT' => 'application/json'
+      }
     )
 
     created_gend_image = GendImage.last
