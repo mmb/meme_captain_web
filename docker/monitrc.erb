@@ -46,3 +46,7 @@ check process mailslack
 check filesystem rootfs
   with path /
   if space usage > 80% then exec /app/bin/free_storage
+
+check system $HOST
+  if memory usage > 90% for 2 cycles then alert
+  if loadavg (1min) > <%= ENV['NPROC'] %> for 2 cycles then alert
