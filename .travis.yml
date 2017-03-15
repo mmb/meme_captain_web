@@ -4,6 +4,7 @@ cache: bundler
 rvm:
 - 2.2.6
 - 2.3.3
+- 2.4.0
 matrix:
   exclude:
     - rvm: 2.2.6
@@ -19,6 +20,21 @@ matrix:
     - rvm: 2.2.6
       env: TASK=spec:javascript
     - rvm: 2.2.6
+      env: TASK=container:spec
+
+    - rvm: 2.3.3
+      env: TASK=coffeelint
+    - rvm: 2.3.3
+      env: TASK=rails_best_practices
+    - rvm: 2.3.3
+      env: TASK=rubocop
+    - rvm: 2.3.3
+      env: TASK=spec DB=mysql
+    - rvm: 2.3.3
+      env: TASK="spec spec:postgres" DB=postgresql
+    - rvm: 2.3.3
+      env: TASK=spec:javascript
+    - rvm: 2.3.3
       env: TASK=container:spec
 env:
   global:
