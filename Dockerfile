@@ -14,6 +14,7 @@ RUN export LDFLAGS=-lMagickWand-6.Q16 \
   && bundle install \
      --without=development test \
      --jobs=4 \
+     --retry=3 \
   && bundle exec rake \
     assets:precompile \
     RAILS_ENV=production
