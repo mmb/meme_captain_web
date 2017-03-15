@@ -128,19 +128,19 @@ describe 'gend_images', ->
         it 'informs the user that there was an error loading the url', ->
           spyOn(fake_log, 'error')
           $('#create-meme-button').click()
-          jasmine.clock().tick(10000)
+          jasmine.clock().tick(30000)
           expect(fake_log.error).toHaveBeenCalledWith(
             'Timed out creating image')
 
         it 'logs a message each time it checks if the image is finished', ->
           spyOn(fake_log, 'info')
           $('#create-meme-button').click()
-          jasmine.clock().tick(10000)
+          jasmine.clock().tick(30000)
           count = 0
           for args in fake_log.info.calls.allArgs()
             if args[0] == 'Waiting for image to be created'
               count += 1
-          expect(count).toEqual(10)
+          expect(count).toEqual(30)
 
     describe 'when the API returns failure', ->
       it 'informs the user that there was an error loading the url', ->

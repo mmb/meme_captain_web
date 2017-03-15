@@ -128,7 +128,7 @@ describe 'shared', ->
               paste_handler(
                 fake_window, fake_event, fake_clipboard, fake_reader, fake_log,
                 fake_modal)
-              jasmine.clock().tick(10000)
+              jasmine.clock().tick(30000)
               expect(fake_log.error).toHaveBeenCalledWith(
                 'Timed out loading image data')
 
@@ -137,12 +137,12 @@ describe 'shared', ->
               paste_handler(
                 fake_window, fake_event, fake_clipboard, fake_reader, fake_log,
                 fake_modal)
-              jasmine.clock().tick(10000)
+              jasmine.clock().tick(30000)
               count = 0
               for args in fake_log.info.calls.allArgs()
                 if args[0] == 'Waiting for image to be processed'
                   count += 1
-              expect(count).toEqual(10)
+              expect(count).toEqual(30)
 
         describe 'when the API returns failure', ->
           it 'informs the user that there was an error loading the url', ->

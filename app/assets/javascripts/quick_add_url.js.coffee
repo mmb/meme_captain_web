@@ -23,7 +23,7 @@
             else
               callbacks.success(data.id)
         count += 1
-        if count >= 10
+        if count >= 30
           clearInterval(timer)
           callbacks.timed_out()
       , 1000

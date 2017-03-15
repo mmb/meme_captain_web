@@ -45,7 +45,7 @@ default_captions_data = ->
               else
                 win.location.replace("/gend_image_pages/#{data.id}")
           count += 1
-          if count >= 10
+          if count >= 30
             clearInterval(timer)
             log.error('Timed out creating image')
         , 1000

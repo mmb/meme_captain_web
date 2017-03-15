@@ -107,19 +107,19 @@ describe 'quick_add_url', ->
           it 'informs the user that there was an error loading the url', ->
             spyOn(fake_log, 'error')
             submit_url()
-            jasmine.clock().tick(10000)
+            jasmine.clock().tick(30000)
             expect(fake_log.error).toHaveBeenCalledWith(
               'Timed out loading URL')
 
           it 'logs a message each time it checks if the image is finished', ->
             spyOn(fake_log, 'info')
             submit_url()
-            jasmine.clock().tick(10000)
+            jasmine.clock().tick(30000)
             count = 0
             for args in fake_log.info.calls.allArgs()
               if args[0] == 'Waiting for image to be loaded'
                 count += 1
-            expect(count).toEqual(10)
+            expect(count).toEqual(30)
 
       describe 'when the API returns failure', ->
         it 'informs the user that there was an error loading the url', ->
