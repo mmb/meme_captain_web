@@ -50,7 +50,7 @@ env:
     - TASK=container:spec
 before_install:
 - sh -e /etc/init.d/xvfb start
-- if [ "$DB" == 'mysql' ]; then echo "gem 'mysql2', '~> 0.3.13'" >> Gemfile; fi
+- if [ "$DB" == 'mysql' ]; then echo "gem 'mysql2', '~> 0.4.5'" >> Gemfile; fi
 install:
 - gem update --system
 - bundle install --jobs=4
