@@ -158,6 +158,7 @@ describe 'gend_images', ->
       $('.set-default-captions').click()
 
       expect(ajax_spy).toHaveBeenCalledWith '/api/v3/src_images/abcdef',
+        context: jasmine.anything(),
         type: 'put',
         contentType: 'application/json',
         dataType: 'json',
@@ -166,4 +167,6 @@ describe 'gend_images', ->
           '"width_pct":0.3,"height_pct":0.4},{"text":"caption 1",' +
           '"top_left_x_pct":0.5,"top_left_y_pct":0.6,"width_pct":0.7,' +
           '"height_pct":0.8},{"text":"caption 2","top_left_x_pct":0.9,' +
-          '"top_left_y_pct":0.11,"width_pct":0.12,"height_pct":0.13}]}'
+          '"top_left_y_pct":0.11,"width_pct":0.12,"height_pct":0.13}]}',
+        success: jasmine.any(Function),
+        error: jasmine.any(Function)

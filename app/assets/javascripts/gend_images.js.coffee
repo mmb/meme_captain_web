@@ -53,14 +53,20 @@ default_captions_data = ->
         log.error('Error submitting request')
 
   $('.set-default-captions').click ->
+    $(this).button('loading')
     src_image_id = $('#gend_image_src_image_id').val()
     url = "/api/v3/src_images/#{src_image_id}"
     $.ajax url,
+      context: $(this),
       type: 'put'
       contentType: 'application/json'
       dataType: 'json'
       data:
         JSON.stringify(default_captions_data())
+      success: ->
+        this.button('success')
+      error: ->
+        this.button('error')
 
 $(document).ready ->
   log = new TerminalLog $('#terminal-status')
