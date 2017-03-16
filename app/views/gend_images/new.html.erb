@@ -46,15 +46,6 @@
 
       <%= button_tag('Add another caption', class: 'btn btn-default text-add', type: :button) %>
 
-      <% if @can_edit_src_image %>
-        <%= button_tag('Set as default captions',
-                       class: 'btn btn-default set-default-captions',
-                       type: :button,
-                       :'data-loading-text' => 'Setting...',
-                       :'data-success-text' => 'Set as default captions &check;',
-                       :'data-error-text' => 'Error') %>
-      <% end %>
-
       <%= f.label :private do %>
           Private?
           <%= f.check_box :private %>
@@ -65,6 +56,15 @@
       </p>
 
       <%= f.text_field :email, style: 'display: none' %>
+  <% end %>
+
+  <% if @can_edit_src_image %>
+    <%= button_tag('Set current captions as default',
+                   class: 'btn btn-default set-default-captions',
+                   type: :button,
+                   :'data-loading-text' => 'Setting...',
+                   :'data-success-text' => 'Set as default captions &check;',
+                   :'data-error-text' => 'Error') %>
   <% end %>
 </div>
 </div>

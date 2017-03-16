@@ -78,7 +78,7 @@ describe 'gend_images/new.html.erb', type: :view do
     before { assign(:can_edit_src_image, true) }
 
     it 'shows the set default captions button' do
-      expect(render).to have_text('Set as default captions')
+      expect(render).to have_text('Set current captions as default')
     end
   end
 
@@ -86,7 +86,7 @@ describe 'gend_images/new.html.erb', type: :view do
     before { assign(:can_edit_src_image, false) }
 
     it 'does not show the set default captions button' do
-      expect(render).to_not have_text('Set as default captions')
+      expect(render).to_not have_text('Set current captions as default')
     end
   end
 end
