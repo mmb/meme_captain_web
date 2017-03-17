@@ -58,13 +58,12 @@ class GendImagesController < ApplicationController
   def destroy
     gend_image = GendImage.find_by!(id_hash: params[:id])
 
-    if admin? || (gend_image.user && gend_image.user == current_user)
-      gend_image.update!(is_deleted: true)
+    head(:forbidden) && return unless gend_image.can_be_edited_by?(
+      current_user
+    )
 
-      head :no_content
-    else
-      head :forbidden
-    end
+    gend_image.update!(is_deleted: true)
+    head :no_content
   end
 
   private

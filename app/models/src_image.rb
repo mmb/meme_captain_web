@@ -3,6 +3,7 @@
 # Source image model.
 class SrcImage < ApplicationRecord
   include HasImageConcern
+  include PermissionConcern
   include IdHashConcern
   include SearchDocumentConcern
 

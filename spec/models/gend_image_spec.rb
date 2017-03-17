@@ -549,4 +549,40 @@ describe GendImage do
       end
     end
   end
+
+  describe '#can_be_edited_by?' do
+    let(:user) { FactoryGirl.create(:user) }
+
+    context 'when passed nil' do
+      it 'returns false' do
+        src_image = FactoryGirl.create(:src_image, user: user)
+        expect(src_image.can_be_edited_by?(nil)).to be(false)
+      end
+    end
+
+    context 'when passed another user' do
+      it 'returns false' do
+        src_image = FactoryGirl.create(:src_image, user: user)
+        user2 = FactoryGirl.create(:user)
+        expect(src_image.can_be_edited_by?(user2)).to be(false)
+      end
+    end
+
+    context 'when passed the owner' do
+      it 'returns true' do
+        src_image = FactoryGirl.create(:src_image, user: user)
+        expect(src_image.can_be_edited_by?(user)).to be(true)
+      end
+    end
+
+    context 'when passed an admin user' do
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      it 'returns true' do
+        user2 = FactoryGirl.create(:user)
+        src_image = FactoryGirl.create(:src_image, user: user2)
+        expect(src_image.can_be_edited_by?(user)).to be(true)
+      end
+    end
+  end
 end

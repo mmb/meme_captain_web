@@ -5,6 +5,7 @@ require 'uri'
 # Generated (meme) image model.
 class GendImage < ApplicationRecord
   include HasImageConcern
+  include PermissionConcern
   include IdHashConcern
   include SearchDocumentConcern
 

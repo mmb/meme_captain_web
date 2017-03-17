@@ -46,7 +46,9 @@ module Api
       def update
         @src_image = SrcImage.find_by!(id_hash: params[:id])
 
-        head(:forbidden) && return unless can_edit
+        head(:forbidden) && return unless @src_image.can_be_edited_by?(
+          current_user
+        )
 
         if @src_image.update(edit_params)
           update_success
@@ -103,10 +105,6 @@ module Api
                  id: @src_image.id_hash,
                  status_url: status_url
                })
-      end
-
-      def can_edit
-        admin? || current_user && @src_image.user == current_user
       end
 
       def update_success
