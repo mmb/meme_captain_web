@@ -22,7 +22,7 @@ class GendImagesController < ApplicationController
       src_image: src_image, private: src_image.private
     )
 
-    @can_edit_src_image = admin?
+    @can_edit_src_image = src_image.can_be_edited_by?(current_user)
 
     MemeCaptainWeb::CaptionBuilder.new.build(@gend_image)
   end

@@ -116,7 +116,7 @@ describe GendImagesController, type: :controller do
       context 'when the user is an admin' do
         let(:user) { FactoryGirl.create(:admin_user) }
 
-        it 'set can_edit_src_image to true' do
+        it 'sets can_edit_src_image to true' do
           get(:new, params: { src: src_image.id_hash })
           expect(assigns(:can_edit_src_image)).to eq(true)
         end
@@ -124,7 +124,30 @@ describe GendImagesController, type: :controller do
 
       context 'when the user is not an admin' do
         let(:user) { FactoryGirl.create(:user) }
-        it 'set can_edit_src_image to false' do
+
+        context 'when the user owns the src image' do
+          let(:src_image) { FactoryGirl.create(:src_image, user: user) }
+
+          it 'sets can_edit_src_image to true' do
+            get(:new, params: { src: src_image.id_hash })
+            expect(assigns(:can_edit_src_image)).to eq(true)
+          end
+        end
+
+        context 'when the user does not own the src image' do
+          let(:src_image) { FactoryGirl.create(:src_image, user: user2) }
+
+          it 'sets can_edit_src_image to false' do
+            get(:new, params: { src: src_image.id_hash })
+            expect(assigns(:can_edit_src_image)).to eq(false)
+          end
+        end
+      end
+
+      context 'when the user is not logged in' do
+        let(:user) { nil }
+
+        it 'sets can_edit_src_image to false' do
           get(:new, params: { src: src_image.id_hash })
           expect(assigns(:can_edit_src_image)).to eq(false)
         end
