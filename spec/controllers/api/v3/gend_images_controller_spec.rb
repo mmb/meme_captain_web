@@ -169,36 +169,34 @@ describe Api::V3::GendImagesController, type: :controller do
     context 'with valid attributes' do
       let(:body) do
         {
-          gend_image: {
-            src_image_id: src_image.id_hash,
-            captions_attributes: {
-              '0' => {
-                'font' => 'font1',
-                'text' => 'hello',
-                'top_left_x_pct' => '0.01',
-                'top_left_y_pct' => '0.02',
-                'width_pct' => '0.03',
-                'height_pct' => '0.04'
-              },
-              '1' => {
-                'font' => 'font2',
-                'text' => 'world',
-                'top_left_x_pct' => '0.05',
-                'top_left_y_pct' => '0.06',
-                'width_pct' => '0.07',
-                'height_pct' => '0.08'
-              },
-              '2' => {
-                'font' => 'font3',
-                'text' => '!',
-                'top_left_x_pct' => '0.09',
-                'top_left_y_pct' => '0.10',
-                'width_pct' => '0.11',
-                'height_pct' => '0.12'
-              }
+          src_image_id: src_image.id_hash,
+          captions_attributes: {
+            '0' => {
+              'font' => 'font1',
+              'text' => 'hello',
+              'top_left_x_pct' => '0.01',
+              'top_left_y_pct' => '0.02',
+              'width_pct' => '0.03',
+              'height_pct' => '0.04'
             },
-            private: '1'
-          }
+            '1' => {
+              'font' => 'font2',
+              'text' => 'world',
+              'top_left_x_pct' => '0.05',
+              'top_left_y_pct' => '0.06',
+              'width_pct' => '0.07',
+              'height_pct' => '0.08'
+            },
+            '2' => {
+              'font' => 'font3',
+              'text' => '!',
+              'top_left_x_pct' => '0.09',
+              'top_left_y_pct' => '0.10',
+              'width_pct' => '0.11',
+              'height_pct' => '0.12'
+            }
+          },
+          private: '1'
         }.to_json
       end
 
@@ -264,40 +262,24 @@ describe Api::V3::GendImagesController, type: :controller do
 
       it 'saves the image to the database' do
         expect do
-          post(:create, params: {
-                 gend_image: {
-                   src_image_id: src_image.id_hash
-                 }
-               })
+          post(:create, params: { src_image_id: src_image.id_hash })
         end.to change { GendImage.count }.by(1)
       end
 
       it 'responds with ok' do
-        post(:create, params: {
-               gend_image: {
-                 src_image_id: src_image.id_hash
-               }
-             })
+        post(:create, params: { src_image_id: src_image.id_hash })
 
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns application/json as the content type' do
-        post(:create, params: {
-               gend_image: {
-                 src_image_id: src_image.id_hash
-               }
-             })
+        post(:create, params: { src_image_id: src_image.id_hash })
 
         expect(response.content_type).to eq('application/json')
       end
 
       it 'returns a json body with the gend image id' do
-        post(:create, params: {
-               gend_image: {
-                 src_image_id: src_image.id_hash
-               }
-             })
+        post(:create, params: { src_image_id: src_image.id_hash })
 
         expect(JSON.parse(response.body)['id']).to eq(
           assigns(:gend_image).id_hash
@@ -305,11 +287,7 @@ describe Api::V3::GendImagesController, type: :controller do
       end
 
       it 'returns a json body with the gend image id' do
-        post(:create, params: {
-               gend_image: {
-                 src_image_id: src_image.id_hash
-               }
-             })
+        post(:create, params: { src_image_id: src_image.id_hash })
 
         expect(JSON.parse(response.body)['status_url']).to eq(
           'http://test.host/api/v3/pending_gend_images/' \
@@ -322,17 +300,15 @@ describe Api::V3::GendImagesController, type: :controller do
       context 'when the height_pct is missing' do
         let(:body) do
           {
-            gend_image: {
-              src_image_id: src_image.id_hash,
-              captions_attributes: [
-                {
-                  text: 'test',
-                  top_left_x_pct: 0.05,
-                  top_left_y_pct: 0.0,
-                  width_pct: 0.9
-                }
-              ]
-            }
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                top_left_x_pct: 0.05,
+                top_left_y_pct: 0.0,
+                width_pct: 0.9
+              }
+            ]
           }.to_json
         end
 
@@ -354,17 +330,15 @@ describe Api::V3::GendImagesController, type: :controller do
       context 'when the top_left_x_pct is missing' do
         let(:body) do
           {
-            gend_image: {
-              src_image_id: src_image.id_hash,
-              captions_attributes: [
-                {
-                  text: 'test',
-                  height_pct: 0.25,
-                  top_left_y_pct: 0.0,
-                  width_pct: 0.9
-                }
-              ]
-            }
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                height_pct: 0.25,
+                top_left_y_pct: 0.0,
+                width_pct: 0.9
+              }
+            ]
           }.to_json
         end
 
@@ -386,17 +360,15 @@ describe Api::V3::GendImagesController, type: :controller do
       context 'when the top_left_y_pct is missing' do
         let(:body) do
           {
-            gend_image: {
-              src_image_id: src_image.id_hash,
-              captions_attributes: [
-                {
-                  text: 'test',
-                  height_pct: 0.25,
-                  top_left_x_pct: 0.05,
-                  width_pct: 0.9
-                }
-              ]
-            }
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                height_pct: 0.25,
+                top_left_x_pct: 0.05,
+                width_pct: 0.9
+              }
+            ]
           }.to_json
         end
 
@@ -418,17 +390,15 @@ describe Api::V3::GendImagesController, type: :controller do
       context 'when the width_pct is missing' do
         let(:body) do
           {
-            gend_image: {
-              src_image_id: src_image.id_hash,
-              captions_attributes: [
-                {
-                  text: 'test',
-                  height_pct: 0.25,
-                  top_left_x_pct: 0.05,
-                  top_left_y_pct: 0.0
-                }
-              ]
-            }
+            src_image_id: src_image.id_hash,
+            captions_attributes: [
+              {
+                text: 'test',
+                height_pct: 0.25,
+                top_left_x_pct: 0.05,
+                top_left_y_pct: 0.0
+              }
+            ]
           }.to_json
         end
 
@@ -451,11 +421,7 @@ describe Api::V3::GendImagesController, type: :controller do
     context 'when the source image is not found' do
       it 'raises record not found' do
         expect do
-          post(:create, params: {
-                 gend_image: {
-                   src_image_id: 'abc'
-                 }
-               })
+          post(:create, params: { src_image_id: 'abc' })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -465,11 +431,7 @@ describe Api::V3::GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          post(:create, params: {
-                 gend_image: {
-                   src_image_id: src_image.id_hash
-                 }
-               })
+          post(:create, params: { src_image_id: src_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -483,11 +445,7 @@ describe Api::V3::GendImagesController, type: :controller do
 
       it 'raises record not found' do
         expect do
-          post(:create, params: {
-                 gend_image: {
-                   src_image_id: src_image.id_hash
-                 }
-               })
+          post(:create, params: { src_image_id: src_image.id_hash })
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
