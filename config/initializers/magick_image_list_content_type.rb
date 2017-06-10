@@ -13,8 +13,6 @@ module Magick
       }.fetch(format)
     end
 
-    def format
-      first.format
-    end
+    delegate :format, to: :first
   end
 end
