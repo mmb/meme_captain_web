@@ -64,7 +64,7 @@ group :test, :development do
   gem 'factory_girl_rails', '~> 4.8'
   gem 'jasmine-rails', '~> 0.14.1'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'
-  gem 'rails_best_practices', '~> 1.18'
+  gem 'rails_best_practices', '~> 1.18', '>= 1.18.1'
   # Should not be needed. Workaround described in:
   #   https://github.com/thoughtbot/shoulda-matchers/commit/6a0d0ff12a2c391a809327daa0ad311e5bd7159f
   gem 'rspec', '~> 3.6'
