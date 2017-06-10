@@ -38,7 +38,7 @@ gem 'statsd-instrument', '~> 2.1', '>= 2.1.2'
 gem 'textacular', '~> 4.0', '>= 4.0.1'
 gem 'therubyracer', '~> 0.12.3'
 gem 'ttfunk', '~> 1.5'
-gem 'twitter_cldr', '~> 4.3'
+gem 'twitter_cldr', '~> 4.4'
 
 group :assets do
   gem 'coffee-rails', '~> 4.2', '>= 4.2.1'
