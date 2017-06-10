@@ -5,6 +5,6 @@ describe 'favicon.ico' do
     expect(
       Rails.application.assets.find_asset('favicon.ico')
     )
-      .not_to be_nil
+      .to_not be_nil
   end
 end

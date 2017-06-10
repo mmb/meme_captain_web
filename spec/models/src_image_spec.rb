@@ -68,7 +68,7 @@ describe SrcImage do
     src_image = FactoryGirl.create(:src_image)
     FactoryGirl.create(:gend_image, src_image: src_image)
     FactoryGirl.create(:gend_image, src_image: src_image)
-    expect { src_image.destroy }.not_to(change { GendImage.count })
+    expect { src_image.destroy }.to_not(change { GendImage.count })
   end
 
   context 'generating a Magick::Image from its data' do
@@ -225,7 +225,7 @@ describe SrcImage do
         src_image = FactoryGirl.create(:src_image, url: nil)
         expect do
           src_image.load_from_url
-        end.not_to(change { src_image.image })
+        end.to_not(change { src_image.image })
       end
     end
 

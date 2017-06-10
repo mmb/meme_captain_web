@@ -5,6 +5,6 @@ describe 'apple-touch-icon.png' do
     expect(
       Rails.application.assets.find_asset('apple-touch-icon.png')
     )
-      .not_to be_nil
+      .to_not be_nil
   end
 end

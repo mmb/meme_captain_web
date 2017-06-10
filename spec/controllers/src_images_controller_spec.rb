@@ -313,7 +313,7 @@ describe SrcImagesController, type: :controller do
             post(:create, params: {
                    src_image: { url: 'http://images.com/image.jpg' }
                  })
-          end.not_to trigger_statsd_increment('src_image.upload')
+          end.to_not trigger_statsd_increment('src_image.upload')
         end
       end
 

@@ -213,7 +213,7 @@ describe SrcImageProcessJob do
 
   it 'generates a thumbnail' do
     src_image_process_job.perform
-    expect(src_image.src_thumb).not_to be_nil
+    expect(src_image.src_thumb).to_not be_nil
     expect(src_image.src_thumb.width).to eq(
       MemeCaptainWeb::Config::THUMB_SIDE
     )

@@ -333,7 +333,7 @@ describe GendImagesController, type: :controller do
           post(:create, params: {
                  gend_image: { src_image_id: src_image.id_hash }
                })
-        end.not_to trigger_statsd_increment('bot.attempt')
+        end.to_not trigger_statsd_increment('bot.attempt')
       end
 
       it 'sets the creator_ip to the remote ip address' do
