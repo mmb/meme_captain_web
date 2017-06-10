@@ -32,7 +32,7 @@ RUN apt-get update \
     libxml2-dev \
     pkg-config \
     zlib1g-dev \
-  && curl https://www.imagemagick.org/download/ImageMagick-6.9.8-0.tar.xz \
+  && curl https://www.imagemagick.org/download/ImageMagick-6.9.8-9.tar.xz \
     | tar xJ \
   && cd $(ls -d ImageMagick-* | head -n 1) \
   && ./configure \
@@ -46,7 +46,7 @@ RUN apt-get update \
   && apt-get install --assume-yes \
     libreadline-dev \
     libssl-dev \
-  && curl https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.bz2 \
+  && curl https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.bz2 \
     | tar xj \
   && cd $(ls -d ruby-* | head -n 1) \
   && ./configure \
@@ -64,7 +64,7 @@ RUN apt-get update \
     libjemalloc-dev \
     libncurses-dev \
     python-docutils \
-  && curl https://repo.varnish-cache.org/source/varnish-5.0.0.tar.gz \
+  && curl https://repo.varnish-cache.org/source/varnish-5.1.2.tar.gz \
     | tar xz \
   && cd $(ls -d varnish-* | head -n 1) \
   && ./configure \
@@ -78,7 +78,7 @@ RUN apt-get update \
   && apt-get install --assume-yes \
     libpam-dev \
     ucspi-tcp \
-  && curl https://mmonit.com/monit/dist/monit-5.21.0.tar.gz \
+  && curl https://mmonit.com/monit/dist/monit-5.23.0.tar.gz \
     | tar xz \
   && cd $(ls -d monit-* | head -n 1) \
   && ./configure \
