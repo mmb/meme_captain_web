@@ -99,7 +99,7 @@ EXPECTED_JSON
         expect(
           MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json
         )
-          .to eq(expected_json.strip)
+          .to eq(expected_json)
       end
     end
   end
