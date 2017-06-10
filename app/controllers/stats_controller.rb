@@ -16,7 +16,7 @@ class StatsController < ApplicationController
   private
 
   def authorized?
-    !Rails.application.secrets.stats_secret.blank? &&
+    Rails.application.secrets.stats_secret.present? &&
       Rails.application.secrets.stats_secret == params[:secret]
   end
 end

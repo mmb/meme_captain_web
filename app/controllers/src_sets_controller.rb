@@ -59,7 +59,7 @@ class SrcSetsController < ApplicationController
   private
 
   def src_set_params
-    if params[:src_set] && !params[:src_set].empty?
+    if params[:src_set].present?
       params.require(:src_set).permit(:name)
     else
       {}
