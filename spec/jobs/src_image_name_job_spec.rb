@@ -22,7 +22,7 @@ describe SrcImageNameJob do
     it 'does not change the src image name' do
       expect do
         src_image_name_job.perform
-      end.to_not change { src_image.name }
+      end.to_not(change { src_image.name })
     end
   end
 
@@ -37,7 +37,7 @@ describe SrcImageNameJob do
       it 'does not change the src image name' do
         expect do
           src_image_name_job.perform
-        end.to_not change { src_image.name }
+        end.to_not(change { src_image.name })
       end
     end
 
@@ -47,7 +47,7 @@ describe SrcImageNameJob do
       it 'does not change the src image name' do
         expect do
           src_image_name_job.perform
-        end.to_not change { src_image.name }
+        end.to_not(change { src_image.name })
       end
     end
 
@@ -64,7 +64,7 @@ describe SrcImageNameJob do
         it 'does not change the src image name' do
           expect do
             src_image_name_job.perform
-          end.to_not change { src_image.name }
+          end.to_not(change { src_image.name })
         end
       end
 
@@ -73,14 +73,14 @@ describe SrcImageNameJob do
           allow(google_image_namer).to receive(:name).with(
             "http://test.com/src_images/#{src_image.id_hash}"
           )
-            .and_return('test image')
+                                                     .and_return('test image')
         end
 
         it "sets the name to Google's description of the image" do
           expect do
             src_image_name_job.perform
             src_image.reload
-          end.to change { src_image.name }.to('test image')
+          end.to(change { src_image.name }.to('test image'))
         end
       end
     end
@@ -93,7 +93,7 @@ describe SrcImageNameJob do
           allow(google_image_namer).to receive(:name).with(
             "http://test.com/src_images/#{src_image.id_hash}"
           )
-            .and_return('test image')
+                                                     .and_return('test image')
         end
 
         it "sets the name to Google's description of the image" do

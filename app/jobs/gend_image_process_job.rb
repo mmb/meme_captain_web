@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Job to generate meme images and create thumbnails.
 class GendImageProcessJob
   attr_reader :gend_image_id

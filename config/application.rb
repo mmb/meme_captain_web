@@ -4,7 +4,7 @@ require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups(assets: %w(development test)))
+Bundler.require(*Rails.groups(assets: %w[development test]))
 
 module MemeCaptainWeb
   # Main application class.

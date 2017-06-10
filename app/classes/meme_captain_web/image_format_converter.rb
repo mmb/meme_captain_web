@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module MemeCaptainWeb
   # Change the format of the passed in Magick::ImageList based on a map.
   class ImageFormatConverter

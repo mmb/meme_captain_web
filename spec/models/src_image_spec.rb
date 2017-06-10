@@ -68,7 +68,7 @@ describe SrcImage do
     src_image = FactoryGirl.create(:src_image)
     FactoryGirl.create(:gend_image, src_image: src_image)
     FactoryGirl.create(:gend_image, src_image: src_image)
-    expect { src_image.destroy }.not_to change { GendImage.count }
+    expect { src_image.destroy }.not_to(change { GendImage.count })
   end
 
   context 'generating a Magick::Image from its data' do
@@ -225,7 +225,7 @@ describe SrcImage do
         src_image = FactoryGirl.create(:src_image, url: nil)
         expect do
           src_image.load_from_url
-        end.not_to change { src_image.image }
+        end.not_to(change { src_image.image })
       end
     end
 
@@ -482,9 +482,9 @@ describe SrcImage do
       before { src_image.image = nil }
 
       it 'does not set the image_hash' do
-        expect { src_image.set_image_hash }.to_not change {
+        expect { src_image.set_image_hash }.to_not(change do
           src_image.image_hash
-        }
+        end)
       end
     end
 

@@ -6,10 +6,10 @@ module Api
     class GendImagesController < ApplicationController
       include GendImagesHelper
 
-      wrap_parameters GendImage, include: [
-        :captions_attributes,
-        :private,
-        :src_image_id
+      wrap_parameters GendImage, include: %i[
+        captions_attributes
+        private
+        src_image_id
       ]
 
       def index
@@ -68,9 +68,9 @@ module Api
 
       def gend_image_params
         params.require(:gend_image).permit(
-          { captions_attributes: [
-            :font, :text, :top_left_x_pct, :top_left_y_pct, :width_pct,
-            :height_pct
+          { captions_attributes: %i[
+            font text top_left_x_pct top_left_y_pct width_pct
+            height_pct
           ] }, :private, :email
         )
       end

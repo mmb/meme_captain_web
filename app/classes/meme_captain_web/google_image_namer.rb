@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 module MemeCaptainWeb
   # Name images using Google search by image.

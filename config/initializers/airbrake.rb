@@ -45,7 +45,7 @@ Airbrake.configure do |c|
   # environments.
   # NOTE: This option *does not* work if you don't set the 'environment' option.
   # https://github.com/airbrake/airbrake-ruby#ignore_environments
-  c.ignore_environments = %w(test)
+  c.ignore_environments = %w[test]
 
   # A list of parameters that should be filtered out of what is sent to
   # Airbrake. By default, all "password" attributes will have their contents
@@ -65,6 +65,6 @@ end
 
 Airbrake.add_filter do |notice|
   notice.ignore! if notice[:errors].any? do |error|
-    %w(ActiveRecord::RecordNotFound).include?(error[:type])
+    %w[ActiveRecord::RecordNotFound].include?(error[:type])
   end
 end

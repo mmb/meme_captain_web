@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Delayed::Worker.destroy_failed_jobs = false
 Delayed::Worker.max_run_time = 90.seconds
 if Rails.env.production?

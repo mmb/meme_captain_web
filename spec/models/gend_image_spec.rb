@@ -374,9 +374,9 @@ describe GendImage do
       before { gend_image.image = nil }
 
       it 'does not set the image_hash' do
-        expect { gend_image.set_image_hash }.to_not change {
+        expect { gend_image.set_image_hash }.to_not(change do
           gend_image.image_hash
-        }
+        end)
       end
     end
 

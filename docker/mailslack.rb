@@ -15,12 +15,14 @@ end
 
 $stdout.sync = true
 
+# rubocop:disable Layout/IndentHeredoc
 print <<-EOS
 220 127.0.0.1\r
 250 127.0.0.1\r
 250 Ok\r
 250 Ok\r
 EOS
+# rubocop:enable Layout/IndentHeredoc
 
 headers_started = false
 body_started = false

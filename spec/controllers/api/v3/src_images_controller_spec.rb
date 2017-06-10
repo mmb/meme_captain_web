@@ -36,7 +36,7 @@ describe Api::V3::SrcImagesController, type: :controller do
 
     it 'gets the src images for the user, query and page' do
       expect(SrcImage).to receive(:for_user).with(user, 'test query', '7')
-        .and_return(src_images)
+                                            .and_return(src_images)
       get(:index, params: { q: 'test query', page: '7', format: :json })
     end
 

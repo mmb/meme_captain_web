@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 desc 'Lint .travis.yml'.freeze
 task 'travis:lint'.freeze do
   # add --exit-code when travis gem can handle apt addon

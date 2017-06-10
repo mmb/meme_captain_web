@@ -19,7 +19,7 @@ describe Api::V3::GendImagesController, type: :controller do
   describe "GET 'index'" do
     it 'gets the gend images for the user, query and page' do
       expect(GendImage).to receive(:for_user).with(user, 'test query', '7')
-        .and_return(GendImage.none)
+                                             .and_return(GendImage.none)
       get(:index, params: { q: 'test query', page: '7', format: :json })
     end
 

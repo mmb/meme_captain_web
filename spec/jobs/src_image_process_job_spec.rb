@@ -36,7 +36,7 @@ describe SrcImageProcessJob do
       expect do
         src_image_process_job.perform
         src_image.reload
-      end.to_not change { src_image.magick_image_list.size }
+      end.to_not(change { src_image.magick_image_list.size })
     end
   end
 
@@ -199,7 +199,7 @@ describe SrcImageProcessJob do
       expect do
         src_image_process_job.perform
         src_image.reload
-      end.to change { src_image.magick_image_list.excerpt(54, 95, 46, 5) }
+      end.to(change { src_image.magick_image_list.excerpt(54, 95, 46, 5) })
     end
   end
 
@@ -207,7 +207,7 @@ describe SrcImageProcessJob do
     expect do
       src_image_process_job.perform
       src_image.reload
-    end.to change { src_image.image }
+    end.to(change { src_image.image })
     expect(src_image.image).to_not be(nil)
   end
 
@@ -273,7 +273,7 @@ describe SrcImageProcessJob do
     expect do
       src_image_process_job.perform
       src_image.reload
-    end.to change { src_image.size }
+    end.to(change { src_image.size })
   end
 
   it "sets the src image model's width" do
@@ -292,7 +292,7 @@ describe SrcImageProcessJob do
       it 'does not update the src image error' do
         expect do
           src_image_process_job.failure(delayed_job)
-        end.to_not change { src_image.error }
+        end.to_not(change { src_image.error })
       end
     end
 
@@ -302,7 +302,7 @@ describe SrcImageProcessJob do
       it 'does not update the src image error' do
         expect do
           src_image_process_job.failure(delayed_job)
-        end.to_not change { src_image.error }
+        end.to_not(change { src_image.error })
       end
     end
 

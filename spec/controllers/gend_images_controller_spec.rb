@@ -619,7 +619,7 @@ describe GendImagesController, type: :controller do
                    email: 'not@empty.com'
                  }
                })
-        end.to_not change { GendImage.count }
+        end.to_not(change { GendImage.count })
       end
 
       it 're-renders the new template' do

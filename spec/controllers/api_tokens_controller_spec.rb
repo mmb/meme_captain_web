@@ -14,7 +14,7 @@ describe ApiTokensController, type: :controller do
         expect do
           post(:create)
           user.reload
-        end.to change { user.api_token }
+        end.to(change { user.api_token })
       end
 
       it 'returns success' do

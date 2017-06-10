@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module MemeCaptainWeb
   # Build composite images from urls.
   #

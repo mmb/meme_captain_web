@@ -21,7 +21,7 @@ describe 'delayed job initializer' do
       it 'does not change the value of delay_jobs' do
         expect do
           Kernel.silence_warnings { load(rb_path) }
-        end.to_not change { Delayed::Worker.delay_jobs }
+        end.to_not(change { Delayed::Worker.delay_jobs })
       end
     end
 

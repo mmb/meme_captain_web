@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   resources :gend_thumbs, only: :show
 
-  resource :session, only: [:create, :destroy, :new]
+  resource :session, only: %i[create destroy new]
 
   resources :src_images, concerns: :paginatable
 
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   resources :src_thumbs, only: :show
 
-  resources :users, only: [:create, :new]
+  resources :users, only: %i[create new]
 
   resource :my, only: :show, controller: :my, concerns: :show_paginatable
 
@@ -58,8 +58,8 @@ Rails.application.routes.draw do
       resources :pending_src_images, only: :show
       resources :src_images,
                 concerns: :paginatable,
-                only: [:create, :index, :update]
-      resources :gend_images, concerns: :paginatable, only: [:create, :index]
+                only: %i[create index update]
+      resources :gend_images, concerns: :paginatable, only: %i[create index]
     end
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Job to fetch and normalize source images and create thumbnails.
 class SrcImageProcessJob
   attr_reader :src_image_id

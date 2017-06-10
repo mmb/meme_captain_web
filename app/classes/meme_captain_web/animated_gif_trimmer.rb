@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module MemeCaptainWeb
   # Remove every other frame from an animated gif to reduce its size.
   class AnimatedGifTrimmer

@@ -122,7 +122,7 @@ describe SrcSetsController, type: :controller do
                 add_src_images: [src_image.id_hash, src_image2.id_hash]
               })
           src_set.reload
-        end.to change { src_set.updated_at }
+        end.to(change { src_set.updated_at })
       end
 
       it 'redirects to the source set' do
@@ -172,7 +172,7 @@ describe SrcSetsController, type: :controller do
                 delete_src_images: [src_image.id_hash, src_image2.id_hash]
               })
           src_set.reload
-        end.to change { src_set.updated_at }
+        end.to(change { src_set.updated_at })
       end
 
       it 'redirects to the source set' do
@@ -235,7 +235,7 @@ describe SrcSetsController, type: :controller do
           put(:update, params: {
                 id: 'a new set', add_src_images: [src_image.id_hash]
               })
-        end.to change { SrcSet.count }.by(1)
+        end.to(change { SrcSet.count }.by(1))
       end
     end
 

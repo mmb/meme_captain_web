@@ -41,7 +41,7 @@ describe UsersController, type: :controller do
         it 'saves the new user to the database' do
           expect do
             post(:create, params: { user: FactoryGirl.attributes_for(:user) })
-          end.to change { User.count }.by(1)
+          end.to(change { User.count }.by(1))
         end
       end
     end
@@ -52,7 +52,7 @@ describe UsersController, type: :controller do
           post(:create, params: {
                  user: FactoryGirl.attributes_for(:invalid_user)
                })
-        end.to_not change { User.count }
+        end.to_not(change { User.count })
       end
 
       it 're-renders the new template' do

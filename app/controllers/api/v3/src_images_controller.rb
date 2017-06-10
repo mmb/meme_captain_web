@@ -6,12 +6,12 @@ module Api
     class SrcImagesController < ApplicationController
       include SrcImagesHelper
 
-      wrap_parameters SrcImage, include: [
-        :captions_attributes,
-        :image,
-        :name,
-        :private,
-        :url
+      wrap_parameters SrcImage, include: %i[
+        captions_attributes
+        image
+        name
+        private
+        url
       ]
 
       def index
@@ -65,12 +65,12 @@ module Api
 
       def edit_params
         params.require(:src_image).permit(
-          captions_attributes: [
-            :top_left_x_pct,
-            :top_left_y_pct,
-            :width_pct,
-            :height_pct,
-            :text
+          captions_attributes: %i[
+            top_left_x_pct
+            top_left_y_pct
+            width_pct
+            height_pct
+            text
           ]
         )
       end

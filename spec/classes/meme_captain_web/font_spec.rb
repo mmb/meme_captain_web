@@ -127,7 +127,7 @@ describe 'MemeCaptainWeb::Font' do
       allow(Dir).to receive(:glob).with(
         Rails.root.join('fonts', '*.ttf')
       ).and_return(
-        %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf)
+        %w[/tmp/fonts/a.ttf /tmp/fonts/b.ttf]
       )
       allow(a_file).to receive(:cmap).with(no_args).and_return(a_cmap)
       allow(a_cmap).to receive(:tables).with(no_args).and_return(a_tables)
@@ -243,7 +243,7 @@ describe 'MemeCaptainWeb::Font' do
     it 'loads the fonts in the correct order' do
       allow(Dir).to receive(:glob).with(
         Rails.root.join('fonts', '*.ttf')
-      ).and_return(%w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf))
+      ).and_return(%w[/tmp/fonts/a.ttf /tmp/fonts/b.ttf])
       allow(TTFunk::File).to receive(:open).with(
         '/tmp/fonts/a.ttf'
       ).and_return(file)
@@ -252,14 +252,14 @@ describe 'MemeCaptainWeb::Font' do
       ).and_return(file)
 
       expect(MemeCaptainWeb::Font.default_fonts.map(&:path))
-        .to eq %w(/tmp/fonts/a.ttf /tmp/fonts/b.ttf)
+        .to eq %w[/tmp/fonts/a.ttf /tmp/fonts/b.ttf]
     end
 
     it 'caches the results' do
       allow(Dir).to receive(:glob).with(
         Rails.root.join('fonts', '*.ttf')
       ).once.and_return(
-        %w(/tmp/fonts/a.ttf)
+        %w[/tmp/fonts/a.ttf]
       )
       allow(TTFunk::File).to receive(:open).with(
         '/tmp/fonts/a.ttf'

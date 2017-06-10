@@ -54,7 +54,7 @@ describe GendImageProcessJob do
       it 'does not update the gend image error' do
         expect do
           gend_image_process_job.failure(delayed_job)
-        end.to_not change { gend_image.error }
+        end.to_not(change { gend_image.error })
       end
     end
 
@@ -64,7 +64,7 @@ describe GendImageProcessJob do
       it 'does not update the gend image error' do
         expect do
           gend_image_process_job.failure(delayed_job)
-        end.to_not change { gend_image.error }
+        end.to_not(change { gend_image.error })
       end
     end
 

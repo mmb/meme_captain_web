@@ -41,27 +41,27 @@ describe 'MemeCaptainWeb::GendImageApiRequestJson' do
       end
 
       it 'sets private to false in the API input JSON' do
-        expected_json = <<-EXPECTED_JSON.chomp
-{
-  "private": false,
-  "src_image_id": "abcde",
-  "captions_attributes": [
-    {
-      "text": "caption 1",
-      "top_left_x_pct": 1.0,
-      "top_left_y_pct": 2.0,
-      "width_pct": 3.0,
-      "height_pct": 4.0
-    },
-    {
-      "text": "caption 2",
-      "top_left_x_pct": 5.0,
-      "top_left_y_pct": 6.0,
-      "width_pct": 7.0,
-      "height_pct": 8.0
-    }
-  ]
-}
+        expected_json = <<-EXPECTED_JSON.chomp.strip_heredoc
+  {
+    "private": false,
+    "src_image_id": "abcde",
+    "captions_attributes": [
+      {
+        "text": "caption 1",
+        "top_left_x_pct": 1.0,
+        "top_left_y_pct": 2.0,
+        "width_pct": 3.0,
+        "height_pct": 4.0
+      },
+      {
+        "text": "caption 2",
+        "top_left_x_pct": 5.0,
+        "top_left_y_pct": 6.0,
+        "width_pct": 7.0,
+        "height_pct": 8.0
+      }
+    ]
+  }
 EXPECTED_JSON
         expect(
           MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json
@@ -81,20 +81,20 @@ EXPECTED_JSON
       end
 
       it 'sets private to true in the API input JSON' do
-        expected_json = <<-EXPECTED_JSON.chomp
-{
-  "private": true,
-  "src_image_id": "abcde",
-  "captions_attributes": [
-    {
-      "text": "caption 1",
-      "top_left_x_pct": 1.0,
-      "top_left_y_pct": 2.0,
-      "width_pct": 3.0,
-      "height_pct": 4.0
-    }
-  ]
-}
+        expected_json = <<-EXPECTED_JSON.chomp.strip_heredoc
+  {
+    "private": true,
+    "src_image_id": "abcde",
+    "captions_attributes": [
+      {
+        "text": "caption 1",
+        "top_left_x_pct": 1.0,
+        "top_left_y_pct": 2.0,
+        "width_pct": 3.0,
+        "height_pct": 4.0
+      }
+    ]
+  }
 EXPECTED_JSON
         expect(
           MemeCaptainWeb::GendImageApiRequestJson.new(gend_image).json
