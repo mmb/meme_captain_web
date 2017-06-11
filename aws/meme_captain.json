@@ -770,6 +770,20 @@
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation"
     },
+    "s3VPCEndpoint": {
+      "Properties": {
+        "RouteTableIds": [
+          {
+            "Ref": "internetGatewayRouteTable"
+          }
+        ],
+        "ServiceName": "com.amazonaws.us-east-1.s3",
+        "VpcId": {
+          "Ref": "vpc"
+        }
+      },
+      "Type": "AWS::EC2::VPCEndpoint"
+    },
     "secretsBucket": {
       "Properties": {
         "AccessControl": "Private",
