@@ -58,8 +58,11 @@ module HasImageConcern
   def move_image_external(bucket, client = nil)
     client ||= Aws::S3::Client.new
     key = write_image_external(bucket, client)
-    update!(image_external_bucket: bucket, image_external_key: key)
-    # TODO: update image to nil
+    update!(
+      image_external_bucket: bucket,
+      image_external_key: key,
+      image: nil
+    )
   end
 
   private

@@ -535,6 +535,7 @@ describe GendImage do
         end.to_not raise_error
         expect(gend_image.image_external_bucket).to eq('bucket1')
         expect(gend_image.image_external_key).to eq('hash1')
+        expect(gend_image.image).to be_nil
       end
     end
 
