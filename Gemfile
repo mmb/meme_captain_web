@@ -54,7 +54,7 @@ group :production do
 end
 
 group :test do
-  gem 'webmock', '~> 2.3', '>= 2.3.2'
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
 end
 
 group :test, :development do
