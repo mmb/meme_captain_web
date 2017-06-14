@@ -242,6 +242,20 @@ describe 'gend_image_pages/show.html.erb', type: :view do
       it 'shows the creator ip' do
         expect(render).to have_link('8.7.6.5', href: 'https://ipinfo.io/8.7.6.5')
       end
+
+      context 'when the creator_ip is blank' do
+        let(:gend_image) do
+          FactoryGirl.create(
+            :gend_image,
+            work_in_progress: false,
+            creator_ip: nil
+          )
+        end
+
+        it 'shows unknown' do
+          expect(render).to have_text('unknown')
+        end
+      end
     end
 
     context 'when show_creator_ip is false' do

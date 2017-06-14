@@ -103,7 +103,13 @@
         <% end %>
 
 	<% if @show_creator_ip %>
-          <p class="meme-meta">Creator IP: <%= link_to(@gend_image.creator_ip, @gend_image.creator_ip_url) %></p>
+            <p class="meme-meta">Creator IP:
+              <% if @gend_image.creator_ip.present? %>
+                <%= link_to(@gend_image.creator_ip, @gend_image.creator_ip_url) %>
+              <% else %>
+                unknown
+              <% end %>
+            </p>
         <% end %>
 
         <div id="qr-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
