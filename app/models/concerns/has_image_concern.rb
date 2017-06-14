@@ -52,7 +52,8 @@ module HasImageConcern
 
   def set_image_hash
     return unless image
-    update!(image_hash: Digest::SHA2.new.hexdigest(image))
+    self.image_hash = Digest::SHA2.new.hexdigest(image)
+    save!(touch: false)
   end
 
   def move_image_external(bucket, client = nil)

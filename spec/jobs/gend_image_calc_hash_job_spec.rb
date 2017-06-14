@@ -14,4 +14,11 @@ describe GendImageCalcHashJob do
       '8bb295b79d039aa6477d3a805ba9579a8a578edc180c099d783b9e8369fc0352'
     )
   end
+
+  it 'does not change the updated_at timestamp' do
+    gend_image.update!(updated_at: Time.at(0))
+    gend_image_calc_hash_job.perform
+    gend_image.reload
+    expect(gend_image.updated_at).to eq(Time.at(0))
+  end
 end
