@@ -305,7 +305,7 @@ describe HomeController, type: :controller do
           work_in_progress: false
         )
         gi2 = FactoryGirl.create(:gend_image, work_in_progress: false)
-        gi2.update!(updated_at: Time.now + 1)
+        gi2.update!(updated_at: Time.zone.now + 1)
 
         get :index
 

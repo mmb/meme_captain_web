@@ -3,7 +3,8 @@ class DashboardController < ApplicationController
   def show
     head(:forbidden) unless admin?
 
-    last_day = (Time.now - 24.hours)..Time.now
+    now = Time.zone.now
+    last_day = (now - 24.hours)..now
 
     calculate_gend_image(last_day)
 

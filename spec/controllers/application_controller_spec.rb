@@ -116,7 +116,7 @@ describe ApplicationController, type: :controller do
       stop_time
       get(:index)
       expect(response.headers['Expires']).to eq(
-        (Time.now + 62.minutes).httpdate
+        (Time.zone.now + 62.minutes).httpdate
       )
     end
 

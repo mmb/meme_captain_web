@@ -66,12 +66,12 @@ describe SearchController, type: :controller do
                                           captions: [caption3, caption4],
                                           work_in_progress: false,
                                           src_image: @src_image3)
-        @gend_image2.update!(updated_at: Time.now + 1)
+        @gend_image2.update!(updated_at: Time.zone.now + 1)
         @gend_image3 = FactoryGirl.create(:gend_image,
                                           captions: [caption5, caption6],
                                           work_in_progress: false,
                                           src_image: @src_image3)
-        @gend_image3.update!(updated_at: Time.now + 2)
+        @gend_image3.update!(updated_at: Time.zone.now + 2)
       end
 
       context 'when the user is not an admin user' do
@@ -151,7 +151,7 @@ describe SearchController, type: :controller do
           src_image4 = FactoryGirl.create(
             :src_image, name: 'sp1', work_in_progress: false, private: true
           )
-          src_image4.update!(updated_at: Time.now + 1)
+          src_image4.update!(updated_at: Time.zone.now + 1)
 
           get(:show, params: { q: 'sp1' })
 
@@ -164,7 +164,7 @@ describe SearchController, type: :controller do
           src_image4 = FactoryGirl.create(
             :src_image, name: 'sp1', work_in_progress: false, is_deleted: true
           )
-          src_image4.update!(updated_at: Time.now + 1)
+          src_image4.update!(updated_at: Time.zone.now + 1)
 
           get(:show, params: { q: 'sp1' })
 
@@ -175,7 +175,7 @@ describe SearchController, type: :controller do
 
         it 'finds in progress source images' do
           src_image4 = FactoryGirl.create(:src_image, name: 'sp1')
-          src_image4.update!(updated_at: Time.now + 1)
+          src_image4.update!(updated_at: Time.zone.now + 1)
 
           get(:show, params: { q: 'sp1' })
 
@@ -194,7 +194,7 @@ describe SearchController, type: :controller do
             work_in_progress: false,
             private: true
           )
-          gend_image4.update!(updated_at: Time.now + 3)
+          gend_image4.update!(updated_at: Time.zone.now + 3)
 
           get(:show, params: { q: 'foo' })
 
@@ -212,7 +212,7 @@ describe SearchController, type: :controller do
             captions: [caption1, caption2],
             work_in_progress: false, is_deleted: true
           )
-          gend_image4.update!(updated_at: Time.now + 3)
+          gend_image4.update!(updated_at: Time.zone.now + 3)
 
           get(:show, params: { q: 'foo' })
 
@@ -230,7 +230,7 @@ describe SearchController, type: :controller do
             captions: [caption1, caption2],
             work_in_progress: true
           )
-          gend_image4.update!(updated_at: Time.now + 3)
+          gend_image4.update!(updated_at: Time.zone.now + 3)
 
           get(:show, params: { q: 'foo' })
 
@@ -271,7 +271,7 @@ describe SearchController, type: :controller do
             name: 'test2',
             src_images: [@src_image1]
           )
-          @src_set2.update!(updated_at: Time.now + 1)
+          @src_set2.update!(updated_at: Time.zone.now + 1)
         end
 
         it 'finds src sets with matching names ordered by most recent' do

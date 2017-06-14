@@ -752,7 +752,7 @@ describe GendImagesController, type: :controller do
       end
 
       it 'has the correct Expires header' do
-        stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
+        stop_time(Time.zone.parse('feb 8 2010 21:55:00 UTC'))
         get(:show, params: { id: gend_image.id_hash })
 
         expires_header = response.headers['Expires']

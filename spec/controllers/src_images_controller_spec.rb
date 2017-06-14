@@ -214,10 +214,10 @@ describe SrcImagesController, type: :controller do
           'image_url' =>
                "http://test.host/src_images/#{src_image1.id_hash}.jpg"
         )
-        expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
+        expect(Time.zone.parse(parsed_body[0]['created_at']).to_i).to eq(
           src_image1.created_at.to_i
         )
-        expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
+        expect(Time.zone.parse(parsed_body[0]['updated_at']).to_i).to eq(
           src_image1.updated_at.to_i
         )
 
@@ -231,10 +231,10 @@ describe SrcImagesController, type: :controller do
           'image_url' =>
               "http://test.host/src_images/#{src_image2.id_hash}.jpg"
         )
-        expect(Time.parse(parsed_body[1]['created_at']).to_i).to eq(
+        expect(Time.zone.parse(parsed_body[1]['created_at']).to_i).to eq(
           src_image2.created_at.to_i
         )
-        expect(Time.parse(parsed_body[1]['updated_at']).to_i).to eq(
+        expect(Time.zone.parse(parsed_body[1]['updated_at']).to_i).to eq(
           src_image2.updated_at.to_i
         )
       end
@@ -266,10 +266,10 @@ describe SrcImagesController, type: :controller do
             'image_url' =>
   "http://gendimagehost.com/src_images/#{src_image1.id_hash}.jpg"
           )
-          expect(Time.parse(parsed_body[0]['created_at']).to_i).to eq(
+          expect(Time.zone.parse(parsed_body[0]['created_at']).to_i).to eq(
             src_image1.created_at.to_i
           )
-          expect(Time.parse(parsed_body[0]['updated_at']).to_i).to eq(
+          expect(Time.zone.parse(parsed_body[0]['updated_at']).to_i).to eq(
             src_image1.updated_at.to_i
           )
         end
@@ -481,7 +481,7 @@ describe SrcImagesController, type: :controller do
       end
 
       it 'has the correct Expires header' do
-        stop_time(Time.parse('feb 8 2010 21:55:00 UTC'))
+        stop_time(Time.zone.parse('feb 8 2010 21:55:00 UTC'))
         get(:show, params: { id: src_image.id_hash })
 
         expires_header = response.headers['Expires']

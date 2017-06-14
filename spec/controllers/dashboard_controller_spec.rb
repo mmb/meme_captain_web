@@ -25,8 +25,8 @@ describe DashboardController, type: :controller do
       let(:user) { FactoryGirl.create(:admin_user) }
 
       it 'counts the gend image creation successes in the last 24 hours' do
-        FactoryGirl.create(:gend_image, created_at: Time.now - 25.hours)
-        FactoryGirl.create(:gend_image, created_at: Time.now - 23.hours)
+        FactoryGirl.create(:gend_image, created_at: Time.zone.now - 25.hours)
+        FactoryGirl.create(:gend_image, created_at: Time.zone.now - 23.hours)
         FactoryGirl.create(:gend_image)
         FactoryGirl.create(:gend_image, error: 'failed')
 
@@ -37,10 +37,10 @@ describe DashboardController, type: :controller do
 
       it 'counts the gend image creation errors in the last 24 hours' do
         FactoryGirl.create(
-          :gend_image, created_at: Time.now - 25.hours, error: 'failed'
+          :gend_image, created_at: Time.zone.now - 25.hours, error: 'failed'
         )
         FactoryGirl.create(
-          :gend_image, created_at: Time.now - 23.hours, error: 'failed'
+          :gend_image, created_at: Time.zone.now - 23.hours, error: 'failed'
         )
         FactoryGirl.create(:gend_image, error: 'failed')
         FactoryGirl.create(:gend_image)
@@ -52,8 +52,8 @@ describe DashboardController, type: :controller do
 
       it 'calculates the gend image creation success rate in the last 24 ' \
         'hours' do
-        FactoryGirl.create(:gend_image, created_at: Time.now - 25.hours)
-        FactoryGirl.create(:gend_image, created_at: Time.now - 23.hours)
+        FactoryGirl.create(:gend_image, created_at: Time.zone.now - 25.hours)
+        FactoryGirl.create(:gend_image, created_at: Time.zone.now - 23.hours)
         FactoryGirl.create(:gend_image)
         FactoryGirl.create(:gend_image, error: 'failed')
 
@@ -71,8 +71,8 @@ describe DashboardController, type: :controller do
       end
 
       it 'counts the src images created in the last 24 hours' do
-        FactoryGirl.create(:src_image, created_at: Time.now - 25.hours)
-        FactoryGirl.create(:src_image, created_at: Time.now - 23.hours)
+        FactoryGirl.create(:src_image, created_at: Time.zone.now - 25.hours)
+        FactoryGirl.create(:src_image, created_at: Time.zone.now - 23.hours)
         FactoryGirl.create(:src_image)
 
         get(:show)
@@ -81,8 +81,8 @@ describe DashboardController, type: :controller do
       end
 
       it 'counts the users created in the last 24 hours' do
-        FactoryGirl.create(:user, created_at: Time.now - 25.hours)
-        FactoryGirl.create(:user, created_at: Time.now - 23.hours)
+        FactoryGirl.create(:user, created_at: Time.zone.now - 25.hours)
+        FactoryGirl.create(:user, created_at: Time.zone.now - 23.hours)
         # another user is created in let
 
         get(:show)
@@ -104,8 +104,8 @@ describe DashboardController, type: :controller do
       end
 
       it 'sets jobs that have not been attempted yet oldest first' do
-        job1 = FactoryGirl.create(:job, created_at: Time.at(0))
-        job2 = FactoryGirl.create(:job, created_at: Time.at(60))
+        job1 = FactoryGirl.create(:job, created_at: Time.zone.at(0))
+        job2 = FactoryGirl.create(:job, created_at: Time.zone.at(60))
 
         get(:show)
 

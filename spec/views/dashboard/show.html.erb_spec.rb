@@ -13,11 +13,11 @@ describe 'dashboard/show.html.erb', type: :view do
            ])
     assign(:jobs, [
              instance_double(Delayed::Job,
-                             created_at: Time.at(0),
+                             created_at: Time.zone.at(0),
                              id: 123,
                              handler: 'many whelps! handle it!'),
              instance_double(Delayed::Job,
-                             created_at: Time.at(60),
+                             created_at: Time.zone.at(60),
                              id: 456,
                              handler: 'handler 2')
            ])

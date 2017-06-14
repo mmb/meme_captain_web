@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def cache_expires(length_of_time)
     # Sets both Expires and Cache-Control headers.
-    headers['Expires'.freeze] = (Time.now + length_of_time).httpdate
+    headers['Expires'.freeze] = (Time.zone.now + length_of_time).httpdate
     expires_in(length_of_time, public: true)
   end
 
