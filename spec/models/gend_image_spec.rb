@@ -529,13 +529,18 @@ describe GendImage do
 
     context 'when the image is already in the bucket' do
       it 'does not write the image to the bucket' do
-        gend_image = FactoryGirl.create(:gend_image, image_hash: 'hash1')
+        gend_image = FactoryGirl.create(
+          :gend_image,
+          image_hash: 'hash1',
+          updated_at: Time.at(0)
+        )
         expect do
           gend_image.move_image_external('bucket1', client)
         end.to_not raise_error
         expect(gend_image.image_external_bucket).to eq('bucket1')
         expect(gend_image.image_external_key).to eq('hash1')
         expect(gend_image.image).to be_nil
+        expect(gend_image.updated_at).to eq(Time.at(0))
       end
     end
 
