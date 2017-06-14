@@ -60,7 +60,7 @@ end
 group :test, :development do
   gem 'capybara', '~> 2.12', '>= 2.12.1'
   gem 'capybara-webkit', '~> 1.12'
-  gem 'coffeelint', '~> 1.14'
+  gem 'coffeelint', '~> 1.16'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'jasmine-rails', '~> 0.14.1'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'
