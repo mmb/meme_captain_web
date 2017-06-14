@@ -35,7 +35,7 @@ gem 'rmagick4j', '~> 0.3.9', platforms: :jruby, require: 'rmagick'
 gem 'rubocop', '~> 0.49.1', require: false
 gem 'sqlite3', '~> 1.3', '>= 1.3.13'
 gem 'statsd-instrument', '~> 2.1', '>= 2.1.2'
-gem 'textacular', '~> 4.0', '>= 4.0.1'
+gem 'textacular', '~> 5.0', '>= 5.0.1'
 gem 'therubyracer', '~> 0.12.3'
 gem 'ttfunk', '~> 1.5', '>= 1.5.1'
 gem 'twitter_cldr', '~> 4.4'
