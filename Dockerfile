@@ -24,3 +24,5 @@ ENV MEMCACHE_SERVERS 127.0.0.1
 CMD ["/usr/bin/runsvdir", "-P", "/app/docker/runit"]
 
 EXPOSE 6081
+
+HEALTHCHECK CMD curl --fail --silent http://localhost:6081/instance_health || exit 1
