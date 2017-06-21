@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'active_model_serializers', '~> 0.10.5'
 gem 'addressable', '~> 2.4'
-gem 'airbrake', '~> 6.1', '>= 6.1.1'
+gem 'airbrake', '~> 6.1', '>= 6.1.2'
 gem 'aws-sdk', '~> 2.9', '>= 2.9.37'
 gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
