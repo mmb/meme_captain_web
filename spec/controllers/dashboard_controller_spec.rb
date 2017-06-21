@@ -111,6 +111,18 @@ describe DashboardController, type: :controller do
 
         expect(assigns(:jobs)).to eq([job1, job2])
       end
+
+      it 'includes a hash of system stats' do
+        get(:show)
+        expect(assigns(:system)[:ruby]).to include('ruby')
+      end
+
+      context 'when the database is Postgres', postgres: true do
+        it 'sets the database size' do
+          get(:show)
+          expect(assigns(:system)[:database_size]).to match(/\d/)
+        end
+      end
     end
   end
 end

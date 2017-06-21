@@ -38,3 +38,14 @@
   </tr>
   <% end %>
 </table>
+
+<h1>System</h1>
+
+<table class="table table-striped">
+  <% @system.sort.each do |k, v| %>
+    <tr>
+      <td><%= k %></td>
+      <td><%= v %></td>
+    </tr>
+  <% end %>
+</table>

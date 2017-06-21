@@ -21,6 +21,9 @@ describe 'dashboard/show.html.erb', type: :view do
                              id: 456,
                              handler: 'handler 2')
            ])
+    assign(:system, c: 3,
+                    a: 1,
+                    b: 2)
     def view.current_user
       nil
     end
@@ -77,5 +80,12 @@ describe 'dashboard/show.html.erb', type: :view do
       expect(rendered).to have_text('handler 2')
       expect(rendered).to have_selector('form[action="/jobs/456"]')
     end
+  end
+
+  it 'shows a table of system stats' do
+    render
+    expect(rendered).to have_text('a 1')
+    expect(rendered).to have_text('b 2')
+    expect(rendered).to have_text('c 3')
   end
 end

@@ -14,7 +14,7 @@ class DashboardController < ApplicationController
 
     @no_result_searches = NoResultSearch.last(20).reverse
 
-    set_jobs
+    set_fields
   end
 
   private
@@ -37,7 +37,28 @@ class DashboardController < ApplicationController
     (success_count / total.to_f * 100).round(2)
   end
 
+  def set_fields
+    set_jobs
+    set_system
+  end
+
   def set_jobs
     @jobs = Delayed::Job.where(attempts: 0).order(:created_at)
+  end
+
+  def set_system
+    @system = {
+      ruby: RUBY_DESCRIPTION
+    }
+
+    set_db_size
+  end
+
+  def set_db_size
+    return unless ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+    db_name = ActiveRecord::Base.connection.current_database
+    @system[:database_size] = ActiveRecord::Base.connection.execute(
+      "SELECT pg_size_pretty(pg_database_size('#{db_name}'))"
+    ).first
   end
 end
