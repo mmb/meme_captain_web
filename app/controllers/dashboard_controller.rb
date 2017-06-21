@@ -59,6 +59,6 @@ class DashboardController < ApplicationController
     db_name = ActiveRecord::Base.connection.current_database
     @system[:database_size] = ActiveRecord::Base.connection.execute(
       "SELECT pg_size_pretty(pg_database_size('#{db_name}'))"
-    ).first
+    ).first['pg_size_pretty']
   end
 end
