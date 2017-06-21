@@ -1,5 +1,8 @@
+**/*.md
 .git
+bin/shipit
 db/*.sqlite3
+deps_container
 doc
 log
 spec
