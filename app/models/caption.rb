@@ -2,7 +2,7 @@
 
 # A caption is a box of text in a meme.
 class Caption < ApplicationRecord
-  belongs_to :gend_image
+  belongs_to :gend_image, optional: true
 
   validates :height_pct, presence: true
   validates :top_left_x_pct, presence: true

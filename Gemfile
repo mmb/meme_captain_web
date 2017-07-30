@@ -24,7 +24,7 @@ gem 'meme_captain',
     git: 'https://github.com/mmb/meme_captain.git',
     ref: 'd80fb4b'
 gem 'puma', '~> 3.9', '>= 3.9.1'
-gem 'rails', '~> 5.0', '>= 5.0.2'
+gem 'rails', '~> 5.1', '>= 5.1.2'
 gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
 gem 'rmagick',
     '~> 2.15',
@@ -63,6 +63,7 @@ group :test, :development do
   gem 'coffeelint', '~> 1.16'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'jasmine-rails', '~> 0.14.1'
+  gem 'listen', '~> 3.1', '>= 3.1.5'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'
   gem 'rails_best_practices', '~> 1.18', '>= 1.18.1'
   # Should not be needed. Workaround described in:

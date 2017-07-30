@@ -84,7 +84,7 @@ describe SrcSetsController, type: :controller do
       let(:user) { nil }
 
       it 'shows all source sets sorted by reverse updated time' do
-        3.times { FactoryGirl.create(:src_set_with_src_image, user: user) }
+        3.times { FactoryGirl.create(:src_set_with_src_image) }
 
         get :index
 

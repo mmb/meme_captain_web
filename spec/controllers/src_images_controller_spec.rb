@@ -476,7 +476,7 @@ describe SrcImagesController, type: :controller do
         get(:show, params: { id: src_image.id_hash })
 
         expect(response.headers['Cache-Control']).to eq(
-          'max-age=31557600, public'
+          'max-age=31556952, public'
         )
       end
 

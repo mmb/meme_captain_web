@@ -5,7 +5,7 @@ class SrcThumb < ApplicationRecord
   before_validation :set_derived_image_fields
   validates :content_type, :height, :image, :size, :width, presence: true
 
-  belongs_to :src_image
+  belongs_to :src_image, optional: true
 
   default_scope { without_image }
 end

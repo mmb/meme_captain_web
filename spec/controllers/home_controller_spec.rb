@@ -321,14 +321,11 @@ describe HomeController, type: :controller do
 
     it 'shows src sets sorted by reverse quality and reverse updated time' do
       set1 = FactoryGirl.create(:src_set_with_src_image,
-                                user: user,
                                 quality: 1,
                                 updated_at: 1.second.from_now)
       set2 = FactoryGirl.create(:src_set_with_src_image,
-                                user: user,
                                 updated_at: 2.seconds.from_now)
       set3 = FactoryGirl.create(:src_set_with_src_image,
-                                user: user,
                                 updated_at: 3.seconds.from_now)
 
       get :index

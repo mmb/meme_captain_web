@@ -11,5 +11,6 @@ FactoryGirl.define do
       '2RTVlduGquS920hFvxRMTEzMRzOv6TfKheMX9ThMTEzMnvlj5ld/S0xM' \
       'TMxjNoGjc3pdi6L4AAAAAElFTkSuQmCC'
     )
+    gend_image
   end
 end

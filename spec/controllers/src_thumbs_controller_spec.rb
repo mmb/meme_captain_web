@@ -37,7 +37,7 @@ describe SrcThumbsController, type: :controller do
         get(:show, params: { id: src_thumb.id })
 
         cache_control = response.headers['Cache-Control']
-        expect(cache_control).to eq('max-age=31557600, public')
+        expect(cache_control).to eq('max-age=31556952, public')
       end
 
       it 'has the correct Expires header' do

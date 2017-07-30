@@ -12,7 +12,7 @@ class GendImage < ApplicationRecord
   belongs_to :src_image, counter_cache: true
   has_one :gend_thumb
   has_many :captions, -> { order :id }
-  belongs_to :user
+  belongs_to :user, optional: true
 
   accepts_nested_attributes_for :captions, reject_if:
       proc { |attrs| attrs['text'.freeze].blank? }

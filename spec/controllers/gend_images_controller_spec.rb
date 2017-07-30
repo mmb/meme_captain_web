@@ -747,7 +747,7 @@ describe GendImagesController, type: :controller do
         get(:show, params: { id: gend_image.id_hash })
 
         expect(response.headers['Cache-Control']).to eq(
-          'max-age=31557600, public'
+          'max-age=31556952, public'
         )
       end
 
