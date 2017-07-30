@@ -1,4 +1,4 @@
-class CreateNoResultSearches < ActiveRecord::Migration[5.0]
+class CreateNoResultSearches < ActiveRecord::Migration[4.2]
   def change
     create_table :no_result_searches do |t|
       t.text :query

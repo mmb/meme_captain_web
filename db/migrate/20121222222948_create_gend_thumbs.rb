@@ -1,4 +1,4 @@
-class CreateGendThumbs < ActiveRecord::Migration[5.0]
+class CreateGendThumbs < ActiveRecord::Migration[4.2]
   def change
     create_table :gend_thumbs do |t|
       t.string :content_type

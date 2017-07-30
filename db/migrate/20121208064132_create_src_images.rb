@@ -1,4 +1,4 @@
-class CreateSrcImages < ActiveRecord::Migration[5.0]
+class CreateSrcImages < ActiveRecord::Migration[4.2]
   def change
     create_table :src_images do |t|
       t.string :id_hash

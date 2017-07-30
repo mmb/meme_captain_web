@@ -1,4 +1,4 @@
-class AddGendImagesCountToSrcImages < ActiveRecord::Migration[5.0]
+class AddGendImagesCountToSrcImages < ActiveRecord::Migration[4.2]
 
   def up
     add_column :src_images, :gend_images_count, :integer, null: false, default: 0

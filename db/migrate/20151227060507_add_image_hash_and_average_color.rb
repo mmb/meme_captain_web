@@ -1,4 +1,4 @@
-class AddImageHashAndAverageColor < ActiveRecord::Migration[5.0]
+class AddImageHashAndAverageColor < ActiveRecord::Migration[4.2]
   def change
     add_column :gend_images, :image_hash, :text
     add_index :gend_images, :image_hash, length: 40

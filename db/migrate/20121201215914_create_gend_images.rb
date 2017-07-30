@@ -1,4 +1,4 @@
-class CreateGendImages < ActiveRecord::Migration[5.0]
+class CreateGendImages < ActiveRecord::Migration[4.2]
   def change
     create_table :gend_images do |t|
       t.string :id_hash

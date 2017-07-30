@@ -1,4 +1,4 @@
-class DropSearches < ActiveRecord::Migration[5.0]
+class DropSearches < ActiveRecord::Migration[4.2]
   def change
     drop_table :searches
   end

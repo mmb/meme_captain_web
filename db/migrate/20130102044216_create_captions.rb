@@ -1,4 +1,4 @@
-class CreateCaptions < ActiveRecord::Migration[5.0]
+class CreateCaptions < ActiveRecord::Migration[4.2]
   def change
     create_table :captions do |t|
       t.string :text

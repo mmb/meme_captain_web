@@ -1,4 +1,4 @@
-class CreateSrcSetJoinTable < ActiveRecord::Migration[5.0]
+class CreateSrcSetJoinTable < ActiveRecord::Migration[4.2]
   def change
     create_table :src_images_src_sets, :id => false do |t|
       t.references :src_image

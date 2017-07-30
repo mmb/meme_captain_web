@@ -1,4 +1,4 @@
-class AddIndexToIdHash < ActiveRecord::Migration[5.0]
+class AddIndexToIdHash < ActiveRecord::Migration[4.2]
 
   def change
     add_index :gend_images, :id_hash, unique: true

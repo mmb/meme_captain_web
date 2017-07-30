@@ -1,4 +1,4 @@
-class RemoveSrcThumbIdFromSrcImages < ActiveRecord::Migration[5.0]
+class RemoveSrcThumbIdFromSrcImages < ActiveRecord::Migration[4.2]
   def up
     remove_column :src_images, :src_thumb_id
   end

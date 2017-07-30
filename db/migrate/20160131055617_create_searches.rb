@@ -1,4 +1,4 @@
-class CreateSearches < ActiveRecord::Migration[5.0]
+class CreateSearches < ActiveRecord::Migration[4.2]
   def change
     create_table :searches do |t|
       t.text :query, null: false

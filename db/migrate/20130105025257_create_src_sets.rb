@@ -1,4 +1,4 @@
-class CreateSrcSets < ActiveRecord::Migration[5.0]
+class CreateSrcSets < ActiveRecord::Migration[4.2]
   def change
     create_table :src_sets do |t|
       t.string :name

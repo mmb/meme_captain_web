@@ -1,4 +1,4 @@
-class CreateSrcThumbs < ActiveRecord::Migration[5.0]
+class CreateSrcThumbs < ActiveRecord::Migration[4.2]
   def change
     create_table :src_thumbs do |t|
       t.references :src_image

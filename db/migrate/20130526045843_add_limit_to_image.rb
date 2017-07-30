@@ -1,4 +1,4 @@
-class AddLimitToImage < ActiveRecord::Migration[5.0]
+class AddLimitToImage < ActiveRecord::Migration[4.2]
 
   def up
     change_column :gend_images, :image, :binary, limit: 16.megabytes

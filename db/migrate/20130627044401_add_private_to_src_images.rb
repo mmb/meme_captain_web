@@ -1,4 +1,4 @@
-class AddPrivateToSrcImages < ActiveRecord::Migration[5.0]
+class AddPrivateToSrcImages < ActiveRecord::Migration[4.2]
 
   def change
     add_column :src_images, :private, :boolean, default: false

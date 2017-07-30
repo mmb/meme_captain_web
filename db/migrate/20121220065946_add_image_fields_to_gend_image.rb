@@ -1,4 +1,4 @@
-class AddImageFieldsToGendImage < ActiveRecord::Migration[5.0]
+class AddImageFieldsToGendImage < ActiveRecord::Migration[4.2]
   def change
     add_column :gend_images, :height, :integer
     add_column :gend_images, :size, :integer

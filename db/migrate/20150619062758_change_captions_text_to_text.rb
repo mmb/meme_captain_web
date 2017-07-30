@@ -1,4 +1,4 @@
-class ChangeCaptionsTextToText < ActiveRecord::Migration[5.0]
+class ChangeCaptionsTextToText < ActiveRecord::Migration[4.2]
   def change
     change_column :captions, :text, :text
   end
