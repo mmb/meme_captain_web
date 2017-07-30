@@ -1,4 +1,4 @@
-class SrcImageNameFullTextIndex < ActiveRecord::Migration
+class SrcImageNameFullTextIndex < ActiveRecord::Migration[5.0]
   def change
     return unless ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
 

@@ -1,4 +1,4 @@
-class SrcImagesSearchDocumentIndices < ActiveRecord::Migration
+class SrcImagesSearchDocumentIndices < ActiveRecord::Migration[5.0]
   def change
     if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
       execute 'drop index src_images_to_tsvector_idx'

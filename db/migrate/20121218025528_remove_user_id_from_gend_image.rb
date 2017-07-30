@@ -1,4 +1,4 @@
-class RemoveUserIdFromGendImage < ActiveRecord::Migration
+class RemoveUserIdFromGendImage < ActiveRecord::Migration[5.0]
   def up
     remove_column :gend_images, :user_id
   end

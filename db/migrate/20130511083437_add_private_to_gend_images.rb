@@ -1,4 +1,4 @@
-class AddPrivateToGendImages < ActiveRecord::Migration
+class AddPrivateToGendImages < ActiveRecord::Migration[5.0]
   def change
     add_column :gend_images, :private, :boolean, :default => false
     add_index :gend_images, :private
