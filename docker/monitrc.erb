@@ -31,6 +31,12 @@ check process delayed_job.<%= i %>
   with pidfile /run/delayed_job.<%= i %>.pid
   start program = "/sbin/start-stop-daemon --pidfile /run/delayed_job.<%= i %>.pid --start --background --make-pidfile --exec /usr/local/bin/rake -- --rakefile /app/Rakefile jobs:work"
   stop program = "/sbin/start-stop-daemon --pidfile /run/delayed_job.<%= i %>.pid --stop --remove-pidfile"
+  if failed
+    port 6081
+    protocol http
+    request /instance_health
+    with timeout 2 seconds
+    then restart
 <% end %>
 
 check process metrics
