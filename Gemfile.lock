@@ -354,7 +354,7 @@ GEM
       pusher-client (~> 0.4)
       typhoeus (~> 0.6, >= 0.6.8)
     ttfunk (1.5.1)
-    twitter_cldr (4.4.1)
+    twitter_cldr (4.4.2)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
       tzinfo
@@ -433,7 +433,7 @@ DEPENDENCIES
   therubyracer (~> 0.12.3)
   travis (~> 1.8, >= 1.8.8)
   ttfunk (~> 1.5, >= 1.5.1)
-  twitter_cldr (~> 4.4, >= 4.4.1)
+  twitter_cldr (~> 4.4, >= 4.4.2)
   uglifier (~> 3.2)
   webmock (~> 3.0, >= 3.0.1)
 
