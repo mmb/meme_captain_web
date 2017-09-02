@@ -26,11 +26,7 @@ class SrcImagesController < ApplicationController
     @src_image.user = current_user
     @src_image.creator_ip = remote_ip
 
-    if @src_image.save
-      create_success
-    else
-      create_fail
-    end
+    @src_image.save ? create_success : create_fail
   end
 
   def show
