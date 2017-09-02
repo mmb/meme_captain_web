@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+require 'support/create_image'
 require 'support/gend_image_skip_callbacks'
 require 'support/src_image_skip_callbacks'
 
@@ -43,6 +44,31 @@ describe GendImageProcessJob do
     expect(gend_image_calc_hash_job).to receive(:perform)
 
     gend_image_process_job.perform
+  end
+
+  context 'when the src image is in an external object store' do
+    let(:src_image) do
+      FactoryGirl.create(
+        :finished_src_image,
+        image_external_bucket: 'bucket1',
+        image_external_key: 'key1'
+      )
+    end
+    let(:gend_image) do
+      FactoryGirl.create(:gend_image, image: nil, src_image: src_image)
+    end
+    before do
+      stub_request(:get, 'https://bucket1.s3.amazonaws.com/key1').to_return(
+        body: create_image(37, 73)
+      )
+    end
+
+    it 'generates the meme image' do
+      gend_image_process_job.perform
+      gend_image.reload
+      expect(gend_image.magick_image_list.columns).to eq(37)
+      expect(gend_image.magick_image_list.rows).to eq(73)
+    end
   end
 
   describe '#failure' do

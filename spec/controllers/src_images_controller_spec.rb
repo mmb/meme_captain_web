@@ -489,6 +489,28 @@ describe SrcImagesController, type: :controller do
       end
     end
 
+    context 'when the image data is in an external object store' do
+      let(:src_image) do
+        FactoryGirl.create(
+          :finished_src_image,
+          image_external_bucket: 'bucket1',
+          image_external_key: 'key1'
+        )
+      end
+
+      before do
+        stub_request(:get, 'https://bucket1.s3.amazonaws.com/key1').to_return(
+          body: 'data'
+        )
+      end
+
+      it 'has the right content' do
+        get(:show, params: { id: src_image.id_hash })
+
+        expect(response.body).to eq('data')
+      end
+    end
+
     context 'when the id is not found' do
       it 'raises record not found' do
         expect do

@@ -42,7 +42,12 @@ class SrcImagesController < ApplicationController
 
     src_image_show_headers(src_image)
 
-    render(body: src_image.image)
+    body = src_image.image_external_body
+    if body
+      self.response_body = body
+    else
+      render(body: src_image.image)
+    end
   end
 
   def update

@@ -49,7 +49,7 @@ class GendImageProcessJob
 
   def make_meme(gend_image)
     MemeCaptain.meme(
-      gend_image.src_image.image,
+      gend_image.src_image.image_external_body || gend_image.src_image.image,
       gend_image.captions.map(&:text_pos)
     )
   end
