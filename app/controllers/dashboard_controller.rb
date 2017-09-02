@@ -59,7 +59,7 @@ class DashboardController < ApplicationController
   def set_db_size
     return unless ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
     db_name = ActiveRecord::Base.connection.current_database
-    @system[:database_size] = ActiveRecord::Base.connection.execute(
+    @system[:database_size_bytes] = ActiveRecord::Base.connection.execute(
       "SELECT pg_database_size('#{db_name}')"
     ).first['pg_database_size']
   end
