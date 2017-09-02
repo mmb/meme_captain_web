@@ -502,6 +502,15 @@ describe SrcImagesController, type: :controller do
         stub_request(:get, 'https://bucket1.s3.amazonaws.com/key1').to_return(
           body: 'data'
         )
+        stub_request(
+          :get,
+          'http://169.254.169.254/latest/meta-data/iam/security-credentials/'
+        ).to_return(
+          status: 404
+        )
+        stub_const('ENV', 'AWS_ACCESS_KEY_ID' => 'test',
+                          'AWS_SECRET_ACCESS_KEY' => 'test',
+                          'AWS_REGION' => 'us-east-1')
       end
 
       it 'has the right content' do
