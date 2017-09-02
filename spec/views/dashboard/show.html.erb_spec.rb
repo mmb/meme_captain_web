@@ -23,7 +23,8 @@ describe 'dashboard/show.html.erb', type: :view do
            ])
     assign(:system, c: 3,
                     a: 1,
-                    b: 2)
+                    b: 2,
+                    some_bytes: 123)
     def view.current_user
       nil
     end
@@ -87,5 +88,6 @@ describe 'dashboard/show.html.erb', type: :view do
     expect(rendered).to have_text('a 1')
     expect(rendered).to have_text('b 2')
     expect(rendered).to have_text('c 3')
+    expect(rendered).to have_text('some 123 Bytes')
   end
 end

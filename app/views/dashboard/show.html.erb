@@ -42,7 +42,7 @@
 <h1>System</h1>
 
 <table class="table table-striped">
-  <% @system.sort.each do |k, v| %>
+  <% @system.map { |k,v| format_system(k, v) }.sort.each do |k, v| %>
     <tr>
       <td><%= k %></td>
       <td><%= v %></td>

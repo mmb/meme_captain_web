@@ -52,13 +52,37 @@ class DashboardController < ApplicationController
     }
 
     set_db_size
+    set_gend_image_size
+    set_src_image_size
   end
 
   def set_db_size
     return unless ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
     db_name = ActiveRecord::Base.connection.current_database
     @system[:database_size] = ActiveRecord::Base.connection.execute(
-      "SELECT pg_size_pretty(pg_database_size('#{db_name}'))"
-    ).first['pg_size_pretty']
+      "SELECT pg_database_size('#{db_name}')"
+    ).first['pg_database_size']
+  end
+
+  def set_gend_image_size
+    @system.merge!(
+      gend_image_db_size_bytes: GendImage.where(
+        image_external_key: nil
+      ).sum(:size),
+      gend_image_external_size_bytes: GendImage.where.not(
+        image_external_key: nil
+      ).sum(:size)
+    )
+  end
+
+  def set_src_image_size
+    @system.merge!(
+      src_image_db_size_bytes: SrcImage.where(
+        image_external_key: nil
+      ).sum(:size),
+      src_image_external_size_bytes: SrcImage.where.not(
+        image_external_key: nil
+      ).sum(:size)
+    )
   end
 end

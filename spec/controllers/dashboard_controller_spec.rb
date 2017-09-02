@@ -114,13 +114,18 @@ describe DashboardController, type: :controller do
 
       it 'includes a hash of system stats' do
         get(:show)
+
+        expect(assigns(:system)[:gend_image_db_size_bytes]).to be >= 0
+        expect(assigns(:system)[:gend_image_external_size_bytes]).to be >= 0
         expect(assigns(:system)[:ruby]).to include('ruby')
+        expect(assigns(:system)[:src_image_db_size_bytes]).to be >= 0
+        expect(assigns(:system)[:src_image_external_size_bytes]).to be >= 0
       end
 
       context 'when the database is Postgres', postgres: true do
         it 'sets the database size' do
           get(:show)
-          expect(assigns(:system)[:database_size]).to match(/\d/)
+          expect(assigns(:system)[:database_size_bytes]).to be >= 0
         end
       end
     end
