@@ -34,6 +34,27 @@ describe MemeCaptainWeb::Config do
     end
   end
 
+  context 'when the GEND_IMAGE_HOST env var is not set' do
+    it 'sets the config for it to nil' do
+      Kernel.silence_warnings { load(rb_path) }
+      expect(MemeCaptainWeb::Config::GEND_IMAGE_HOST).to be_nil
+    end
+  end
+
+  context 'when the GEND_IMAGE_HOST env var is set' do
+    before do
+      stub_const(
+        'ENV',
+        ENV.to_hash.merge('GEND_IMAGE_HOST' => 'testhost.com')
+      )
+    end
+
+    it 'uses the environment variable' do
+      Kernel.silence_warnings { load(rb_path) }
+      expect(MemeCaptainWeb::Config::GEND_IMAGE_HOST).to eq('testhost.com')
+    end
+  end
+
   context 'when the MAX_SRC_IMAGE_SIZE env var is not set' do
     it 'uses the default' do
       Kernel.silence_warnings { load(rb_path) }
@@ -73,6 +94,27 @@ describe MemeCaptainWeb::Config do
     it 'uses the environment variable' do
       Kernel.silence_warnings { load(rb_path) }
       expect(MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE).to eq(78)
+    end
+  end
+
+  context 'when the IMAGE_BUCKET env var is not set' do
+    it 'sets the config for it to nil' do
+      Kernel.silence_warnings { load(rb_path) }
+      expect(MemeCaptainWeb::Config::IMAGE_BUCKET).to be_nil
+    end
+  end
+
+  context 'when the IMAGE_BUCKET env var is set' do
+    before do
+      stub_const(
+        'ENV',
+        ENV.to_hash.merge('IMAGE_BUCKET' => 'test-image-bucket')
+      )
+    end
+
+    it 'uses the environment variable' do
+      Kernel.silence_warnings { load(rb_path) }
+      expect(MemeCaptainWeb::Config::IMAGE_BUCKET).to eq('test-image-bucket')
     end
   end
 end

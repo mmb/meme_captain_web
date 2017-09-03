@@ -43,6 +43,10 @@ class GendImageProcessJob
 
   def enqueue_jobs(gend_image)
     GendImageCalcHashJob.new(gend_image.id).delay(queue: :calc_hash).perform
+    return unless MemeCaptainWeb::Config::IMAGE_BUCKET
+    GendImageMoveExternalJob.new(
+      gend_image.id, MemeCaptainWeb::Config::IMAGE_BUCKET
+    ).delay(queue: :move_image_external).perform
   end
 
   private

@@ -46,6 +46,25 @@ describe GendImageProcessJob do
     gend_image_process_job.perform
   end
 
+  context 'when an image bucket is configured' do
+    before do
+      stub_const('MemeCaptainWeb::Config::IMAGE_BUCKET', 'test-image-bucket')
+    end
+
+    it 'enqueues a job to move the image to the bucket' do
+      gend_image_move_external_job = instance_double(GendImageMoveExternalJob)
+      expect(GendImageMoveExternalJob).to receive(:new).with(
+        gend_image.id, 'test-image-bucket'
+      ).and_return(gend_image_move_external_job)
+      expect(gend_image_move_external_job).to receive(:delay).with(
+        queue: :move_image_external
+      ).and_return(gend_image_move_external_job)
+      expect(gend_image_move_external_job).to receive(:perform)
+
+      gend_image_process_job.perform
+    end
+  end
+
   context 'when the src image is in an external object store' do
     let(:src_image) do
       FactoryGirl.create(

@@ -33,5 +33,8 @@ module MemeCaptainWeb
                           else
                             ENV['MAX_GIF_SHRINK_SIZE'].to_i
                           end
+
+    # Object store bucket to store images in.
+    IMAGE_BUCKET = ENV['IMAGE_BUCKET'].blank? ? nil : ENV['IMAGE_BUCKET']
   end
 end

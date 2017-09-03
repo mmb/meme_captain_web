@@ -255,6 +255,25 @@ describe SrcImageProcessJob do
     src_image_process_job.perform
   end
 
+  context 'when an image bucket is configured' do
+    before do
+      stub_const('MemeCaptainWeb::Config::IMAGE_BUCKET', 'test-image-bucket')
+    end
+
+    it 'enqueues a job to move the image to the bucket' do
+      src_image_move_external_job = instance_double(SrcImageMoveExternalJob)
+      expect(SrcImageMoveExternalJob).to receive(:new).with(
+        src_image.id, 'test-image-bucket'
+      ).and_return(src_image_move_external_job)
+      expect(src_image_move_external_job).to receive(:delay).with(
+        queue: :move_image_external
+      ).and_return(src_image_move_external_job)
+      expect(src_image_move_external_job).to receive(:perform)
+
+      src_image_process_job.perform
+    end
+  end
+
   it "sets the src image model's content type" do
     expect do
       src_image_process_job.perform
