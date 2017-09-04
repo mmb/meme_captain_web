@@ -74,6 +74,8 @@ module HasImageConcern
   end
 
   def write_image_external(bucket, client)
+    set_image_hash unless image_hash
+
     return image_hash if image_external_exists(bucket, image_hash, client)
 
     client.put_object(

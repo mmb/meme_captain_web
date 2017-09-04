@@ -527,6 +527,17 @@ describe GendImage do
       )
     end
 
+    context 'when the image hash is not set' do
+      it 'sets the image hash' do
+        gend_image = FactoryGirl.create(:finished_gend_image)
+        expect do
+          gend_image.move_image_external('bucket1', client)
+        end.to change { gend_image.image_hash }.from(nil).to(
+          '8bb295b79d039aa6477d3a805ba9579a8a578edc180c099d783b9e8369fc0352'
+        )
+      end
+    end
+
     context 'when the image is already in the bucket' do
       it 'does not write the image to the bucket' do
         gend_image = FactoryGirl.create(
