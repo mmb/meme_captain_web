@@ -166,7 +166,7 @@ describe SrcImage do
     end
   end
 
-  describe '#image_if_not_url' do
+  describe '#image_required' do
     let(:attrs) { { image: nil, url: nil } }
 
     subject { FactoryGirl.build(:src_image, attrs) }
@@ -187,6 +187,13 @@ describe SrcImage do
 
     context 'when both are set' do
       let(:attrs) { { url: 'abc' } }
+      it { should be_valid }
+    end
+
+    context 'when only image_external_key and image_external_bucket are set' do
+      let(:attrs) do
+        { image_external_key: 'test-key', image_external_bucket: 'test-bucket' }
+      end
       it { should be_valid }
     end
   end

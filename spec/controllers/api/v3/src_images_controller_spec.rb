@@ -281,7 +281,8 @@ describe Api::V3::SrcImagesController, type: :controller do
       it 'returns json with the errors' do
         post(:create, params: { src_image: { name: 'test name' } })
         expect(JSON.parse(response.body)).to eq(
-          'image' => ['is required if url is not set.']
+          'image' => ['is required if url or image external key and bucket ' \
+                      'are not set.']
         )
       end
     end

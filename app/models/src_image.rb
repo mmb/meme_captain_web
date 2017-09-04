@@ -18,15 +18,17 @@ class SrcImage < ApplicationRecord
   before_validation :add_url_scheme
   validates :url, url: true
 
-  validate :image_if_not_url
+  validate :image_required
 
   after_commit :create_jobs, on: :create
 
   attr_accessor :image_url
 
-  def image_if_not_url
-    return if url.present? || image.present?
-    errors.add :image, 'is required if url is not set.'.freeze
+  def image_required
+    return if url.present? || image.present? ||
+              (image_external_key.present? && image_external_bucket.present?)
+    errors.add :image, 'is required if url or image external key and bucket ' \
+      'are not set.'
   end
 
   def load_from_url
