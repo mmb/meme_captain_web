@@ -54,6 +54,8 @@ class DashboardController < ApplicationController
     set_db_size
     set_gend_image_size
     set_src_image_size
+    @system[:dedup_savings_bytes] = \
+      dedup_savings(GendImage) + dedup_savings(SrcImage)
   end
 
   def set_db_size
@@ -84,5 +86,14 @@ class DashboardController < ApplicationController
         image_external_key: nil
       ).sum(:size)
     )
+  end
+
+  def dedup_savings(klass)
+    klass.where.not(image_external_key: nil).select(
+      'image_external_key, size * (COUNT(image_external_key) - 1) AS saved'
+    )
+         .group(:image_external_key, :size).having(
+           'COUNT(image_external_key) > ?', 1
+         ).map(&:saved).reduce(:+).to_i
   end
 end
