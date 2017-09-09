@@ -8,6 +8,4 @@ class SrcThumb < ApplicationRecord
   validates :content_type, :height, :size, :width, presence: true
 
   belongs_to :src_image, optional: true
-
-  default_scope { without_image }
 end

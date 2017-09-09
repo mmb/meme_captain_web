@@ -8,6 +8,4 @@ class GendThumb < ApplicationRecord
   validates :content_type, :height, :size, :width, presence: true
 
   belongs_to :gend_image
-
-  default_scope { without_image }
 end

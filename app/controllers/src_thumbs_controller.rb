@@ -3,7 +3,7 @@
 # Source image thumbnails controller.
 class SrcThumbsController < ApplicationController
   def show
-    src_thumb = SrcThumb.select(:image).find(params[:id])
+    src_thumb = SrcThumb.find(params[:id])
 
     cache_expires(1.year)
 

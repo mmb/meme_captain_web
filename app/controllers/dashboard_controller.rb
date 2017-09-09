@@ -71,14 +71,13 @@ class DashboardController < ApplicationController
 
   def image_sizes(klass)
     prefix = klass.to_s.underscore
-    @system.merge!(
-      "#{prefix}_db_size_bytes" => klass.where(
-        image_external_key: nil
-      ).sum(:size),
-      "#{prefix}_external_size_bytes" => klass.where.not(
-        image_external_key: nil
-      ).sum(:size)
-    )
+    @system["#{prefix}_db_size_bytes"] = klass.select(
+      :image_external_key, :size
+    ).where(image_external_key: nil).sum(:size)
+
+    @system["#{prefix}_external_size_bytes"] = klass.select(
+      :image_external_key, :size
+    ).where.not(image_external_key: nil).sum(:size)
   end
 
   def dedup_savings(klass)

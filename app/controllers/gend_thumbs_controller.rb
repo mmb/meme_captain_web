@@ -3,7 +3,7 @@
 # Generated (meme) image thumbnails controller.
 class GendThumbsController < ApplicationController
   def show
-    gend_thumb = GendThumb.select(:image).find(params[:id])
+    gend_thumb = GendThumb.find(params[:id])
 
     cache_expires(1.year)
 
