@@ -24,7 +24,7 @@ class SearchController < ApplicationController
     @no_results = true
     @template_search = "#{params[:q]} meme template"
     google_query = {
-      tbm: 'isch'.freeze,
+      tbm: 'isch',
       q: @template_search
     }
     @google_search_url =

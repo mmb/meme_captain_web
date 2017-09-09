@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pending generated (meme) images controller.
 class PendingGendImagesController < ApplicationController
   include GendImagesHelper

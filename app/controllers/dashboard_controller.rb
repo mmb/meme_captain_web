@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Admin dashboard controller.
 class DashboardController < ApplicationController
   def show

@@ -84,7 +84,7 @@ class SrcImage < ApplicationRecord
   def add_url_scheme
     return true if url.blank?
     return true if url.start_with?(
-      'http://'.freeze, 'https://'.freeze, 'data:'.freeze
+      'http://', 'https://', 'data:'
     )
     self.url = "http://#{url}"
     true

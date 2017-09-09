@@ -30,7 +30,7 @@ module MemeCaptainWeb
     private
 
     def combine_horizontal(url)
-      images = url.split('[]'.freeze).map(&method(:url_to_magick_image))
+      images = url.split('[]').map(&method(:url_to_magick_image))
 
       equalize_height(images)
 
@@ -52,7 +52,7 @@ module MemeCaptainWeb
     end
 
     def combine_vertical(url)
-      images = url.split('|'.freeze).map(&method(:url_to_magick_image))
+      images = url.split('|').map(&method(:url_to_magick_image))
 
       equalize_width(images)
 

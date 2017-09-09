@@ -15,7 +15,7 @@ class GendThumbsController < ApplicationController
   private
 
   def make_headers(gend_thumb)
-    headers.update('Content-Length'.freeze => gend_thumb.size,
-                   'Content-Type'.freeze => gend_thumb.content_type)
+    headers.update('Content-Length' => gend_thumb.size,
+                   'Content-Type' => gend_thumb.content_type)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Gend image API script controller.
 class GendImageScriptsController < ApplicationController
   def show

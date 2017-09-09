@@ -36,7 +36,7 @@ class SrcImageProcessJob
   def failure(job)
     return if job.last_error.blank?
     src_image = SrcImage.without_image.find(src_image_id)
-    error = job.last_error.split("\n".freeze).first
+    error = job.last_error.split("\n").first
     src_image.update_attribute(:error, error)
   end
 
@@ -57,7 +57,7 @@ class SrcImageProcessJob
   end
 
   def shrink_animated?(src_image)
-    src_image.image.start_with?('GIF'.freeze) &&
+    src_image.image.start_with?('GIF') &&
       src_image.image.size > MemeCaptainWeb::Config::MAX_SRC_IMAGE_SIZE &&
       src_image.image.size <= MemeCaptainWeb::Config::MAX_GIF_SHRINK_SIZE
   end
@@ -95,7 +95,7 @@ class SrcImageProcessJob
 
   def watermark(img)
     watermark_img = Magick::ImageList.new(
-      Rails.root + 'app/assets/images/watermark.png'.freeze
+      Rails.root + 'app/assets/images/watermark.png'
     )
     img.extend(MemeCaptain::ImageList::Watermark)
     img.watermark_mc(watermark_img)

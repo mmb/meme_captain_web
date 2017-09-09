@@ -15,7 +15,7 @@ class GendImage < ApplicationRecord
   belongs_to :user, optional: true
 
   accepts_nested_attributes_for :captions, reject_if:
-      proc { |attrs| attrs['text'.freeze].blank? }
+      proc { |attrs| attrs['text'].blank? }
 
   # This email field is a negative captcha. If form bots fill it in,
   # validation will fail.
@@ -34,13 +34,13 @@ class GendImage < ApplicationRecord
   end
 
   def meme_text
-    captions.position_order.map(&:text).join(' '.freeze)
+    captions.position_order.map(&:text).join(' ')
   end
 
   def headers
     {
-      'Content-Length'.freeze => size,
-      'Content-Type'.freeze => content_type
+      'Content-Length' => size,
+      'Content-Type' => content_type
     }
   end
 

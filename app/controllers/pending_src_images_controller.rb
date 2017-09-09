@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pending src images controller.
 class PendingSrcImagesController < ApplicationController
   include SrcImagesHelper

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Generated (meme) image thumbnail model.
 class GendThumb < ApplicationRecord
   include HasImageConcern

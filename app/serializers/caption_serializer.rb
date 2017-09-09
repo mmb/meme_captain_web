@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # JSON serializer for captions
 class CaptionSerializer < ActiveModel::Serializer
   attributes :height_pct,

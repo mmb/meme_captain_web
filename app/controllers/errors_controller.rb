@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Error report controller.
 class ErrorsController < ApplicationController
   def index

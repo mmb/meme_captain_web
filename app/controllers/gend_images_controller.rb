@@ -120,8 +120,8 @@ class GendImagesController < ApplicationController
 
     headers.update(gend_image.headers)
     headers.update(
-      'Meme-Name'.freeze => Rack::Utils.escape(src_image.name),
-      'Meme-Source-Image'.freeze => src_image_url_for(src_image)
+      'Meme-Name' => Rack::Utils.escape(src_image.name),
+      'Meme-Source-Image' => src_image_url_for(src_image)
     )
   end
 end

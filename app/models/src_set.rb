@@ -16,7 +16,7 @@ class SrcSet < ApplicationRecord
   def one_active_name
     if new_record? && name_taken? ||
        !is_deleted && name_taken_by_other?
-      errors.add(:name, 'has already been taken'.freeze)
+      errors.add(:name, 'has already been taken')
     end
   end
 
@@ -55,7 +55,7 @@ class SrcSet < ApplicationRecord
   }
 
   scope :front_page, lambda {
-    where('quality >= ?'.freeze, MemeCaptainWeb::Config::SetFrontPageMinQuality)
+    where('quality >= ?', MemeCaptainWeb::Config::SetFrontPageMinQuality)
   }
 
   scope :not_empty, -> { where.not(src_images_count: 0) }
@@ -75,7 +75,7 @@ class SrcSet < ApplicationRecord
   end
 
   def name_taken_by_other?
-    SrcSet.where('name = ? AND id != ?'.freeze, name, id).active.exists?
+    SrcSet.where('name = ? AND id != ?', name, id).active.exists?
   end
 
   def search_document_parts

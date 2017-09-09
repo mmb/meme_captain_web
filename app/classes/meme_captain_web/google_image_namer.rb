@@ -7,9 +7,9 @@ module MemeCaptainWeb
     def name(image_url)
       conn = create_connection
 
-      conn.get('/imghp'.freeze)
+      conn.get('/imghp')
 
-      response = conn.get('/searchbyimage'.freeze, image_url: image_url)
+      response = conn.get('/searchbyimage', image_url: image_url)
 
       extract_name(response.body)
     end
@@ -17,12 +17,12 @@ module MemeCaptainWeb
     private
 
     def create_connection
-      Faraday.new(url: 'https://images.google.com'.freeze) do |faraday|
+      Faraday.new(url: 'https://images.google.com') do |faraday|
         faraday.use(:cookie_jar)
         faraday.use(FaradayMiddleware::FollowRedirects)
-        faraday.headers['User-Agent'.freeze] = \
+        faraday.headers['User-Agent'] = \
           'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 ' \
-          'Firefox/8.0'.freeze
+          'Firefox/8.0'
         faraday.adapter(Faraday.default_adapter)
       end
     end

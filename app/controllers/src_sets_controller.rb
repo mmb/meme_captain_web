@@ -13,7 +13,7 @@ class SrcSetsController < ApplicationController
     if @src_set.save
       redirect_to(
         { action: :index },
-        notice: 'Source set created.'.freeze
+        notice: 'Source set created.'
       )
     else
       render :new
@@ -25,14 +25,12 @@ class SrcSetsController < ApplicationController
   end
 
   def update
-    unless current_user
-      render(status: :forbidden, plain: 'Forbidden'.freeze) && return
-    end
+    render(status: :forbidden, plain: 'Forbidden') && return unless current_user
 
     @src_set = first_or_create
 
     unless @src_set.user == current_user
-      render(status: :forbidden, plain: 'Forbidden'.freeze) && return
+      render(status: :forbidden, plain: 'Forbidden') && return
     end
 
     add_and_delete
@@ -95,7 +93,7 @@ class SrcSetsController < ApplicationController
       format.html do
         redirect_to(
           { action: :show, id: @src_set.name },
-          notice: 'The set was successfully updated.'.freeze
+          notice: 'The set was successfully updated.'
         )
       end
       format.json { render(json: {}) }

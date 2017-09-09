@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ActiveRecord::Model mixin to check a user's access to a model.
 module PermissionConcern
   extend ActiveSupport::Concern

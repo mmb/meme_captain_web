@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Validate that data contains a supported image format.
   class ImgFormatValidator

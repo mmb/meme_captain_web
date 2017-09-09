@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # JSON serializer for gend images
 class GendImageSerializer < ActiveModel::Serializer
   attributes :content_type,

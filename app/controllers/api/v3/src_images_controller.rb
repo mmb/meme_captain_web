@@ -81,7 +81,7 @@ module Api
       end
 
       def create_success
-        StatsD.increment('src_image.upload'.freeze) if @src_image.image
+        StatsD.increment('src_image.upload') if @src_image.image
         respond_to do |format|
           format.json { ok_response }
         end

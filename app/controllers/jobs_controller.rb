@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Jobs controller.
 class JobsController < ApplicationController
   def destroy

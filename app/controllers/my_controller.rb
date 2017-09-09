@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # User page controller.
 class MyController < ApplicationController
   def show

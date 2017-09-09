@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Stats controller for sending arbitrary data to statsd from the web.
 #
 # The initial use case is deploy tracking.

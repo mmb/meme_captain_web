@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ActiveRecord::Model mixin to set a random id hash column.
 module IdHashConcern
   extend ActiveSupport::Concern

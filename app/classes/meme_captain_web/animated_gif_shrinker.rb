@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Try to reduce the size of large animated gifs.
   class AnimatedGifShrinker

@@ -39,5 +39,5 @@ class Caption < ApplicationRecord
     end
   end
 
-  scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct'.freeze) }
+  scope :position_order, -> { reorder('top_left_y_pct, top_left_x_pct') }
 end

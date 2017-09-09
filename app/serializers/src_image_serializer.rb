@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # JSON serializer for src images
 class SrcImageSerializer < ActiveModel::Serializer
   attributes :content_type,

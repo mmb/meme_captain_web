@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Converts image data blobs into Magick::ImageLists.
   class ImgBlobLoader

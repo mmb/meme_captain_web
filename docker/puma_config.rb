@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 directory '/app'
 
 threads_count = ENV.fetch('RAILS_MAX_THREADS') { 5 }.to_i

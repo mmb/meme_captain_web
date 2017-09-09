@@ -5,7 +5,7 @@ module MemeCaptainWeb
   class ImageFormatConverter
     def convert(image)
       conversions = {
-        'SVG'.freeze => 'PNG'.freeze
+        'SVG' => 'PNG'
       }
       new_format = conversions[image.format]
       image.format = new_format if new_format

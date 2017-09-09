@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in
@@ -115,7 +117,7 @@ Rails.application.configure do
     }
   end
 
-  syslog_logger = MemeCaptainWeb::Syslog.new.logger(ENV, 'rails'.freeze)
+  syslog_logger = MemeCaptainWeb::Syslog.new.logger(ENV, 'rails')
   config.logger = syslog_logger if syslog_logger
 
   config.colorize_logging = false

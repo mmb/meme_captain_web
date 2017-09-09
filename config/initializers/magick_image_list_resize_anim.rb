@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Magick
   # Add helpers for resizing all frames of animated images.
   class ImageList

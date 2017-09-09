@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Reduce or enlarge an image based on configured constraints.
   class ImgSizeConstrainer

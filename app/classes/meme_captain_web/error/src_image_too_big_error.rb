@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   module Error
     # Error subclass for src images that are too big.
@@ -6,7 +8,7 @@ module MemeCaptainWeb
 
       def initialize(bytes = nil)
         message = 'image is too large'
-        message << " (#{number_to_human_size(bytes)})" if bytes
+        message += " (#{number_to_human_size(bytes)})" if bytes
         super(message)
       end
     end

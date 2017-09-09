@@ -6,7 +6,7 @@ module MemeCaptainWeb
   # Coalesce large animated gifs without loading them with rmagick.
   class AnimatedGifCoalescer
     def coalesce(data)
-      command = 'convert - -coalesce -'.freeze
+      command = 'convert - -coalesce -'
       Open3.popen3(command) do |i, o, e, t|
         i.binmode
         o.binmode

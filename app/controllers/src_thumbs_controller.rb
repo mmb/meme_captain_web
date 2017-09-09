@@ -15,7 +15,7 @@ class SrcThumbsController < ApplicationController
   private
 
   def make_headers(src_thumb)
-    headers.update('Content-Length'.freeze => src_thumb.size,
-                   'Content-Type'.freeze => src_thumb.content_type)
+    headers.update('Content-Length' => src_thumb.size,
+                   'Content-Type' => src_thumb.content_type)
   end
 end

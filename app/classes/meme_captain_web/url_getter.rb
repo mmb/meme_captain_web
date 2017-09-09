@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday/restrict_ip_addresses'
 
 module MemeCaptainWeb

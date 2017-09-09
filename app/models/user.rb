@@ -23,6 +23,6 @@ class User < ApplicationRecord
   end
 
   scope :for_auth, lambda { |email|
-    where('LOWER(email) = ?'.freeze, email.downcase)
+    where('LOWER(email) = ?', email.downcase)
   }
 end

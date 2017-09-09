@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # ActiveRecord text match scope lambda generator.
   #
   # Uses Postgres full text search for Postgres and SQL for other databases.
   class TextMatchLambda
     def lambder(o, column)
-      if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'.freeze
+      if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
         postgres_lambda(o)
       else
         other_lambda(o, column)
@@ -28,7 +30,7 @@ module MemeCaptainWeb
       lambda do |query|
         prepared_query = query.try(:strip).try(:downcase)
         if prepared_query
-          o.where("LOWER(#{column}) LIKE ?".freeze,
+          o.where("LOWER(#{column}) LIKE ?",
                   "%#{prepared_query}%")
         end
       end

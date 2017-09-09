@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Generated (meme) image pages controller.
 class GendImagePagesController < ApplicationController
   include GendImagesHelper

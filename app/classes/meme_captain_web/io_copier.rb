@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Mixin for conditionally copying data from one IO to another.
   module IoCopier

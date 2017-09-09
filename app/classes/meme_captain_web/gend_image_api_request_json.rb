@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Generate API request JSON that created a gend image.
   class GendImageApiRequestJson

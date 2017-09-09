@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Instance health check middleware.
   # Does not require a database connection to return ok.

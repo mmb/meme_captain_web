@@ -9,7 +9,7 @@ module HasImageConcern
 
   included do
     scope :without_image, lambda {
-      select((column_names - ['image'.freeze]).map { |c| "#{table_name}.#{c}" })
+      select((column_names - ['image']).map { |c| "#{table_name}.#{c}" })
     }
   end
 

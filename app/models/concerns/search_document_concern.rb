@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ActiveRecord::Model mixin to combine text fields into a search document field.
 module SearchDocumentConcern
   extend ActiveSupport::Concern

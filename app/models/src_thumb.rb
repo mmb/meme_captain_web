@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Source image thumbnail model.
 class SrcThumb < ApplicationRecord
   include HasImageConcern

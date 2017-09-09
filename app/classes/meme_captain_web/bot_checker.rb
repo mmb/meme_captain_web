@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Check params for params that only bots would use.
   #
@@ -5,7 +7,7 @@ module MemeCaptainWeb
   class BotChecker
     def check(params)
       return if params[:gend_image][:email].blank?
-      StatsD.increment('bot.attempt'.freeze)
+      StatsD.increment('bot.attempt')
     end
   end
 end

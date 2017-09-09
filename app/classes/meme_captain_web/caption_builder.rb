@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemeCaptainWeb
   # Build the default captions for a gend image.
   class CaptionBuilder

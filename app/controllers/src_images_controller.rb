@@ -5,7 +5,7 @@ class SrcImagesController < ApplicationController
   include SrcImagesHelper
 
   def new
-    return if not_logged_in 'Please login to create a source image.'.freeze
+    return if not_logged_in 'Please login to create a source image.'
 
     @src_image = SrcImage.new
   end
@@ -80,7 +80,7 @@ class SrcImagesController < ApplicationController
   def read_image_data(create_params)
     return unless create_params.try(:[], :image)
     create_params[:image] = create_params[:image].read
-    StatsD.increment('src_image.upload'.freeze)
+    StatsD.increment('src_image.upload')
   end
 
   def create_success
@@ -88,7 +88,7 @@ class SrcImagesController < ApplicationController
       format.html do
         redirect_to(
           { controller: :my, action: :show },
-          notice: 'Source image created.'.freeze
+          notice: 'Source image created.'
         )
       end
       format.json { redirect_to_pending }
@@ -124,8 +124,8 @@ class SrcImagesController < ApplicationController
 
   def src_image_show_headers(src_image)
     headers.update(
-      'Content-Length'.freeze => src_image.size,
-      'Content-Type'.freeze => src_image.content_type
+      'Content-Length' => src_image.size,
+      'Content-Type' => src_image.content_type
     )
   end
 end

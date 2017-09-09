@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # delayed jobs
 
 PendingGendImagesController.extend(StatsD::Instrument)
