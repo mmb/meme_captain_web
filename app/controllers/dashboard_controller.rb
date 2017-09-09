@@ -50,14 +50,15 @@ class DashboardController < ApplicationController
 
   def set_system
     @system = {
-      ruby: RUBY_DESCRIPTION
+      ruby_version: RUBY_DESCRIPTION,
+      rails_version: Rails::VERSION::STRING
     }
 
     set_db_size
-    set_gend_image_size
-    set_src_image_size
+    [GendImage, GendThumb, SrcImage, SrcThumb].each { |c| image_sizes(c) }
     @system[:dedup_savings_bytes] = \
-      dedup_savings(GendImage) + dedup_savings(SrcImage)
+      dedup_savings(GendImage) + dedup_savings(GendThumb) +
+      dedup_savings(SrcImage) + dedup_savings(SrcThumb)
   end
 
   def set_db_size
@@ -68,23 +69,13 @@ class DashboardController < ApplicationController
     ).first['pg_database_size']
   end
 
-  def set_gend_image_size
+  def image_sizes(klass)
+    prefix = klass.to_s.underscore
     @system.merge!(
-      gend_image_db_size_bytes: GendImage.where(
+      "#{prefix}_db_size_bytes" => klass.where(
         image_external_key: nil
       ).sum(:size),
-      gend_image_external_size_bytes: GendImage.where.not(
-        image_external_key: nil
-      ).sum(:size)
-    )
-  end
-
-  def set_src_image_size
-    @system.merge!(
-      src_image_db_size_bytes: SrcImage.where(
-        image_external_key: nil
-      ).sum(:size),
-      src_image_external_size_bytes: SrcImage.where.not(
+      "#{prefix}_external_size_bytes" => klass.where.not(
         image_external_key: nil
       ).sum(:size)
     )

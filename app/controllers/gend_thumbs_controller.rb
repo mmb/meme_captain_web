@@ -9,7 +9,13 @@ class GendThumbsController < ApplicationController
 
     return unless stale?(gend_thumb)
     make_headers(gend_thumb)
-    render(body: gend_thumb.image)
+
+    body = gend_thumb.image_external_body
+    if body
+      self.response_body = body
+    else
+      render(body: gend_thumb.image)
+    end
   end
 
   private

@@ -1,10 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -201,7 +194,9 @@ CREATE TABLE gend_thumbs (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     image_hash text,
-    average_color text
+    average_color text,
+    image_external_bucket text,
+    image_external_key text
 );
 
 
@@ -439,7 +434,9 @@ CREATE TABLE src_thumbs (
     updated_at timestamp without time zone,
     content_type character varying,
     image_hash text,
-    average_color text
+    average_color text,
+    image_external_bucket text,
+    image_external_key text
 );
 
 
@@ -1065,6 +1062,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170117054337'),
 ('20170214052503'),
 ('20170228061601'),
-('20170720044056');
+('20170720044056'),
+('20170909041842');
 
 

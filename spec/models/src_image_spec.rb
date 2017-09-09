@@ -564,7 +564,7 @@ describe SrcImage do
     context 'when image_external_bucket and image_external_key are not nil' do
       it 'returns an IO of the image body from the external object store' do
         src_image = FactoryGirl.create(
-          :gend_image,
+          :src_image,
           image_external_bucket: 'bucket1',
           image_external_key: 'key1'
         )
@@ -596,7 +596,7 @@ describe SrcImage do
     context 'when the image is already in the bucket' do
       it 'does not write the image to the bucket' do
         src_image = FactoryGirl.create(
-          :gend_image,
+          :src_image,
           image_hash: 'hash1',
           updated_at: Time.at(0)
         )

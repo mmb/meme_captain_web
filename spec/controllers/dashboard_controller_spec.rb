@@ -115,11 +115,16 @@ describe DashboardController, type: :controller do
       it 'includes a hash of system stats' do
         get(:show)
 
-        expect(assigns(:system)[:gend_image_db_size_bytes]).to be >= 0
-        expect(assigns(:system)[:gend_image_external_size_bytes]).to be >= 0
-        expect(assigns(:system)[:ruby]).to include('ruby')
-        expect(assigns(:system)[:src_image_db_size_bytes]).to be >= 0
-        expect(assigns(:system)[:src_image_external_size_bytes]).to be >= 0
+        expect(assigns(:system)['gend_image_db_size_bytes']).to be >= 0
+        expect(assigns(:system)['gend_image_external_size_bytes']).to be >= 0
+        expect(assigns(:system)['gend_thumb_db_size_bytes']).to be >= 0
+        expect(assigns(:system)['gend_thumb_external_size_bytes']).to be >= 0
+        expect(assigns(:system)[:rails_version]).to match(/\d\.\d\.\d/)
+        expect(assigns(:system)[:ruby_version]).to include('ruby')
+        expect(assigns(:system)['src_image_db_size_bytes']).to be >= 0
+        expect(assigns(:system)['src_image_external_size_bytes']).to be >= 0
+        expect(assigns(:system)['src_thumb_db_size_bytes']).to be >= 0
+        expect(assigns(:system)['src_thumb_external_size_bytes']).to be >= 0
         expect(assigns(:system)[:dedup_savings_bytes]).to be >= 0
       end
 

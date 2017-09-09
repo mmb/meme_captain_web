@@ -9,7 +9,13 @@ class SrcThumbsController < ApplicationController
 
     return unless stale?(src_thumb)
     make_headers(src_thumb)
-    render(body: src_thumb.image)
+
+    body = src_thumb.image_external_body
+    if body
+      self.response_body = body
+    else
+      render(body: src_thumb.image)
+    end
   end
 
   private
