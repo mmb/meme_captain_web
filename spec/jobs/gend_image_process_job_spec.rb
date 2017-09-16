@@ -62,9 +62,13 @@ describe GendImageProcessJob do
       expect(image_move_external_job).to receive(:perform)
 
       thumb_move_external_job = instance_double(ImageMoveExternalJob)
-      expect(ImageMoveExternalJob).to receive(:new).with(
-        GendThumb, gend_image.id, 'test-image-bucket'
-      ).and_return(thumb_move_external_job)
+      expect(ImageMoveExternalJob).to receive(:new) do |klass, id, bucket|
+        expect(klass).to eq(GendThumb)
+        gend_image.reload
+        expect(id).to eq(gend_image.gend_thumb.id)
+        expect(bucket).to eq('test-image-bucket')
+        thumb_move_external_job
+      end
       expect(thumb_move_external_job).to receive(:delay).with(
         queue: :move_image_external
       ).and_return(thumb_move_external_job)
