@@ -106,8 +106,8 @@ class SrcImageProcessJob
     SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
     SrcImageCalcHashJob.new(src_image.id).delay(queue: :calc_hash).perform
     return unless MemeCaptainWeb::Config::IMAGE_BUCKET
-    SrcImageMoveExternalJob.new(
-      src_image.id, MemeCaptainWeb::Config::IMAGE_BUCKET
+    ImageMoveExternalJob.new(
+      SrcImage, src_image.id, MemeCaptainWeb::Config::IMAGE_BUCKET
     ).delay(queue: :move_image_external).perform
   end
 end

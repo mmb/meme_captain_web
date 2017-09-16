@@ -261,14 +261,14 @@ describe SrcImageProcessJob do
     end
 
     it 'enqueues a job to move the image to the bucket' do
-      src_image_move_external_job = instance_double(SrcImageMoveExternalJob)
-      expect(SrcImageMoveExternalJob).to receive(:new).with(
-        src_image.id, 'test-image-bucket'
-      ).and_return(src_image_move_external_job)
-      expect(src_image_move_external_job).to receive(:delay).with(
+      image_move_external_job = instance_double(ImageMoveExternalJob)
+      expect(ImageMoveExternalJob).to receive(:new).with(
+        SrcImage, src_image.id, 'test-image-bucket'
+      ).and_return(image_move_external_job)
+      expect(image_move_external_job).to receive(:delay).with(
         queue: :move_image_external
-      ).and_return(src_image_move_external_job)
-      expect(src_image_move_external_job).to receive(:perform)
+      ).and_return(image_move_external_job)
+      expect(image_move_external_job).to receive(:perform)
 
       src_image_process_job.perform
     end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe GendImageMoveExternalJob do
-  subject(:gend_image_move_external_job) do
-    GendImageMoveExternalJob.new(gend_image.id, 'test-image-bucket')
+describe ImageMoveExternalJob do
+  subject(:image_move_external_job) do
+    ImageMoveExternalJob.new(GendImage, gend_image.id, 'test-image-bucket')
   end
 
   let(:gend_image) { FactoryGirl.create(:gend_image) }
@@ -17,6 +17,6 @@ describe GendImageMoveExternalJob do
     expect(gend_image).to receive(:move_image_external).with(
       'test-image-bucket'
     )
-    gend_image_move_external_job.perform
+    image_move_external_job.perform
   end
 end
