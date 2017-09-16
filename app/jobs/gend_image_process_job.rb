@@ -47,6 +47,9 @@ class GendImageProcessJob
     ImageMoveExternalJob.new(
       GendImage, gend_image.id, MemeCaptainWeb::Config::IMAGE_BUCKET
     ).delay(queue: :move_image_external).perform
+    ImageMoveExternalJob.new(
+      GendThumb, gend_image.gend_thumb.id, MemeCaptainWeb::Config::IMAGE_BUCKET
+    ).delay(queue: :move_image_external).perform
   end
 
   private

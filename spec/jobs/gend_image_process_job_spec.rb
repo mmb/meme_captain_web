@@ -51,7 +51,7 @@ describe GendImageProcessJob do
       stub_const('MemeCaptainWeb::Config::IMAGE_BUCKET', 'test-image-bucket')
     end
 
-    it 'enqueues a job to move the image to the bucket' do
+    it 'enqueues jobs to move the image and thumbnail to the bucket' do
       image_move_external_job = instance_double(ImageMoveExternalJob)
       expect(ImageMoveExternalJob).to receive(:new).with(
         GendImage, gend_image.id, 'test-image-bucket'
@@ -60,6 +60,15 @@ describe GendImageProcessJob do
         queue: :move_image_external
       ).and_return(image_move_external_job)
       expect(image_move_external_job).to receive(:perform)
+
+      thumb_move_external_job = instance_double(ImageMoveExternalJob)
+      expect(ImageMoveExternalJob).to receive(:new).with(
+        GendThumb, gend_image.id, 'test-image-bucket'
+      ).and_return(thumb_move_external_job)
+      expect(thumb_move_external_job).to receive(:delay).with(
+        queue: :move_image_external
+      ).and_return(thumb_move_external_job)
+      expect(thumb_move_external_job).to receive(:perform)
 
       gend_image_process_job.perform
     end

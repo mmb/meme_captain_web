@@ -105,9 +105,16 @@ class SrcImageProcessJob
   def enqueue_jobs(src_image)
     SrcImageNameJob.new(src_image.id).delay(queue: :src_image_name).perform
     SrcImageCalcHashJob.new(src_image.id).delay(queue: :calc_hash).perform
+    enqueue_move_external_jobs(src_image)
+  end
+
+  def enqueue_move_external_jobs(src_image)
     return unless MemeCaptainWeb::Config::IMAGE_BUCKET
     ImageMoveExternalJob.new(
       SrcImage, src_image.id, MemeCaptainWeb::Config::IMAGE_BUCKET
+    ).delay(queue: :move_image_external).perform
+    ImageMoveExternalJob.new(
+      SrcThumb, src_image.src_thumb.id, MemeCaptainWeb::Config::IMAGE_BUCKET
     ).delay(queue: :move_image_external).perform
   end
 end
