@@ -48,7 +48,7 @@ spot_ip() {
       'Name=instance-state-name,Values=running' \
   | jq \
     --raw-output \
-    '.Reservations[].Instances[0].PublicIpAddress'
+    '.Reservations[0].Instances[0].PublicIpAddress'
 }
 
 open_hole
