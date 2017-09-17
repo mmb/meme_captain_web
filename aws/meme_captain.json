@@ -4,7 +4,7 @@
     "dbHost": {
       "Value": {
         "Fn::GetAtt": [
-          "db",
+          "database",
           "Endpoint.Address"
         ]
       }
@@ -137,11 +137,11 @@
       },
       "Type": "AWS::S3::Bucket"
     },
-    "db": {
-      "DeletionPolicy": "Snapshot",
+    "database": {
       "Properties": {
-        "AllocatedStorage": "150",
+        "AllocatedStorage": "10",
         "AvailabilityZone": "us-east-1d",
+        "BackupRetentionPeriod": "1",
         "DBInstanceClass": "db.t2.small",
         "DBName": "memecaptain",
         "DBSubnetGroupName": {
@@ -175,14 +175,14 @@
             "Ref": "dbTopic"
           }
         ],
-        "AlarmDescription": "notify if database free storage is < 20G",
+        "AlarmDescription": "notify if database free storage is < 5G",
         "AlarmName": "dbFreeStorageLow",
         "ComparisonOperator": "LessThanThreshold",
         "Dimensions": [
           {
             "Name": "DBInstanceIdentifier",
             "Value": {
-              "Ref": "db"
+              "Ref": "database"
             }
           }
         ],
@@ -191,7 +191,7 @@
         "Namespace": "AWS/RDS",
         "Period": "60",
         "Statistic": "Minimum",
-        "Threshold": "20000000000"
+        "Threshold": "5000000000"
       },
       "Type": "AWS::CloudWatch::Alarm"
     },
