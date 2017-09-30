@@ -17,12 +17,12 @@ end
 $stdout.sync = true
 
 # rubocop:disable Layout/IndentHeredoc
-print <<-EOS
+print <<-SMTP
 220 127.0.0.1\r
 250 127.0.0.1\r
 250 Ok\r
 250 Ok\r
-EOS
+SMTP
 # rubocop:enable Layout/IndentHeredoc
 
 headers_started = false

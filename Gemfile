@@ -29,7 +29,7 @@ gem 'puma', '~> 3.10'
 gem 'rails', '~> 5.1', '>= 5.1.2'
 gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
 gem 'rmagick', '~> 2.16'
-gem 'rubocop', '~> 0.49.1', require: false
+gem 'rubocop', '~> 0.50.0', require: false
 gem 'sqlite3', '~> 1.3', '>= 1.3.13'
 gem 'statsd-instrument', '~> 2.1', '>= 2.1.4'
 gem 'textacular', '~> 5.0', '>= 5.0.1'

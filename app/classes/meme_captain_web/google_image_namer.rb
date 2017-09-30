@@ -29,7 +29,9 @@ module MemeCaptainWeb
 
     def extract_name(body)
       match = body.match(%r{Best guess for this image:.*?>(.+?)</a>})
-      match.captures[0] if match
+      # rubocop:disable Lint/SafeNavigationChain
+      match&.captures[0]
+      # rubocop:enable Lint/SafeNavigationChain
     end
   end
 end
