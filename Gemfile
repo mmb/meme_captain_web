@@ -24,16 +24,11 @@ gem 'less-rails', '~> 2.8'
 gem 'local_time', '~> 1.0.3'
 gem 'meme_captain',
     git: 'https://github.com/mmb/meme_captain.git',
-    ref: 'd80fb4b'
+    ref: 'daa7ac'
 gem 'puma', '~> 3.10'
 gem 'rails', '~> 5.1', '>= 5.1.2'
 gem 'remote_syslog_logger', '~> 1.0', '>= 1.0.3'
-gem 'rmagick',
-    '~> 2.15',
-    '>= 2.15.4',
-    platforms: %i[ruby mswin],
-    require: 'rmagick'
-gem 'rmagick4j', '~> 0.3.9', platforms: :jruby, require: 'rmagick'
+gem 'rmagick', '~> 2.16'
 gem 'rubocop', '~> 0.49.1', require: false
 gem 'sqlite3', '~> 1.3', '>= 1.3.13'
 gem 'statsd-instrument', '~> 2.1', '>= 2.1.4'

@@ -8,12 +8,12 @@ GIT
 
 GIT
   remote: https://github.com/mmb/meme_captain.git
-  revision: d80fb4b6f13bae4100ecbf95015e64f2790217ad
-  ref: d80fb4b
+  revision: daa7ac8244916562378d37820dad21ee01b89d71
+  ref: daa7ac
   specs:
     meme_captain (0.3.1)
       mime-types (~> 2.5)
-      rmagick (~> 2.15.3)
+      rmagick (~> 2.16)
 
 GEM
   remote: https://rubygems.org/
@@ -280,7 +280,7 @@ GEM
     remote_syslog_logger (1.0.3)
       syslog_protocol
     require_all (1.4.0)
-    rmagick (2.15.4)
+    rmagick (2.16.0)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
       rspec-expectations (~> 3.6.0)
@@ -420,8 +420,7 @@ DEPENDENCIES
   rails-controller-testing (~> 1.0, >= 1.0.1)
   rails_best_practices (~> 1.18, >= 1.18.1)
   remote_syslog_logger (~> 1.0, >= 1.0.3)
-  rmagick (~> 2.15, >= 2.15.4)
-  rmagick4j (~> 0.3.9)
+  rmagick (~> 2.16)
   rspec (~> 3.6)
   rspec-rails (~> 3.6, >= 3.6.1)
   rubocop (~> 0.49.1)
