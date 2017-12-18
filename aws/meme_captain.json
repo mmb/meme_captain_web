@@ -939,7 +939,7 @@
     },
     "spotAutoScalingGroup": {
       "Properties": {
-        "DesiredCapacity": 1,
+        "DesiredCapacity": 0,
         "HealthCheckGracePeriod": 300,
         "HealthCheckType": "ELB",
         "LaunchConfigurationName": {
